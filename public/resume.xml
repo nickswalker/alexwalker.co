@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resume>
+	<bio>
+		<name>Alex Walker</name>
+		<job-title>Cinematographer</job-title>
+		<email>alexanderiwalker@icloud.com</email>
+		<site>alexwalker.co</site>
+		<phone-number>210.777.8527</phone-number>
+		<street-address></street-address>
+		<social>
+<!--
+			<github></github>
+			<vimeo></vimeo>
+			<tumblr></tumblr>
+-->
+			<googleplus>https://plus.google.com/113971903490532346524/posts</googleplus>
+			<twitter>http://twitter.com/awalker47</twitter>
+			<facebook>https://www.facebook.com/alexander.i.walker</facebook>
+		</social>
+	</bio>
+	<section type="arbitrary" title="full"> <![CDATA[ 
+		<a href="/resume/work" class="full-work"> View full work history</a>
+		]]>
+	</section>
+	<section title="Film/TV" type="detail-list">
+
+		<item>
+			<title>Cool Pools 45, 46 HGTV</title>
+			<subtitle>Director of Photography</subtitle>
+			<text>Produced by Steve Hall, AMS Pictures</text>
+		</item>
+		
+		<item>
+			<title>Book of Ruth</title>
+			<subtitle></subtitle>
+			<text>Directed by Pablo Véliz</text>
+		</item>
+		<item>
+			<title>Guts and Glory CBS/KENS5</title>
+			<subtitle></subtitle>
+			<text>Directed by Peter Anthony Andrews</text>
+		</item>
+
+				<item>
+			<title>No One Will Know</title>
+			<subtitle></subtitle>
+			<text>Directed by Raj Reddy</text>
+		</item>
+		<item>
+			<title>Seeking Solace</title>
+			<subtitle></subtitle>
+			<text>Directed by Holly Chadwick</text>
+		</item>
+
+		
+		<item>
+			<title>Troubled Skye</title>
+			<subtitle></subtitle>
+			<text>Directed by Alex Murphy</text>
+		</item>
+		<item>
+			<title>Among the Dead</title>
+			<subtitle></subtitle>
+			<text>Directed by William Instone</text>
+		</item>
+		<item>
+			<title>A Bird's Nest</title>
+			<subtitle></subtitle>
+			<text>Directed by Christine Chen</text>
+		</item>
+		<item>
+			<title>Assisted Living TV pilot</title>
+			<subtitle>2nd Unit DP</subtitle>
+			<text>Directed by Kat Steffens</text>
+		</item>
+		
+
+		<item>
+			<title>Under Nitrous TV pilot</title>
+			<subtitle></subtitle>
+			<text>Directed by Lamarcus Tinker</text>
+		</item>
+		<item>
+			<title>Funemployment</title>
+			<subtitle>Additional Photography</subtitle>
+			<text>Directed by Christine Chen</text>
+		</item>
+		<item>
+			<title>Leap Year Season 2 (Hulu Series)</title>
+			<subtitle></subtitle>
+			<text>Directed by Yuri Baronovsky</text>
+		</item>
+		<item>
+			<title>Live at 25th Street Studios Pilot</title>
+			<subtitle></subtitle>
+			<text>Directed by Jay Blakesberg</text>
+		</item>
+	</section>
+	<section title="Commercials/Music Videos" type="detail-list">
+		<item>
+			<title>Romney Ryan Traveling Press</title>
+			<subtitle>Director of Photography</subtitle>
+			<text>Mas Consulting</text>
+		</item>
+		<item>
+			<title>RNC'12 Tribute to Hispanic Voters</title>
+			<subtitle></subtitle>
+			<text>Mas Consulting</text>
+		</item>
+		
+		<item>
+			<title>HEB Groceries 'Brisket'</title>
+			<subtitle></subtitle>
+			<text>Richards Group Agency</text>
+		</item>
+		<item>
+			<title>HEB Groceries 'Heart to Heart'</title>
+			<subtitle></subtitle>
+			<text>Richards Group Agency</text>
+		</item>
+		<item>
+			<title>Groomer Sea Food TV spots</title>
+			<subtitle></subtitle>
+			<text>1427 Creative/TimeWarner Cable</text>
+		</item>
+		<item>
+			<title>Dream Act TV spots</title>
+			<subtitle></subtitle>
+			<text>CineVeliz</text>
+		</item>
+		<item>
+			<title>Texas CASA Web/TV/Theatrical PSAs</title>
+			<subtitle></subtitle>
+			<text>K. Fernandez</text>
+		</item>
+		<item>
+			<title>The Cake Shop TV spots</title>
+			<subtitle></subtitle>
+			<text>CineVeliz</text>
+		</item>
+		
+		<item>
+			<title>George P Bush Cinco de Mayo</title>
+			<subtitle></subtitle>
+			<text>Mas Consulting</text>
+		</item>
+		<item>
+			<title>Ted Nugent Endorses Sid Miller</title>
+			<subtitle></subtitle>
+			<text>Directed by Walt Roberts</text>
+		</item>
+		<item>
+			<title>Gov.Rick Perry Endorses Sid Miller</title>
+			<subtitle></subtitle>
+			<text>Directed by Alex Walker</text>
+		</item>
+		<item>
+			<title>Colored Girl Hustle 'Afro Aliens' </title>
+			<subtitle></subtitle>
+			<text>Directed by Carre Real</text>
+		</item>
+
+
+	</section>
+	
+	
+	<section title="Corporate/Web/Live-to-tape" type="detail-list">
+		
+		
+		
+		<item>
+			<title>HP Bura </title>
+			<subtitle>Director of Photography</subtitle>
+			<text>Big Picture Lab</text>
+		</item>
+		
+		<item>
+			<title>Spinlet @SXSW'12</title>
+			<subtitle></subtitle>
+			<text>Directed by Jay Blakesberg</text>
+		</item>
+		<item>
+			<title>Greenstart Startup Accelerator</title>
+			<subtitle></subtitle>
+			<text>Managing Partner Mitch Lowe</text>
+		</item>
+		<item>
+			<title>Yamaha All-Access</title>
+			<subtitle></subtitle>
+			<text>Yamaha Entertainment Group</text>
+		</item>
+		
+		<item>
+			<title>Valley Girl Show @SXSW'11</title>
+			<subtitle></subtitle>
+			<text>Directed by Jesse Draper</text>
+		</item>
+		<item>
+			<title>WideOpenCamera @NAB'12</title>
+			<subtitle>Additional Camera</subtitle>
+			<text>Directed by Jared Abrams</text>
+		</item>
+		<item>
+			<title>Brash@SXSW'14 w/Nissan</title>
+			<subtitle></subtitle>
+			<text>Mode Media</text>
+		</item>
+		
+		<item>
+			<title>IPL3, 4, and 5 live-to-tape</title>
+			<subtitle></subtitle>
+			<text>IGN Entertainment</text>
+		</item>
+		
+
+	</section>
+
+
+
+</resume>

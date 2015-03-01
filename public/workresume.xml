@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resume>
+	<bio>
+		<name>Alex Walker</name>
+		<job-title>Cinematographer/Editor</job-title>
+		<email>alexanderiwalker@icloud.com</email>
+		<site>alexwalker.co</site>
+		<phone-number>210.777.8527</phone-number>
+		<street-address></street-address>
+		<social>
+			<googleplus>https://plus.google.com/113971903490532346524/posts</googleplus>
+			<twitter>http://twitter.com/awalker47</twitter>
+			<facebook>https://www.facebook.com/alexander.i.walker</facebook>
+		</social>
+	</bio>
+	<section title="objective">
+		I seek the opportunity to prove myself in the art of storytelling.
+	</section>
+	<section title="representation" type="text"><![CDATA[ 
+	<p><a href="http://therighteye.com/">The Right Eye Agency</a><br />
+41 Union Square West, Suite 1004<br />
+New York, NY 10003<br />
+212.924.8505<br />
+<br />
+
+Features:<br />
+Thomas Turley</p>
+]]>
+	</section>
+	<section title="reel-links " type="arbitrary">
+		<![CDATA[ 
+		<div class="item-container">
+			<a href="http://bit.ly/QUreQE">View Narrative Reel</a>
+			<a href="http://bit.ly/12qyLxr">View Commercial Reel</a>
+			<a href="http://imdb.to/vkWpEF">View IMDB</a>
+		</div>
+		]]>
+	</section>
+	
+	<section title="experience" type="highlight-list">
+		<item>
+			<title>A Bird's Nest</title>
+			<subtitle>Director of Photography/Colorist</subtitle>
+			<date>May 2014</date>
+			<text>Shreveport, LA - Directed by Christine Chen</text>
+		</item>															
+		<item>
+			<title>Among the Dead</title>
+			<subtitle>Director of Photography/Colorist</subtitle>
+			<date>May 2014</date>
+			<text>Bastrop, TX - Directed by William Instone</text>
+		</item>						
+		<item>
+			<title>Noble Pig Web Video</title>
+			<subtitle>Director of Photography/Colorist</subtitle>
+			<date>May 2014</date>
+			<text>Austin, TX - Produced by Osei Bonsu</text>
+		</item>
+		<item>
+			<title>Governor Rick Perry Endorses Sid Miller</title>
+			<subtitle>Director/Shooter/Editor</subtitle>
+			<date>May 2014</date>
+			<text>Austin, TX</text>
+		</item>
+		<item>
+			<title>TelCel Kiosk Videos</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>May 2014</date>
+			<text>San Antonio, TX - Produced by MAS Consulting</text>
+		</item>
+		<item>
+			<title>Sid Miller Texas Republican Convention Intro</title>
+			<subtitle>Director/Shooter/Editor</subtitle>
+			<date>May 2014</date>
+			<text>Austin, TX</text>
+		</item>
+		<item>
+			<title>George P Bush Cinco De Mayo Greeting</title>
+			<subtitle>Director of Photography/Editor</subtitle>
+			<date>May 2014</date>
+			<text>Ft. Worth, TX- Produced by MAS Consulting</text>
+		</item>
+		<item>
+			<title>Lumenate 2014 Crawfish Boil </title>
+			<subtitle>Editor</subtitle>
+			<date>April 2014</date>
+			<text>Avid- Produced by Webstorytellers</text>
+		</item>
+		<item>
+			<title>ATPE Happy Teacher Appreciation Week PSAs</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>April 2014</date>
+			<text>Austin, TX - Produced by Horizon Film/Video</text>
+		</item>
+		<item>
+			<title>CISCO - McAllen ISD</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>April 2014</date>
+			<text>McAllen, TX - Produced by Webstorytellers</text>
+		</item>
+		<item>
+			<title>HP Bura Web Video</title>
+			<subtitle>DP/Colorist</subtitle>
+			<date>April 2014</date>
+			<text>Phoenix, AZ - Produced by Big Picture Lab</text>
+		</item>
+		<item>
+			<title>Texas CASA TV/WEB/THEATRICAL PSAs</title>
+			<subtitle>DP/Editor/Colorist</subtitle>
+			<date>April 2014</date>
+			<text>San Antonio,TX - Produced by K. Fernandez</text>
+		</item>
+		<item>
+			<title>Sid Miller Happy Easter Greeting</title>
+			<subtitle>Director/Shooter/Editor</subtitle>
+			<date>March 2014</date>
+			<text>Stephenville,TX </text>
+		</item>
+		<item>
+			<title>Lumenate</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>March 2014</date>
+			<text>Dallas,TX - Produced by Webstorytellers</text>
+		</item>
+		
+		<item>
+			<title>Go To Sleep</title>
+			<subtitle>Director of Photography/Colorist</subtitle>
+			<date>March 2014</date>
+			<text>Austin,TX - Directed by William Instone</text>
+		</item>
+		<item>
+			<title>Keste/Dallas AirMotive</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>March 2014</date>
+			<text>Dallas,TX - Produced by MainStay</text>
+		</item>
+			<item>
+			<title>Got it Cam TV ad</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>February 2014</date>
+			<text>Austin,TX - Directed by Christine Chen</text>
+		</item>	
+		<item>
+			<title>Maker Square Web video</title>
+			<subtitle>Director of Photography/Colorist</subtitle>
+			<date>February 2014</date>
+			<text>Austin,TX - Produced by Osei Bonsu</text>
+		</item>
+		
+			<item>
+			<title>Michael McClung Dc Business Film</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>February 2014</date>
+			<text>Austin,TX - Produced by GoldenArm Productions</text>
+		</item>
+		<item>
+			<title>Brash @SXSW'14 Sponsored by Nissan</title>
+			<subtitle>Shooter</subtitle>
+			<date>February 2014</date>
+			<text>Austin,TX - Produced by Glam Media</text>
+		</item>									
+		<item>
+			<title>Ted Nugent Endorses Sid Miller</title>
+			<subtitle>Shooter/editor</subtitle>
+			<date>January 2014</date>
+			<text>Carizzo Springs,TX - Directed by Walt Roberts</text>
+		</item>
+								
+		<item>
+			<title>Sid Miller Christmas Greeting</title>
+			<subtitle>Shooter/editor</subtitle>
+			<date>December 2013</date>
+			<text>Austin,TX - Directed by Walt Roberts</text>
+		</item>
+															
+		<item>
+			<title>Bon Appetit</title>
+			<subtitle>Associate Producer/Gaffer/Colorist</subtitle>
+			<date>December 2013</date>
+			<text>Austin,TX - Directed by Chris Todd</text>
+		</item>
+										
+		<item>
+			<title>BPUB Resaca Restoration Project Video</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>December 2013</date>
+			<text>Brownsville,TX - Directed by Karla Fernandez</text>
+		</item>
+				
+		<item>
+			<title>Doritos Super Bowl 2014 contest entry</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>November 2013</date>
+			<text>Austin,TX - Directed by Christine Chen</text>
+		</item>
+				
+		<item>
+			<title>Good Morning Sun </title>
+			<subtitle>Director of Photography</subtitle>
+			<date>November 2013</date>
+			<text>Kerrville,TX - Directed by Marshall Dungan</text>
+		</item>
+			
+			
+		<item>
+			<title>General Data Tech Quarterly </title>
+			<subtitle>Director of Photography</subtitle>
+			<date>November 2013</date>
+			<text>Dallas,TX - Webstorytellers</text>
+		</item>
+		
+		<item>
+			<title>Cisco Communications SA</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>October 2013</date>
+			<text>San Antonio,TX - Webstorytellers</text>
+		</item>
+		
+		<item>
+			<title>HP/Puerto Rico Corporate PSA</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>October 2013</date>
+			<text>Houston,TX - CineVeliz</text>
+		</item>
+		
+		<item>
+			<title>Funemployment</title>
+			<subtitle>2nd Unit DP</subtitle>
+			<date>September-December 2013</date>
+			<text>Austin,TX - Produced by Christine Chen</text>
+		</item>
+		
+		
+		<item>
+			<title>Assisted Living TV Pilot</title>
+			<subtitle>Gaffer/2nd Unit DP</subtitle>
+			<date>August-September 2013</date>
+			<text>Austin/San Antonio, TX - Produced by Brad Adams + Kat Steffens.</text>
+		</item>
+		
+		<item>
+			<title>The Box: Emma's Journey Pts II + III</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>August 2013</date>
+			<text>New Braunfels, TX - Produced by Mike Manero.</text>
+		</item>
+		<item>
+			<title>Cool Pools 45, 46 HGTV </title>
+			<subtitle>Director of Photography</subtitle>
+			<date>July. 2013</date>
+			<text>Houston, TX - Produced by Steve Hall. AMS Pictures. C300, portajib, underwater 5D</text>
+		</item>
+		<item>
+			<title>Guts and Glory CBS/KENS5 AFL Reality Show</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>June. 2013</date>
+			<text>San Antonio, TX - Directed by Peter Anthony Andrews. Airing across SoTx TV market. FS100.</text>
+		</item>
+		<item>
+			<title>'La Jornada/Book of Ruth'</title>
+			<subtitle>Director of Photography, Colorist</subtitle>
+			<date>May-June 2013</date>
+			<text>Sony FS100 Directed by Pablo Véliz. Shot in Big Bend State Park, TX.</text>
+		</item>
+		<item>
+			<title>'The Sconce'</title>
+			<subtitle>Director of Photography, Editor, Colorist</subtitle>
+			<date>May. 2012</date>
+			<text>Houston, TX - Directed By Mario de la Garza.</text>
+		</item>
+		
+		<item>
+			<title>TexCare Broadcast Commercials</title>
+			<subtitle>Director of Photography, Colorist</subtitle>
+			<date>May. 2013</date>
+			<text>San Antonio, TX - Directed by Pablo Véliz. Airing across SoTx TV market. FS100.</text>
+		</item>
+			<item>
+			<title>Colored Girl Hustle - 'Afro Aliens'</title>
+			<subtitle>Director of Photography, Editor, Colorist</subtitle>
+			<date>Apr. 2013</date>
+			<text>New York City</text>
+		</item>
+
+
+		<item>
+			<title>'The Box: Emma's Journey'</title>
+			<subtitle>Director of Photography, Editor, Colorist</subtitle>
+			<date>Dec. 2012</date>
+			<text>Lake McQueeny, TX - Directed By Mike Manero.</text>
+		</item>
+		
+		<item>
+			<title>The Cake Shop Broadcast Commercials</title>
+			<subtitle>Director of Photography, Colorist</subtitle>
+			<date>Dec. 2012</date>
+			<text>San Antonio, TX - Directed by Pablo Véliz. Airing across SoTx TV market. FS100.</text>
+		</item>
+		<item>
+			<title>IGN Pro League (IPL5) LIVE eSports Event</title>
+			<subtitle>Main Stage Camera Operator</subtitle>
+			<date>Nov. 2012</date>
+			<text>Shot at the Cosmopolitan in Las Vegas. Sony EX series, live to tape.</text>
+		</item>
+		
+		<item>
+			<title>Romney Ryan Presidential Campaign Traveling Press</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>Aug-Nov 2012</date>
+			<text>Shot in Texas, New Mexico, Idaho, California, Nevada - Mas Consulting</text>
+		</item>
+
+
+		
+		
+		<item>
+			<title>Groomer Sea Food TV spot campaign</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>Oct. 2012</date>
+			<text>Shot in San Antonio, TX. - 1427 Creative, TimeWarner Cable</text>
+		</item>
+
+		
+		
+				
+		
+		
+		<item>
+			<title>Republican National Convention Hispanic Voters Tribute</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>Aug. 2012</date>
+			<text>Shot in Texas, New Mexico, and Idaho. - Mas Consulting</text>
+		</item>
+		
+		
+		<item>
+			<title>Under Nitrous TV pilot</title>
+			<subtitle>2nd Unit DP</subtitle>
+			<date>Aug. 2012</date>
+			<text>San Antonio, TX - Directed by Lamarcus Tinker</text>
+		</item>
+		
+		<item>
+			<title>HEB Groceries Broadcast Commercials</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>Jul. 2012</date>
+			<text>San Antonio, TX - Directed by Richards Group Agency. Airing across Texas TV market.</text>
+		</item>
+		<item>
+			<title>Dreamers Act Broadcast Commercials</title>
+			<subtitle>Director of Photography, Colorist</subtitle>
+			<date>Jun. 2012</date>
+			<text>San Antonio, TX - Directed by Pablo Véliz. Airing across SoTx TV market. FS100.</text>
+		</item>
+		<item>
+			<title>Wide Open Camera.com NABSHOW2012 Coverage</title>
+			<subtitle>Editor, Camera Operator, On Screen Talent</subtitle>
+			<date>Apr. 2012</date>
+			<text>Las Vegas Convention Center. FS100. Directed by Jared Abrams. Sponsored by Zacuto, Format Hitech, Marshall Monitors, and Carl Zeiss.</text>
+		</item>
+		<item>
+			<title>GSL Finals</title>
+			<subtitle>Main Stage Camera Operator</subtitle>
+			<date>Apr. 2012</date>
+			<text>Shot at the Cosmopolitan in Las Vegas. Sony EX series, live to tape.</text>
+		</item>
+		<item>
+			<title>IGN Pro League (IPL4) LIVE eSports Event</title>
+			<subtitle>Main Stage Camera Operator</subtitle>
+			<date>Apr. 2012</date>
+			<text>Shot at the Cosmopolitan in Las Vegas. Sony EX series, live to tape.</text>
+		</item>
+		<item>
+			<title>Leap Year Season 2</title>
+			<subtitle>Camera A Operator</subtitle>
+			<date>Mar. 2012</date>
+			<link>http://www.hulu.com/leap-year</link>
+			<text>San Francisco, CA.</text>
+		</item>
+				<item>
+			<title>Greenstart Cleantech</title>
+			<subtitle>Marketing Video Cinematographer, Editor</subtitle>
+			<date>Sep. 2011 - Mar. 2012</date>
+			<link>http://www.greenstart.com</link>
+			<text>San Francisco, CA - Mitch Lowe, Managing Partner.</text>
+		</item>
+		<item>
+			<title>Spinlet @SXSW</title>
+			<subtitle>Shooter/Editor</subtitle>
+			<date>Mar. 2012</date>
+			<link>http://spinlet.com/</link>
+			<text>Jay Blakesberg, director, shot in Austin, TX</text>
+		</item>
+		<item>
+			<title>Ben Sample Music Video</title>
+			<subtitle>1st AC</subtitle>
+			<date>Mar. 2012</date>
+			<text>Shot in San Francisco, CA. RED EPIC.</text>
+		</item>
+		<item>
+			<title>Live at 25th Street Studios Pilot</title>
+			<subtitle>Camera Operator</subtitle>
+			<date>Feb. 2012</date>
+			<text>Jay Blakesberg, producer/director. Shot in Oakland, CA</text>
+		</item>
+		<item>
+			<title>MotoActv Motorola Spot</title>
+			<subtitle>DIT, Interview B-Cam Operator</subtitle>
+			<date>Feb. 2012</date>
+			<text>RED EPIC, Director Mark Maccara, Shot in San Francisco, CA.</text>
+		</item>
+		<item>
+			<title>Yamaha Entertainment Group</title>
+			<subtitle>BTS All-Access Cinematographer</subtitle>
+			<date>Jan. 2012</date>
+			<link>http://www.yamaha.com/allaccess360/</link>
+			<text>Ben James, Content Development Manager. Shot Berkeley, CA.</text>
+		</item>
+		<item>
+			<title>IGN Pro League (IPL) LIVE eSports Event</title>
+			<subtitle>Main Stage Camera Operator</subtitle>
+			<date>Oct. 2011</date>
+			<text>Shot in Atlantic City, NJ. Sony EX series, live to tape. Produced by Alex Lowry.</text>
+		</item>
+		<item>
+			<title>Les Concierges</title>
+			<subtitle>Corporate Video Editor</subtitle>
+			<date>Sep. 2011</date>
+			<link>http://www.lesconcierges.com/</link>
+			<text>Shot in San Francisco, CA.</text>
+		</item>
+				<item>
+			<title>'Hark'</title>
+			<subtitle>Loader/Video Assist</subtitle>
+			<date>Sep. 2011</date>
+			<text>Arri BL-4, 35mm. Directed by Jonathan Fung. San Francisco, CA.</text>
+		</item>
+		<item>
+			<title>'Seeking Solace'</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>Aug. 2011</date>
+			<text>RED ONE. Produced by Joe Stillwater. Directed by Holly Chadwick. Shot on Whidbey Island, WA.</text>
+		</item>
+		<item>
+			<title>'Dos Hogares'</title>
+			<subtitle>Lighting Tech, Stills Photographer, BTS Videographer</subtitle>
+			<date>Jun. 2011</date>
+			<text>Produced by Televisa, Emilio Larrosa. Shot in San Antonio, TX.</text>
+		</item>
+		<item>
+			<title>'No One Will Know'</title>
+			<subtitle>Director of Photography</subtitle>
+			<date>May. 2011</date>
+			<text>Canon 7D, 2 Camera. Produced by Jonathan Polenz. Directed by Raj Reddy. Shot in Marin County, CA.</text>
+		</item>
+				<item>
+			<title>Eden Burning - 'Smoke 'n Love'</title>
+			<subtitle>Director of Photography, DIT</subtitle>
+			<date>Apr. 2011</date>
+			<text>San Antonio, TX</text>
+		</item>
+		<item>
+			<title>Teo Blake - 'Sunshine People'</title>
+			<subtitle>Director of Photography, Colorist</subtitle>
+			<date>Apr. 2011</date>
+			<text>Austin, TX.</text>
+		</item>
+		<item>
+			<title>'Troubled Skye'</title>
+			<subtitle>Director of Photography, Colorist</subtitle>
+			<date>Mar. 2011</date>
+			<text>Austin, TX - Directed By Alex Murphy.</text>
+		</item>
+		<item>
+			<title>'Power Architecture'</title>
+			<subtitle>Director of Photography, DIT</subtitle>
+			<date>Mar. 2011</date>
+			<text>Austin , TX - Echo Earth Media. Freescale Semiconductor Systems.For Sales and Marketing Summit.</text>
+		</item>
+				<item>
+			<title>'The Con-Test'</title>
+			<subtitle>Director of Photography, DIT</subtitle>
+			<date>Mar. 2011</date>
+			<text>San Antonio, TX - By Broken Camera Productions.</text>
+		</item>
+		<item>
+			<title>'The Valley Girl' Web Show on location @SXSW2011</title>
+			<subtitle>Camera Op., DIT, Editor</subtitle>
+			<date>Jun. 2012</date>
+			<link>http://youtu.be/-jhxIAODWt8</link>
+			<text>Austin, TX - 7D/HVX200. Captured and edited hours of P2 media into Avid. Neat Video Noise reduction.</text>
+		</item>
+		<item>
+			<title>Instant Cash For Gold Jorge Campos</title>
+			<subtitle>Assistant Camera, DIT, After Effects Work</subtitle>
+			<date>Feb. 2011</date>
+			<text>Houston, TX.</text>
+		</item>
+		<item>
+			<title>Eagle Pritchard Murray Band - 'Favorite Misery'</title>
+			<subtitle>Director of Photography, DIT, Colorist</subtitle>
+			<date>Feb. 2011</date>
+			<text>Austin, TX.</text>
+		</item>
+				<item>
+			<title>Grupo TBC Premier</title>
+			<subtitle>Director of Photography, DIT, Colorist</subtitle>
+			<date>Jan. 2011</date>
+			<text>San Antonio, TX.</text>
+		</item>
+		<item>
+			<title>Texas Raging Bull Stampede VIII Driving</title>
+			<subtitle>Director of Photography, DIT, Editor, Colorist</subtitle>
+			<date>Jan. 2011</date>
+			<text>Shot all over TX.</text>
+		</item>
+		<item>
+			<title>'Hipsters With Guns'</title>
+			<subtitle>Director of Photography, DIT, Colorist</subtitle>
+			<date>Dec. 2010</date>
+			<text>By Marshall Dungan. Shot in Austin, TX.</text>
+		</item>
+		<item>
+			<title>'Convergence'</title>
+			<subtitle>Director of Photography, DIT, Colorist</subtitle>
+			<date>Dec. 2010 - Mar. 2011</date>
+			<text>Austin, TX - Concrete Jungle Pictures. Directed by Carre Real.</text>
+		</item>
+				<item>
+			<title>Melrose</title>
+			<subtitle>Camera Operator, Assistant Camera, DIT</subtitle>
+			<date>Oct. 2010</date>
+			<text>San Antonio, TX.</text>
+		</item>
+		<item>
+			<title>'One Way'</title>
+			<subtitle>Director of Photography, Colorist</subtitle>
+			<date>Oct. - Nov. 2010</date>
+			<text>San Antonio, TX - Cheap Soup Films. Directed by Mark Hitchcock and Erick Cantu.</text>
+		</item>
+				<item>
+			<title>Texas Travesty News Paper Media Division</title>
+			<subtitle>Resident Cinematographer, DIT</subtitle>
+			<date>Sep. - Dec. 2010</date>
+			<text>Director of Photography on all short films produced for the online version of the publication.</text>
+		</item>
+		<item>
+			<title>'Cardboard Dreams'</title>
+			<subtitle>Grip, Photographer, BTS Videographer</subtitle>
+			<date>Jun. 2010</date>
+			<text>Shot and cut together hours of behind the scenes footage on a Canon 7D.</text>
+		</item>
+		<item>
+			<title>So Sweet the Hour - 'A Better Way to Say Okay'</title>
+			<subtitle>Assistant Camera, DIT, Editor</subtitle>
+			<date>May 2010</date>
+			<text>Rogue Eye Productions. Focus puller, logged, conformed and transcoded hundreds of HD shots from a 7D to 24p DNxHD 175x, edited in Avid.</text>
+		</item>
+		<item>
+			<title>ABC/Disney</title>
+			<subtitle>Featured Background My Generation TV Pilot</subtitle>
+			<date>Mar. 2010</date>
+		</item>
+		
+		<item>
+			<title>Hunt for Heroes - Pursuit Channel</title>
+			<subtitle>Camera Operator - Canon XL2</subtitle>
+			<date>Nov. 2009</date>
+		</item>
+				<item>
+			<title>NBC</title>
+			<subtitle>Extra, PA on Friday Night Lights TV series</subtitle>
+			<date>2006 - 2008</date>
+			<text>Extra in the background of several scenes.</text>
+		</item>
+		<item>
+			<title>Rudd Creative</title>
+			<subtitle>Extra, PA</subtitle>
+			<date>Sep. 2005</date>
+			<text>Extra in the background of one commercial, script supervisor and production assistant on 7 others.</text>
+		</item>		
+	</section>
+	<section title="skills" type="list">
+		<item>Avid MC</item>
+		<item>Adobe CC</item>
+		<item>RED camera systems</item>
+		<item>Sony AVCHD cameras</item>
+		<item>DSLR filmmaking</item>
+		<item>Digital Imaging Technician</item>
+		<item>Arri 16SR3</item>
+		<item>Arri Alexa</item>
+		<item>Arri BL-4</item>
+	</section>
+	<section title="education" type="highlight-list">
+		<item>
+			<title>University of Texas at Austin</title>
+			<subtitle>Rhetoric/Writing Major - Film Minor</subtitle>
+			<text>Media courses: Film History, TV/Radio History, Comm. Technology and Society, Visual Rhetoric, Internet Adv.</text>
+    	</item>
+		<item>
+			<title>Communications Arts High School</title>
+			<subtitle>Distinguished Diploma 4.0</subtitle>
+    	</item>
+	</section>
+</resume>

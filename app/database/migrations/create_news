@@ -1,0 +1,14 @@
+public function up()
+{
+    Schema::create('news', function($table)
+    {
+        $table->increments('id');
+        $table->char('text', 140);
+        $table->timestamps();
+    });
+}
+
+public function down()
+{
+    Schema::drop('news');
+}

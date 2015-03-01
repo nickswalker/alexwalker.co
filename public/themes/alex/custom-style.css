@@ -1,0 +1,67 @@
+body{
+	font-family: "Open Sans", "Helvetica Neue", sans-serif;
+}
+section > h2	{
+	font-weight: 700;
+}
+.plate h1	{
+	font-family: "Open Sans", "Helvetica Neue", sans-serif;
+	font-weight: 900;
+	letter-spacing: normal;
+	text-transform: none;
+}
+.plate h2	{
+	text-transform: none;
+	letter-spacing: normal;
+}
+.right-plate{
+	width: 300px;
+}
+div.representation	{
+	font-size: 14px;
+	display: inline-block;
+}
+.representation b	{
+	font-weight: bold;
+}
+/*--- = Custom Button  */
+.item-container	{
+		display: -webkit-flex;
+	display: flex;
+}
+.item-container a	{
+		-webkit-flex: 0 1 33%;
+	flex: 0 1 33%;
+	text-align: center;
+	font-style: italic
+	font-size: 21px;
+	font-weight: bold;
+	text-decoration: none;
+	background-color: #888;
+	color: white;
+	text-shadow: none;
+	padding: 5px 0;
+	margin: 0 6px;
+	
+}
+
+/* = Override Detail List
+-------------------------------------------------------------- */
+
+.detail-list article	{
+	margin: 0;
+	display: block;
+	width: 100%;
+	overflow: auto;
+}
+.detail-list .description	{
+	float: right;
+}
+.detail-list article h2	{
+	width: 300px;
+	font-size: 16px;
+}
+.detail-list article h3	{
+	width: 200px;
+	margin: 0;
+}
