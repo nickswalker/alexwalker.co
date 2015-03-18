@@ -13,7 +13,6 @@
 			41 Union Square West, Suite 1004<br />
 			New York, NY 10003<br />
 			212.924.8505</p>
-			<img src="/img/right-eye.png" />
 		</div>
 		<ul class="social">
 			<li><a href="http://twitter.com/awalker47"><i class="ion-social-twitter"></i></a></li>
@@ -24,6 +23,7 @@
 			<li><a href="https://www.youtube.com/user/WalkerStudios"><i class="ion-social-youtube"></i></a></li>
 			<li><a href="https://plus.google.com/+AlexWalker"><i class="ion-social-googleplus"></i></a></li>
 		</ul>
+		<img src="/img/right-eye.png" />
 	</div>
 </div>
 <div class="copyright">&copy; Alex Walker 2005-<?php echo date("Y"); ?></div>

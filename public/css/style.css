@@ -470,8 +470,8 @@ ul.thumbnails{
   }
 
 .clients	{
-		-webkit-column-count: 1;
-	column-count: 1;
+        -webkit-column-count: 2;
+	column-count: 2;
 	text-align: center;
 	color: rgba(0,0,0,.3);
 	display: block;
@@ -819,37 +819,38 @@ textarea {
 	#cinematographer figure	{
 		margin-bottom: 32px;
 	}
-	.thumbnails figure:nth-of-type(1){
-		margin-left: 0;
-	}
-	.thumbnails figure:nth-of-type(2){
-		margin-right: 0;
-	}
-	.thumbnails li:nth-of-type(2n)	{
-		margin-left: 4px;
-		margin-right: 0;
+	ul.thumbnails {
+    	    -webkit-justify-content: space-around;
+    	justify-content: space-around;
 	}
 	.thumbnails li	{
 			-webkit-flex: 1 calc(50% - 4px);
 		flex: 1 calc(50% - 4px);
 		max-width: calc(50% - 4px);
-		margin-right: 4px;
 		margin-bottom: 8px
 	}
 	.clients	{
-			-webkit-column-count: 2;
-		column-count: 2;
+		text-align: left
 	}
 	.clients li	{
 		line-height: inherit;
 		margin: 0;
 	}
 
+    /*--- = Colorist  */
+
+    #colorist figure    {
+            -webkit-flex: 1 100%;
+        flex: 1 100%;
+        max-width: 100%;
+    }
+    #colorist .thumbnails li {
+        	-webkit-flex: 1 calc(25% - 4px);
+        flex: 1 calc(25% - 4px);
+        max-width: calc(25% - 4px);
+    }
 	/*--- = Director  */
 
-    #director .thumbnails li:nth-of-type(2n) {
-    	margin-right: 8px
-	}
 
 
 	/*--- = Contact  */

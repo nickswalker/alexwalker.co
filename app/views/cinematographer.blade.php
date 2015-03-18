@@ -30,20 +30,21 @@
 	</div>
 	<div class="text">
 		<ul class="clients">
-			<li>HP</li>
-			<li>HGTV</li>
-			<li>HEB</li>
+            <li>Sid Miller for TX AG Comm.</li>
+			<li>George P. Bush</li>
 			<li>IGN</li>
-			<li>Nissan</li>
+			<li>Rooster Teeth</li>
+			<li>YAMAHA Entertainment</li>
+			<li>HEB</li>
 			<li>Greenstart</li>
 			<li>Romney Ryan</li>
-			<li>Sid Miller for TX AG Comm.</li>
 			<li>K. Fernandez & Assoc.</li>
+			<li>Nissan</li>
+            <li>HP</li>
 			<li>MAS Consulting Group</li>
-			<li>YAMAHA Entertainment</li>
+			<li>HGTV</li>
 			<li>Wide Open Camera</li>
-			<li>George P. Bush</li>
-			<li>Rooster Teeth</li>
+
 
 		</ul>
 	</div>
