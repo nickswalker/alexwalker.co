@@ -1,7 +1,7 @@
 <div class="container">
 	<h2>Tutorials</h2>
 	<div class="text">
-		<p>I am an experienced editor as well as an <a href="http://avid.com">Avid.com</a> community moderator and product beta tester. If you're new to Avid editing here are a series of tutorials for editing common camera formats.</p>
+		<p>Alex is an experienced editor as well as an <a href="http://avid.com">Avid.com</a> community moderator and product beta tester. If you're new to Avid editing here are a series of tutorials for editing common camera formats.</p>
 			</div>
 	<figure>
 		<ul class="tutorials thumbnails">

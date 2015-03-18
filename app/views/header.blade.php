@@ -5,7 +5,7 @@
 					<li class="reveal"><a></a></li>
 					<li><a class="waypoint" href="#about" data-slide="2">About</a></li>
 					<li><a class="waypoint" href="#cinematographer" data-slide="4">Cinematographer</a></li>
-					<li><a class="waypoint" href="#director" data-slide="5">Director</a></li>
+					<li><a class="waypoint" href="#colorist" data-slide="5">Colorist</a></li>
 					<li><a class="waypoint" href="#tutorials" data-slide="6">Tutorials</a></li>
 					<li><a class="waypoint" href="#contact" data-slide="7">Contact</a></li>
 					<li>

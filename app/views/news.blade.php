@@ -1,5 +1,5 @@
 <div id="news" class="container">
-	<div class="ticker collapsed">
+	{{-- <div class="ticker collapsed">
 		<h2>News</h2>
 		<div class="reveal"><a></a></div>
 		<ul>
@@ -9,8 +9,8 @@
 		</li>
 		@endforeach
 		</ul>
-	</div>
-	
+	</div>--}]
+
 </div>
 
 

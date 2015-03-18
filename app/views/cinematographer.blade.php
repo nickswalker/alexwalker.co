@@ -24,7 +24,7 @@
 	</figure>
 
 	<div class="text">
-		<p>RED EPIC DRAGON or FS100 package available.</p>
+		<p>RED EPIC DRAGON, Sony A7s, FS100, and Odyssey 7Q+ packages available. Interested in renting my gear? Head over to AustinMovieGear.com for more info.</p>
 
 
 	</div>

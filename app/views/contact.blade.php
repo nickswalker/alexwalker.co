@@ -26,4 +26,4 @@
 		</ul>
 	</div>
 </div>
-<div class="copyright">&copy; Alex Walker 2005-2015</div>
+<div class="copyright">&copy; Alex Walker 2005-<?php echo date("Y"); ?></div>

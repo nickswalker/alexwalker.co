@@ -36,7 +36,7 @@
 	@include('layout.slide', array('wrap'=>'about', 'number'=>'2'))
 	@include('layout.slide', array('wrap'=>'stills', 'number'=>'3'))
 	@include('layout.slide', array('wrap'=>'cinematographer', 'number'=>'4'))
-	@include('layout.slide', array('wrap'=>'director', 'number'=>'5'))
+	@include('layout.slide', array('wrap'=>'colorist', 'number'=>'5'))
 	@include('layout.slide', array('wrap'=>'tutorials', 'number'=>'6'))
 	@include('layout.slide', array('wrap'=>'contact', 'number'=>'7'))
 	<script type="text/javascript">
@@ -99,12 +99,17 @@
 						media : {}
 					}
 				});
-				$('#director a.sixteen-by-nine').fancybox({
+				$('#colorist a.sixteen-by-nine').fancybox({
 					autoSize: true,
+					width: 1600,
+					height: 900,
 					padding: 0,
 					helpers : {
 						media : {}
-					}
+					},
+					iframe : {
+							preload: false
+						}
 				});
 			});
 		});
