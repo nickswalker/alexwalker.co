@@ -46,14 +46,14 @@ return array(
 
 	'connections' => array(
 
-	
+
 
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database' => 'nickswal_alex',
-			'username' => 'nickswal_php',
-			'password' => '.KSAHB~%PisX;TWy;#',
+			'database' => $_ENV["PRODUCTION_DATABASE_NAME"],
+			'username' => $_ENV["PRODUCTION_DATABASE_USERNAME"],
+			'password' => $_ENV["PRODUCTION_DATABASE_PASSWORD"],
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
