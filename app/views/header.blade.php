@@ -11,6 +11,7 @@
 					<li>
 						<ul class="social">
 							<li><a href="http://twitter.com/awalker47"><i class="ion-social-twitter"></i></a></li>
+							<li><a href="https://fb.me/alexwalkerfilmmaker"><i class="ion-social-facebook"></i></a></li>
 							<li><a href="http://instagram.com/alex_walker47"><i class="ion-social-instagram"></i></a></li>
 							<li><a href="https://vimeo.com/awalkerstudios"><i class="ion-social-vimeo"></i></a></li>
 							<li><a href="https://www.youtube.com/user/WalkerStudios"><i class="ion-social-youtube"></i></a></li>

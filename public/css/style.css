@@ -224,6 +224,7 @@ section h2	{
 	-webkit-flex: 1 100%;
 	flex: 1 100%;
 }
+
 /*--- = News  */
 #news	{
 	background-color: black;
@@ -331,7 +332,12 @@ time {
 #slider-container .current	{
 	opacity: 1;
 }
-
+#slider-container .image-2  {
+    background-position-x: 30%;
+}
+#slider-container .image-5  {
+    background-position-x: 60%;
+}
 /*--- = About  */
 section#about	{
 	padding-top: 36px; /*Special case, up against the navbar*/
@@ -375,7 +381,7 @@ ul.thumbnails{
 	display: block;
 	margin: 0 auto;
 }
-.reels a::before {
+.reels a::before, #colorist .thumbnails a::before {
     content: '\25B6 ' attr(data-year);
     text-decoration: none !important;
     text-shadow: 0 0px 2px rgba(0,0,0,.6);
@@ -397,6 +403,26 @@ ul.thumbnails{
 }
   .thumbnails a.resolution-2k::after {
     content: '2K';
+    text-decoration: none !important;
+    text-shadow: 0 0px 2px rgba(0,0,0,.6);
+    font-size: 16px;
+    padding-top: 3px;
+    font-weight: 400;
+    display: block;
+    color: white;
+    text-align: right;
+    position: absolute;
+    line-height: 1em;
+	height: 1em;
+	bottom: 0;
+	right: 0;
+	margin: 0 6px 6px 0;
+	width: 100%;
+	z-index: 1;
+	color: rgba(255,255,255,.6);
+}
+  .thumbnails a.resolution-4k::after {
+    content: '4K';
     text-decoration: none !important;
     text-shadow: 0 0px 2px rgba(0,0,0,.6);
     font-size: 16px;
@@ -437,20 +463,20 @@ ul.thumbnails{
   }
 
 .new-content::after{
-      position: absolute;
-  top: -8px;
-  right: -4px;
-  width: 3.5em;
-	height: 1.8em;
-	line-height: 1.8em;
-  text-align: center;
-  font-size: 12px;
-  content: 'new';
-  background-color: #D43108;
-  color: #fff;
-  text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.15);
-  box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.35), 0px 1px 1px rgba(0, 0, 0, 0.2);
-  border-radius: 4em;
+    position: absolute;
+    top: -8px;
+    right: -4px;
+    width: 3.5em;
+    height: 1.8em;
+    line-height: 1.8em;
+    text-align: center;
+    font-size: 12px;
+    content: 'new';
+    background-color: #D43108;
+    color: #fff;
+    text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.35), 0px 1px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 4em;
   }
   .thumbnails a.coming-soon::after {
   position: absolute;
@@ -669,16 +695,25 @@ textarea {
 #contact .representation a	{
 	color: inherit;
 }
-#contact .representation img   {
-
+#contact .representation-logo   {
+    display: inline-block;
+    opacity: .5;
+    margin-bottom: 8px;
 }
 #contact .social	{
+        -webkit-flex: 1 100%;
+    flex: 1 100%;
+    text-align: center;
 	font-size: 16px;
 	line-height: 16px;
+	margin-bottom: 16px;
 }
 #contact .social li	{
 	display: inline-block;
 	margin-right: 12px;
+}
+#contact .social li:last-child    {
+    margin-right: 0;
 }
 #contact .social li a	{
 	color: white;
@@ -750,8 +785,10 @@ textarea {
 	/*--- = Slider  */
 	#slider	{
 		height: 100vh;
-
 	}
+	#slider-container .image-5  {
+        background-position-x: 100%;
+    }
 	/*--- = News  */
 	#news	{
 		position: absolute;
@@ -827,7 +864,7 @@ textarea {
 			-webkit-flex: 1 calc(50% - 4px);
 		flex: 1 calc(50% - 4px);
 		max-width: calc(50% - 4px);
-		margin-bottom: 8px
+		margin-bottom: 4px
 	}
 	.clients	{
 		text-align: left
@@ -849,14 +886,13 @@ textarea {
         flex: 1 calc(25% - 4px);
         max-width: calc(25% - 4px);
     }
-	/*--- = Director  */
-
-
-
 	/*--- = Contact  */
 	#contact form	{
 			-webkit-flex: 2;
 		flex: 2;
+	}
+	#contact .social   {
+        text-align: left;
 	}
 	#contact .text{
 			-webkit-flex: 1;
