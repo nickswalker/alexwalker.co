@@ -6,8 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<meta name="author" content="Alex Walker">
-	<meta name="description" content="Professional Director of Photography. See some of my work and hire me here."
-	<meta name="keywords" content="Cinematographer,Director,Photography,Vision,Camera,Experienced,Professional">
+	<meta name="description" content="Cinematographer, editor and colorist. See some of my work and hire me here."
+	<meta name="keywords" content="Cinematographer,Colorist,Director,Portfolio,Photography,Vision,Camera,Experienced,Professional,">
 
 	<link rel="shortcut icon" href="/favicon.png" />
 	<link rel="apple-touch-icon-precomposed" href="/touch-icon.png" />
