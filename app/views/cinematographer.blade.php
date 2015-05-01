@@ -30,16 +30,16 @@
 	</div>
 	<div class="text">
 		<ul class="clients">
+    		<li>George P. Bush</li>
+    		<li>Romney Ryan</li>
+    		<li>Nissan</li>
             <li>Sid Miller for TX AG Comm.</li>
-			<li>George P. Bush</li>
 			<li>IGN</li>
 			<li>Rooster Teeth</li>
 			<li>YAMAHA Entertainment</li>
 			<li>HEB</li>
 			<li>Greenstart</li>
-			<li>Romney Ryan</li>
 			<li>K. Fernandez & Assoc.</li>
-			<li>Nissan</li>
             <li>Hewlett Packard</li>
 			<li>MAS Consulting Group</li>
 			<li>HGTV</li>
