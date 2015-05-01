@@ -335,7 +335,7 @@ time {
 #slider-container .image-2  {
     background-position-x: 30%;
 }
-#slider-container .image-5  {
+#slider-container .image-4  {
     background-position-x: 60%;
 }
 /*--- = About  */
@@ -786,7 +786,7 @@ textarea {
 	#slider	{
 		height: 100vh;
 	}
-	#slider-container .image-5  {
+	#slider-container .image-4  {
         background-position-x: 100%;
     }
 	/*--- = News  */

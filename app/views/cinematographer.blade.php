@@ -31,8 +31,9 @@
 	<div class="text">
 		<ul class="clients">
     		<li>George P. Bush</li>
-    		<li>Romney Ryan</li>
     		<li>Nissan</li>
+    		<li>Romney Ryan</li>
+    		<li>Hewlett Packard</li>
             <li>Sid Miller for TX AG Comm.</li>
 			<li>IGN</li>
 			<li>Rooster Teeth</li>
@@ -40,7 +41,7 @@
 			<li>HEB</li>
 			<li>Greenstart</li>
 			<li>K. Fernandez & Assoc.</li>
-            <li>Hewlett Packard</li>
+
 			<li>MAS Consulting Group</li>
 			<li>HGTV</li>
 			<li>Wide Open Camera</li>
