@@ -10,7 +10,7 @@
 		<div class="representation">
 			<h3>Representation</h3>
 			<p><a href="http://therighteye.com/">The Right Eye Agency</a><br />
-			41 Union Square West, Suite 1004<br />
+			41 Union Square West, Suite 435<br />
 			New York, NY 10003<br />
 			212.924.8505</p>
 		</div>
