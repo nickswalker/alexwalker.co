@@ -3,7 +3,7 @@
 	<h2>About</h2>
 	<figure><img src="img/about.jpg"></figure>
 	<div class="text">
-		<p>Austin, Texas based filmmaker specializing in Cinematography, Editing, and Color Correction. Alex has shot several feature films as well as national and regional ad campaigns. His work has won him the award for Best Cinematography at the Sunset Int'l FF in 2012 for the feature film <i>No One Will Know</i>. Alex's list of projects includes work for HGTV, HP, IGN, as well as several well known national and state political candidates.</p>
+		<p>Austin, Texas based filmmaker specializing in Cinematography, Editing, and Color Correction. Alex has shot several feature films as well as national and regional ad campaigns. His work won him the award for Best Cinematography at the Sunset Int'l FF in 2012 for the feature film No One Will Know. Alex's list of work includes HGTV, Hewlett Packard, Nissan, HEB as well as several well known Republican and Democratic political candidates.</p>
 		<button><a href="/resume/">R&#233;sum&#233;</a></button>
 		<button><a href="http://imdb.to/vkWpEF">IMDB</a></button>
 		<button><a href="#contact" data-slide="6">Contact Me</a></button>

@@ -7,10 +7,10 @@ function Slider ( container) {
 	this.timerIsRunning = false,
 	this.timer;
 	this.animationTime = 5000; //Doesn't work when passed in the right place for some reason
-	
+
 	this.start();
-	
-	
+
+
 	//Initialize to random slide
 	this.shift( Math.round(Math.random()* this.maxIndex) )
 }
@@ -26,8 +26,8 @@ Slider.prototype.shift = function(target)	{
 	this.$sliderList.removeClass("current");
 	$target = $(this.$sliderList.get(target))
 	$target.addClass("current");
-	
-	this.current = target;	
+
+	this.current = target;
 };
 
 
@@ -43,7 +43,7 @@ Slider.prototype.start = function ()	{
 	clearInterval(this.timer);
 	this.timer = setInterval( function (){
 		self.timerCallback.call(self);
-	}, 5000 );
-	
+	}, 4000 );
+
 	this.timerIsRunning=true;
 }
