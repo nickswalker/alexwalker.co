@@ -14,8 +14,7 @@
 			<li><a href="http://linkedin.com/in/alexanderiwalker"><i class="ion-social-linkedin"></i></a></li>
 			<li><a href="https://vimeo.com/awalkerstudios"><i class="ion-social-vimeo"></i></a></li>
 			<li><a href="https://www.youtube.com/user/WalkerStudios"><i class="ion-social-youtube"></i></a></li>
-			<li><a href="https://plus.google.com/+AlexWalker"><i class="ion-social-googleplus"></i></a></li>
-		</ul>
+					</ul>
 		<div class="representation">
 			<h3>Representation</h3>
 			<p><a href="http://therighteye.com/">The Right Eye Agency</a><br />

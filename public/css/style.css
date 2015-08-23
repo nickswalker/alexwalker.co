@@ -1,5 +1,4 @@
 @import url('reset.css');
-@import url('ionicons.min.css');
 
 /* = Global
 -------------------------------------------------------------- */
@@ -97,14 +96,15 @@ button > a:link	{
 -------------------------------------------------------------- */
 
 header {
-	background-color:rgba(255, 255, 255,.95);
+	background-color:rgba(255, 255, 255,.85);
 	z-index:900;
 	border-bottom: 3px solid #08abd4;
 	box-sizing: border-box;
-	opacity: .85;
 	transition: background-color .4s;
 	color: black;
 	overflow: hidden;
+	    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
 }
 header .container	{
 	display: block;
@@ -334,6 +334,9 @@ time {
 }
 #slider-container .image-2  {
     background-position-x: 30%;
+}
+#slider-container .image-3  {
+    background-position-x: 60%;
 }
 #slider-container .image-4  {
     background-position-x: 60%;
@@ -749,7 +752,7 @@ textarea {
 	/*--- = Dark Mode  */
 	header.dark	{
 		color: white;
-		background-color: rgba(0,0,0,.95);
+		background-color: rgba(0,0,0,.75);
 	}
 	header.dark	h1,
 	header.dark nav ul li a{

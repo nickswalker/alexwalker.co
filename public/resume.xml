@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resume>
+
 	<bio>
 		<name>Alex Walker</name>
 		<job-title>Cinematographer</job-title>
@@ -13,21 +14,18 @@
 			<vimeo></vimeo>
 			<tumblr></tumblr>
 -->
-			<googleplus>https://plus.google.com/113971903490532346524/posts</googleplus>
+			<facebook>https://www.facebook.com/alexwalkerfilmmaker</facebook>
 			<twitter>http://twitter.com/awalker47</twitter>
-			<facebook>https://www.facebook.com/alexander.i.walker</facebook>
+			x
 		</social>
 	</bio>
-	<section type="arbitrary" title="full"> <![CDATA[ 
-		<a href="/resume/work" class="full-work"> View full work history</a>
-		]]>
-	</section>
+	
 	<section title="Film/TV" type="detail-list">
 
 		<item>
 			<title>Cool Pools 45, 46 HGTV</title>
 			<subtitle>Director of Photography</subtitle>
-			<text>Produced by Steve Hall, AMS Pictures</text>
+			<text>Directed by Steve Hall, AMS Pictures</text>
 		</item>
 		
 		<item>
@@ -68,6 +66,7 @@
 			<subtitle></subtitle>
 			<text>Directed by Christine Chen</text>
 		</item>
+		
 		<item>
 			<title>Assisted Living TV pilot</title>
 			<subtitle>2nd Unit DP</subtitle>
@@ -169,7 +168,7 @@
 		
 		
 		<item>
-			<title>HP Bura </title>
+			<title>Hewlett Packard Bura </title>
 			<subtitle>Director of Photography</subtitle>
 			<text>Big Picture Lab</text>
 		</item>
