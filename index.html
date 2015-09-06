@@ -14,6 +14,7 @@
 	<title>Alex Walker</title>
 
 	<link media="all" type="text/css" rel="stylesheet" href="/css/style.css">
+	<link media="all" type="text/css" rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 	<link media="all" type="text/css" rel="stylesheet" href="/packages/fancybox/jquery.fancybox.css">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,600,700' rel='stylesheet' type='text/css'>
@@ -23,9 +24,10 @@
 
 	<script src="http://alex.nickwalker.us/js/viewport-units-buggyfill.js"></script>
 	<script>window.viewportUnitsBuggyfill.init();</script>
-	<script src="http://alex.nickwalker.us/js/slider.js"></script>
-	<script src="http://alex.nickwalker.us/js/contact.js"></script>
-	<script src="http://alex.nickwalker.us/js/scripts.js"></script>
+	<script src="/js/waypoints.min.js"></script>
+	<script src="/js/slider.js"></script>
+	<script src="/js/contact.js"></script>
+	<script src="/js/scripts.js"></script>
 
 </head>
 <body>
@@ -58,10 +60,9 @@
 				<ul>
 					<li class="logo"><h1><a class="waypoint" href="#news" data-slide="1">Alex Walker</a></h1></li>
 					<li class="reveal"><a></a></li>
-					<li><a class="waypoint" href="#about" data-slide="2">About</a></li>
 					<li><a class="waypoint" href="#cinematographer" data-slide="4">Cinematographer</a></li>
 					<li><a class="waypoint" href="#colorist" data-slide="5">Colorist</a></li>
-					<li><a class="waypoint" href="#tutorials" data-slide="6">Tutorials</a></li>
+					<li><a class="waypoint" href="#about" data-slide="2">Bio</a></li>
 					<li><a class="waypoint" href="#contact" data-slide="7">Contact</a></li>
 					<li>
 						<ul class="social">
@@ -75,27 +76,7 @@
 				</ul>
 			</nav>
 	</header>
-		<section id="about" data-slide="2">
-
-		<div class="container">
-
-	<h2>About</h2>
-	<figure><img src="img/about.jpg"></figure>
-	<div class="text">
-		<p>Austin, Texas based filmmaker specializing in Cinematography, Editing, and Color Correction. Alex has shot several feature films as well as national and regional ad campaigns. His work won the award for Best Cinematography at the Sunset Int'l FF in 2012 for the feature film <i>No One Will Know</i>. Alex's list of work includes HGTV, Hewlett Packard, Nissan, HEB as well as several well known Republican and Democratic political candidates.</p>
-		<button><a href="/resume/">R&#233;sum&#233;</a></button>
-		<button><a href="http://imdb.to/vkWpEF">IMDB</a></button>
-		<button><a href="#contact" data-slide="6">Contact Me</a></button>
-		<div class="representation">
-			<h3>Representation</h3>
-			<p><a href="http://therighteye.com/">The Right Eye Agency</a><br />
-			41 Union Square West, Suite 435<br />
-			New York, NY 10003<br />
-			212.924.8505</p>
-		</div>
-	</div>
-</div>
-</section>	<section id="stills" data-slide="3">
+<section id="stills" data-slide="3">
 
 		<div class="container">
 	<ul class="stills">
@@ -243,7 +224,7 @@
 	</figure>
 
 	<div class="text">
-		<p>RED EPIC DRAGON, Sony A7s, FS100, and Odyssey 7Q+ packages available.</p>
+		<p>RED EPIC DRAGON, Sony A7s, FS100, and Odyssey 7Q+ available.</p>
 
 
 	</div>
@@ -259,11 +240,11 @@
 			<li>YAMAHA Entertainment</li>
 			<li>HEB</li>
 			<li>Greenstart</li>
-			<li>K. Fernandez & Assoc.</li>
+			<li>VICE HBO</li>
 
 			<li>MAS Consulting Group</li>
 			<li>HGTV</li>
-			<li>Wide Open Camera</li>
+			<li>Atlassian</li>
 
 
 		</ul>
@@ -285,27 +266,27 @@
 		</ul>
 	</figure>
 </div>
-</section>	<section id="tutorials" data-slide="6">
+</section>
+
+<section id="about" data-slide="2">
 
 		<div class="container">
-	<h2>Tutorials</h2>
+
+	<h2>Bio</h2>
+	<figure><img src="img/about.jpg"></figure>
 	<div class="text">
-		<p>Alex is an experienced editor as well as an <a href="http://avid.com">Avid.com</a> community moderator and product beta tester. If you're new to Avid editing here are a series of tutorials that Alex created in association with Avid for editing common camera formats.</p>
-			</div>
-	<figure>
-		<ul class="tutorials thumbnails">
-			<li><a href="https://vimeo.com/42417253" title="AVID R3D Workflow" class="sixteen-by-nine"><img src="/img/tutorials/AVIDred.jpg"/></a></li>
-			<li><a href="https://vimeo.com/42327728" title="AVID AVCHD Workflow" class="sixteen-by-nine"><img src="/img/tutorials/AVIDavchd.jpg"/></a></li>
-			<li><a href="https://vimeo.com/42262022" title="AVID DSLR Workflow" class="sixteen-by-nine"><img src="/img/tutorials/AVIDdslr.jpg"/></a></li>
-			<li><a href="https://vimeo.com/31589515" title="AVID-After Effects Workflow" class="sixteen-by-nine"><img src="/img/tutorials/AVIDautomaticduck.jpg"/></a></li>
-		</ul>
-	</figure>
+		<p>Austin, Texas based filmmaker specializing in Cinematography and Color Correction. Alex has shot several feature films as well as national and regional ad campaigns. His work won the award for Best Cinematography at the Sunset Int'l FF in 2012 for the feature film <i>No One Will Know</i>. Alex's list of work includes HGTV, Hewlett Packard, Nissan, VICE HBO as well as several well known Republican and Democratic political candidates.</p>
+		<button><a href="/resume/">R&#233;sum&#233;</a></button>
+		<button><a href="http://imdb.to/vkWpEF">IMDB</a></button>
+	</div>
 </div>
-</section>	<section id="contact" data-slide="7">
+</section>
+
+<section id="contact" data-slide="7">
 
 		<div class="container">
 	<div class="return-message" href="#contact"></div>
-	<form method="POST" action="contact.php" accept-charset="UTF-8">
+	<form method="POST" action="include/contact.php" accept-charset="UTF-8">
     	<input required="" placeholder="Your Name" name="name" type="text">
     	<input required="" placeholder="Your Email Address" name="email" type="email">
     	<textarea required="" placeholder="Your Message" name="message" cols="50" rows="10"></textarea>
@@ -319,7 +300,7 @@
 			<li><a href="http://linkedin.com/in/alexanderiwalker"><i class="ion-social-linkedin"></i></a></li>
 			<li><a href="https://vimeo.com/awalkerstudios"><i class="ion-social-vimeo"></i></a></li>
 			<li><a href="https://www.youtube.com/user/WalkerStudios"><i class="ion-social-youtube"></i></a></li>
-					</ul>
+        </ul>
 		<div class="representation">
 			<h3>Representation</h3>
 			<p><a href="http://therighteye.com/">The Right Eye Agency</a><br />
@@ -327,11 +308,12 @@
 			New York, NY 10003<br />
 			212.924.8505</p>
 		</div>
-		<img class="representation-logo" src="/img/right-eye.png" />
+		<img class="representation-logo" src="/img/right-eye.svg" />
 	</div>
 </div>
 <div class="copyright">&copy; Alex Walker 2005-<span id="copyright-current-year">2015</span></div>
-</section>	<script type="text/javascript">
+</section>
+<script type="text/javascript">
 		$('.ticker li').addClass("hidden");
 	 	jQuery(document).ready(function ($) {
 
@@ -404,7 +386,7 @@
 						}
 				});
 			});
-			getElementById("copyright-current-year").innerHTML(new Date().getFullYear());
+			document.getElementById("copyright-current-year").innerHTML = new Date().getFullYear();
 		});
 </script>
 <script>

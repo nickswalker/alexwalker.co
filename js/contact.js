@@ -1,4 +1,4 @@
-function Contact ( form, returnMessage) {
+function Contact(form, returnMessage) {
 	this.$form = form,
 	this.$returnMessage = returnMessage;
 }
