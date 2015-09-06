@@ -9,12 +9,12 @@
 	<meta name="description" content="Cinematographer, editor and colorist. See some of my work and hire me here."
 	<meta name="keywords" content="Cinematographer,Colorist,Director,Portfolio,Photography,Vision,Camera,Experienced,Professional,">
 
-	<link rel="shortcut icon" href="/favicon.png" />
-	<link rel="apple-touch-icon-precomposed" href="/touch-icon.png" />
+	<link rel="shortcut icon" href="/img/favicon.png" />
+	<link rel="apple-touch-icon-precomposed" href="/img/touch-icon.png" />
 	<title>Alex Walker</title>
 
-	<link media="all" type="text/css" rel="stylesheet" href="http://alex.nickwalker.us/css/style.css">
-	<link media="all" type="text/css" rel="stylesheet" href="http://alex.nickwalker.us/packages/fancybox/jquery.fancybox.css">
+	<link media="all" type="text/css" rel="stylesheet" href="/css/style.css">
+	<link media="all" type="text/css" rel="stylesheet" href="/packages/fancybox/jquery.fancybox.css">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,600,700' rel='stylesheet' type='text/css'>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
@@ -23,7 +23,6 @@
 
 	<script src="http://alex.nickwalker.us/js/viewport-units-buggyfill.js"></script>
 	<script>window.viewportUnitsBuggyfill.init();</script>
-	<script src="http://alex.nickwalker.us/js/waypoints.min.js"></script>
 	<script src="http://alex.nickwalker.us/js/slider.js"></script>
 	<script src="http://alex.nickwalker.us/js/contact.js"></script>
 	<script src="http://alex.nickwalker.us/js/scripts.js"></script>
@@ -306,7 +305,13 @@
 
 		<div class="container">
 	<div class="return-message" href="#contact"></div>
-	<form method="POST" action="http://alex.nickwalker.us/contact" accept-charset="UTF-8"><input name="_token" type="hidden" value="ckB4kgewuntzv1QNj02O781kBIoWxAispZxBLHbe">		<input required="" placeholder="Your Name" name="name" type="text">		<input required="" placeholder="Your Email Address" name="email" type="email">		<textarea required="" placeholder="Your Message" name="message" cols="50" rows="10"></textarea>		<input type="submit" value="Send Message">	</form>	<div class="text">
+	<form method="POST" action="contact.php" accept-charset="UTF-8">
+    	<input required="" placeholder="Your Name" name="name" type="text">
+    	<input required="" placeholder="Your Email Address" name="email" type="email">
+    	<textarea required="" placeholder="Your Message" name="message" cols="50" rows="10"></textarea>
+    	<input type="submit" value="Send Message">
+    </form>
+    	<div class="text">
         <ul class="social">
 			<li><a href="http://twitter.com/awalker47"><i class="ion-social-twitter"></i></a></li>
 			<li><a href="https://fb.me/alexwalkerfilmmaker"><i class="ion-social-facebook"></i></a></li>
@@ -325,7 +330,7 @@
 		<img class="representation-logo" src="/img/right-eye.png" />
 	</div>
 </div>
-<div class="copyright">&copy; Alex Walker 2005-2015</div>
+<div class="copyright">&copy; Alex Walker 2005-<span id="copyright-current-year">2015</span></div>
 </section>	<script type="text/javascript">
 		$('.ticker li').addClass("hidden");
 	 	jQuery(document).ready(function ($) {
@@ -399,6 +404,7 @@
 						}
 				});
 			});
+			getElementById("copyright-current-year").innerHTML(new Date().getFullYear());
 		});
 </script>
 <script>
