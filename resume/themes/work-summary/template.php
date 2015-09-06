@@ -8,7 +8,7 @@
 	<link rel="stylesheet"  href="<?php echo $this->getThemeURL();?>resume.css" media="all" />
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,600,700' rel='stylesheet|Merriweather:400,400italic,700,700italic' type='text/css'>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.css">
-	<?php 
+	<?php
 	if( file_exists( $this->themePathFromRoot.'/custom-style.css') ){
 		echo ('<link rel="stylesheet" href="'.$this->getThemeURL() .'custom-style.css">');
 	}?>
@@ -28,7 +28,7 @@
 	   	title : null
 	}
 			});
-			
+
 		});
 	</script>
 </head>
@@ -63,7 +63,7 @@
 		<section>
 			<div class="representation">
 					<b><a href="http://therighteye.com/">The Right Eye Agency</a></b><br>
-					41 Union Square West, Suite 1004<br>
+					41 Union Square West, Suite 435<br>
 					New York, NY 10003<br>
 					212.924.8505<br>
 				</div>
@@ -72,7 +72,7 @@
 		<footer>
 			<p><?php echo $bio['name'];?> &mdash; <a href="mailto:<?php echo $bio['email'];?>"><?php echo $bio['email'];?></a><?php if (isset($bio['phone-number']) ){ echo '&mdash;'; echo $bio['phone-number']; }?></p>
 		</footer>
-	
+
 	</div>
 </body>
 </html>

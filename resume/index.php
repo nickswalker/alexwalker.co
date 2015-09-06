@@ -1,15 +1,12 @@
 <?php
-//Bootstrap - Move this code to wherever you want the resume to display on your server
-// This is the barest implementation to get the package off the ground
+require 'vendor/autoload.php';
+$resumeFromRoot = realpath('resume.xml'); //Where is the directory that shows up when you go to the root of your site?
+								 // http://example.com/  might be located at /home/public_html/ on the server.
 
-require 'vendor/autoload.php'; //Don't try to make these paths absolute (begin with a /) unless you know what you're doing.
-
-$resumePathFromRoot = realpath('resume.xml');
-
-$themePathFromRoot = realpath('themes/alex'); //Where is your theme?
+$themeFromRoot = realpath('themes/work-summary/'); //Where is your theme?
 												 //Note that the theme MUST be in a publicly accesible directory!
 												 //Otherwise your CSS won't load :(
 
-$neueresume = new \Nickswalker\NeueResume\NeueResume($resumePathFromRoot, $themePathFromRoot);
+$neueresume = new \Nickswalker\NeueResume\NeueResume($resumeFromRoot, $themeFromRoot);
 
 $neueresume->display();
