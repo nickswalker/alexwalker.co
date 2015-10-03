@@ -18,6 +18,9 @@ $error = "";
 if (!$name){
     $error .= 'Please enter your name.<br />';
 }
+if (isset($_POST['url']) && $_POST['url'] == ''){
+    $error .= 'Unable to process input';
+}
 
 // Check email
 if (!$email){
@@ -27,6 +30,10 @@ if (!$email){
 // Check agains bot habit
 if ($name && $email && $name == $email) {
     $error .= 'Name and email cannot be the same.<br />';
+}
+if ( preg_match( "/[\r\n]/", $name ) || preg_match( "/[\r\n]/", $email ) ) {
+    $error .= 'Unexpected newlines in name or email';
+
 }
 
 // Check message (length)

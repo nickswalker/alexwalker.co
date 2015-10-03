@@ -651,6 +651,12 @@ ul.tutorials	{
 	//max-width: 700px;
 	margin-bottom: 12px;
 }
+#contact .counter-measure {
+    height: 0;
+    width: 0;
+    position: absolute;
+    display: none;
+}
 input {
   padding: 7px 5px;
   width: 100%;
