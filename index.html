@@ -15,16 +15,16 @@
 
 	<link media="all" type="text/css" rel="stylesheet" href="/css/style.css">
 	<link media="all" type="text/css" rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
 	<link media="all" type="text/css" rel="stylesheet" href="/packages/fancybox/jquery.fancybox.css">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,600,700' rel='stylesheet' type='text/css'>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/helpers/jquery.fancybox-media.js"></script>
-
+    <script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js"></script>
 	<script src="http://alex.nickwalker.us/js/viewport-units-buggyfill.js"></script>
 	<script>window.viewportUnitsBuggyfill.init();</script>
-	<script src="/js/waypoints.min.js"></script>
 	<script src="/js/slider.js"></script>
 	<script src="/js/contact.js"></script>
 	<script src="/js/scripts.js"></script>
@@ -32,7 +32,7 @@
 </head>
 <body>
 	<section id="slider" data-slide="1">
-
+        <button id="reel-button"><a href="https://vimeo.com/74100926">Reel</a></button>
 		<div id="slider-container" >
 
     	<div style="background-image:url('/img/slider/1.jpg'); background-image: -webkit-image-set(
@@ -51,6 +51,7 @@
 	url('/img/slider/4.jpg') 1x,
 	url('/img/slider-super/4.jpg') 2x
 	);" class="image-4"></div>
+
  </div>
 
 
@@ -226,7 +227,6 @@
 	<div class="text">
 		<p>RED EPIC DRAGON, Sony A7s, FS100, and Odyssey 7Q+ available.</p>
 
-
 	</div>
 	<div class="text">
 		<ul class="clients">
@@ -241,12 +241,9 @@
 			<li>HEB</li>
 			<li>Greenstart</li>
 			<li>VICE HBO</li>
-
 			<li>MAS Consulting Group</li>
 			<li>HGTV</li>
 			<li>Atlassian</li>
-
-
 		</ul>
 	</div>
 
@@ -308,24 +305,15 @@
 			<li><a href="https://vimeo.com/awalkerstudios"><i class="ion-social-vimeo"></i></a></li>
 			<li><a href="https://www.youtube.com/user/WalkerStudios"><i class="ion-social-youtube"></i></a></li>
         </ul>
-		
+
 		<img class="representation-logo" src="/img/right-eye.svg" />
 	</div>
 </div>
 <div class="copyright">&copy; Alex Walker 2005-<span id="copyright-current-year">2015</span></div>
 </section>
 <script type="text/javascript">
-		$('.ticker li').addClass("hidden");
 	 	jQuery(document).ready(function ($) {
-
 			$(window).load(function() {
-				$('.ticker li').each(function(i) {
-
-					setTimeout(function (li) {
-			            li.removeClass("hidden");
-			        }, 500 * i, $(this));
-
-				});
 
 				$('.stills-image').fancybox({
 					padding : 0,
@@ -364,7 +352,7 @@
 							preload: false
 						}
 					});
-				$('#cinematographer ul li a.sixteen-by-nine, #tutorials ul .sixteen-by-nine').fancybox({
+				$('#cinematographer ul li a.sixteen-by-nine, #reel-button a').fancybox({
 					autoSize: true,
 					width: 1600,
 					height: 900,
@@ -390,6 +378,7 @@
 			document.getElementById("copyright-current-year").innerHTML = new Date().getFullYear();
 		});
 </script>
+<script src="js/scrollblur.js"></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

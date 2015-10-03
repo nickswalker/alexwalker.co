@@ -1,5 +1,4 @@
 @import url('reset.css');
-@import url('ionicons.min.css');
 
 /* = Global
 -------------------------------------------------------------- */
@@ -306,6 +305,9 @@ time {
 	-webkit-flex: 0 1 100%;
 }
 /*--- = Slider  */
+#reel-button {
+    display: none;
+}
 #slider	{
 	padding: 0;
 	height: 80vh;
@@ -318,6 +320,7 @@ time {
 	width: 100%;
 	position: relative;
 	overflow: hidden;
+	transition: .3s;
 }
 #slider-container div	{
 	position: absolute;
@@ -789,6 +792,16 @@ textarea {
 		justify-content: flex-start;
 	}
 	/*--- = Slider  */
+	#reel-button {
+        position: absolute;
+        right: 20px;
+        bottom: 50px;
+        display: block;
+        opacity: .4;
+        z-index: 10;
+        color: white;
+        border-color: white;
+	}
 	#slider	{
 		height: 100vh;
 	}
