@@ -1,4 +1,5 @@
 vendor/
 
-#Private information
-.env.php
+# Private information
+# Deploy hook filename must be kept secret.
+*-deploy-hook.*
