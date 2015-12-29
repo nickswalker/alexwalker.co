@@ -37,11 +37,14 @@ if ( preg_match( "/[\r\n]/", $name ) || preg_match( "/[\r\n]/", $email ) ) {
 }
 
 // Check message (length)
-if (!$message || strlen($message) < 10){
-    $error .= "Please enter your message. It should have at least 10 characters.<br />";
+if (!$message || strlen($message) < 10 || 15000 < strlen($message)){
+    $error .= "Your message is either too long or too short.<br />";
 }
 
 if ($error == ""){
+    $email = filter_var($emal, FILTER_SANITIZE_EMAIL);
+    $message = filter_var($message, FILTER_SANITIZE_STRING);
+    $name = filter_var($name, FILTER_SANITIZE_STRING);
     $headers = "From: ".$name." <".$email.">\r\n"
     ."Reply-To: ".$email."\r\n"
     ."X-Mailer: PHP/" . phpversion();
