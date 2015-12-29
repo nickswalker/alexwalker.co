@@ -2,7 +2,10 @@
 function saveEmailToDisk($name, $email, $message) {
     $date = new DateTime();
     $dateString = date($date::ATOM, time());
-    file_put_contents(realpath(".").$dateString.".txt", $name."\n".$email."\n".$message);
+    $currentPath = realpath(".");
+    $outFileName = $dateString.".txt";
+    $outFilePath = join(DIRECTORY_SEPARATOR, array($currentPath, $outFileName));
+    file_put_contents($outFilePath, $name."\n".$email."\n".$message);
 }
 
 $post = (!empty($_POST)) ? true : false;
