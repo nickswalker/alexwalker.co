@@ -15,7 +15,6 @@ if (!$post) {
 $name = stripslashes($_POST['name']);
 $email = trim($_POST['email']);
 $message = stripslashes($_POST['message']);
-// Check name
 
 $error = "";
 if (!$name){
@@ -27,10 +26,19 @@ if (isset($_POST['url']) && $_POST['url'] == ''){
 
 // Check email
 if (!$email){
-    $error .= 'Please enter an e-mail address.<br />';
+    $error .= 'Please enter an email address.<br />';
 }
 
-// Check agains bot habit
+// Check email
+if (!$email){
+    $error .= 'Please enter an email address.<br />';
+}
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+     $error .= 'Please enter a valid email address';
+}
+
+// Check against bot habit
 if ($name && $email && $name == $email) {
     $error .= 'Name and email cannot be the same.<br />';
 }
