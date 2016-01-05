@@ -44,6 +44,13 @@
 			<subtitle></subtitle>
 			<text>Directed by Raj Reddy</text>
 		</item>
+		
+			<item>
+			<title>VICE Guide to Film</title>
+			<subtitle></subtitle>
+			<text>Directed by Lewis Cohen</text>
+		</item>
+		
 		<item>
 			<title>Seeking Solace</title>
 			<subtitle></subtitle>
@@ -51,11 +58,7 @@
 		</item>
 
 		
-		<item>
-			<title>Troubled Skye</title>
-			<subtitle></subtitle>
-			<text>Directed by Alex Murphy</text>
-		</item>
+	
 		<item>
 			<title>Among the Dead</title>
 			<subtitle></subtitle>
@@ -80,7 +83,7 @@
 			<text>Directed by Lamarcus Tinker</text>
 		</item>
 		<item>
-			<title>Funemployment</title>
+			<title>Two Roads</title>
 			<subtitle>Additional Photography</subtitle>
 			<text>Directed by Christine Chen</text>
 		</item>
