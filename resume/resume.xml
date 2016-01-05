@@ -103,7 +103,7 @@
 			<item>
 			<title>GFCU TV Spots</title>
 			<subtitle>Director/Cinematographer</subtitle>
-			<text>Capitol Factory Studios</text>
+			<text>Capital Factory Studios</text>
 		</item>
 		
 		<item>
@@ -158,12 +158,7 @@
 			<subtitle></subtitle>
 			<text>K. Fernandez</text>
 		</item>
-		<item>
-			<title>The Cake Shop TV spots</title>
-			<subtitle></subtitle>
-			<text>CineVeliz</text>
-		</item>
-		
+	
 		<item>
 			<title>George P Bush Cinco de Mayo</title>
 			<subtitle></subtitle>
@@ -179,7 +174,11 @@
 	<section title="Corporate/Web/Live-to-tape" type="detail-list">
 		
 		
-		
+			<item>
+			<title>Atlassian Choose Your Own Adventure</title>
+			<subtitle>Cinematographer</subtitle>
+			<text>SPL Pictures</text>
+		</item>
 		<item>
 			<title>Hewlett Packard Bura </title>
 			<subtitle>Cinematographer</subtitle>
