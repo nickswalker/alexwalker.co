@@ -69,6 +69,11 @@
 			<subtitle></subtitle>
 			<text>Directed by Christine Chen</text>
 		</item>
+			<item>
+			<title>Two Roads</title>
+			<subtitle></subtitle>
+			<text>Directed by Christine Chen</text>
+		</item>
 		
 		<item>
 			<title>Assisted Living TV pilot</title>
@@ -79,14 +84,10 @@
 
 		<item>
 			<title>Under Nitrous TV pilot</title>
-			<subtitle></subtitle>
+			<subtitle>Additional Photography</subtitle>
 			<text>Directed by Lamarcus Tinker</text>
 		</item>
-		<item>
-			<title>Two Roads</title>
-			<subtitle>Additional Photography</subtitle>
-			<text>Directed by Christine Chen</text>
-		</item>
+	
 		<item>
 			<title>Leap Year Season 2 (Hulu Series)</title>
 			<subtitle></subtitle>
@@ -108,7 +109,7 @@
 		<item>
 			<title>Melrose Spring 2015 TV Spots</title>
 			<subtitle></subtitle>
-			<text></text>
+			<text>K. Fernandez</text>
 		</item>
 			<item>
 			<title>Ted Nugent Endorses Sid Miller</title>
