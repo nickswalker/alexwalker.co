@@ -1,5 +1,5 @@
 <?php
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 $resumeFromRoot = realpath('resume.xml'); //Where is the directory that shows up when you go to the root of your site?
 								 // http://example.com/  might be located at /home/public_html/ on the server.
 
