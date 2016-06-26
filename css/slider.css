@@ -1,0 +1,21 @@
+/* The percentage controls what gets placed at the left border of the slider.
+    Ex: 0% -> the left edge of the image is placed at the left edge of the screen
+        Higher percentages move the image further left.
+        */
+
+#slider-container .image-2  {
+    background-position-x: 65%;
+}
+#slider-container .image-3  {
+    background-position-x: 60%;
+}
+#slider-container .image-4  {
+    background-position-x: 60%;
+}
+
+/* These rules apply to windows greater than 900px wide */
+@media screen and (min-width: 900px) {
+	#slider-container .image-4  {
+        background-position-x: 100%;
+    }
+}
