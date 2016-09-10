@@ -70,7 +70,7 @@
 		</section>
 
 		<footer>
-			<p><?php echo $bio['name'];?> &mdash; <a href="mailto:<?php echo $bio['email'];?>"><?php echo $bio['email'];?></a><?php if (isset($bio['phone-number']) ){ echo '&mdash;'; echo $bio['phone-number']; }?> &mdash; Last Updated: 05.28.16</p>
+			<p><?php echo $bio['name'];?> &mdash; <a href="mailto:<?php echo $bio['email'];?>"><?php echo $bio['email'];?></a><?php if (isset($bio['phone-number']) ){ echo '&mdash;'; echo $bio['phone-number']; }?> &mdash; Last Updated: 08.02.16</p>
 		</footer>
 
 	</div>
