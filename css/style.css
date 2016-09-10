@@ -801,7 +801,8 @@ textarea {
         border-color: white;
 	}
 	#slider	{
-		height: 100vh;
+		/* Take up the full height, but leave room for the navbar to appear on screen as well*/
+		height: calc(100vh - 54px);
 	}
 	/*--- = News  */
 	#news	{
