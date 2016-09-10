@@ -749,7 +749,7 @@ textarea {
 		position: -o-sticky;
 		position: -ms-sticky;
 		position: sticky;
-		margin-top: -53px;
+/* margin-top: -53px;  // This is causing problems with chrome because of lack of sticky support*/
 		top: 0px;
 	}
 
