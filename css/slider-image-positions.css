@@ -3,22 +3,23 @@
         Higher percentages move the image further left.
         */
 
-#slider-container .image-2  {
+/* Note that images indices start counting from 0*/
+#slider-container .item[data-index="1"] > div  {
     background-position-x: 65%;
 }
-#slider-container .image-3  {
+#slider-container .item[data-index="2"] > div  {
     background-position-x: 60%;
 }
-#slider-container .image-4  {
+#slider-container .item[data-index="3"] > div  {
     background-position-x: 60%;
 }
-#slider-container .image-5  {
+#slider-container .item[data-index="4"] > div  {
     background-position-x: 60%;
 }
 
 /* These rules apply to windows greater than 900px wide */
 @media screen and (min-width: 900px) {
-	#slider-container .image-4  {
+	#slider-container .item[data-index="4"] > div  {
         background-position-x: 100%;
     }
 }
