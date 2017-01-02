@@ -16,7 +16,7 @@ $(function () {
     function onScroll(e) {
         const target = $(e.target);
         $returnToTop.stop();
-        if (target.scrollTop() >= wHeight * 1.5) {        // If page is scrolled more than 50px
+        if (target.scrollTop() >= wHeight ) {        // If page is scrolled more than 50px
             $returnToTop.fadeIn(400);    // Fade in the arrow
         } else {
             $returnToTop.fadeOut(400);   // Else fade out the arrow
@@ -60,9 +60,6 @@ $(function () {
 
     // Scroll down indicator
     const $scrollDownIndicator = $("#scroll-down-indicator");
-    // Display none by default
-    $scrollDownIndicator.show();
-
     // Scroll to top button
     const $returnToTop = $('#return-to-top');
     // Passive scroll handler
@@ -92,22 +89,30 @@ $(function () {
         {"pause": null}
         );
     const slideTime = 5000;
-    const $firstIndicator = $(".carousel-indicators > [data-slide-to='0']");
-    $firstIndicator.animate({"opacity": 0.0}, slideTime, "linear");
     // Customize carousel
 
+    const $allIndicators = $carouselContainer.find(".carousel-indicators > *");
+    $allIndicators.each(function(index, element){
+        $(element).append('<div class="progress-bar"></div>')
+    });
+
+    const $firstProgress = $("[data-slide-to='0'] .progress-bar");
+    $firstProgress.animate({"width": "100%"}, slideTime, "linear");
+
+    const $allProgressBars = $allIndicators.find(".progress-bar");
     $carouselContainer.on('slide.bs.carousel', function (event) {
         const paused = $carouselContainer.hasClass("paused");
         // New slide reached
         if (!paused) {
             const targetIndex = $(event.relatedTarget).data("index");
-            const $allIndicators = $carouselContainer.find(".carousel-indicators > *");
-            $allIndicators.each(function(index, element){
+            $allProgressBars.each(function(index, element){
                 $(element).stop();
-                $(element).css({"opacity": 1.0});
+                $(element).css({"width": 0});
             });
-            const $currentIndicator = $carouselContainer.find(".carousel-indicators > [data-slide-to='" +targetIndex +"']");
-            $currentIndicator.animate({"opacity": 0.0}, slideTime, "linear");
+            const indicatorSelector = "*[data-slide-to='" +targetIndex +"']";
+            const $currentIndicator = $allIndicators.filter(indicatorSelector);
+            const $currentProgress = $currentIndicator.find(".progress-bar");
+            $currentProgress.animate({"width": "100%"}, slideTime, "linear");
 
         }
     });

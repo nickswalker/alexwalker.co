@@ -54,23 +54,19 @@ h3	{
 }
 header,
 section figure,
-section .text{
-		-webkit-flex: 1 100%;
-	flex: 1 100%;
+section h2,
+section h3 {
+	flex: none;
+	width: 100%;
 }
 section .text	{
-		display: -webkit-flex;
 	display: flex;
-	flex-flow: column;
-		-webkit-justify-content: center;
-	justify-content: center;
+	flex-flow: column nowrap;
 	/* Cross axis */
-		-webkit-align-content: flex-start;
 	align-content: flex-start;
 }
 section .text p	{
-	-webkit-flex: 1 100%;
-	flex: 1 100%;
+	flex: none;
 }
 button,
 input[type="submit"]	{
@@ -133,6 +129,30 @@ header nav > ul > li	{
 header nav > ul > li:nth-of-type(3){
 	margin-top: 12px;
 }
+
+header	{
+	position: -webkit-sticky;
+	position: -moz-sticky;
+	position: -o-sticky;
+	position: -ms-sticky;
+	position: sticky;
+	/* margin-top: -53px;  // This is causing problems with chrome because of lack of sticky support*/
+	top: 0px;
+}
+
+/*--- = Dark Mode  */
+header.dark	{
+	color: white;
+	background-color: rgba(0,0,0,.75);
+}
+header.dark	h1,
+header.dark nav ul li a{
+	color: white;
+}
+header.dark nav ul li a	{
+	text-shadow: none;
+}
+
 nav ul li a {
 	/* border-bottom: 1px solid rgba(8,171,212, 0); */
 	transition: .4s;
@@ -163,8 +183,8 @@ header .social li	{
 }
 
 #scroll-down-indicator {
-	display: none;
-	opacity: .5;
+	/* Don't show on mobile*/
+	max-height: 0 !important;
 }
 
 nav .social li	{
@@ -243,10 +263,15 @@ section .container	{
 	padding: 36px 0 0 0;
 	box-sizing: border-box;
 	border-top: 1px solid rgba(0,0,0,.1);
-		display: -webkit-flex;
 	display: flex;
-	flex-flow: row wrap;
+	flex-flow: column wrap;
 }
+
+section .container > *:last-child {
+	margin-bottom: 0;
+}
+
+/* No border for first section 2 sections*/
 section:nth-of-type(1) .container,
 section:nth-of-type(2) .container{
 	border: none;
@@ -255,19 +280,12 @@ section:nth-of-type(2) .container{
 section figure	{
 	margin-bottom: 24px;
 }
-section figure h3{
-	padding: 0 12px;
-	margin-bottom: 6px;
-
-}
 section .text	{
 	padding: 0 12px;
 }
 section h2	{
 	margin: 0 0 36px 0;
 	text-align: center;
-	-webkit-flex: 1 100%;
-	flex: 1 100%;
 }
 
 .button-row {
@@ -279,21 +297,6 @@ section h2	{
 
 .button-row > button {
 	margin-right: 6px;
-}
-
-/*--- = News  */
-#news	{
-	background-color: black;
-	padding: 6px 12px;
-	padding-bottom: 12px;
-	height: auto;
-	overflow: hidden;
-	color: white;
-}
-#news .container	{
-	-webkit-justify-content: flex-end;
-	justify-content: flex-end;
-	height: 100%; /* Container will take up all space in the section sans the area reserved for the navigation */
 }
 
 /*--- = Slider  */
@@ -338,8 +341,6 @@ section h2	{
 	background-size: cover; /*Script will set image background*/
 }
 
-
-
 .carousel.custom-slide .carousel-inner .item {
 	transition-property: opacity;
 }
@@ -364,6 +365,37 @@ section h2	{
 	transform: translate3d(0, 0, 0);
 }
 
+.carousel-indicators.rectangle-indicators > * {
+	border-radius: 0;
+	border: none;
+	background-color: rgba(255,255,255,0.25);
+	width: 40px;
+	height: 10px;
+	margin: 0 2px;
+	position: relative;
+}
+
+.carousel-indicators.rectangle-indicators > *.active {
+	border: none;
+	width: 40px;
+	height: 10px;
+	margin: 0 2px;
+	background-color: rgba(255,255,255,0.25);
+}
+
+.carousel-indicators.rectangle-indicators .progress-bar {
+	height: 100%;
+	position: absolute;
+	background-color: rgba(255,255,255,0.3);
+	top: 0;
+	left: 0;
+	width: 0;
+	opacity: 0;
+}
+
+.carousel-indicators.rectangle-indicators > *.active > .progress-bar {
+	opacity: 1;
+}
 
 .carousel-custom-slide .carousel-control {
 	z-index: 2;
@@ -387,12 +419,12 @@ ul.thumbnails{
 		display: -webkit-flex;
 	display: flex;
 		overflow: visible;
-		-webkit-flex-flow: row wrap;
-		-webkit-justify-content: flex-start;
 	flex-flow: row wrap;
 	justify-content: flex-start;
-
-
+}
+#cinematographer h3{
+	padding: 0 12px;
+	margin-bottom: 6px;
 }
 .thumbnails a	{
 	display: block;
@@ -400,11 +432,13 @@ ul.thumbnails{
 .thumbnails li	{
 	position: relative; /* Required for absolutely positioned pseudo-element */
 	margin-bottom: 24px;
-		-webkit-flex: 1 100%;
 	flex: 1 100%;
-
 	box-sizing: border-box;
 }
+.thumbnails li:last-child {
+	margin-bottom: 0;
+}
+
 .thumbnails img	{
 	display: block;
 	margin: 0 auto;
@@ -430,46 +464,7 @@ ul.thumbnails{
 	z-index: 1;
 	color: rgba(255,255,255,.6);
 }
-  .thumbnails a.resolution-2k::after {
-    content: '2K';
-    text-decoration: none !important;
-    text-shadow: 0 0px 2px rgba(0,0,0,.6);
-    font-size: 16px;
-    padding-top: 3px;
-    font-weight: 400;
-    display: block;
-    color: white;
-    text-align: right;
-    position: absolute;
-    line-height: 1em;
-	height: 1em;
-	bottom: 0;
-	right: 0;
-	margin: 0 6px 6px 0;
-	width: 100%;
-	z-index: 1;
-	color: rgba(255,255,255,.6);
-}
-  .thumbnails a.resolution-4k::after {
-    content: '4K';
-    text-decoration: none !important;
-    text-shadow: 0 0px 2px rgba(0,0,0,.6);
-    font-size: 16px;
-    padding-top: 3px;
-    font-weight: 400;
-    display: block;
-    color: white;
-    text-align: right;
-    position: absolute;
-    line-height: 1em;
-	height: 1em;
-	bottom: 0;
-	right: 0;
-	margin: 0 6px 6px 0;
-	width: 100%;
-	z-index: 1;
-	color: rgba(255,255,255,.6);
-}
+
 .reels .black-text::before	{
 	color: rgba(0,0,0,.3);
 	text-shadow: 0 0 2px rgba(255,255,255,.6);
@@ -507,22 +502,22 @@ ul.thumbnails{
     box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.35), 0px 1px 1px rgba(0, 0, 0, 0.2);
     border-radius: 4em;
   }
-  .thumbnails a.coming-soon::after {
-  position: absolute;
-  top: -8px;
-  right: -4px;
-  width: 7em;
+.thumbnails a.coming-soon::after {
+	position: absolute;
+	top: -8px;
+	right: -4px;
+	width: 7em;
 	height: 1.8em;
 	line-height: 1.8em;
-  text-align: center;
-  font-size: 12px;
-  content: '2014';
-  background-color: #D43108;
-  color: #fff;
-  text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.15);
-  box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.35), 0px 1px 1px rgba(0, 0, 0, 0.2);
-  border-radius: 4em;
-  }
+	text-align: center;
+	font-size: 12px;
+	content: '2014';
+	background-color: #D43108;
+	color: #fff;
+	text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.15);
+	box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.35), 0px 1px 1px rgba(0, 0, 0, 0.2);
+	border-radius: 4em;
+}
 
 .clients	{
         -webkit-column-count: 2;
@@ -531,93 +526,14 @@ ul.thumbnails{
 	color: rgba(0,0,0,.3);
 	display: block;
 	width: 100%;
+	margin-bottom: 12px;
 }
 .clients li{
 	line-height: 1;
 	margin-bottom: 8px;
 }
 
-/*--- = Director  */
 
-    #director a {
-        text-decoration: underline;
-    }
-    #director .embed {
-        cursor: pointer;
-        position: relative;
-    }
-    #director .embed * {
-    	width: 100%;
-	}
-	#director .new-content::after  {
-    	left: auto;
-    	right: auto;
-    	bottom: auto;
-    	top: auto;
-    	margin-left: 10px;
-	}
-
-	#director .resolution-4k::before {
-    content: '\25B6 4K';
-    text-decoration: none !important;
-    text-shadow: 0 0px 2px rgba(0,0,0,.6);
-    font-size: 16px;
-    font-weight: 400;
-    display: block;
-    color: white;
-    text-align: left;
-    position: absolute;
-    line-height: 1em;
-   margin: 0 0 8px 6px;
-	height: 1em;
-	bottom: 0;;
-	width: 100%;
-	z-index: 1;
-	color: rgba(255,255,255,.6);
-}
-	#director .thumbnails li  {
-        -webkit-flex: 1 calc(25% - 8px);
-        flex: 1 calc(25% - 8px);
-        max-height: 80px;
-        margin-bottom: 0;
-        overflow: hidden;
-	}
-	.multi-column {
-    	font-size: 12px;
-    	-webkit-column-count: 2;
-	}
-	.equipment-credit   {
-    	font-size: 12px;
-	}
-
-/* Tutorials */
-
-#tutorials{
-	background-color:#ffffff;
-}
-ul.tutorials	{
-
-}
-.tutorials a::before {
-    content: attr(title);
-    text-decoration: none !important;
-    text-shadow: 0 0px 2px rgba(0,0,0,.6);
-    font-size: 16px;
-    padding-top: 3px;
-    font-weight: 400;
-    display: block;
-    color: white;
-    text-align: left;
-    position: absolute;
-    line-height: 1em;
-	height: 1em;
-	bottom: 0;
-	left: 0;
-	margin: 0 0 6px 6px;
-	width: 100%;
-	z-index: 1;
-	color: rgba(255,255,255,.8);
-}
 /*--- = Stills	*/
 #stills	{
 	margin-bottom: 0;
@@ -667,11 +583,10 @@ ul.tutorials	{
 	color: white;
 }
 #contact form{
-		-webkit-flex: 1 100%;
-	flex: 1 100%;
-	//max-width: 700px;
+	flex: 1 0 auto;
 	margin-bottom: 12px;
 }
+
 #contact .counter-measure {
     height: 0;
     width: 0;
@@ -679,41 +594,42 @@ ul.tutorials	{
     display: none;
 }
 input {
-  padding: 7px 5px;
-  width: 100%;
+    padding: 7px 12px;
+    width: 100%;
 }
 
 input, textarea {
-  display: inline-block;
-  font-size: 16px;
-  font-family: inherit;
-  margin-bottom: 10px;
-  padding: 7px 5px;
-  box-sizing: border-box;
-  background-color: rgba(255,255,255,1);
-  box-shadow: none;
-  border: none;
-  }
+    display: inline-block;
+    font-size: 16px;
+    font-family: inherit;
+    margin-bottom: 10px;
+    padding: 7px 12px;
+    box-sizing: border-box;
+    background-color: rgba(255,255,255,1);
+    box-shadow: none;
+    border: none;
+}
 
 textarea {
   width: 100%;
   height: auto;
   min-height: 200px;
   resize: none;
-  }
+}
 
 .return-message {
-  font-size: 16px;
-  margin-bottom: 24px;
-  color: inherit
-  }
+	font-size: 16px;
+	margin-bottom: 24px;
+	color: inherit
+}
 
 #contact input[type="submit"] {
 	width: auto;
 	font-family: inherit;
-  color: white;
-  cursor: pointer;
-  border-color: white;
+	color: white;
+	cursor: pointer;
+	border-color: white;
+    margin-left: 12px;
 }
 
 #contact input[type="submit"]:hover {
@@ -721,10 +637,6 @@ textarea {
 	background-color: white;
 }
 
-#contact .text	{
-		-webkit-flex: 1 100%;
-	flex: 1 100%;
-}
 #contact .representation	{
 	display: inline-block;
 	color: white;
@@ -786,64 +698,45 @@ textarea {
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
 
-	section .container
-	 {
+	section .container {
 		border-width: 0.5px !important;
-
 	}
 }
-/* Bar allowed to stick and go dark when over the news section */
-	header	{
-		position: -webkit-sticky;
-		position: -moz-sticky;
-		position: -o-sticky;
-		position: -ms-sticky;
-		position: sticky;
-/* margin-top: -53px;  // This is causing problems with chrome because of lack of sticky support*/
-		top: 0px;
-	}
-
-	/*--- = Dark Mode  */
-	header.dark	{
-		color: white;
-		background-color: rgba(0,0,0,.75);
-	}
-	header.dark	h1,
-	header.dark nav ul li a{
-		color: white;
-	}
-	header.dark nav ul li a	{
-		text-shadow: none;
-	}
 
 @media screen and (min-width: 900px) {
+	#scroll-down-indicator {
+		opacity: .5;
+		font-size: 21px;
+		max-height: auto !important;
+	}
+
 	.collapsed	{
 		max-height: none !important;
 	}
 	section h2	{
 		margin: 0 0 48px 0;
 	}
+
 	section .container	{
 		padding: 48px 24px 0px 24px;
+		flex-flow: row wrap;
 	}
 	section figure,
 	section .text,
 	aside	{
-		-webkit-flex: 1 50%;
 		flex: 1 50%;
 		max-width: 50%;
 		box-sizing: border-box;
 		padding: 0 12px;
 	}
 	section .text	{
-			-webkit-justify-content: flex-start;
 		justify-content: flex-start;
 	}
 	/*--- = Slider  */
 	#reel-button {
         position: absolute;
-        right: 20px;
-        bottom: 50px;
+        right: 30px;
+        top: 30px;
         display: block;
         opacity: .4;
         z-index: 10;
@@ -854,36 +747,12 @@ textarea {
 		/* Take up the full height, but leave room for the navbar to appear on screen as well*/
 		height: calc(100vh - 54px);
 	}
-	/*--- = News  */
-	#news	{
-		position: absolute;
-		top: 0;
-		right: 0;
-		width: 400px;
-		padding: 0;
-		padding-bottom: 12px;
-		background-color: transparent;
-
-	}
-	.ticker {
-		-webkit-flex: 1 100%;
-		flex: 1 100%;
-		padding: 12px 24px;
-		padding-bottom: 24px; /* Leave space to fade out*/
-		display: block;
-		z-index: 100; /* Gotta keep it above the slider*/
-		overflow: hidden;
-		box-sizing: border-box;
-		background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45) 90%, rgba(0, 0, 0, 0) 100%);
-	}
 
 	/*--- = Navigation  */
 	.logo	{
 		margin-bottom: 0;
 	}
 	header nav > ul	{
-			-webkit-flex-flow: row nowrap;
-			-webkit-justify-content: space-around;
 		flex-flow: row nowrap;
 		justify-content: space-around;
 	}
@@ -921,6 +790,9 @@ textarea {
 	#cinematographer figure	{
 		margin-bottom: 32px;
 	}
+	#cinematographer h3 {
+		padding: 0 24px;
+	}
 	ul.thumbnails {
     	    -webkit-justify-content: space-around;
     	justify-content: space-around;
@@ -932,7 +804,8 @@ textarea {
 		margin-bottom: 4px
 	}
 	.clients	{
-		text-align: left
+		text-align: left;
+		margin-bottom: 0;
 	}
 	.clients li	{
 		line-height: inherit;
@@ -953,9 +826,12 @@ textarea {
     }
 	/*--- = Contact  */
 	#contact form	{
-			-webkit-flex: 2;
 		flex: 2 0 auto;
+		width: 66%;
 	}
+    #contact input[type="submit"] {
+        margin: 0;
+    }
 	#contact .social   {
         text-align: left;
 	}
@@ -964,6 +840,7 @@ textarea {
 		align-items: flex-start;
 		padding: 0 24px;
 		box-sizing: margin-box;
+		width: 33%;
 	}
 }
 
@@ -1012,7 +889,6 @@ textarea {
 		padding-top: 48px; /*Special case, doesn't have a text title to add padding*/
 	}
 	.stills li	{
-			-webkit-flex: 0 1 12.5%;
 		flex: 0 1 12.5%;
 	}
 	/*Remove any overrides from smaller widths*/
@@ -1022,6 +898,4 @@ textarea {
 	.stills li:nth-of-type(16){
 		display: inherit;
 	}
-
-
 }

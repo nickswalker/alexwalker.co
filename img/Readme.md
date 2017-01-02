@@ -7,7 +7,9 @@ Image role | File Size
 4K slider | 400KB
 Still thumbnail | 75KB
 
-Finally, do a pass of lossless compression with [ImageOptim](https://imageoptim.com/howto.html)
+Finally, do a pass of lossless compression with [ImageOptim](https://imageoptim.com)
+
+See overall site resource distribution and statistics with [Pingdom speed test](https://tools.pingdom.com).
 
 ## "-super" Folders
 
