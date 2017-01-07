@@ -7,7 +7,7 @@
 body {
 	line-height: 1.5;
 	font-weight: 300;
-	font-family: -apple-system, "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: -apple-system,  BlinkMacSystemFont, "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #111;
 	background-color:#ffffff;
 	/*
@@ -57,7 +57,6 @@ section figure,
 section h2,
 section h3 {
 	flex: none;
-	width: 100%;
 }
 section .text	{
 	display: flex;
@@ -334,11 +333,12 @@ section h2	{
 	transition: .4s;
 }
 
-#slider-container .item > div {
+#slider-container .item picture > * {
 	height: 100%;
 	width: 100%;
-	background-position: 25% center;
-	background-size: cover; /*Script will set image background*/
+	object-position: 25% 50%;
+	object-fit: cover;
+
 }
 
 .carousel.custom-slide .carousel-inner .item {
@@ -520,12 +520,10 @@ ul.thumbnails{
 }
 
 .clients	{
-        -webkit-column-count: 2;
 	column-count: 2;
 	text-align: center;
 	color: rgba(0,0,0,.3);
 	display: block;
-	width: 100%;
 	margin-bottom: 12px;
 }
 .clients li{
@@ -550,14 +548,11 @@ ul.thumbnails{
 	display: flex;
 	overflow: auto;
 	width: 100%;
-		-webkit-flex-flow: row wrap;
-		-webkit-justify-content: center;
 	flex-flow: row wrap;
 	justify-content: space-between;
 
 }
 .stills li	{
-		-webkit-flex: 0 1 33.33%;
 	flex: 0 1 33.33%; /* We want rows of three*/
 	overflow: auto;
 	transition: .2s;
@@ -696,7 +691,7 @@ textarea {
 /* = Media Queries
 -------------------------------------------------------------- */
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 1.5dppx) {
 
 	section .container {
 		border-width: 0.5px !important;
@@ -704,6 +699,12 @@ textarea {
 }
 
 @media screen and (min-width: 900px) {
+	header,
+	section figure,
+	section h2,
+	section h3 {
+		width: 100%;
+	}
 	#scroll-down-indicator {
 		opacity: .5;
 		font-size: 21px;

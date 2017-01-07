@@ -4,22 +4,22 @@
         */
 
 /* Note that images indices start counting from 0*/
-#slider-container .item[data-index="1"] > div  {
-    background-position-x: 65%;
+#slider-container .item[data-index="1"] picture > *  {
+    object-position: 65% 50%;
 }
-#slider-container .item[data-index="2"] > div  {
-    background-position-x: 60%;
+#slider-container .item[data-index="2"] picture > *  {
+    object-position: 60% 50%;
 }
-#slider-container .item[data-index="3"] > div  {
-    background-position-x: 60%;
+#slider-container .item[data-index="3"] picture > *  {
+    object-position: 60% 50%;
 }
-#slider-container .item[data-index="4"] > div  {
-    background-position-x: 60%;
+#slider-container .item[data-index="4"] picture > *  {
+    object-position: 60% 50%;
 }
 
 /* These rules apply to windows greater than 900px wide */
 @media screen and (min-width: 900px) {
-	#slider-container .item[data-index="4"] > div  {
-        background-position-x: 100%;
+	#slider-container .item[data-index="4"] picture > *  {
+        object-position: 100% 50%;
     }
 }
