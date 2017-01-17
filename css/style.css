@@ -567,7 +567,12 @@ ul.thumbnails{
 .stills img{
 	display: block;
 	pointer-events: none;
+	transition: 0.3s;
 }
+.stills img:hover {
+	transform: scale(1.05);
+}
+
 #stills + section .container	{
 	border-top: none;
 }
