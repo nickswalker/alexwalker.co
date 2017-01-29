@@ -11,7 +11,7 @@
     object-position: 60% 50%;
 }
 #slider-container .item[data-index="3"] picture > *  {
-    object-position: 60% 50%;
+    object-position: 70% 50%;
 }
 #slider-container .item[data-index="4"] picture > *  {
     object-position: 50% 50%;
