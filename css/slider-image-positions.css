@@ -14,7 +14,7 @@
     object-position: 60% 50%;
 }
 #slider-container .item[data-index="4"] picture > *  {
-    object-position: 35% 50%;
+    object-position: 20% 50%;
 }
 
 /* These rules apply to windows greater than 900px wide */
