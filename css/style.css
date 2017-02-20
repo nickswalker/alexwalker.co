@@ -10,10 +10,6 @@ body {
 	font-family: -apple-system,  BlinkMacSystemFont, "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #111;
 	background-color:#ffffff;
-	/*
-display: -webkit-flex;
-	-webkit-flex-flow: column nowrap;
-*/
 }
 p {
 	-webkit-hyphens: auto;
@@ -433,6 +429,7 @@ ul.thumbnails{
 	position: relative; /* Required for absolutely positioned pseudo-element */
 	margin-bottom: 24px;
 	flex: 1 100%;
+	overflow: hidden;
 	box-sizing: border-box;
 }
 .thumbnails li:last-child {
@@ -442,7 +439,13 @@ ul.thumbnails{
 .thumbnails img	{
 	display: block;
 	margin: 0 auto;
+	transition: 0.3s;
 }
+
+.thumbnails a img:hover	{
+	transform: scale(1.025);
+}
+
 .reels a::before, #colorist .thumbnails a::before {
     content: '\f488\00a0\00a0' attr(data-year);
     font-family: "ionicons", sans-serif;
@@ -554,7 +557,7 @@ ul.thumbnails{
 }
 .stills li	{
 	flex: 0 1 33.33%; /* We want rows of three*/
-	overflow: auto;
+	overflow: hidden;
 	transition: .2s;
 }
 /*We're using 16 images, so remove the stray one when we have rows of 3*/
@@ -566,11 +569,10 @@ ul.thumbnails{
 }
 .stills img{
 	display: block;
-	pointer-events: none;
 	transition: 0.3s;
 }
 .stills img:hover {
-	transform: scale(1.05);
+	transform: scale(1.025);
 }
 
 #stills + section .container	{
@@ -883,7 +885,6 @@ textarea {
 	}
 
 	section .container	{
-		overflow: auto;
 		position: relative;
 	}
 	section figure	{

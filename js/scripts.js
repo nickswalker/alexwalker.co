@@ -13,22 +13,30 @@ $(function () {
         }, 400, 'easeInOutQuint');
     }
 
+    let lastEventLocation = 0;
+
     function onScroll(e) {
         const target = $(e.target);
-        $returnToTop.stop();
-        if (target.scrollTop() >= wHeight ) {        // If page is scrolled more than 50px
-            $returnToTop.fadeIn(400);    // Fade in the arrow
-        } else {
-            $returnToTop.fadeOut(400);   // Else fade out the arrow
+        const lastBelow = lastEventLocation >= wHeight;
+        const currentBelow = target.scrollTop() >= wHeight;
+
+        if (lastBelow ^ currentBelow) {
+            if (currentBelow) {
+                $returnToTop.fadeIn(400);    // Fade in the arrow
+            } else {
+                $returnToTop.fadeOut(400);   // Else fade out the arrow
+            }
+
+            if (currentBelow) {
+                $scrollDownIndicator.fadeTo(400, 0.1);
+                $scrollDownIndicator.css("pointer-events", "none");
+            } else {
+                $scrollDownIndicator.fadeTo(400, 0.5);
+                $scrollDownIndicator.css("pointer-events", "all");
+            }
         }
-        $scrollDownIndicator.stop();
-        if (target.scrollTop() >= wHeight * 0.5) {
-            $scrollDownIndicator.fadeTo(200, 0.1);
-            $scrollDownIndicator.css("pointer-events", "none");
-        } else {
-            $scrollDownIndicator.fadeTo(200, 0.5);
-            $scrollDownIndicator.css("pointer-events", "all");
-        }
+
+        lastEventLocation = target.scrollTop();
     }
 
     function blurOnScroll() {
