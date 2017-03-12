@@ -4,7 +4,7 @@
         */
 
 /* Note that images indices start counting from 0*/
-#slider-container .item[data-index="1"] picture > *  {
+#slider-container .item[data-index="0"] picture > *  {
     object-position: 65% 50%;
 }
 #slider-container .item[data-index="1"] picture > *  {
