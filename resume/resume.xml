@@ -100,11 +100,7 @@
 		</item>
 	</section>
 	<section title="Commercials/Music Videos" type="detail-list">
-		<item>
-			<title>MTV Woodies 2017 TV Spot Campaign</title>
-			<subtitle></subtitle>
-			<text>Viacom</text>
-		</item>	
+		
 		
 		<item>
 			<title>GFCU TV Spots</title>
@@ -127,10 +123,15 @@
 			<subtitle></subtitle>
 			<text></text>
 		</item>
+		<item>
+			<title>MTV Woodies 2017 TV Spot Campaign</title>
+			<subtitle>Cinematographer</subtitle>
+			<text>Viacom</text>
+		</item>	
 		
 		<item>
 			<title>Romney Ryan Traveling Press</title>
-			<subtitle>Cinematographer</subtitle>
+			<subtitle></subtitle>
 			<text>Mas Consulting</text>
 		</item>
 		<item>
