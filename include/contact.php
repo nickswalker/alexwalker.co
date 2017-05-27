@@ -29,11 +29,6 @@ if (!$email){
     $error .= 'Please enter an email address.<br />';
 }
 
-// Check email
-if (!$email){
-    $error .= 'Please enter an email address.<br />';
-}
-
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
      $error .= 'Please enter a valid email address';
 }
@@ -42,6 +37,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 if ($name && $email && $name == $email) {
     $error .= 'Name and email cannot be the same.<br />';
 }
+
 if ( preg_match( "/[\r\n]/", $name ) || preg_match( "/[\r\n]/", $email ) ) {
     $error .= 'Unexpected newlines in name or email';
 
@@ -53,7 +49,7 @@ if (!$message || strlen($message) < 10 || 15000 < strlen($message)){
 }
 
 if ($error == ""){
-    $email = filter_var($emal, FILTER_SANITIZE_EMAIL);
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
     $message = filter_var($message, FILTER_SANITIZE_STRING);
     $name = filter_var($name, FILTER_SANITIZE_STRING);
     $headers = "From: ".$name." <".$email.">\r\n"
