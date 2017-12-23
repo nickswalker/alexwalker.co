@@ -43,6 +43,9 @@ $(function () {
         const currentScrollY = this.latestKnownScrollY;
         this.ticking = false;
         const percentage = currentScrollY / wHeight;
+        if (percentage > 1) {
+            return;
+        }
         const opacity = percentage - 0.3;
         const blurRadius = Math.max((percentage - 0.3)  * 25, 0);
         $toBlur.css({
