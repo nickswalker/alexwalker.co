@@ -456,11 +456,19 @@ section h2 {
     z-index: 2;
 }
 
+
+.backdrop {
+    background-color: #eeeeee;
+}
 /* Cinematographer */
 .thumbnails {
     display: grid;
     grid-gap: var(--grid-gap) var(--grid-gap);
     grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(auto-fit, 1fr);
+    width: 80vmin;
+    min-width: 60%;
+    margin: 0 auto;
 }
 
 #cinematographer h3 {
@@ -469,6 +477,8 @@ section h2 {
 
 .thumbnails a {
     display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .thumbnails li {
@@ -486,6 +496,8 @@ section h2 {
     margin: 0 auto;
     transition: 0.3s;
     width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .thumbnails a img:hover {
@@ -539,6 +551,10 @@ section h2 {
 li.coming-soon:hover img {
     opacity: .5;
 }
+.thumbnails li div {
+    width: 100%;
+    height: 100%;
+}
 
 li.coming-soon:hover div::after {
     position: absolute;
@@ -578,18 +594,19 @@ li.coming-soon a::before {
     border-radius: 4em;
 }
 
-.thumbnails.posters li img {
+.feature-films .thumbnails li img {
     object-position: 0;
     max-width: unset;
-    object-fit: contain;
+    object-fit: cover;
     width: 100%;
     height: 100%;
 }
 
-.thumbnails.posters li a {
+.feature-films .thumbnails li a {
     width: 100%;
     height: 100%;
 }
+
 
 .clients {
     column-count: 2;
@@ -708,7 +725,7 @@ input, textarea {
 }
 
 @supports (padding: max(0px)) {
-    input, textarea {
+    form {
         padding-left: max(12px, env(safe-area-inset-left));
         padding-right: max(12px, env(safe-area-inset-right));
     }
@@ -861,7 +878,7 @@ textarea {
 
     section .container {
         padding: 48px 24px 0px 24px;
-        grid-template-columns: repeat(2, [col] 1fr);
+        grid-template-columns: 30fr 23fr; /* Tuned to make the feature posters look good */
     }
 
     .container > h3 {
@@ -953,16 +970,16 @@ textarea {
         margin: 0;
     }
 
-    .thumbnails.posters {
-        height: 310px;
-    }
-
-    .thumbnails.posters img {
-        object-fit: contain;
-    }
-
     #cinematographer .text {
         margin-top: 24px;
+    }
+
+    .thumbnails {
+        width: unset;
+        margin: 0 auto;
+    }
+    .backdrop {
+        background-color: unset;
     }
 
     /*--- = Colorist  */
