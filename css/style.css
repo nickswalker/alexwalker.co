@@ -55,11 +55,11 @@ h1 {
 h2 {
     font-size: 36px;
     line-height: var(--double-spacing-unit);
-    font-weight: 300;
+    font-weight: 800;
 }
 
 h3 {
-    font-weight: 600;
+    font-weight: 400;
     font-size: 18px;
     padding: 0 var(--half-spacing-unit);
 }
@@ -203,15 +203,17 @@ nav ul li:hover {
 .logo {
     flex: 0 3 auto;
     margin-bottom: var(--half-spacing-unit);
+    display: unset;
 }
 
-header .reveal {
-    flex: 0 1 auto;
+
+header {
+    max-height: 54px;
+
 }
 
-header .reveal a::after {
-    content: '\f20d';
-    font-family: 'ionicons';
+header li {
+    display: none;
 }
 
 header .social li {
@@ -220,8 +222,8 @@ header .social li {
 }
 
 #scroll-down-indicator {
-    /* Don't show on mobile*/
-    max-height: 0 !important;
+    flex: 0 1 auto;
+    display: unset;
 }
 
 nav .social li {
@@ -243,11 +245,6 @@ nav .social li {
     color: inherit;
 }
 
-/*--- = Collapsed  */
-header.collapsed {
-    max-height: 54px;
-
-}
 
 /*--- = Scroll to top */
 #return-to-top {
@@ -866,9 +863,8 @@ textarea {
         font-size: 21px;
         max-height: auto !important;
     }
-
-    .collapsed {
-        max-height: none !important;
+    header li {
+        display: unset;
     }
 
     section h2 {
@@ -936,9 +932,6 @@ textarea {
         margin-top: 0;
     }
 
-    .reveal {
-        display: none;
-    }
 
     /*--- = Stills  */
     #stills .container,
