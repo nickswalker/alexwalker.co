@@ -8,7 +8,7 @@
     object-position: 65% 50%;
 }
 #slider-container .item[data-index="1"] picture > *  {
-    object-position: 40% 50%;
+    object-position: 80% 50%;
 }
 #slider-container .item[data-index="2"] picture > *  {
     object-position: 75% 50%;
