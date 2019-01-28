@@ -5,16 +5,16 @@
 
 /* Note that images indices start counting from 0*/
 #slider-container .item[data-index="0"] picture > *  {
-    object-position: 40% 50%;
+    object-position: 37% 50%;
 }
 #slider-container .item[data-index="1"] picture > *  {
-    object-position: 80% 50%;
+    object-position: 70% 50%;
 }
 #slider-container .item[data-index="2"] picture > *  {
     object-position: 80% 50%;
 }
 #slider-container .item[data-index="3"] picture > *  {
-    object-position: 50% 50%;
+    object-position: 74% 50%;
 }
 #slider-container .item[data-index="4"] picture > *  {
     object-position: 70% 50%;
