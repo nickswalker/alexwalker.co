@@ -1051,7 +1051,7 @@ textarea {
 
     .stills {
         grid-template-columns: repeat(8, calc(100% / 8));
-        grid-template-rows: repeat(auto-fit, calc(100% / 8));
+        grid-template-rows: repeat(auto-fit, calc(400% / 8));
     }
 
     /*Remove any overrides from smaller widths*/
