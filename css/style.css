@@ -899,6 +899,16 @@ textarea {
     /*--- = Slider  */
     #reel-button {
         position: absolute;
+        right: 180px;
+        top: 180px;
+        display: block;
+        opacity: 1;
+        z-index: 10;
+        color: white;
+        border-color: white;
+    }
+    #reelimdb-button {
+        position: absolute;
         right: 30px;
         top: 30px;
         display: block;
@@ -907,6 +917,7 @@ textarea {
         color: white;
         border-color: white;
     }
+    
 
     #slider {
         /* Take up the full height, but leave room for the navbar to appear on screen as well*/
