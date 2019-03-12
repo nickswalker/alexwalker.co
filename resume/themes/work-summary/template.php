@@ -60,6 +60,14 @@
 					New York, NY 10003<br>
 					212.924.8505<br>
 				</div>
+			<div class="right-plate">
+					<div class="contact-info">
+						<h3 id="print"><button onClick="window.print()">Print</button></h3>
+						<h3><a itemprop="url" href="http://<?php echo $bio['site'];?>"><?php echo $bio['site'];?></a></h3>
+						<h3><a itemprop="email" href="mailto:<?php echo $bio['email'];?>"><?php echo $bio['email'];?></a></h3>
+						<h3 itemprop="telephone"><?php echo $this->issetor($bio['phone-number']);?></h3>
+						<h4 itemprop="address" class="address"><?php echo $this->issetor($bio['street-address']);?></h4>
+					</div>
 			
 		</section>
 
