@@ -39,14 +39,7 @@
 					<h1 itemprop="name"><?php echo $bio['name'];?></h1>
 					<h2 itemprop="jobTitle"><?php echo $bio['job-title'];?></h2>
 				</div>
-				<div class="right-plate">
-					<div class="contact-info">
-						<h3 id="print"><button onClick="window.print()">Print</button></h3>
-						<h3><a itemprop="url" href="http://<?php echo $bio['site'];?>"><?php echo $bio['site'];?></a></h3>
-						<h3><a itemprop="email" href="mailto:<?php echo $bio['email'];?>"><?php echo $bio['email'];?></a></h3>
-						<h3 itemprop="telephone"><?php echo $this->issetor($bio['phone-number']);?></h3>
-						<h4 itemprop="address" class="address"><?php echo $this->issetor($bio['street-address']);?></h4>
-					</div>
+				
 					<ul id="social">
 						<?php
 							foreach ( $social[0] as $name=>$value ){
@@ -67,10 +60,18 @@
 					New York, NY 10003<br>
 					212.924.8505<br>
 				</div>
+			<div class="right-plate">
+					<div class="contact-info">
+						<h3 id="print"><button onClick="window.print()">Print</button></h3>
+						<h3><a itemprop="url" href="http://<?php echo $bio['site'];?>"><?php echo $bio['site'];?></a></h3>
+						<h3><a itemprop="email" href="mailto:<?php echo $bio['email'];?>"><?php echo $bio['email'];?></a></h3>
+						<h3 itemprop="telephone"><?php echo $this->issetor($bio['phone-number']);?></h3>
+						<h4 itemprop="address" class="address"><?php echo $this->issetor($bio['street-address']);?></h4>
+					</div>
 		</section>
 
 		<footer>
-			<p><?php echo $bio['name'];?> &mdash; <a href="mailto:<?php echo $bio['email'];?>"><?php echo $bio['email'];?> </a><?php if (isset($bio['phone-number']) ){ echo '&mdash;'; echo $bio['phone-number']; }?> &mdash; Last Updated: 03.12.19</p>
+			<p><?php if (isset($bio['phone-number']) ){ echo '&mdash;'; echo $bio['phone-number']; }?> &mdash; Last Updated: 03.12.19</p>
 		</footer>
 
 	</div>
