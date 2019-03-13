@@ -39,8 +39,11 @@
 					<h1 itemprop="name"><?php echo $bio['name'];?></h1>
 					<h2 itemprop="jobTitle"><?php echo $bio['job-title'];?></h2>
 				</div>
-				<img src="/img/slider/TRE_Logo_030118_draft.jpg" />
-					<ul id="social">
+				
+					<div class="right-plate">
+					<div class="contact-info">
+						<img src="/img/TRE_Logo_030118_draft.jpg"/>
+					</div><ul id="social">
 						<?php
 							foreach ( $social[0] as $name=>$value ){
 								if( $value != '' ){
