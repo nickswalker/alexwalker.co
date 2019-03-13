@@ -72,7 +72,7 @@
 		</section>
 
 		<footer>
-			<p><?php if (isset($bio['phone-number']) ){ echo '&mdash;'; echo $bio['phone-number']; }?> &mdash; Last Updated: 03.12.19</p>
+			<p><?php if (isset($bio['phone-number']) ){ echo '&mdash;'; echo $bio[]; }?> &mdash; Last Updated: 03.12.19</p>
 		</footer>
 
 	</div>
