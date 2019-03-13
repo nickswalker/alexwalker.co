@@ -49,7 +49,7 @@
 							}
 ?>
 					</ul>
-				</div>
+				
 		</header>
 
 		<?php $this->showSections();?>
