@@ -9,17 +9,7 @@
 		<phone-number>210.777.8527</phone-number>
 		<street-address></street-address>
 		
-		<social>
-<!--
-			<github></github>
-			<vimeo></vimeo>
-			<tumblr></tumblr>
--->
-			<facebook>https://www.facebook.com/alexwalkerfilmmaker</facebook>
-			<instagram>https://www.instagram.com/alex_walker47/</instagram>
-			<youtube>https://www.youtube.com/user/WalkerStudios</youtube>
-			x
-		</social>
+		
 	</bio>
 	
 	<section title="Film/TV" type="detail-list">
