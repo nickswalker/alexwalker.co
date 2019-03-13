@@ -76,7 +76,7 @@
 		</section>
 
 		<footer>
-			<p>Last Updated: 03.12.19</p>
+			<p>Last Updated: 03.13.19</p>
 		</footer>
 
 	</div>
