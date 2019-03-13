@@ -58,6 +58,7 @@
 		<?php $this->showSections();?>
 		<section>
 			<div class="representation">
+				<b>Representation</b><br>
 					<b><a href="http://therighteye.com/">The Right Eye Inc.</a></b><br>
 					41 Union Square West, Suite 435<br>
 					New York, NY 10003<br>
