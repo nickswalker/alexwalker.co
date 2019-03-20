@@ -15,7 +15,7 @@
 	<section title="Film/TV" type="detail-list">
 <item>
 			<title>VICE Guide to Film (TV Series)</title>
-			<subtitle>Cinematographer</subtitle>
+			<subtitle></subtitle>
 			<text>Directed by Lewis Cohen</text>
 		</item>
 		<item>
@@ -94,32 +94,8 @@
 	<section title="Commercials/Music Videos" type="detail-list">
 		
 		
-		<item>
-			<title>GFCU TV Spots</title>
-			<subtitle>Director/Cinematographer</subtitle>
-			<text>Capital Factory Studios</text>
-		</item>
-		<item>
-			<title>Texas CASA TV Spots</title>
-			<subtitle></subtitle>
-			<text>K. Fernandez</text>
-		</item>
 		
-		<item>
-			<title>Melrose Spring 2015 TV Spots</title>
-			<subtitle></subtitle>
-			<text>K. Fernandez</text>
-		</item>
-			<item>
-			<title>Ted Nugent Endorses Sid Miller</title>
-			<subtitle></subtitle>
-			<text>TX AG Comm. Campaign</text>
-		</item>
-		<item>
-			<title>Gov. Rick Perry Endorses Sid Miller</title>
-			<subtitle></subtitle>
-			<text>TX AG Comm. Campaign</text>
-		</item>
+		
 		<item>
 			<title>MTV Woodies 2017 TV Spot</title>
 			<subtitle>Cinematographer</subtitle>
@@ -165,6 +141,32 @@
 			<subtitle></subtitle>
 			<text>Mas Consulting</text>
 		</item>
+		<item>
+			<title>GFCU TV Spots</title>
+			<subtitle>Director/Cinematographer</subtitle>
+			<text>Capital Factory Studios</text>
+		</item>
+		<item>
+			<title>Texas CASA TV Spots</title>
+			<subtitle></subtitle>
+			<text>K. Fernandez</text>
+		</item>
+		
+		<item>
+			<title>Melrose Spring 2015 TV Spots</title>
+			<subtitle></subtitle>
+			<text>K. Fernandez</text>
+		</item>
+			<item>
+			<title>Ted Nugent Endorses Sid Miller</title>
+			<subtitle></subtitle>
+			<text>TX AG Comm. Campaign</text>
+		</item>
+<item>
+			<title>Gov. Rick Perry Endorses Sid Miller</title>
+			<subtitle></subtitle>
+			<text>TX AG Comm. Campaign</text>
+		</item>
 	
 	
 
@@ -177,7 +179,7 @@
 		
 			<item>
 			<title>Atlassian Austin Office Tour</title>
-			<subtitle>Cinematographer</subtitle>
+			<subtitle></subtitle>
 			<text>SPL Pictures</text>
 		</item>
 		<item>
