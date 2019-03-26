@@ -468,6 +468,16 @@ section h2 {
     margin: 0 auto;
 }
 
+.thumbnails2 {
+    display: grid;
+    grid-gap: var(--grid-gap) var(--grid-gap);
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(auto-fit, 1fr);
+    width: 80vmin;
+    min-width: 60%;
+    margin: 0 auto;
+}
+
 #cinematographer h3 {
     margin-bottom: 6px;
 }
