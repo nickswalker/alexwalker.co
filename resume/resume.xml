@@ -12,7 +12,7 @@
 		
 	</bio>
 	
-	<section title="Film/TV" type="detail-list"><text>Directed by:</text>
+	<section title="Film/TV" type="detail-list"><span class="description">Directed by</span>
 		<item>
 			<title>VICE Guide to Film (TV Series)</title>
 			<subtitle></subtitle>
