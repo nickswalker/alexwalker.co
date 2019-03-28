@@ -59,6 +59,7 @@ h2 {
 }
 
 h3 {
+    text-align: center;
     font-weight: 400;
     font-size: 18px;
     padding: 0 var(--half-spacing-unit);
@@ -624,7 +625,7 @@ li.coming-soon a::before {
 
 /*--- = Stills	*/
 #stills {
-    margin-bottom: 0;margin-top: 35px;
+    margin-bottom: 0;margin-top: 0px;
 
 }
 
@@ -848,7 +849,7 @@ textarea {
 
 @media screen and (min-width: 500px) {
     .stills {
-        margin-top: 0px;
+        margin-top: 35px;
         grid-template-columns: repeat(4, calc(100vw / 4));
         grid-template-rows: repeat(auto-fit, calc(100vw / 4));
     }
@@ -856,7 +857,7 @@ textarea {
     .stills li:nth-of-type(n) {
         display: unset;
     }
-    .h3 { text-align: center;
+    h3 { text-align: left;
     }
 }
 
