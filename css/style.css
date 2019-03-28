@@ -855,6 +855,8 @@ textarea {
     .stills li:nth-of-type(n) {
         display: unset;
     }
+    .h3 { text-align: center;
+    }
 }
 
 @media screen and (min-width: 900px) {
