@@ -92,7 +92,7 @@ section .text p {
 button,
 input[type="submit"] {
     display: flex;
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: calc(var(--spacing-unit) / 2);
     font-weight: 600;
     border: 2px solid #08abd4;
