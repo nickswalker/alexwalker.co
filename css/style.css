@@ -848,6 +848,7 @@ textarea {
 
 @media screen and (min-width: 500px) {
     .stills {
+        margin-top: 0px;
         grid-template-columns: repeat(4, calc(100vw / 4));
         grid-template-rows: repeat(auto-fit, calc(100vw / 4));
     }
