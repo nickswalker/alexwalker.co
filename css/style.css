@@ -624,9 +624,10 @@ li.coming-soon a::before {
 
 /*--- = Stills	*/
 #stills {
-    margin-bottom: 0;
+    margin-bottom: 0;margin-top: 40px;
 
 }
+
 
 #stills .container {
     padding: 0;
