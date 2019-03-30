@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+	 <meta property="og:url" content="https://alexwalker.co/resume/">
+    <meta property="og:image" content="https://alexwalker.co/img/ogimage.jpg">
+    <meta property="og:title" content="Alex Walker's Cinematography CV">
+    <meta property="og:description" content="">
 	<meta charset="utf-8" />
 	<meta name="format-detection" content="telephone=no">
 	<title><?php echo $bio['name'];?> | <?php echo $bio['email'];?></title>
