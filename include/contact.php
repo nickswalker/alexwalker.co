@@ -45,7 +45,7 @@ if ( preg_match( "/[\r\n]/", $name ) || preg_match( "/[\r\n]/", $email ) ) {
 
 // Check message (length)
 if (!$message || strlen($message) < 10 || 15000 < strlen($message)){
-    $error .= "Your message is either too long or too short.<br />";
+    $error .= "Your message is either too long or too short, please refresh the page to try again<br />";
 }
 
 if ($error == ""){
