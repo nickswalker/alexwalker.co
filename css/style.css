@@ -343,9 +343,7 @@ section h2 {
 }
 
 /*--- = Slider  */
-#reel-button {
-    display: none;
-}
+
 
 #reel-button:hover {
     color: black;
