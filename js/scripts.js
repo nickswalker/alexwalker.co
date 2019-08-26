@@ -77,12 +77,12 @@ $(function () {
     window.addEventListener('scroll', onScroll.bind(this), {passive: true});
 
     //Setup contact ajax
-    const contact = new Contact( $("#contact form"), $(".return-message"));
+    /*const contact = new Contact( $("#contact form"), $(".return-message"));
 
 	$("body").on("click","#contact input[type='submit']", function(event){
 		event.preventDefault();
 		contact.sendEmail();
-	});
+	});*/
 
 	// Blur scrolling
 	const blurScroller = new Scroller(blurOnScroll);

@@ -1002,6 +1002,9 @@ textarea {
 
     /*--- = Contact  */
     #contact .container {
+        grid-template-columns: [col] 1fr;
+    }
+    /*#contact .container {
         grid-template-columns: 2fr 1fr;
     }
 
@@ -1020,7 +1023,7 @@ textarea {
     #contact .text {
         align-items: flex-start;
         padding: 0 var(--spacing-unit);
-    }
+    }*/
 }
 
 @media screen and (min-width: 1220px) {

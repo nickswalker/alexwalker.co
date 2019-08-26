@@ -30,7 +30,6 @@
     <script src="/packages/fancybox/jquery.fancybox.min.js"></script>
     <script src="/packages/bootstrap/js/bootstrap-carousel.js"></script>
     <script src="/js/scroller.js"></script>
-    <script src="/js/contact.js"></script>
     <script src="/js/scripts.js"></script>
 
 </head>
@@ -451,7 +450,7 @@
         <div class="container" style="margin-bottom: 35px;">
 
             <h2>Bio</h2>
-            <figure><img src="img/about.jpg">
+            <figure><img src="img/about.jpg" />
             </figure>
             <div class="text">
                 <p>Alex is a cinematographer and colorist based in Austin, Texas and has shot many acclaimed international and regional ad campaigns, documentaries, and feature films. His work on the feature <i>“No One Will Know”</i> won Best Cinematography at the Sunset International Film Festival. With 15 years of experience, Alex also offers post-production services. </p>
@@ -478,14 +477,7 @@
     <section id="contact" >
 
         <div class="container">
-            <div class="return-message" href="#contact"></div>
-            <form method="POST" action="include/contact.php" accept-charset="UTF-8">
-                <input required="" placeholder="Your Name" name="name" type="text" />
-                <input required="" placeholder="Your Email Address" name="email" type="email" />
-                <input class="counter-measure" type="text" name="url" />
-                <textarea required="" placeholder="Your Message" name="message" cols="50" rows="10"></textarea>
-                <input type="submit" value="Send Message">
-            </form>
+            <!-- Removed contact form due to spam causing the server to get banned from sending mail to iCloud servers 8/25/19 -->
             <div class="text">
                 <ul class="social">
                      <li><a href="https://fb.me/alexwalkerfilmmaker"><i class="ion-social-facebook"></i></a>
@@ -507,7 +499,7 @@
                 <img class="representation-logo" src="/img/right-eye.svg" />
             </div>
         </div>
-        <div class="copyright">&copy; Alex Walker 2003-<span id="copyright-current-year">2019</span></i></a>
+        <div class="copyright">&copy; Alex Walker 2003-<span id="copyright-current-year">2019</span>
         </div>
     </section>
     <script type="text/javascript">
