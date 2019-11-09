@@ -5,7 +5,7 @@
 
 /* Note that images indices start counting from 0*/
 #slider-container .item[data-index="0"] picture > *  {
-    object-position: 75% 50%;
+    object-position: 40% 50%;
 }
 #slider-container .item[data-index="1"] picture > *  {
     object-position: 75% 50%;
