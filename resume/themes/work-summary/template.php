@@ -80,7 +80,7 @@
 		</section>
 
 		<footer>
-			<p>Last Updated: 03.13.19</p>
+			<p>Last Updated: 11.17.19</p>
 		</footer>
 
 	</div>
