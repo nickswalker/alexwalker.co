@@ -12,7 +12,7 @@
 		
 	</bio>
 	
-	<section title="Film/TV" type="detail-list"><span class="description">Directed by</span>
+	<section title="Film/TV:" type="detail-list"><span class="description">Directed by</span>
 		<item>
 			<title>VICE Guide to Film (TV Series)</title>
 			<subtitle></subtitle>
@@ -92,7 +92,7 @@
 		</item>
 		
 	</section>
-	<section title="Commercials/Music Videos" type="detail-list">
+	<section title="Commercials/Music Videos:" type="detail-list">
 		
 		<item>
 			<title>Toyota SEMA 2019</title>
@@ -178,7 +178,7 @@
 	</section>
 	
 	
-	<section title="Other" type="detail-list">
+	<section title="Other:" type="detail-list">
 		
 		
 			<item>
