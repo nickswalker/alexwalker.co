@@ -23,11 +23,7 @@
 			<subtitle></subtitle>
 			<text>Steve Hall</text>
 		</item>
-		<item>
-			<title>Writer's Block (Feature)</title>
-			<subtitle></subtitle>
-			<text>Ray Spivey and Jeff Kerr</text>
-		</item>
+		
 		
 		<item>
 			<title>Book of Ruth (Feature)</title>
@@ -45,11 +41,7 @@
 		
 			
 		
-		<item>
-			<title>Red Bull Hang Gliding World Record</title>
-			<subtitle></subtitle>
-			<text>Jonny Durrand</text>
-		</item>
+		
 		<item>
 			<title>Javelina Run (Short)</title>
 			<subtitle></subtitle>
@@ -69,7 +61,11 @@
 			<text>Anita Azenet</text>
 		</item>
 
-		
+		<item>
+			<title>Writer's Block (Feature)</title>
+			<subtitle></subtitle>
+			<text>Ray Spivey and Jeff Kerr</text>
+		</item>
 	
 		
 		
@@ -89,7 +85,11 @@
 		</item><item>
 			<title>Leap Year Season 2 (Hulu Series)</title>
 			<subtitle>Additional Camera</subtitle>
-			<text>Yuri Baronovsky</text></item>
+			<text>Yuri Baronovsky</text></item><item>
+			<title>Red Bull Hang Gliding World Record</title>
+			<subtitle></subtitle>
+			<text>Jonny Durrand</text>
+		</item>
 		
 	</section>
 	<section title="Commercials/Music Videos" type="detail-list">
