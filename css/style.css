@@ -870,7 +870,18 @@ textarea {
     section h3 {
         width: 100%;
     }
-
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: hsl(120, 2%, 9%);
+    --light-background-color: hsl(120, 2%, 20%);
+    --text-color: #ccc;
+    --light-text-color: #aaa;
+    --heading-color: #dee2e6;
+    --hr-color: rgba(255, 255, 255, .1);
+    --code-color: rgba(212, 73, 80, .85);
+    --code-snippet-border: rgba(255, 255, 255, .1);
+    --neutral-accent: #828282;
+  }
     #scroll-down-indicator {
         opacity: .5;
         font-size: 21px;
