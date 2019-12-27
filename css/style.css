@@ -882,6 +882,7 @@ textarea {
     --code-snippet-border: rgba(255, 255, 255, .1);
     --neutral-accent: #828282;
   }
+    }
     #scroll-down-indicator {
         opacity: .5;
         font-size: 21px;
