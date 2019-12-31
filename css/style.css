@@ -850,7 +850,7 @@ textarea {
   :root {
     --background-color: #363636;
     --light-background-color: hsl(120, 2%, 20%);
-    --text-color: white;
+    --text-color: #ffffff;
     --light-text-color: #aaa;
     --heading-color: #dee2e6;
     --hr-color: rgba(255, 255, 255, .1);
