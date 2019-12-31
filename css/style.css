@@ -2,6 +2,16 @@
 @import url('slider-image-positions.css');
 
 :root {
+     --background-color: #ffffff;
+    --light-background-color: hsl(120, 2%, 20%);
+    --text-color: #111;
+    --alt-text-color: rgba(0, 0, 0, .4);
+    --light-text-color: #aaa;
+    --heading-color: #dee2e6;
+    --hr-color: rgba(255, 255, 255, .1);
+    --code-color: rgba(212, 73, 80, .85);
+    --code-snippet-border: rgba(255, 255, 255, .1);
+    --neutral-accent: #828282;
     --spacing-unit: 24px;
     --half-spacing-unit: calc(var(--spacing-unit) / 2);
     --double-spacing-unit: calc(var(--spacing-unit) * 2);
@@ -15,8 +25,8 @@ body {
     line-height: 1.5;
     font-weight: 300;
     font-family: -apple-system, BlinkMacSystemFont, "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #111;
-    background-color: #ffffff;
+    color: var(--text-color);
+    background-color: var(--background-color);
 }
 
 p {
@@ -617,7 +627,7 @@ li.coming-soon a::before {
 .clients {
     column-count: 2;
     text-align: center;
-    color: rgba(0, 0, 0, .3);
+    color: var(--alt-text-color);
     display: block;
 }
 
@@ -679,7 +689,7 @@ section#about {
 
 .representation {
     flex: 1 100%;
-    color: rgba(0, 0, 0, .4);
+    color: var(--alt-text-color);
     font-size: 14px;
 }
 
@@ -837,6 +847,20 @@ textarea {
 
 /* = Media Queries
 -------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #363636;
+    --light-background-color: hsl(120, 2%, 20%);
+    --text-color: #ffffff;
+    --alt-text-color: rgba(255, 255, 255, .4);
+    --light-text-color: #aaa;
+    --heading-color: #dee2e6;
+    --hr-color: rgba(255, 255, 255, .1);
+    --code-color: rgba(212, 73, 80, .85);
+    --code-snippet-border: rgba(255, 255, 255, .1);
+    --neutral-accent: #828282;
+  }
+}
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 1.5dppx) {
 
@@ -870,19 +894,7 @@ textarea {
     section h3 {
         width: 100%;
     }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background-color: hsl(120, 2%, 9%);
-    --light-background-color: hsl(120, 2%, 20%);
-    --text-color: #ccc;
-    --light-text-color: #aaa;
-    --heading-color: #dee2e6;
-    --hr-color: rgba(255, 255, 255, .1);
-    --code-color: rgba(212, 73, 80, .85);
-    --code-snippet-border: rgba(255, 255, 255, .1);
-    --neutral-accent: #828282;
-  }
-    }
+
     #scroll-down-indicator {
         opacity: .5;
         font-size: 21px;
