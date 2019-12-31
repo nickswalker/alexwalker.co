@@ -627,7 +627,7 @@ li.coming-soon a::before {
 .clients {
     column-count: 2;
     text-align: center;
-    color: rgba(0, 0, 0, .3);
+    color: var(--alt-text-color);
     display: block;
 }
 
