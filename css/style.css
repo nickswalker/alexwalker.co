@@ -5,6 +5,7 @@
      --background-color: #ffffff;
     --light-background-color: hsl(120, 2%, 20%);
     --text-color: #111;
+    --alt-text-color: rgba(0, 0, 0, .4);
     --light-text-color: #aaa;
     --heading-color: #dee2e6;
     --hr-color: rgba(255, 255, 255, .1);
@@ -688,7 +689,7 @@ section#about {
 
 .representation {
     flex: 1 100%;
-    color: rgba(0, 0, 0, .4);
+    color: var(--alt-text-color);
     font-size: 14px;
 }
 
@@ -851,6 +852,7 @@ textarea {
     --background-color: #363636;
     --light-background-color: hsl(120, 2%, 20%);
     --text-color: #ffffff;
+    --alt-text-color: rgba(255, 255, 255, .4);
     --light-text-color: #aaa;
     --heading-color: #dee2e6;
     --hr-color: rgba(255, 255, 255, .1);
