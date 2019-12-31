@@ -4,7 +4,7 @@
 :root {
      --background-color: #ffffff;
     --light-background-color: hsl(120, 2%, 20%);
-    --text-color: #ccc;
+    --text-color: #111;
     --light-text-color: #aaa;
     --heading-color: #dee2e6;
     --hr-color: rgba(255, 255, 255, .1);
@@ -24,8 +24,8 @@ body {
     line-height: 1.5;
     font-weight: 300;
     font-family: -apple-system, BlinkMacSystemFont, "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #111;
-    background-color: var( --background-color);
+    color: var(--text-color);
+    background-color: var(--background-color);
 }
 
 p {
@@ -850,7 +850,7 @@ textarea {
   :root {
     --background-color: #363636;
     --light-background-color: hsl(120, 2%, 20%);
-    --text-color: #ccc;
+    --text-color: white;
     --light-text-color: #aaa;
     --heading-color: #dee2e6;
     --hr-color: rgba(255, 255, 255, .1);
