@@ -15,7 +15,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
      --background-color: #ffffff;
      --container-background: #f5f5f5;
     --light-background-color: hsl(120, 2%, 20%);
-    --text-color: #111;
+    --text-color: #333;
     --alt-text-color: rgba(0, 0, 0, .4);
     --light-text-color: #aaa;
     --heading-color: #dee2e6;
@@ -192,7 +192,7 @@ footer p {
 /* = Core Typography
 -------------------------------------------------------------- */
 h1,h2,h3,h4 {
-	color:#333;
+	color:var(--text-color);
 }
 
 h2 {
