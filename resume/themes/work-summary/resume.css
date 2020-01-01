@@ -75,7 +75,7 @@ a {
 /* = Core Structure
 -------------------------------------------------------------- */
 body {
-	color:#444;
+	color:var(--text-color);
 	width:950px;
 	margin:auto;
 	background-color:var(--background-color);
