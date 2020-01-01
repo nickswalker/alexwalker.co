@@ -50,7 +50,7 @@ a:link {
 }
 
 a:visited {
-    color: #555;
+    color: var(--alt-text-color);
 }
 
 a:hover {
