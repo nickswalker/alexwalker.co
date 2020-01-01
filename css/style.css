@@ -42,7 +42,7 @@ p i {
 }
 
 a {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 a:link {
