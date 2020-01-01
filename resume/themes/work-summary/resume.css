@@ -210,7 +210,7 @@ h3,h4 {
 }
 
 a {
-	color:#222;
+	color:var(--text-color);
 }
 
 a:hover {
