@@ -46,7 +46,7 @@ a {
 }
 
 a:link {
-    color: #333;
+    color: var(--alt-text-color);
 }
 
 a:visited {
