@@ -46,7 +46,7 @@
 				
 					<div class="right-plate">
 					<div class="contact-info">
-						<img src="/img/TRE_Logo_030118_draft.jpg"/>
+						<img src="/img/TRE_Logo_transparent.png"/>
 					</div><ul id="social">
 						<?php
 							foreach ( $social[0] as $name=>$value ){
@@ -80,7 +80,7 @@
 		</section>
 
 		<footer>
-			<p>Last Updated: 12.03.19</p>
+			<p>Last Updated: 01.01.20</p>
 		</footer>
 
 	</div>
