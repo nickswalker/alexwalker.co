@@ -2,6 +2,16 @@
 @import url('slider-image-positions.css');
 
 :root {
+    --background-color: #ffffff;		
+    --light-background-color: hsl(120, 2%, 20%);		
+    --text-color: #111;		
+    --alt-text-color: rgba(0, 0, 0, .4);		
+    --light-text-color: #aaa;		
+    --heading-color: #dee2e6;		
+    --hr-color: rgba(255, 255, 255, .1);		
+    --code-color: rgba(212, 73, 80, .85);		
+    --code-snippet-border: rgba(255, 255, 255, .1);		
+    --neutral-accent: #828282;
     --spacing-unit: 24px;
     --half-spacing-unit: calc(var(--spacing-unit) / 2);
     --double-spacing-unit: calc(var(--spacing-unit) * 2);
@@ -15,8 +25,8 @@ body {
     line-height: 1.5;
     font-weight: 300;
     font-family: -apple-system, BlinkMacSystemFont, "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #111;
-    background-color: #ffffff;
+    color: var(--text-color);
+    background-color: var(--background-color);
 }
 
 p {
@@ -828,6 +838,20 @@ textarea {
 
 /* = Media Queries
 -------------------------------------------------------------- */
+	@media (prefers-color-scheme: dark) {		
+  :root {		
+    --background-color: #363636;		
+    --light-background-color: hsl(120, 2%, 20%);		
+    --text-color: #ffffff;		
+    --alt-text-color: rgba(255, 255, 255, .4);		
+    --light-text-color: #aaa;		
+    --heading-color: #dee2e6;		
+    --hr-color: rgba(255, 255, 255, .1);		
+    --code-color: rgba(212, 73, 80, .85);		
+    --code-snippet-border: rgba(255, 255, 255, .1);		
+    --neutral-accent: #828282;		
+  }		
+}
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 1.5dppx) {
 
