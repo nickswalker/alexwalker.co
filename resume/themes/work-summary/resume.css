@@ -11,6 +11,23 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 	vertical-align:baseline;
 }
 
+:root {
+     --background-color: #ffffff;
+    --light-background-color: hsl(120, 2%, 20%);
+    --text-color: #111;
+    --alt-text-color: rgba(0, 0, 0, .4);
+    --light-text-color: #aaa;
+    --heading-color: #dee2e6;
+    --hr-color: rgba(255, 255, 255, .1);
+    --code-color: rgba(212, 73, 80, .85);
+    --code-snippet-border: rgba(255, 255, 255, .1);
+    --neutral-accent: #828282;
+    --spacing-unit: 24px;
+    --half-spacing-unit: calc(var(--spacing-unit) / 2);
+    --double-spacing-unit: calc(var(--spacing-unit) * 2);
+    --grid-gap: 1px;
+}
+
 /* HTML5 display-role reset for older browsers */
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
 	display:block;
@@ -60,7 +77,7 @@ body {
 	color:#444;
 	width:950px;
 	margin:auto;
-	background-color:#FFF;
+	background-color:var(--background-color);
 	
 }
 
@@ -363,6 +380,22 @@ article hgroup a {
 }
 /* = Media Queries
 -------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #222;
+    --light-background-color: hsl(120, 2%, 20%);
+    --text-color: #ffffff;
+    --alt-text-color: rgba(255, 255, 255, .4);
+    --light-text-color: #aaa;
+    --heading-color: #dee2e6;
+    --hr-color: rgba(255, 255, 255, .1);
+    --code-color: rgba(212, 73, 80, .85);
+    --code-snippet-border: rgba(255, 255, 255, .1);
+    --neutral-accent: #828282;
+  }
+}
+
+
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
 	section
 	 {
