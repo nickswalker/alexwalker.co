@@ -355,7 +355,11 @@ section h2 {
 .reel-button-container {
     display: flex;
     justify-content: center;
-    margin: calc(.5 * var(--spacing-unit));
+    margin: calc(.5 * var(--spacing-unit)) 0;
+}
+
+#reel-button {
+    margin: 0;
 }
 
 #reel-button:hover {
@@ -950,7 +954,11 @@ textarea {
         border-color: white;
         font-size: 24px;
     }
-   
+
+    .reel-button-container {
+        margin: 0;
+    }
+
 
     #slider {
         /* Take up the full height, but leave room for the navbar to appear on screen as well*/
