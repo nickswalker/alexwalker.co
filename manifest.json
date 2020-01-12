@@ -1,0 +1,13 @@
+{
+  "name": "Alex Walker",
+  "icons": [
+    {
+      "src": "/img/touch-icon.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "scope": "/"
+}
