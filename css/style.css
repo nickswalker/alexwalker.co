@@ -7,11 +7,7 @@
     --text-color: #111;
     --alt-text-color: rgba(0, 0, 0, .4);
     --light-text-color: #aaa;
-    --heading-color: #dee2e6;
     --hr-color: rgba(255, 255, 255, .1);
-    --code-color: rgba(212, 73, 80, .85);
-    --code-snippet-border: rgba(255, 255, 255, .1);
-    --neutral-accent: #828282;
     --spacing-unit: 24px;
     --half-spacing-unit: calc(var(--spacing-unit) / 2);
     --double-spacing-unit: calc(var(--spacing-unit) * 2);
@@ -73,13 +69,9 @@ h3 {
     font-weight: 400;
     font-size: 18px;
     padding: 0 var(--half-spacing-unit);
-}
+    padding-left: max(var(--half-spacing-unit), constant(safe-area-inset-left));
+    padding-right: max(var(--half-spacing-unit), constant(safe-area-inset-right));
 
-@supports (padding: max(0px)) {
-    h3 {
-        padding-left: max(12px, env(safe-area-inset-left));
-        padding-right: max(12px, env(safe-area-inset-right));
-    }
 }
 
 header,
@@ -104,7 +96,7 @@ button,
 input[type="submit"] {
     display: flex;
     font-size: 18px;
-    margin-bottom: calc(var(--spacing-unit) / 2);
+    margin-bottom: var(--half-spacing-unit);
     font-weight: 600;
     border: 2px solid #08abd4;
     border-radius: 4px;
@@ -147,7 +139,7 @@ header {
 
 header .container {
     display: block;
-    padding: calc(var(--spacing-unit) / 2);
+    padding: var(--half-spacing-unit);
 }
 
 @supports (padding: max(0px)) {
@@ -323,8 +315,8 @@ section .container > *:last-child {
 }
 
 /* No border for first section 2 sections*/
-section:nth-of-type(1) .container,
-section:nth-of-type(2) .container {
+body.home section:nth-of-type(1) .container,
+body.home section:nth-of-type(2) .container {
     border: none;
     padding-top: 0;
 }
@@ -341,6 +333,12 @@ section h2 {
     text-align: center;
 }
 
+.full-width-centered {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
 .button-row {
     display: flex;
     flex-direction: row;
@@ -354,6 +352,11 @@ section h2 {
 
 /*--- = Slider  */
 
+.reel-button-container {
+    display: flex;
+    justify-content: center;
+    margin: calc(.5 * var(--spacing-unit));
+}
 
 #reel-button:hover {
     color: black;
@@ -465,28 +468,21 @@ section h2 {
 
 
 /* Cinematographer */
+.thumbnails-container {
+    width: 80vmin;
+    min-width: 60%;
+    margin: 0 auto;
+}
+
 .thumbnails {
     display: grid;
     grid-gap: var(--grid-gap) var(--grid-gap);
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(auto-fit, 1fr);
-    width: 80vmin;
-    min-width: 60%;
-    margin: 0 auto;
 }
 
-.thumbnails2 {
-    display: grid;
-    grid-gap: var(--grid-gap) var(--grid-gap);
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(auto-fit, 1fr);
-    width: 80vmin;
-    min-width: 60%;
-    margin: 0 auto;
-}
-
-#cinematographer h3 {
-    margin-bottom: 6px;
+.thumbnails-container h3 {
+    margin-bottom: calc(.25 * var(--spacing-unit));
 }
 
 .thumbnails a {
@@ -621,7 +617,6 @@ li.coming-soon a::before {
     height: 100%;
 }
 
-
 .clients {
     column-count: 2;
     text-align: center;
@@ -634,7 +629,6 @@ li.coming-soon a::before {
     margin-bottom: 0;margin-top: 0px;
 
 }
-
 
 #stills .container {
     padding: 0;
@@ -679,10 +673,17 @@ li.coming-soon a::before {
     border-top: none;
 }
 
+/*--- = Cinematographer */
+
+#cinematographer figure {
+    margin-bottom: var(--double-spacing-unit);
+}
+
 /*--- = About    */
 
 section#about {
     padding-top: 36px; /*Special case, up against the navbar*/
+    margin-bottom: var(--double-spacing-unit);
 }
 
 .representation {
@@ -692,6 +693,7 @@ section#about {
 }
 
 .representation h3 {
+    text-align: left;
     font-weight: inherit;
     margin-left: 0;
     padding-left: 0;
@@ -699,12 +701,22 @@ section#about {
 
 #about figure {
     height: 60vmin;
- 
+
 }
 
 #about figure img {
     object-fit: contain;
     height: 100%;
+}
+
+/*--- = Short films */
+
+#short-films .container > * {
+    margin-bottom: var(--double-spacing-unit);
+}
+
+.thumbnails.four-up {
+    grid-template-columns: repeat(4, 1fr);
 }
 
 /*--- = Contact  */
@@ -852,11 +864,7 @@ textarea {
     --text-color: #ffffff;
     --alt-text-color: rgba(255, 255, 255, .4);
     --light-text-color: #aaa;
-    --heading-color: #dee2e6;
     --hr-color: rgba(255, 255, 255, .1);
-    --code-color: rgba(212, 73, 80, .85);
-    --code-snippet-border: rgba(255, 255, 255, .1);
-    --neutral-accent: #828282;
   }
 }
 
@@ -869,7 +877,6 @@ textarea {
 
 @media screen and (min-width: 500px) {
     .stills {
-        margin-top: 35px;
         grid-template-columns: repeat(4, calc(100vw / 4));
         grid-template-rows: repeat(auto-fit, calc(100vw / 4));
     }
@@ -912,8 +919,8 @@ textarea {
         grid-template-columns: 30fr 23fr; /* Tuned to make the feature posters look good */
     }
 
-    .container > h3 {
-
+    .full-width-centered {
+        grid-column: 1 / 3;
     }
 
     section figure,
@@ -941,6 +948,7 @@ textarea {
         z-index: 10;
         color: white;
         border-color: white;
+        font-size: 24px;
     }
    
 
@@ -976,8 +984,10 @@ textarea {
     }
 
     .stills {
-        grid-template-columns: repeat(6, calc(100vw / 6));
-        grid-template-rows: repeat(auto-fit, calc(100vw / 6));
+        margin-top: var(--double-spacing-unit);
+        /* Dividing by six causes with no epsilon causes overflow in Safari 13*/
+        grid-template-columns: repeat(6, calc(100vw / 6 - 3px));
+        grid-template-rows: repeat(auto-fit, calc(100vw / 6 - 3px));
     }
 
     /*We're using 16 images, so remove the stray four when we have rows of 6*/
@@ -1003,12 +1013,14 @@ textarea {
         margin-top: 24px;
     }
 
-    .thumbnails {
+    .thumbnails-container {
         width: unset;
         margin: 0 auto;
     }
-    .backdrop {
-        background-color: unset;
+
+    /*--- = Short films */
+    .thumbnails.four-up {
+        grid-template-columns: repeat(4, 1fr);
     }
 
     /*--- = Colorist  */
