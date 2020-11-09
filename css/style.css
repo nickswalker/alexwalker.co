@@ -1034,8 +1034,18 @@ textarea {
     /*--- = Colorist  */
     #colorist .thumbnails {
         grid-template-columns: repeat(4, 1fr);
+       
     }
 
+      /*--- = CinematographerFeat  */
+    #cinemafeat .thumbnails {
+        grid-template-columns: repeat(4, 1fr);
+       
+    }
+
+     
+     
+     
     /*--- = About    */
     #about figure {
         height: unset;
