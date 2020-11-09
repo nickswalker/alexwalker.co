@@ -1038,7 +1038,7 @@ textarea {
     }
 
       /*--- = CinematographerFeat  */
-    #cinemafeat .thumbnails {
+    #cinemafeat.thumbnails {
         grid-template-columns: repeat(4, 1fr);
        
     }
