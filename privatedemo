@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
+    <title>Alex Walker</title>
+    <meta name="author" content="Alex Walker">
+    <meta name="description" content="Cinematographer, colorist."/>
+    <meta name="keywords"
+          content="Cinematographer,Colorist,Director,Portfolio,Photography,Vision,Camera,Experienced,Professional,"/>
+
+    <!-- Test this out with https://developers.facebook.com/tools/debug/sharing/?q=alexwalker.co -->
+    <meta property="og:url" content="https://alexwalker.co">
+    <meta property="og:image" content="https://alexwalker.co/img/ogimage2.jpg">
+    <meta property="og:title" content="Short Films Shot by Alex Walker">
+    <meta property="og:description" content="">
+
+    <link rel="shortcut icon" href="/img/favicon.png"/>
+    <link rel="apple-touch-icon-precomposed" href="/img/touch-icon.png"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+
+    <link media="all" type="text/css" rel="stylesheet" href="/css/style.css">
+    <link media="all" type="text/css" rel="stylesheet"
+          href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link media="all" type="text/css" rel="stylesheet" href="/packages/bootstrap/css/bootstrap-carousel.css">
+    <link media="all" type="text/css" rel="stylesheet" href="/packages/fancybox/jquery.fancybox.min.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600,700' rel='stylesheet' type='text/css'>
+    <script src="/packages/fancybox/jquery.fancybox.min.js"></script>
+    <script src="/packages/bootstrap/js/bootstrap-carousel.js"></script>
+    <script src="/js/scroller.js"></script>
+    <script src="/js/contact.js"></script>
+    <script src="/js/scripts.js"></script>
+
+</head>
+
+<body><a id="top"></a>
+
+
+<header class="dark">
+    <nav class="container">
+        <ul>
+            <li class="logo">
+                <h1><a href="https://alexwalker.co/">Alex Walker</a></h1>
+            </li>
+            <li><a href="https://alexwalker.co/#cinematographer">Cinematographer</a>
+            </li>
+            <li><a href="https://alexwalker.co/#colorist">Colorist</a>
+            </li>
+            <li><a href="https://alexwalker.co/#about">Bio</a>
+            </li>
+            <li><a href="https://alexwalker.co/#contact">Contact</a>
+            </li>
+            <li>
+                <ul class="social">
+
+                    <li><a href="https://fb.me/alexwalkerfilmmaker"><i class="ion-social-facebook"></i></a>
+                    </li>
+                    <li><a href="https://www.youtube.com/user/WalkerStudios"><i class="ion-social-youtube"></i></a>
+                    </li>
+                    <li><a href="https://instagram.com/alex_walker47"><i class="ion-social-instagram"></i></a>
+                    </li>
+
+
+                </ul>
+            </li>
+            <li id="scroll-down-indicator">
+                <a href="#return" id="scroll-down" class="smooth-scroll"><i class="ion-chevron-down"></i></a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<a id="return-to-top" href="#top" class="smooth-scroll"><i class="ion-chevron-up"></i></a>
+
+<section id="short-films">
+
+    <div class="container">
+
+        <h2>Short Films as Cinematographer and Colorist</h2>
+
+
+        <figure class="full-width-centered">
+            <div class="thumbnails-container">
+                <ul class="thumbnails four-up">
+                      <li>
+
+                        <a href="https://www.imdb.com/title/tt11934656/?ref_=nm_flmg_cin_2"><img src="/img/posters/c3.jpg"/>
+                        </a>
+
+                    </li>
+                    
+                    
+                    <li>
+                        <img src="/img/posters/mts.jpg"/>
+                    </li>
+                    
+                     <li>
+
+                        <a href="https://www.imdb.com/title/tt10869626/?ref_=nm_flmg_cin_6"><img src="/img/posters/saposter.jpg"/>
+                        </a>
+
+                    </li>
+                    
+                    
+                    
+                    <li>
+   <a href="https://www.imdb.com/title/tt10461524/?ref_=nm_knf_i3"><img src="/img/posters/JR.jpg"/>
+                        </a>
+                       
+                       
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt9178306/"><img src="/img/posters/lp.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt8887800/"><img src="/img/posters/ee.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt7686150/"><img src="/img/posters/fhnp.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt7579434/"><img src="/img/posters/goh.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt6187926/"><img src="/img/posters/bu.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt5759066/"><img src="/img/posters/ya.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt5235882/"><img src="/img/posters/iose.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt5883002/"><img src="/img/posters/alohp.jpg"/>
+                        </a>
+
+                    </li>
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt4779974/"><img src="/img/posters/atd.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt4643326/"><img src="/img/posters/tr.jpg"/>
+                        </a>
+
+                    </li>
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt5046928/"><img src="/img/posters/shine.jpg"/>
+                        </a>
+
+                    </li>
+                    </li>
+                    <li>
+
+                        <a href="https://www.youtube.com/watch?v=8DGsLrGLDXc"><img src="/img/posters/ca.jpg"/>
+                        </a>
+
+                    </li>
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt4034704/"><img src="/img/posters/bdr.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt3717360/"><img src="/img/posters/bn.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt3632708/"><img src="/img/posters/gts.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt4568464/"><img src="/img/posters/gms.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt3812490/"><img src="/img/posters/sconce.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="https://www.imdb.com/title/tt2624240/"><img src="/img/posters/box.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt2369730/"><img src="/img/posters/ms.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt7481940/"><img src="/img/posters/sf5.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt7481934/"><img src="/img/posters/sf4.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt7481944/"><img src="/img/posters/sf3.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt7481930/"><img src="/img/posters/sf2.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt7481926/"><img src="/img/posters/sf1.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt2356876/"><img src="/img/posters/ct.jpg"/>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="https://www.imdb.com/title/tt1992262/"><img src="/img/posters/ts.jpg"/>
+                        </a>
+
+                    </li><li>
+
+                        <img src="/img/posters/te.jpg"/>
+                        
+
+                    </li>
+
+                </ul>
+            </div>
+        </figure>
+
+        <div class="full-width-centered">
+            <a id="return"></a>
+
+            <button><a href="https://alexwalker.co/index.html#back">Back to Main Page</a>
+            </button>
+        </div>
+    </div>
+</section>
+<section class="copyright">
+    <div class="copyright">&copy; Alex Walker 2003-<span id="copyright-current-year">2017</span></i></a>
+    </div>
+</section>
+
+</body>
+
+</html>
