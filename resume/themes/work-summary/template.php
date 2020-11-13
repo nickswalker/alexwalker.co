@@ -3,7 +3,7 @@
 <head>
 	 <meta property="og:url" content="https://alexwalker.co/resume/">
     <meta property="og:image" content="https://alexwalker.co/img/ogimage3.jpg">
-    <meta property="og:title" content="Alex Walker's Cinematography CV">
+    <meta property="og:title" content="Alex Walker's Cinematography Résumé">
     <meta property="og:description" content="">
 	<meta charset="utf-8" />
 	<meta name="format-detection" content="telephone=no">
@@ -63,11 +63,14 @@
 		<section>
 			<div class="representation">
 				<b><h2>Representation:</h2></b>
-					<b><a href="http://therighteye.com/">The Right Eye Inc.</a></b><br>
-					41 Union Square West, Suite 435<br>
-					New York, NY 10003<br>
-					212.924.8505<br>
-				</div>
+					<b> The Right Eye Inc.
+                    <br/><a href="http://therighteye.com/">www.therighteye.com</a>
+ <br/>Thomas Turley | turley@therighteye.com
+    <br/>office 212.924.8505
+ <br/>cell 917.209.5445
+                
+                    <br/> New York, NY
+            
 			<div class="right-plate">
 					<div class="contact-info">
 						<h3 id="print"><button onClick="window.print()">Print</button></h3>
