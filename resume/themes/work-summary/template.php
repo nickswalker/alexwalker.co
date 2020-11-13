@@ -70,7 +70,7 @@
  <br/>cell 917.209.5445
                 
                     <br/> New York, NY
-            
+            </div>
 			<div class="right-plate">
 					<div class="contact-info">
 						<h3 id="print"><button onClick="window.print()">Print</button></h3>
