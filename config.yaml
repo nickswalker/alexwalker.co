@@ -1,0 +1,16 @@
+title: Alex Walker
+first_last_name: Alex Walker
+description: > # this means to ignore newlines until "baseurl:"
+  Portfolio site
+baseurl: "" # Subpath, in my case, root
+url: "https://alexwalker.co" # includes protocol
+
+plugins:
+  - jekyll-sitemap
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .idea
+include:
+  - .well-known
