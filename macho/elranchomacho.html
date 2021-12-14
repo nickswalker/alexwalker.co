@@ -2,6 +2,21 @@
 <html lang="en">
 
 <head>
+    
+    <script language="javascript">
+function pasuser(form) { 
+if (form.id.value=="macho") { 
+if (form.pass.value=="macho2022") { location="https://alexwalker.co/macho/elranchomacho.html" } 
+else { alert("Wrong Password") } 
+} 
+else { alert("Wrong Username") } 
+} 
+</script>
+<form name="login">
+Username: < input name="id" size="6" type="text">
+Password: < input name="pass" size="6" type="password">
+<input value="Login" onclick="pasuser(this.form)" type="button">
+</form>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
     <title>El Rancho Macho</title>
