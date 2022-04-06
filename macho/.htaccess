@@ -1,4 +1,0 @@
-AuthType Basic
-AuthName "Protected Site"
-AuthUserFile macho/.htpasswd
-require valid-user
