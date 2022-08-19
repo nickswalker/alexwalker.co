@@ -79,7 +79,7 @@
 
         <h3>Private portfolio. Videos are unlisted; do not share.</h3>
         <center> <h3>All projects were shot and colored by me unless otherwise noted.</h3></center>
-        </section> <section id="shortfilms">
+      
      
 
         <h2>Narrative</h2>
@@ -295,6 +295,18 @@
             }
         });
         $('#colorist a.sixteen-by-nine').fancybox({
+            autoSize: true,
+            width: 1600,
+            height: 900,
+            padding: 0,
+            helpers: {
+                media: {}
+            },
+            iframe: {
+                preload: false
+            }
+        });
+        $('#shortfilms a.sixteen-by-nine').fancybox({
             autoSize: true,
             width: 1600,
             height: 900,
