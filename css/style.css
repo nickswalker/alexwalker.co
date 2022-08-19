@@ -481,8 +481,16 @@ section h2 {
 .thumbnails {
     display: grid;
     grid-gap: var(--grid-gap) var(--grid-gap);
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(auto-fit, 1fr);
+}
+.thumbnails-cont{
+       grid-template-columns: repeat(4, 1fr);
+}
+@media screen and (max-width: 500px){
+     .thumbnails-cont{
+            grid-template-columns: repeat(2, 1fr);
+     }
 }
 
 .thumbnails-container h3 {
