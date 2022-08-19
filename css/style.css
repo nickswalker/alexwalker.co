@@ -473,7 +473,7 @@ section h2 {
 
 /* Cinematographer */
 .thumbnails-container {
-    width: 80vmin;
+    min-width: 80vmin;
     min-width: 60%;
     margin: 0 auto;
 }
