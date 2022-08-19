@@ -264,6 +264,51 @@
     <div class="copyright">&copy; Alex Walker 2003-<span id="copyright-current-year">2017</span></i></a>
     </div>
 </section>
+<script type="text/javascript">
+    $(function () {
+        $('.stills-image').fancybox({
+            thumbs: false,
+            slideShow: false
+        });
+
+        $('#cinematographer .reels a').fancybox({
+            autoSize: true,
+            width: 1300,
+            height: 550,
+            padding: 0,
+            aspectRatio: true,
+            helpers: {
+                media: {}
+            },
+            iframe: {
+                preload: false
+            }
+        });
+        $('#cinematographer .reels a.sixteen-by-nine, #reel-button a').fancybox({
+            autoSize: true,
+            width: 1600,
+            height: 900,
+            padding: 0,
+            aspectRatio: true,
+            helpers: {
+                media: {}
+            }
+        });
+        $('#colorist a.sixteen-by-nine').fancybox({
+            autoSize: true,
+            width: 1600,
+            height: 900,
+            padding: 0,
+            helpers: {
+                media: {}
+            },
+            iframe: {
+                preload: false
+            }
+        });
+
+    });
+</script>
 <!-- Default Statcounter code for Portfolio Website
 http://alexwalker.co -->
 <script type="text/javascript">
