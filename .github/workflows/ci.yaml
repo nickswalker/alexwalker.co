@@ -25,7 +25,7 @@ jobs:
         run: |
           pwd
           ls
-          bundle exec htmlproofer ./_site --only-4xx --check-favicon --check-html --assume-extension --alt-ignore '/.*/' --file-ignore '/google/' --url-ignore '/vimeo.com/' --url-ignore '/twitter.com/' --url-swap 'https?\:\/\/alexwalker\.co:'
+          bundle exec htmlproofer ./_site --only-4xx  --assume-extension .html --no-enforce-https --ignore-missing-alt --ignore-urls '/vimeo.com/' --ignore-urls '/twitter.com/' --swap-urls 'https?\:\/\/alexwalker\.co:'
       - name: Upload build artifact
         uses: actions/upload-artifact@v2
         with:
