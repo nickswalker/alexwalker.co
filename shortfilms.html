@@ -22,18 +22,15 @@
 
     <link media="all" type="text/css" rel="stylesheet" href="/css/style.css">
     <link media="all" type="text/css" rel="stylesheet"
-          href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+          href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link media="all" type="text/css" rel="stylesheet" href="/packages/bootstrap/css/bootstrap-carousel.css">
     <link media="all" type="text/css" rel="stylesheet" href="/packages/fancybox/jquery.fancybox.min.css">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600,700' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600,700' rel='stylesheet' type='text/css'>
     <script src="/packages/fancybox/jquery.fancybox.min.js"></script>
     <script src="/packages/bootstrap/js/bootstrap-carousel.js"></script>
     <script src="/js/scroller.js"></script>
-    <script src="/js/contact.js"></script>
-    <script src="/js/scripts.js"></script>
-
 </head>
 
 <body><a id="top"></a>
@@ -43,13 +40,13 @@
     <nav class="container">
         <ul>
             <li class="logo">
-                <h1><a href="https://alexwalker.co/">Alex Walker</a></h1>
+                <h1><a href="/">Alex Walker</a></h1>
             </li>
-            <li><a href="https://alexwalker.co/#cinematographer">Cinematographer</a>
+            <li><a href="/#cinematographer">Cinematographer</a>
             </li>
-            <li><a href="https://alexwalker.co/#colorist">Colorist</a>
+            <li><a href="/#colorist">Colorist</a>
             </li>
-            <li><a href="https://alexwalker.co/#about">Bio</a>
+            <li><a href="/#about">Bio</a>
             </li>
            
             <li>
@@ -90,44 +87,30 @@
 
                     </li>  
                      <li>
-
-                        <a href=""><img src="/img/posters/mess.jpg"/>
-                        </a>
-
-                    </li>    <li>
-
-                        <a href=""><img src="/img/posters/alitposter.jpg"/>
-                        </a>
+                        <img src="/img/posters/mess.jpg"/>
+                    </li>    
+                    <li>
+                        <img src="/img/posters/alitposter.jpg"/>
 
                     </li>   
                     
                     <li>
+                        <img src="/img/posters/RABBposter.jpg"/>
 
-                        <a href=""><img src="/img/posters/RABBposter.jpg"/>
-                        </a>
-
-                    </li>     <li>
-
-                        <a href=""><img src="/img/posters/tdposter.jpg"/>
-                        </a>
-
-                    </li> <li>
-
-                        <a href=""><img src="/img/posters/gbposter.jpg"/>
-                        </a>
-
-                    </li>   <li>
-
-                        <a href=""><img src="/img/posters/bdposter.jpg"/>
-                        </a>
-
+                    </li>     
+                    <li>
+                        <img src="/img/posters/tdposter.jpg"/>
+                    </li> 
+                    <li>
+                        <img src="/img/posters/gbposter.jpg"/>
+                    </li>   
+                    <li>
+                        <img src="/img/posters/bdposter.jpg"/>
                     </li> 
                     
                     <li>
-
                         <a href="https://www.imdb.com/title/tt11934656/?ref_=nm_flmg_cin_2"><img src="/img/posters/c3.jpg"/>
                         </a>
-
                     </li>
                     
                     
@@ -309,10 +292,9 @@
                         <a href="https://www.imdb.com/title/tt1992262/"><img src="/img/posters/ts.jpg"/>
                         </a>
 
-                    </li><li>
-
-                        <img src="/img/posters/te.jpg"/>
-                        
+                    </li>
+                    <li>
+                        <img src="/img/posters/te.jpg"/> 
 
                     </li>
 
@@ -332,6 +314,69 @@
     <div class="copyright">&copy; Alex Walker 2003-<span id="copyright-current-year">2017</span></i></a>
     </div>
 </section>
+<script type="text/javascript">
+   $(function () {
+        const $htmlBody = $("html,body");
+        let wHeight  = $(window).height();
+
+        $(window).on('resize', function(){
+            wHeight = $(window).height();
+        });
+
+        function goToByScroll(element) {
+            $htmlBody.animate({
+                scrollTop: element.offset().top
+            }, 400, 'easeInOutQuint');
+        }
+
+        let lastEventLocation = 0;
+
+        function onScroll(e) {
+            const target = $(e.target);
+            const lastBelow = lastEventLocation >= wHeight;
+            const currentBelow = target.scrollTop() >= wHeight;
+
+            if (lastBelow ^ currentBelow) {
+                if (currentBelow) {
+                    $returnToTop.fadeIn(400);    // Fade in the arrow
+                } else {
+                    $returnToTop.fadeOut(400);   // Else fade out the arrow
+                }
+
+            }
+
+            lastEventLocation = target.scrollTop();
+        }
+
+        // Smooth scroll-to
+        const links = $('.smooth-scroll');
+
+        //Handle clicks on elements that send to other parts of the page
+        links.click(function (e) {
+            e.preventDefault();
+            if (!e.currentTarget.hash) {
+                return;
+            }
+            const element = $(e.currentTarget.hash);
+            if (element) {
+                goToByScroll(element);
+            }
+        });
+
+
+        // Scroll to top button
+        const $returnToTop = $('#return-to-top');
+        // Passive scroll handler
+        window.addEventListener('scroll', onScroll.bind(this), {passive: true});
+
+
+        // Keep the copyright up to date.
+        document.getElementById("copyright-current-year").innerHTML = new Date().getFullYear().toString();
+
+
+
+    });
+</script>
 <!-- Default Statcounter code for Portfolio Website
 http://alexwalker.co -->
 <script type="text/javascript">

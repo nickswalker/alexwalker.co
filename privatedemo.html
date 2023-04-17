@@ -22,34 +22,42 @@
 
     <link media="all" type="text/css" rel="stylesheet" href="/css/style.css">
     <link media="all" type="text/css" rel="stylesheet"
-          href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <link media="all" type="text/css" rel="stylesheet" href="/packages/bootstrap/css/bootstrap-carousel.css">
+          href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link media="all" type="text/css" rel="stylesheet" href="/packages/fancybox/jquery.fancybox.min.css">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600,700' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600,700' rel='stylesheet' type='text/css'>
     <script src="/packages/fancybox/jquery.fancybox.min.js"></script>
     <script src="/packages/bootstrap/js/bootstrap-carousel.js"></script>
     <script src="/js/scroller.js"></script>
-    <script src="/js/contact.js"></script>
-    <script src="/js/scripts.js"></script>
 
+    <style type="text/css">
+
+        @media screen and (min-width: 900px) {
+            section .container.four-columns {
+                grid-template-columns: 100%;
+            }
+            section .container.four-columns .thumbnails {
+                grid-template-columns: repeat(4,1fr);
+            }
+        }
+    </style>
 </head>
 
-<body><a id="top"></a>
+<body><a id="top" href="#"></a>
 
 
 <header class="dark">
     <nav class="container">
         <ul>
             <li class="logo">
-                <h1><a href="https://alexwalker.co/">Alex Walker</a></h1>
+                <h1><a href="/">Alex Walker</a></h1>
             </li>
-            <li><a href="https://alexwalker.co/#cinematographer">Cinematographer</a>
+            <li><a href="/#cinematographer">Cinematographer</a>
             </li>
-            <li><a href="https://alexwalker.co/#colorist">Colorist</a>
+            <li><a href="/#colorist">Colorist</a>
             </li>
-            <li><a href="https://alexwalker.co/#about">Bio</a>
+            <li><a href="/#about">Bio</a>
             </li>
           
             <li>
@@ -75,16 +83,13 @@
 
 <section id="shortfilms">
 
-    <div class="container">
+    <div class="container four-columns">
 
       
-      
-     
 
         <h2>Narrative</h2>
-        <figure class="full-width-centered">
-            <div class="thumbnails-container">
-                <ul class="thumbnails thumbnails-cont">
+        <figure>
+            <ul class="thumbnails">
                       <li>   
 
                         <a href="https://www.youtube.com/watch?v=3ftKJaKxl_c" class="sixteen-by-nine"><img src="/img/temp4.jpg"/>
@@ -147,13 +152,14 @@
       
 
                 </ul>
-            </div>
         </figure>
-        <br><br>
+    </div>
+</section>
+<section id="commercial">
+    <div class="container four-columns">
          <h2>Commercial, Documentary & Music Video</h2>
-        <figure class="full-width-centered">
-            <div class="thumbnails-container">
-                <ul class="thumbnails thumbnails-cont">
+        <figure>
+                <ul class="thumbnails">
                        <li>
                         <a href="https://www.youtube.com/watch?v=2-gmX0QuFTo" class="sixteen-by-nine"><img src="/img/Youtube.jpg"/> </a>
                     </li>   <li>
@@ -287,11 +293,12 @@
                 </ul>
             </div>
         </figure>
-     <br><br>
+</section>
+<section id="colorist">
+    <div class="container four-columns">
          <h2>Colorist Only</h2>
-        <figure class="full-width-centered">
-            <div class="thumbnails-container">
-                <ul class="thumbnails thumbnails-cont">
+        <figure>
+                <ul class="thumbnails">
                    <li>
 
                         <a href="https://youtu.be/cwVhkQJFzIE" class="sixteen-by-nine"><img src="/img/hitch.jpg"/>
@@ -336,79 +343,87 @@
                     </li>
 
                 </ul>
-            </div>  </figure>
+        </figure>
               
-      
-             <br><br>
-        <div class="full-width-centered">
-            <a id="return"></a>
-
-            <button><a href="https://alexwalker.co/">Visit Public Portfolio Website</a>
+      </div>
+  </section>
+<section id="return">
+        <div class="container">
+            <div class="full-width-centered">
+<button><a href="https://alexwalker.co/">Visit Public Portfolio Website</a>
             </button>
-             <br><br>
+</div>
+            <div class="text">
+            <h3>Private portfolio. Videos are unlisted; do not share.</h3>
+            </div>
+            <div class="text">
+      <h3>All projects were shot and colored by me unless otherwise noted.</h3>
         </div>
-        <h3>Private portfolio. Videos are unlisted; do not share.</h3>
-        <center> <h3>All projects were shot and colored by me unless otherwise noted.</h3></center>
+
     </div>
-</section>
+        
+    </section>
 <section class="copyright">
     <div class="copyright">&copy; Alex Walker 2003-<span id="copyright-current-year">2017</span></i></a>
     </div>
 </section>
 <script type="text/javascript">
-    $(function () {
-        $('.stills-image').fancybox({
-            thumbs: false,
-            slideShow: false
+   $(function () {
+        const $htmlBody = $("html,body");
+        let wHeight  = $(window).height();
+
+        $(window).on('resize', function(){
+            wHeight = $(window).height();
         });
 
-        $('#cinematographer .reels a').fancybox({
-            autoSize: true,
-            width: 1300,
-            height: 550,
-            padding: 0,
-            aspectRatio: true,
-            helpers: {
-                media: {}
-            },
-            iframe: {
-                preload: false
+        function goToByScroll(element) {
+            $htmlBody.animate({
+                scrollTop: element.offset().top
+            }, 400, 'easeInOutQuint');
+        }
+
+        let lastEventLocation = 0;
+
+        function onScroll(e) {
+            const target = $(e.target);
+            const lastBelow = lastEventLocation >= wHeight;
+            const currentBelow = target.scrollTop() >= wHeight;
+
+            if (lastBelow ^ currentBelow) {
+                if (currentBelow) {
+                    $returnToTop.fadeIn(400);    // Fade in the arrow
+                } else {
+                    $returnToTop.fadeOut(400);   // Else fade out the arrow
+                }
+
+            }
+
+            lastEventLocation = target.scrollTop();
+        }
+
+        // Smooth scroll-to
+        const links = $('.smooth-scroll');
+
+        //Handle clicks on elements that send to other parts of the page
+        links.click(function (e) {
+            e.preventDefault();
+            if (!e.currentTarget.hash) {
+                return;
+            }
+            const element = $(e.currentTarget.hash);
+            if (element) {
+                goToByScroll(element);
             }
         });
-        $('#cinematographer .reels a.sixteen-by-nine, #reel-button a').fancybox({
-            autoSize: true,
-            width: 1600,
-            height: 900,
-            padding: 0,
-            aspectRatio: true,
-            helpers: {
-                media: {}
-            }
-        });
-        $('#colorist a.sixteen-by-nine').fancybox({
-            autoSize: true,
-            width: 1600,
-            height: 900,
-            padding: 0,
-            helpers: {
-                media: {}
-            },
-            iframe: {
-                preload: false
-            }
-        });
-        $('#shortfilms a.sixteen-by-nine').fancybox({
-            autoSize: true,
-            width: 1000,
-            height: 700,
-            padding: 0,
-            helpers: {
-                media: {}
-            },
-            iframe: {
-                preload: false
-            }
-        });
+
+        // Scroll to top button
+        const $returnToTop = $('#return-to-top');
+        // Passive scroll handler
+        window.addEventListener('scroll', onScroll.bind(this), {passive: true});
+
+
+        // Keep the copyright up to date.
+        document.getElementById("copyright-current-year").innerHTML = new Date().getFullYear().toString();
 
     });
 </script>
