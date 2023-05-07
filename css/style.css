@@ -693,7 +693,6 @@ li.coming-soon a::before {
 
 section#about {
     padding-top: 36px; /*Special case, up against the navbar*/
-    margin-bottom: var(--double-spacing-unit);
 }
 
 .representation {
@@ -969,9 +968,6 @@ section#about {
         grid-template-columns: repeat(4, 1fr);
        
     }
-
-     
-     
      
     /*--- = About    */
     #about figure {
