@@ -1,11 +1,12 @@
 ## File sizes
 
-Target the below sizes. 50-60% JPEG quality is typicall sufficient.
+Target the below sizes. 50-60% JPEG quality is typically sufficient. Consider
+using [WebP](https://developers.google.com/speed/webp) for new images.
 
-Image role | File Size
------------------
-4K slider | 400KB
-Still thumbnail | 75KB
+| Image role      | File Size |
+|-----------------|-----------|
+| 4K slider       | 400KB     |
+| Still thumbnail | 75KB      |
 
 Finally, do a pass of lossless compression with [ImageOptim](https://imageoptim.com)
 

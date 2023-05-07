@@ -10,7 +10,7 @@ For the front page, open a terminal and then drag in the root folder of the site
 
 Now, run the following:
 
-    python -m SimpleHTTPServer 8000
+    python3 -m http.server 8000
 
 You can access the site from a browser at `localhost:8000`
 
