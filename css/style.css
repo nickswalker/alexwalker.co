@@ -1032,3 +1032,10 @@ section#about {
         display: unset;
     }
 }
+
+.feature-films{
+     display: block;
+}
+.feature-container{
+      grid-template-columns: repeat(4, 1fr);
+}
