@@ -1034,7 +1034,7 @@ section#about {
 }
 
 .feature-films{
-     display: block;
+     display: block !important;
 }
 .feature-container{
       grid-template-columns: repeat(4, 1fr);
