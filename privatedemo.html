@@ -91,7 +91,7 @@
 
         <h2>Narrative</h2>
         <figure>
-            <ul class="thumbnails">
+            <ul class="thumbnails lightbox playbuttons">
                 <li>   
 
                         <a href="https://www.youtube.com/watch?v=BxMmSiMJxo0" class="sixteen-by-nine"><img src="/img/HoAtrailer.jpg"/>
@@ -174,7 +174,7 @@
     <div class="container four-columns">
          <h2>Commercial, Documentary & Music Video</h2>
         <figure>
-                <ul class="thumbnails">
+                <ul class="thumbnails lightbox playbuttons">
                        <li>
                         <a href="https://www.youtube.com/watch?v=2-gmX0QuFTo" class="sixteen-by-nine"><img src="/img/Youtube.jpg"/> </a>
                     </li>   <li>
@@ -320,7 +320,7 @@
     <div class="container four-columns">
          <h2>Colorist Only</h2>
         <figure>
-                <ul class="thumbnails">
+                <ul class="thumbnails lightbox playbuttons">
                     <li>
 
                         <a href="https://youtu.be/vmnXwAJq7go" class="sixteen-by-nine"><img src="/img/fever.jpg"/>
@@ -399,6 +399,49 @@
     <div class="copyright">&copy; Alex Walker 2003-<span id="copyright-current-year">2017</span></i></a>
     </div>
 </section>
+<script type="text/javascript">
+    $(function () {
+        $('.stills-image').fancybox({
+            thumbs: false,
+            slideShow: false
+        });
+
+        $('.thumbnails.lightbox a').fancybox({
+            autoSize: true,
+            width: 1300,
+            height: 550,
+            padding: 0,
+            aspectRatio: true,
+            helpers: {
+                media: {}
+            },
+            iframe: {
+                preload: false
+            }
+        });
+        $('.thumbnails.lightbox a.sixteen-by-nine, #reel-button a').fancybox({
+            autoSize: true,
+            width: 1600,
+            height: 900,
+            padding: 0,
+            aspectRatio: true,
+            helpers: {
+                media: {}
+            }
+        });
+        $('a.sixteen-by-nine').fancybox({
+            autoSize: true,
+            width: 1600,
+            height: 900,
+            padding: 0,
+            helpers: {
+                media: {}
+            },
+            iframe: {
+                preload: false
+            }
+        });
+    
 <script type="text/javascript">
    $(function () {
         const $htmlBody = $("html,body");
