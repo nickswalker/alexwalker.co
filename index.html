@@ -34,6 +34,8 @@
     <script src="/packages/bootstrap/js/bootstrap-carousel.js"></script>
     <script src="/js/scroller.js"></script>
 
+    
+
 </head>
 
 <body class="home">
@@ -600,14 +602,14 @@
        }, 
                          {
            media: "(color-gamut: p3)",
-           srcset: "/img/slider-wide/2.jpg 3840w",
-           secondSrcset: "/img/slider/3.jpg 1920w, /img/slider-super/2.jpg 3840w",
-           src: "/img/slider/3.jpg"
-       }, {
-           media: "(color-gamut: p3)",
-           srcset: "/img/slider-wide/3.jpg 3840w",
+           srcset: "/img/slider-wide/4.jpg 3840w",
            secondSrcset: "/img/slider/1.jpg 1920w, /img/slider-super/4.jpg 3840w",
            src: "/img/slider/1.jpg"
+       }, {
+           media: "(color-gamut: p3)",
+           srcset: "/img/slider-wide/5.jpg 3840w",
+           secondSrcset: "/img/slider/4.jpg 1920w, /img/slider-super/5.jpg 3840w",
+           src: "/img/slider/4.jpg"
        }];
 
     // set carousel items
@@ -619,23 +621,26 @@
 
         while(randomLinks.length < 5) {
             let randomIndex = Math.floor(Math.random() * 5);
-            let index = indexList.pop(randomIndex);
+            let index = indexList.slice(randomIndex);
 
             randomLinks.push(imageLinks[index]);
         }
 
         let htmlChildren = '';
-        randomeLinks.forEach((linkItem, linkItemIndex) => {
-        let htmlItem = `<div class="item" data-index="${linkItemIndex}">
+        randomLinks.forEach((linkItem, linkItemIndex) => {
+        htmlChildren += `<div class="item" data-index="${linkItemIndex}">
                 <picture>
                     <source media="(color-gamut: p3)" srcset="${linkItem.srcset}" sizes="100vw"/>
                     <source srcset="${linkItem.secondSrcset}" sizes="100vw"/>
                     <img src="${linkItem.src}"/>
                 </picture>
             </div>`;
-
-            $('#slider-container .carousel-inner').append(htmlItem);
         });
+
+        let html = `<div class="carousel-inner" role="listbox">
+            ${htmlChildren}
+        </div>`;
+        $('#slider-container .carousel-inner').html(html);
     };
 
     setCarouselItems();
