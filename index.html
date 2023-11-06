@@ -667,12 +667,12 @@
         let realItems = $('#slider-container .carousel-inner').children();
 
         for (let i = 0; i < realItems.length; i++) {
-            let subChildren = realItems[i].find('query').children();
+            let subChildren = $(realItems[i]).find('query').children();
 
             if (subChildren.length > 2) {
-                subChildren[0].attr('srcset', randomLinks[i].srcset);
-                subChildren[1].attr('srcset', randomLinks[i].secondSrcset);
-                subChildren[2].attr('src', randomLinks[i].src);
+                $(subChildren[0]).attr('srcset', randomLinks[i].srcset);
+                $(subChildren[1]).attr('srcset', randomLinks[i].secondSrcset);
+                $(subChildren[2]).attr('src', randomLinks[i].src);
             }
         }
 
