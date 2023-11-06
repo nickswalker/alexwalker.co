@@ -664,17 +664,31 @@
             randomLinks.push(imageLinks[index]);
         }
 
-        let htmlChildren = '';
-        randomLinks.forEach((linkItem, linkItemIndex) => {
-        htmlChildren += `<div class="item" data-index="${linkItemIndex}">
-                <picture>
-                    <source media="(color-gamut: p3)" srcset="${linkItem.srcset}" sizes="100vw"/>
-                    <source srcset="${linkItem.secondSrcset}" sizes="100vw"/>
-                    <img src="${linkItem.src}"/>
-                </picture>
-            </div>`;
-        });
-        $('#slider-container .carousel-inner').html(htmlChildren);
+        let realItems = $('#slider-container .carousel-inner).children();
+
+        for (let i = 0; i < realItems.length; i++) {
+            let subChildren = realItem[i].find('query').children();
+
+            if (subChildren.length > 2) {
+                subChildren[0].attr('srcset', randomLinks[i].srcset);
+                subChildren[1].attr('srcset', randomLinks[i].secondSrcset);
+                subChildren[2].attr('src', randomLinks[i].src);
+            }
+        }
+
+        // let htmlChildren = '';
+        // randomLinks.forEach((linkItem, linkItemIndex) => {
+
+            
+        // htmlChildren += `<div class="item" data-index="${linkItemIndex}">
+        //         <picture>
+        //             <source media="(color-gamut: p3)" srcset="${linkItem.srcset}" sizes="100vw"/>
+        //             <source srcset="${linkItem.secondSrcset}" sizes="100vw"/>
+        //             <img src="${linkItem.src}"/>
+        //         </picture>
+        //     </div>`;
+        // });
+        // $('#slider-container .carousel-inner').html(htmlChildren);
 
         setCarouselSlider();
     };
