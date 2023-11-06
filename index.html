@@ -612,6 +612,44 @@
            src: "/img/slider/4.jpg"
        }];
 
+    function setCarouselSlider() {
+        const $carouselContainer = $('#slider-container');
+
+        // Initialize carousel
+        $carouselContainer.carousel(
+            // Don't pause on hover
+            {"pause": null}
+            );
+        const slideTime = 5000;
+        // Customize carousel
+
+        const $allIndicators = $carouselContainer.find(".carousel-indicators > *");
+        $allIndicators.each(function(index, element){
+            $(element).append('<div class="progress-bar"></div>')
+        });
+
+        const $firstProgress = $("[data-slide-to='0'] .progress-bar");
+        $firstProgress.animate({"width": "100%"}, slideTime, "linear");
+
+        const $allProgressBars = $allIndicators.find(".progress-bar");
+        $carouselContainer.on('slide.bs.carousel', function (event) {
+            const paused = $carouselContainer.hasClass("paused");
+            // New slide reached
+            if (!paused) {
+                const targetIndex = $(event.relatedTarget).data("index");
+                $allProgressBars.each(function(index, element){
+                    $(element).stop();
+                    $(element).css({"width": 0});
+                });
+                const indicatorSelector = "*[data-slide-to='" +targetIndex +"']";
+                const $currentIndicator = $allIndicators.filter(indicatorSelector);
+                const $currentProgress = $currentIndicator.find(".progress-bar");
+                $currentProgress.animate({"width": "100%"}, slideTime, "linear");
+
+            }
+        });
+    }
+
     // set carousel items
     function  setCarouselItems () {
         // generate random items
@@ -637,9 +675,13 @@
             </div>`;
         });
         $('#slider-container .carousel-inner').html(htmlChildren);
+
+        setCarouselSlider();
     };
 
-    setCarouselItems();
+
+
+    
     
     $(function () {
         $('.stills-image').fancybox({
@@ -776,41 +818,7 @@
         let imageLinks = [];
         
 
-        const $carouselContainer = $('#slider-container');
-
-        // Initialize carousel
-        $carouselContainer.carousel(
-            // Don't pause on hover
-            {"pause": null}
-            );
-        const slideTime = 5000;
-        // Customize carousel
-
-        const $allIndicators = $carouselContainer.find(".carousel-indicators > *");
-        $allIndicators.each(function(index, element){
-            $(element).append('<div class="progress-bar"></div>')
-        });
-
-        const $firstProgress = $("[data-slide-to='0'] .progress-bar");
-        $firstProgress.animate({"width": "100%"}, slideTime, "linear");
-
-        const $allProgressBars = $allIndicators.find(".progress-bar");
-        $carouselContainer.on('slide.bs.carousel', function (event) {
-            const paused = $carouselContainer.hasClass("paused");
-            // New slide reached
-            if (!paused) {
-                const targetIndex = $(event.relatedTarget).data("index");
-                $allProgressBars.each(function(index, element){
-                    $(element).stop();
-                    $(element).css({"width": 0});
-                });
-                const indicatorSelector = "*[data-slide-to='" +targetIndex +"']";
-                const $currentIndicator = $allIndicators.filter(indicatorSelector);
-                const $currentProgress = $currentIndicator.find(".progress-bar");
-                $currentProgress.animate({"width": "100%"}, slideTime, "linear");
-
-            }
-        });
+        setCarouselItems();
 
 
     });
