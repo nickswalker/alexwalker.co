@@ -667,7 +667,7 @@
         let realItems = $('#slider-container .carousel-inner').children();
 
         for (let i = 0; i < realItems.length; i++) {
-            let subChildren = $(realItems[i]).find('query').children();
+            let subChildren = $(realItems[i]).find('picture').children();
 
             if (subChildren.length > 2) {
                 $(subChildren[0]).attr('srcset', randomLinks[i].srcset);
