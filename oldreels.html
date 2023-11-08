@@ -91,19 +91,19 @@
 
         <h2>Previous Demo Reels</h2>
         <figure>
-            <ul class="thumbnails">
+            <ul class="thumbnails lightbox playbuttons">
                          <li>
-   <a href="https://youtu.be/j_MPRknbLzM?feature=shared" class="sixteen-by-nine"><img src="/img/2019reelt.jpg"/>
+   <a href="https://youtube.com/embed/j_MPRknbLzM?feature=shared" class="sixteen-by-nine"><img src="/img/2019reelt.jpg"/>
                         </a>
                             <li>
-   <a href="https://youtu.be/chZDUn-Gygw?feature=shared" class="sixteen-by-nine"><img src="/img/2018reelt.jpg"/>
+   <a href="https://youtube.com/embed/chZDUn-Gygw?feature=shared" class="sixteen-by-nine"><img src="/img/2018reelt.jpg"/>
                         </a>  </li>
                        
                        <li>
-   <a href="https://youtu.be/y-oPfHm6yrc?feature=shared" class="sixteen-by-nine"><img src="/img/2015reelt.jpg"/>
+   <a href="https://youtube.com/embed/y-oPfHm6yrc?feature=shared" class="sixteen-by-nine"><img src="/img/2015reelt.jpg"/>
                         </a>  </li>
                          <li>
-   <a href="https://youtu.be/Wii6Kp-s9WU?feature=shared" class="sixteen-by-nine"><img src="/img/2014reelt.jpg"/>
+   <a href="https://youtube.com/embed/Wii6Kp-s9WU?feature=shared" class="sixteen-by-nine"><img src="/img/2014reelt.jpg"/>
                         </a>
                        
                        
@@ -111,19 +111,19 @@
                     </li>
 
                               <li>
-   <a href="https://youtu.be/bBZBWCyGGo4?feature=shared" class="sixteen-by-nine"><img src="/img/2013reelt.jpg"/>
+   <a href="https://youtube.com/embed/bBZBWCyGGo4?feature=shared" class="sixteen-by-nine"><img src="/img/2013reelt.jpg"/>
                         </a>
                        
                        
 
                     </li>
                     <li>
-   <a href="https://youtu.be/2h3brD2haY4?feature=shared" class="sixteen-by-nine"><img src="/img/2012v2reelt.jpg"/>
+   <a href="https://youtube.com/embed/2h3brD2haY4?feature=shared" class="sixteen-by-nine"><img src="/img/2012v2reelt.jpg"/>
                         </a>
                        
                    </li>
                      <li>
-   <a href="https://youtu.be/gIZkkCsDAFM?feature=shared" class="sixteen-by-nine"><img src="/img/2012reelt.jpg"/>
+   <a href="https://youtube.com/embed/gIZkkCsDAFM?feature=shared" class="sixteen-by-nine"><img src="/img/2012reelt.jpg"/>
                         </a>
                        
                        
@@ -131,21 +131,21 @@
                     </li>
                   <li>
 
-                        <a href="https://youtu.be/xosCpq5vBUM?feature=shared" class="sixteen-by-nine"><img src="/img/2011reelt.jpg"/>
+                        <a href="https://youtube.com/embed/xosCpq5vBUM?feature=shared" class="sixteen-by-nine"><img src="/img/2011reelt.jpg"/>
                         </a>
 
                     </li>
                     
                     
                            <li>
-   <a href="https://youtu.be/aAH9JxfreyY?feature=shared" class="sixteen-by-nine"><img src="/img/2011altreelt.jpg"/>
+   <a href="https://youtube.com/embed/aAH9JxfreyY?feature=shared" class="sixteen-by-nine"><img src="/img/2011altreelt.jpg"/>
                         </a>
                        
                        
 
                     </li>
                       <li>
-   <a href="https://youtu.be/bBZBWCyGGo4?feature=shared" class="sixteen-by-nine"><img src="/img/2011reelt2.jpg"/>
+   <a href="https://youtube.com/embed/bBZBWCyGGo4?feature=shared" class="sixteen-by-nine"><img src="/img/2011reelt2.jpg"/>
                         </a>
                        </li> 
               
@@ -153,20 +153,20 @@
                   
                 <li>   
 
-                        <a href="https://youtu.be/Jvq6xZpfNys?feature=shared" class="sixteen-by-nine"><img src="/img/2010reelt.jpg"/>
+                        <a href="https://youtube.com/embed/Jvq6xZpfNys?feature=shared" class="sixteen-by-nine"><img src="/img/2010reelt.jpg"/>
                         </a>
 
                     </li>     
                 
                 <li>   
 
-                        <a href="https://youtu.be/HZJl9TA3HW4?feature=shared" class="sixteen-by-nine"><img src="/img/2007reelt.jpg"/>
+                        <a href="https://youtube.com/embed/HZJl9TA3HW4?feature=shared" class="sixteen-by-nine"><img src="/img/2007reelt.jpg"/>
                         </a>
 
                     </li>     
                 <li>   
 
-                        <a href="https://youtu.be/C-Lg3QZYpVQ?feature=shared" class="sixteen-by-nine"><img src="/img/2006reelt.jpg"/>
+                        <a href="https://youtube.com/embed/C-Lg3QZYpVQ?feature=shared" class="sixteen-by-nine"><img src="/img/2006reelt.jpg"/>
                         </a>
 
                     </li>
@@ -210,65 +210,112 @@
     </div>
 </section>
 <script type="text/javascript">
-   $(function () {
-        const $htmlBody = $("html,body");
-        let wHeight  = $(window).height();
 
-        $(window).on('resize', function(){
-            wHeight = $(window).height();
-        });
+        $(function () {
+            $('a.stills-image').fancybox({
+                thumbs: false,
+                slideShow: false
+            });
 
-        function goToByScroll(element) {
-            $htmlBody.animate({
-                scrollTop: element.offset().top
-            }, 400, 'easeInOutQuint');
-        }
+            $('a.sixteen-by-nine').fancybox({
+                autoSize: true,
+                width: 1300,
+                height: 550,
+                padding: 0,
+                aspectRatio: true,
+                type: 'iframe',
+                helpers: {
+                    media: {}
+                },
+                iframe: {
+                    preload: false
+                }
+            });
 
-        let lastEventLocation = 0;
+            // $('a.sixteen-by-nine').fancybox({
+            //     autoSize: true,
+            //     width: 1600,
+            //     height: 900,
+            //     padding: 0,
+            //     type: 'iframe',
+            //     aspectRatio: true,
+            //     helpers: {
+            //         media: {}
+            //     }
+            // });
 
-        function onScroll(e) {
-            const target = $(e.target);
-            const lastBelow = lastEventLocation >= wHeight;
-            const currentBelow = target.scrollTop() >= wHeight;
+            // $('a.sixteen-by-nine').fancybox({
+            //     autoSize: true,
+            //     width: 1600,
+            //     height: 900,
+            //     padding: 0,
+            //     type: 'iframe',
+            //     helpers: {
+            //         media: {}
+            //     },
+            //     iframe: {
+            //         preload: false
+            //     }
+            // });
+            
+            const $htmlBody = $("html,body");
+            let wHeight = $(window).height();
 
-            if (lastBelow ^ currentBelow) {
-                if (currentBelow) {
-                    $returnToTop.fadeIn(400);    // Fade in the arrow
-                } else {
-                    $returnToTop.fadeOut(400);   // Else fade out the arrow
+            $(window).on('resize', function () {
+                wHeight = $(window).height();
+            });
+
+            function goToByScroll(element) {
+                $htmlBody.animate({
+                    scrollTop: element.offset().top
+                }, 400, 'easeInOutQuint');
+            }
+
+            let lastEventLocation = 0;
+
+            function onScroll(e) {
+                const target = $(e.target);
+                const lastBelow = lastEventLocation >= wHeight;
+                const currentBelow = target.scrollTop() >= wHeight;
+
+                if (lastBelow ^ currentBelow) {
+                    if (currentBelow) {
+                        $returnToTop.fadeIn(400);    // Fade in the arrow
+                    } else {
+                        $returnToTop.fadeOut(400);   // Else fade out the arrow
+                    }
+
                 }
 
+                lastEventLocation = target.scrollTop();
             }
 
-            lastEventLocation = target.scrollTop();
-        }
+            // Smooth scroll-to
+            const links = $('.smooth-scroll');
 
-        // Smooth scroll-to
-        const links = $('.smooth-scroll');
+            //Handle clicks on elements that send to other parts of the page
+            links.click(function (e) {
+                e.preventDefault();
+                if (!e.currentTarget.hash) {
+                    return;
+                }
+                const element = $(e.currentTarget.hash);
+                if (element) {
+                    goToByScroll(element);
+                }
+            });
 
-        //Handle clicks on elements that send to other parts of the page
-        links.click(function (e) {
-            e.preventDefault();
-            if (!e.currentTarget.hash) {
-                return;
-            }
-            const element = $(e.currentTarget.hash);
-            if (element) {
-                goToByScroll(element);
-            }
+            // Scroll to top button
+            const $returnToTop = $('#return-to-top');
+            // Passive scroll handler
+            window.addEventListener('scroll', onScroll.bind(this), { passive: true });
+
+
+            // Keep the copyright up to date.
+            document.getElementById("copyright-current-year").innerHTML = new Date().getFullYear().toString();
+
         });
-
-        // Scroll to top button
-        const $returnToTop = $('#return-to-top');
-        // Passive scroll handler
-        window.addEventListener('scroll', onScroll.bind(this), {passive: true});
-
-
-        // Keep the copyright up to date.
-        document.getElementById("copyright-current-year").innerHTML = new Date().getFullYear().toString();
-
-    });
-</script>
+    </script>
 <!-- Default Statcounter code for Portfolio Website
 http://alexwalker.co -->
 <script type="text/javascript">
