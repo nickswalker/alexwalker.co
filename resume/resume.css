@@ -228,24 +228,30 @@ h3#print {
     overflow: auto
 }
 
-button {
-    background: #666;
-    color: #fff;
-    line-height: 1;
-    padding: 7px 12px;
-    text-decoration: none;
-    border: 0;
-    cursor: pointer;
-    font-size: inherit;
-    text-align: left;
-    width: 100%;
-    box-sizing: border-box;
-    font-family: inherit;
-    font-weight: 500
+button,
+input[type="submit"] {
+    display: flex;
+    font-size: 18px;
+    margin-bottom: var(--half-spacing-unit);
+    font-weight: 600;
+    border: 2px solid #08abd4;
+    border-radius: 4px;
+    padding: 6px 12px;
+    background-color: transparent;
+    color: #08abd4;
+    transition: 0.3s;
+}
+
+button > a,
+button > a:visited,
+button > a:link {
+    color: inherit;
+
 }
 
 button:hover {
-    background: #333
+    background-color: #08abd4;
+    color: white;
 }
 
 .skills ul {
