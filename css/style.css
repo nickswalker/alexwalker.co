@@ -13,6 +13,9 @@
     --double-spacing-unit: calc(var(--spacing-unit) * 2);
     --grid-gap: 1px;
 }
+.hide-dot li {
+     list-style-type: none !important;
+}
 
 /* = Global
 -------------------------------------------------------------- */
