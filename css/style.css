@@ -652,8 +652,8 @@ li.coming-soon a::before {
 
 .stills {
     display: grid;
-    grid-template-columns: repeat(3, calc(100vw / 3));
-    grid-template-rows: repeat(auto-fit, calc(100vw / 3));
+    /* Can't use 100vw here because it'll be wrong on windows with scroll bars */
+    grid-template-columns: repeat(3, calc(100% / 3));
     overflow: auto;
     width: 100%;
 
@@ -806,8 +806,7 @@ section#about {
 
 @media screen and (min-width: 500px) {
     .stills {
-        grid-template-columns: repeat(4, calc(100vw / 4));
-        grid-template-rows: repeat(auto-fit, calc(100vw / 4));
+        grid-template-columns: repeat(4, calc(100% / 4));
     }
 
     .stills li:nth-of-type(n) {
@@ -923,8 +922,7 @@ section#about {
     .stills {
         margin-top: var(--double-spacing-unit);
         /* Dividing by six causes with no epsilon causes overflow in Safari 13*/
-        grid-template-columns: repeat(6, calc(100vw / 6 - 3px));
-        grid-template-rows: repeat(auto-fit, calc(100vw / 6 - 3px));
+        grid-template-columns: repeat(6, calc(100% / 6 - 3px));
     }
 
     /*We're using 16 images, so remove the stray four when we have rows of 6*/
@@ -1027,7 +1025,6 @@ section#about {
 
     .stills {
         grid-template-columns: repeat(8, calc(100% / 8));
-        grid-template-rows: repeat(auto-fit, calc(400% / 8));
     }
 
     /*Remove any overrides from smaller widths*/
