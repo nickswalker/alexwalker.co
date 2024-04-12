@@ -717,6 +717,7 @@ section#about {
 }
 
 #about figure img {
+     vertical-align:top;
     object-fit: contain;
     height: 100%;
 }
