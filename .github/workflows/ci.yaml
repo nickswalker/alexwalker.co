@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 📂 setup
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: 💎 setup ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -25,9 +25,9 @@ jobs:
         run: |
           pwd
           ls
-          bundle exec htmlproofer ./_site --only-4xx  --assume-extension .html --no-enforce-https --ignore-missing-alt --ignore-urls '/vimeo.com/' --ignore-urls '/twitter.com/' --ignore-urls '/instagram.com/' --swap-urls 'https?\:\/\/alexwalker\.co:'
+          bundle exec htmlproofer ./_site --only-4xx  --assume-extension .html --no-enforce-https --ignore-missing-alt --ignore-urls '/vimeo.com/,/twitter.com/,/instagram.com/' --swap-urls 'https?\:\/\/alexwalker\.co:'
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: site
           path: _site
