@@ -1,5 +1,2 @@
 vendor/
-
-# Private information
-# Deploy hook filename must be kept secret.
-*-deploy-hook.*
+_site/
