@@ -10,22 +10,33 @@ jobs:
   jekyll-build:
     runs-on: ubuntu-latest
     steps:
-      - name: 📂 setup
+      - name: 📂 set up
         uses: actions/checkout@v4
-      - name: 💎 setup ruby
+      - name: 💎 set up ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1.2
       - run:  yes | gem update --system --force
       - name: 🔨 install dependencies & build site
-        uses: limjh16/jekyll-action-ts@master
+        uses: limjh16/jekyll-action-ts@v2
         with:
           enable_cache: true
+      - name: cache HTMLProofer
+        id: cache-htmlproofer
+        uses: actions/cache@v4
+        with:
+          path: tmp/.htmlproofer
+          key: ${{ runner.os }}-htmlproofer
       - name: run tests
         run: |
-          pwd
-          ls
-          bundle exec htmlproofer ./_site --only-4xx  --assume-extension .html --no-enforce-https --ignore-missing-alt --ignore-urls '/vimeo.com/,/twitter.com/,/instagram.com/' --swap-urls 'https?\:\/\/alexwalker\.co:'
+          bundle exec htmlproofer ./_site\
+            --only-4xx\
+            --assume-extension .html\
+            --no-enforce-https\
+            --ignore-missing-alt\
+            --ignore-urls '/vimeo.com/,/twitter.com/,/instagram.com/'\
+            --swap-urls 'https?\:\/\/alexwalker\.co:'\
+            --cache '{ "timeframe": { "external": "30d" } }'
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
