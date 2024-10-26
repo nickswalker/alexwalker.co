@@ -111,7 +111,8 @@ input[type="submit"] {
 }
 
 figure img {
-    width: 100%;
+/*    width: 100%; */
+    
 }
 
 button>a,
@@ -735,6 +736,7 @@ section#about {
 
 #about figure img {
     vertical-align: top;
+    horizontal-align: center;
     object-fit: contain;
     height: 100%;
 }
