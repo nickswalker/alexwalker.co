@@ -1,0 +1,26 @@
+Mar  7 01:13:24 10.71.60.0 tmp107991816-1320 Connection from 10.71.60.0 port 11452 on 74.208.59.228 port 22 rdomain ""
+Mar  7 01:13:24 10.71.60.0 tmp107991816-1320 Accepted password for tmp107991816-1320 from 10.71.60.0 port 11452 ssh2
+Mar  7 01:13:25 10.71.60.0 tmp107991816-1320 Starting session: subsystem 'sftp' for tmp107991816-1320 from 10.71.60.0 port 11452 id 0
+Mar  7 01:13:25 10.71.60.0 tmp107991816-1320 session opened for local user tmp107991816-1320 from [10.71.60.0]
+Mar  7 01:18:26 10.71.60.0 tmp107991816-1320 session closed for local user tmp107991816-1320 from [10.71.60.0]
+Mar  7 01:18:26 10.71.60.0 tmp107991816-1320 Connection closed by 10.71.60.0 port 11452
+Mar  7 01:19:47 10.71.60.0 u107991816 Connection from 10.71.60.0 port 40286 on 74.208.59.228 port 22 rdomain ""
+Mar  7 01:19:54 10.71.60.0 u107991816 Accepted password for u107991816 from 10.71.60.0 port 40286 ssh2
+Mar  7 01:19:54 10.71.60.0 u107991816 Starting session: subsystem 'sftp' for u107991816 from 10.71.60.0 port 40286 id 0
+Mar  7 01:19:54 10.71.60.0 u107991816 session opened for local user u107991816 from [10.71.60.0]
+Mar  7 01:20:06 10.71.60.0 u107991816 Connection from 10.71.60.0 port 40306 on 74.208.59.228 port 22 rdomain ""
+Mar  7 01:20:06 10.71.60.0 u107991816 Accepted password for u107991816 from 10.71.60.0 port 40306 ssh2
+Mar  7 01:20:06 10.71.60.0 u107991816 Connection from 10.71.60.0 port 40304 on 74.208.59.228 port 22 rdomain ""
+Mar  7 01:20:06 10.71.60.0 u107991816 Accepted password for u107991816 from 10.71.60.0 port 40304 ssh2
+Mar  7 01:20:06 10.71.60.0 u107991816 Starting session: subsystem 'sftp' for u107991816 from 10.71.60.0 port 40306 id 0
+Mar  7 01:20:06 10.71.60.0 u107991816 Starting session: subsystem 'sftp' for u107991816 from 10.71.60.0 port 40304 id 0
+Mar  7 01:20:06 10.71.60.0 u107991816 session opened for local user u107991816 from [10.71.60.0]
+Mar  7 01:20:06 10.71.60.0 u107991816 session opened for local user u107991816 from [10.71.60.0]
+Mar  7 01:20:06 10.71.60.0 u107991816 sent status No such file
+Mar  7 01:20:06 10.71.60.0 u107991816 open "/index.html" flags READ mode 0666
+Mar  7 01:20:06 10.71.60.0 u107991816 open "/ranchoelmacho.html" flags READ mode 0666
+Mar  7 01:20:07 10.71.60.0 u107991816 close "/index.html" bytes read 2514 written 0
+Mar  7 01:20:07 10.71.60.0 u107991816 [10.71.60.0|get|1|2514|0|0|0|2f696e6465782e68746d6c|]
+Mar  7 01:20:07 10.71.60.0 u107991816 close "/ranchoelmacho.html" bytes read 40108 written 0
+Mar  7 01:20:07 10.71.60.0 u107991816 [10.71.60.0|get|1|40108|0|0|0|2f72616e63686f656c6d6163686f2e68746d6c|]
+Mar  7 01:20:07 10.71.60.0 u107991816 open "/logs/sftp.log" flags READ mode 0666

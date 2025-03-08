@@ -1,0 +1,12 @@
+Options +Indexes
+RemoveHandler .html
+RemoveType .html
+AddType text/html .html
+Satisfy any
+Order Deny,Allow
+Allow from 212.227.112.228
+Deny from all
+AuthType Basic
+AuthName "Access to /logs"
+AuthUserFile /kunden/homepages/46/d906885914/htpasswd
+Require user u107991816
