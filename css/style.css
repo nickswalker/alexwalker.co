@@ -997,10 +997,9 @@ section#about {
     #about figure {
         height: unset;
         background-color: unset;
+        justify-self: end;
     }
-#about .text {
-    flex-grow: 1;
-}
+
 
     /*--- = Contact  */
     #contact .container {
