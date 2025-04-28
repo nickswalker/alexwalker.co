@@ -186,6 +186,7 @@ header nav>ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 4px;
 }
 
 header nav > ul > li {
@@ -969,6 +970,7 @@ section#about {
         flex-flow: row nowrap;
         justify-content: space-around;
         align-items: center;
+        padding-bottom: 4px;
     }
 
     header nav>ul>li {
