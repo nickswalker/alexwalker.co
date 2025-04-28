@@ -15,7 +15,6 @@
 }
 
 /* --- Inserted for corrected Watch Reels button --- */
-
 #reel-button.reel-link {
     display: inline-block;
     padding: 6px 12px;
@@ -28,17 +27,19 @@
     font-weight: 600;
     transition: 0.3s;
 }
-
 #reel-button.reel-link:hover {
     background-color: #08abd4;
     color: white;
 }
 
-/* Continue with the original styles */
+
 
 .hide-dot li {
     list-style-type: none !important;
 }
+
+/* = Global
+-------------------------------------------------------------- */
 
 body {
     line-height: 1.5;
@@ -48,4 +49,1039 @@ body {
     background-color: var(--background-color);
 }
 
-/* (Rest of the original style.css continues here unchanged) */
+p {
+    margin-bottom: var(--half-spacing-unit);
+}
+
+img {
+    max-width: 100%;
+}
+
+p i {
+    font-style: italic;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:link {
+    color: var(--alt-text-color);
+}
+
+a:visited {
+    color: var(--alt-text-color);
+}
+
+a:hover {
+    color: #ffffff;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 36px;
+    line-height: var(--double-spacing-unit);
+    font-weight: 700;
+}
+
+h3 {
+    text-align: center;
+    font-weight: 400;
+    font-size: 18px;
+    padding: 0 var(--half-spacing-unit);
+    padding-left: max(var(--half-spacing-unit), constant(safe-area-inset-left));
+    padding-right: max(var(--half-spacing-unit), constant(safe-area-inset-right));
+
+}
+
+header,
+section figure,
+section h2,
+section h3 {
+    flex: none;
+}
+
+section .text {
+    display: flex;
+    flex-flow: column nowrap;
+    /* Cross axis */
+    align-content: flex-start;
+}
+
+section .text p {
+    flex: none;
+}
+
+button,
+input[type="submit"] {
+    display: flex;
+    font-size: 18px;
+    margin-bottom: var(--half-spacing-unit);
+    font-weight: 600;
+    border: 2px solid #08abd4;
+    border-radius: 4px;
+    padding: 6px 12px;
+    background-color: transparent;
+    color: #08abd4;
+    transition: 0.3s;
+}
+
+figure img {
+/*    width: 100%; */
+    
+}
+
+button>a,
+button>a:visited,
+button>a:link {
+    color: inherit !important;
+
+}
+
+button#reel-button:hover {
+    background-color: #08abd4;
+    color: white;
+}
+
+button:hover {
+    background-color: #08abd4;
+    color: white;
+}
+
+/* = Header
+-------------------------------------------------------------- */
+
+header {
+    background-color: rgba(255, 255, 255, .85);
+    z-index: 900;
+    border-bottom: 3px solid #08abd4;
+    box-sizing: border-box;
+    transition: background-color .4s;
+    color: black;
+    overflow: hidden;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+
+header .container {
+    display: block;
+    padding: var(--half-spacing-unit);
+}
+
+@supports (padding: max(0px)) {
+    header .container {
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
+    }
+}
+
+header nav>ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+header nav>ul>li {
+    flex: 0 1 100%;
+    text-align: center;
+    height: auto;
+}
+
+header nav>ul>li:nth-of-type(3) {
+    margin-top: var(--half-spacing-unit);
+}
+
+header {
+    position: -webkit-sticky;
+    position: -moz-sticky;
+    position: -o-sticky;
+    position: -ms-sticky;
+    position: sticky;
+    /* margin-top: -53px;  // This is causing problems with chrome because of lack of sticky support*/
+    top: 0px;
+}
+
+/*--- = Dark Mode  */
+header.dark {
+    color: white;
+    background-color: rgba(0, 0, 0, .75);
+}
+
+header.dark h1,
+header.dark nav ul li a {
+    color: white;
+}
+
+header.dark nav ul li a {
+    text-shadow: none;
+}
+
+nav ul li a {
+    /* border-bottom: 1px solid rgba(8,171,212, 0); */
+    transition: .4s;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+    overflow: visible;
+    display: block;
+}
+
+nav ul li:hover {
+    cursor: pointer;
+    color: #a9d3d0;
+}
+
+.text-start {
+    text-align: start !important;
+}
+
+.logo {
+    margin-bottom: var(--half-spacing-unit);
+    display: unset;
+}
+
+
+header {
+    max-height: 54px;
+
+}
+
+header li {
+    display: none;
+}
+
+header .social li {
+    padding: 0 6px;
+    opacity: .5;
+}
+
+#scroll-down-indicator {
+    flex: 0 1 auto;
+    display: unset;
+}
+
+.social li {
+    display: inline-block;
+
+}
+
+.logo h1 {
+    line-height: 1;
+    display: inline-block;
+    color: #333;
+    vertical-align: middle;
+    transition: .4s;
+}
+
+.logo h1 a:link,
+.logo h1 a:visited,
+.logo h1 a:hover {
+    color: inherit;
+}
+
+
+/*--- = Scroll to top */
+#return-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(127, 127, 127, 0.5);
+    width: 50px;
+    height: 50px;
+    text-decoration: none;
+    border-radius: 35px;
+    display: block;
+    display: none;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+#return-to-top i {
+    color: #fff;
+    margin: 0;
+    position: relative;
+    left: 16px;
+    top: 13px;
+    line-height: 1;
+    font-size: 19px;
+    transition: all 0.3s ease;
+}
+
+#return-to-top:hover {
+    background: rgba(127, 127, 127, 0.8);
+}
+
+#return-to-top:hover i {
+    color: #fff;
+    top: 10px;
+}
+
+/* = Slides
+-------------------------------------------------------------- */
+
+section {
+    height: auto;
+    overflow: auto;
+    position: relative;
+    padding: 0 0 36px 0;
+    box-sizing: border-box;
+
+}
+
+section .container {
+    overflow: visible;
+    position: relative;
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 36px 0 0 0;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+    grid-gap: var(--spacing-unit) var(--spacing-unit);
+    display: grid;
+    grid-template-columns: [col] 1fr;
+}
+
+section .container>*:last-child {
+    margin-bottom: 0;
+}
+
+/* No border for first section 2 sections*/
+body.home section:nth-of-type(1) .container,
+body.home section:nth-of-type(2) .container {
+    border: none;
+    padding-top: 0;
+}
+
+@supports (padding: max(0px)) {
+    section .text {
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
+    }
+}
+
+.align-items-start {
+    align-items: flex-start;
+}
+
+section h2 {
+    margin: 0 0 36px 0;
+    text-align: center;
+}
+
+.full-width-centered {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.button-row {
+    display: flex;
+    flex-direction: row;
+    flex: 0 0 auto;
+    align-items: flex-start;
+    gap: .5rem;
+}
+
+
+/*--- = Slider  */
+
+.reel-button-menu {
+    display: unset;
+}
+
+.reel-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: -4px;
+}
+
+#reel-button {
+    margin: 0;
+}
+
+#slider {
+    padding: 0;
+    height: 80vh;
+    overflow: hidden;
+    background-color: black;
+}
+
+#slider-container {
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: .3s;
+}
+
+.carousel-inner {
+    height: 100%;
+}
+
+#slider-container .item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    transition: .4s;
+}
+
+#slider-container .item picture>* {
+    height: 100%;
+    width: 100%;
+    object-position: 25% 50%;
+    object-fit: cover;
+
+}
+
+.carousel.custom-slide .carousel-inner .item {
+    transition-property: opacity;
+}
+
+.carousel.custom-slide .carousel-inner .item,
+.carousel.custom-slide .carousel-inner .active.left,
+.carousel.custom-slide .carousel-inner .active.right {
+    opacity: 0;
+}
+
+.carousel.custom-slide .carousel-inner .active,
+.carousel.custom-slide .carousel-inner .next.left,
+.carousel.custom-slide .carousel-inner .prev.right {
+    opacity: 1;
+}
+
+.carousel.custom-slide .carousel-inner .next,
+.carousel.custom-slide .carousel-inner .prev,
+.carousel.custom-slide .carousel-inner .active.left,
+.carousel.custom-slide .carousel-inner .active.right {
+    left: 0;
+    transform: translate3d(0, 0, 0);
+}
+
+#slider .carousel-indicators {
+    width: 100%;
+    margin-left: -50%;
+}
+
+.carousel-indicators.rectangle-indicators>* {
+    border-radius: 0;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.25);
+    width: 40px;
+    height: 10px;
+    margin: 0 2px;
+    position: relative;
+}
+
+.carousel-indicators.rectangle-indicators>*.active {
+    border: none;
+    width: 40px;
+    height: 10px;
+    margin: 0 2px;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.carousel-indicators.rectangle-indicators .progress-bar {
+    height: 100%;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.3);
+    top: 0;
+    left: 0;
+    width: 0;
+    opacity: 0;
+}
+
+.carousel-indicators.rectangle-indicators>*.active>.progress-bar {
+    opacity: 1;
+}
+
+.carousel-custom-slide .carousel-control {
+    z-index: 2;
+}
+
+
+
+/* Cinematographer */
+.thumbnails-container {
+    min-width: 80vmin;
+    min-width: 60%;
+    margin: 0 auto;
+}
+
+.thumbnails {
+    display: grid;
+    grid-gap: var(--grid-gap) var(--grid-gap);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(auto-fit, 1fr);
+}
+
+.thumbnails-cont {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+@media screen and (max-width: 500px) {
+    .thumbnails-cont {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.thumbnails-container h3 {
+    margin-bottom: calc(.25 * var(--spacing-unit));
+}
+
+.thumbnails a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.thumbnails li {
+    position: relative;
+    /* Required for absolutely positioned pseudo-element */
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.thumbnails li:last-child {
+    margin-bottom: 0;
+}
+
+.thumbnails img {
+    display: block;
+    margin: 0 auto;
+    transition: 0.3s;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.thumbnails a img:hover {
+    transform: scale(1.025);
+}
+
+.playbuttons.thumbnails a::before {
+    content: '\f488\00a0\00a0' attr(data-year);
+    font-family: "ionicons", sans-serif;
+    text-decoration: none !important;
+    text-shadow: 0 0px 2px rgba(0, 0, 0, .6);
+    font-size: 10px;
+    padding-top: 3px;
+    font-weight: 400;
+    display: block;
+    color: white;
+    text-align: left;
+    position: absolute;
+    line-height: 1em;
+    height: 1em;
+    bottom: 0;
+    left: 0;
+    margin: 0 0 6px 10px;
+    width: 100%;
+    z-index: 1;
+
+}
+
+.reels .black-text::before {
+    color: rgba(0, 0, 0, .3);
+    text-shadow: 0 0 2px rgba(255, 255, 255, .6);
+}
+
+.thumbnails a.new::after {
+    position: absolute;
+    top: -8px;
+    right: -4px;
+    width: 3em;
+    height: 1.8em;
+    line-height: 1.8em;
+    text-align: center;
+    font-size: 12px;
+    content: 'new';
+    background-color: #D43108;
+    color: #fff;
+    text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.35), 0px 1px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 4em;
+}
+
+li.coming-soon:hover img {
+    opacity: .5;
+}
+
+.thumbnails li div {
+    width: 100%;
+    height: 100%;
+}
+
+li.coming-soon:hover div::after {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -3.25em;
+    margin-top: -0.9em;
+    width: 6.5em;
+    height: 1.8em;
+    line-height: 1.8em;
+    text-align: center;
+    font-size: 18px;
+    content: 'Coming Soon';
+    font-style: italic;
+    color: #000;
+    text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.15);
+}
+
+li.coming-soon a::before {
+    content: "";
+}
+
+.thumbnails a.coming-soon::after {
+    position: absolute;
+    top: 0px;
+    right: -4px;
+    width: 7em;
+    height: 1.8em;
+    line-height: 1.8em;
+    text-align: center;
+    font-size: 12px;
+    content: '2014';
+    background-color: #D43108;
+    color: #fff;
+    text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.35), 0px 1px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 4em;
+}
+
+.feature-films .thumbnails li img {
+    object-position: 0;
+    max-width: unset;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.feature-films .thumbnails li a {
+    width: 100%;
+    height: 100%;
+}
+
+.clients {
+    column-count: 2;
+    text-align: center;
+    color: var(--alt-text-color);
+    display: block;
+}
+
+/*--- = Stills	*/
+#stills {
+    margin-bottom: 0;
+    margin-top: 0px;
+
+}
+
+#stills .container {
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    border: none;
+}
+
+.stills {
+    display: grid;
+    /* Can't use 100vw here because it'll be wrong on windows with scroll bars */
+    grid-template-columns: repeat(3, calc(100% / 3));
+    overflow: auto;
+    width: 100%;
+
+}
+
+.stills li {
+    overflow: hidden;
+    transition: .2s;
+}
+
+/*We're using 16 images, so remove the stray one when we have rows of 3*/
+.stills li:nth-of-type(16) {
+    display: none;
+}
+
+.stills a {
+    display: block;
+}
+
+.stills img {
+    display: block;
+    transition: 0.3s;
+}
+
+.stills img:hover {
+    transform: scale(1.025);
+}
+
+#stills+section .container {
+    border-top: none;
+}
+
+/*--- = Cinematographer */
+
+#cinematographer figure {
+    margin-bottom: var(--double-spacing-unit);
+}
+
+/*--- = About    */
+
+section#about {
+    padding-top: 36px;
+    /*Special case, up against the navbar*/
+}
+
+.representation {
+    flex: 1 100%;
+    color: var(--alt-text-color);
+    font-size: 14px;
+}
+
+.representation h3 {
+    text-align: left;
+    font-weight: inherit;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+#about figure {
+    height: 60vmin;
+
+}
+
+#about figure img {
+    vertical-align: top;
+    horizontal-align: center;
+    object-fit: contain;
+    height: 100%;
+}
+
+/*--- = Short films */
+
+#short-films .container>* {
+    margin-bottom: var(--double-spacing-unit);
+}
+
+.thumbnails.four-up {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/*--- = Contact  */
+
+#contact {
+    background-color: #222;
+    color: white;
+}
+
+#contact .representation {
+    display: inline-block;
+    color: white;
+    text-shadow: 0 0 3px rgba(0, 0, 0, .5);
+    box-sizing: border-box;
+    min-width: 300px;
+}
+
+#contact .representation a {
+    color: inherit;
+}
+
+#contact .representation-logo {
+    display: inline-block;
+    margin-bottom: 8px;
+    height: 100px;
+}
+
+
+#contact a {
+    opacity: 0.5;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#contact a:hover {
+    opacity: 1;
+}
+
+#contact .representation-logo {
+    opacity: 0.5;
+    transition: 0.3s;
+}
+
+#contact .representation-logo:hover {
+    opacity: 1.0;
+}
+
+
+/*--- = Copyright  */
+
+.copyright {
+    text-align: center;
+    color: gray;
+}
+
+/* = Media Queries
+-------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #363636;
+        --light-background-color: hsl(120, 2%, 20%);
+        --text-color: #ffffff;
+        --alt-text-color: rgba(255, 255, 255, .4);
+        --light-text-color: #aaa;
+        --hr-color: rgba(255, 255, 255, .1);
+    }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 1.5dppx) {
+
+    section .container {
+        border-width: 0.5px !important;
+    }
+}
+
+@media screen and (min-width: 500px) {
+    .stills {
+        grid-template-columns: repeat(4, calc(100% / 4));
+    }
+
+    .stills li:nth-of-type(n) {
+        display: unset;
+    }
+
+    h3 {
+        text-align: left;
+    }
+}
+
+@media screen and (min-width: 900px) {
+    :root {
+        --grid-gap: calc(var(--spacing-unit) / 6);
+    }
+
+    header,
+    section figure,
+    section h2,
+    section h3 {
+        width: 100%;
+    }
+
+    #scroll-down-indicator {
+        opacity: .5;
+        font-size: 21px;
+        max-height: auto !important;
+    }
+
+    header li {
+        display: unset;
+    }
+
+    section h2 {
+        margin: 0 0 var(--double-spacing-unit) 0;
+        grid-column: 1 / 3;
+    }
+
+    section .container {
+        padding: 48px 24px 0px 24px;
+        grid-template-columns: 30fr 23fr;
+        /* Tuned to make the feature posters look good */
+    }
+
+    .full-width-centered {
+        grid-column: 1 / 3;
+    }
+
+    section figure,
+    section .text,
+    aside {
+        box-sizing: border-box;
+    }
+
+    section .text {
+        justify-content: flex-start;
+    }
+
+    figure>h3 {
+        margin-left: 0;
+        padding: 0;
+    }
+
+    /*--- = Slider  */
+    #reel-button {
+        display: block;
+        opacity: 1;
+        color: white;
+        z-index: 10;
+        border-color: white;
+        font-size: 18px;
+        margin-top: -4px;
+    }
+
+    .reel-button-container {
+        margin: 0;
+    }
+
+
+    #slider {
+        /* Take up the full height, but leave room for the navbar to appear on screen as well*/
+        height: calc(100vh - 54px);
+    }
+
+    /*--- = Navigation  */
+    .logo {
+        margin-bottom: 0;
+    }
+
+    header nav>ul {
+        flex-flow: row nowrap;
+        justify-content: space-around;
+    }
+
+    header nav>ul>li {
+        flex: 0 1 auto;
+        height: auto;
+    }
+
+    header nav>ul>li:nth-of-type(3) {
+        margin-top: 0;
+    }
+
+
+    .columns-span-width.container {
+        grid-template-columns: 100%;
+    }
+
+    .columns-span-width .thumbnails {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    /*--- = Stills  */
+
+    .stills {
+        margin-top: var(--double-spacing-unit);
+        /* Dividing by six causes with no epsilon causes overflow in Safari 13*/
+        grid-template-columns: repeat(6, calc(100% / 6 - 3px));
+    }
+
+    /*We're using 16 images, so remove the stray four when we have rows of 6*/
+    .stills li:nth-of-type(13),
+    .stills li:nth-of-type(14),
+    .stills li:nth-of-type(15),
+    .stills li:nth-of-type(16) {
+        display: none;
+    }
+
+    /*--- = Cinematographer  */
+    .clients {
+        text-align: left;
+        margin-bottom: 0;
+    }
+
+    .clients li {
+        line-height: inherit;
+        margin: 0;
+    }
+
+    #cinematographer .text {
+        margin-top: 24px;
+    }
+
+    .thumbnails-container {
+        width: unset;
+        margin: 0 auto;
+    }
+
+    /*--- = Short films */
+    .thumbnails.four-up {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    /*--- = Colorist  */
+    #colorist .thumbnails {
+        grid-template-columns: repeat(4, 1fr);
+
+    }
+
+    /*--- = CinematographerFeat  */
+    #cinemafeat.thumbnails {
+        grid-template-columns: repeat(4, 1fr);
+
+    }
+
+    /*--- = About    */
+    #about figure {
+        height: unset;
+        background-color: unset;
+    }
+
+    /*--- = Contact  */
+    #contact .container {
+        grid-template-columns: [col] 1fr;
+    }
+
+}
+
+@media screen and (min-width: 1220px) {
+
+    /* = Global
+    -------------------------------------------------------------- */
+    body {
+        margin: 0 auto;
+    }
+
+    .container {
+        margin: 0 auto;
+    }
+
+    /* = Slides
+    -------------------------------------------------------------- */
+    section {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 0 0 var(--double-spacing-unit) 0;
+        box-sizing: border-box;
+    }
+
+    section#about {
+        padding-top: var(--double-spacing-unit);
+        /*Special case, up against the navbar*/
+    }
+
+    section .container {
+        position: relative;
+    }
+
+    section figure {
+        margin-bottom: 0px;
+    }
+
+    /*--- = Stills	*/
+    #stills .container {
+        max-width: 1200px;
+        padding-top: var(--double-spacing-unit);
+        /*Special case, doesn't have a text title to add padding*/
+    }
+
+    .stills {
+        grid-template-columns: repeat(8, calc(100% / 8));
+    }
+
+    /*Remove any overrides from smaller widths*/
+    .stills li:nth-of-type(n) {
+        display: unset;
+    }
+}
+
+.feature-films {
+    display: block !important;
+}
+
+.feature-container {
+    grid-template-columns: repeat(4, 1fr);
+}
