@@ -1068,6 +1068,28 @@ section#about {
     grid-template-columns: repeat(4, 1fr);
 }
 
+/* Lightbox external button styling */
+.fancybox-caption .external-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+    padding: 6px 12px;
+    border: 2px solid white;
+    color: white;
+    background-color: transparent;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background 0.3s, color 0.3s;
+}
+
+.fancybox-caption .external-button:hover {
+    background-color: white;
+    color: #111;
+}
+
 @media screen and (max-width: 700px) and (orientation: portrait) {
   
   .fancybox-slide--iframe .fancybox-content {
