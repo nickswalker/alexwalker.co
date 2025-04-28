@@ -998,6 +998,9 @@ section#about {
         height: unset;
         background-color: unset;
     }
+    #about .text {
+    margin-left: 36px;
+}
 
     /*--- = Contact  */
     #contact .container {
