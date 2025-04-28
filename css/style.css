@@ -899,6 +899,13 @@ section#about {
         display: unset;
     }
 
+      header nav ul li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+}
+
     section h2 {
         margin: 0 0 var(--double-spacing-unit) 0;
         grid-column: 1 / 3;
