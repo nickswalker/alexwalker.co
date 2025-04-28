@@ -187,7 +187,10 @@ header nav>ul {
     justify-content: space-between;
 }
 
-header nav>ul>li {
+header nav > ul > li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex: 0 1 100%;
     text-align: center;
     height: auto;
