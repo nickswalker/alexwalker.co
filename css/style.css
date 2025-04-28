@@ -997,7 +997,7 @@ section#about {
     #about figure {
         height: unset;
         background-color: unset;
-        justify-self: end;
+        margin-left: auto;
     }
 
 
