@@ -918,15 +918,17 @@ section#about {
     }
 
     /*--- = Slider  */
-    #reel-button {
-        display: block;
-        opacity: 1;
-        color: white;
-        z-index: 10;
-        border-color: white;
-        font-size: 18px;
-        margin-top: -4px;
-    }
+    #reel-button.reel-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    color: white;
+    z-index: 10;
+    border-color: white;
+    font-size: 18px;
+    margin: 0; /* Remove the -4px margin-top that was messing up centering */
+}
 
     .reel-button-container {
         margin: 0;
