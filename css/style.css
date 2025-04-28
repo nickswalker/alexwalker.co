@@ -1065,3 +1065,21 @@ section#about {
 .feature-container {
     grid-template-columns: repeat(4, 1fr);
 }
+
+@media screen and (max-width: 700px) and (orientation: portrait) {
+  
+  .fancybox-slide--iframe .fancybox-content {
+    width: 90vw !important;
+    aspect-ratio: 16 / 9 !important;
+    max-width: 90vw;
+    margin: 0 auto;
+    height: auto !important;
+    padding: 0 !important;
+  }
+
+  .fancybox-slide--iframe iframe {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+  }
+}
