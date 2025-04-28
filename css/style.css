@@ -998,8 +998,9 @@ section#about {
         height: unset;
         background-color: unset;
     }
-    #about .text {
-    margin-left: 36px;
+  #about .text {
+    padding-left: 0;
+    margin-left: 0;
 }
 
     /*--- = Contact  */
