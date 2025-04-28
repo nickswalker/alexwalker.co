@@ -196,6 +196,18 @@ header nav > ul > li {
     height: auto;
 }
 
+header nav ul li {
+    display: none;
+}
+
+header nav ul li.logo,
+header nav ul li.reel-button-menu,
+header nav ul li.menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 header nav>ul>li:nth-of-type(3) {
     margin-top: var(--half-spacing-unit);
 }
