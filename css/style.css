@@ -1093,3 +1093,8 @@ section#about {
     margin-bottom: 20px; /* optional spacing */
   }
 }
+@media screen and (max-width: 700px) {
+  #about figure {
+    margin-bottom: 24px; /* Adds breathing room below the image */
+  }
+}
