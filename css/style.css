@@ -14,29 +14,6 @@
     --grid-gap: 1px;
 }
 
-/* --- Inserted for corrected Watch Reels button --- */
-#reel-button.reel-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 12px;
-    border: 2px solid white; /* unified white border */
-    color: white; /* unified white text */
-    background-color: transparent;
-    border-radius: 4px;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 600;
-    transition: background 0.3s, color 0.3s;
-}
-
-#reel-button.reel-link:hover {
-    background-color: white;
-    color: #111;
-}
-
-
-
 .hide-dot li {
     list-style-type: none !important;
 }
@@ -185,29 +162,12 @@ header .container {
 header nav>ul {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding-bottom: 6px;
 }
 
-header nav > ul > li {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+header nav>ul>li {
     flex: 0 1 100%;
     text-align: center;
     height: auto;
-}
-
-header nav ul li {
-    display: none;
-}
-
-header nav ul li.logo,
-header nav ul li.reel-button-menu,
-header nav ul li.menu-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 header nav>ul>li:nth-of-type(3) {
@@ -263,7 +223,7 @@ nav ul li:hover {
 
 
 header {
-    max-height: 64px;
+    max-height: 54px;
 
 }
 
@@ -352,7 +312,7 @@ section {
 section .container {
     overflow: visible;
     position: relative;
-
+    max-width: 1170px;
     margin: 0 auto;
     padding: 36px 0 0 0;
     box-sizing: border-box;
@@ -901,13 +861,6 @@ section#about {
         display: unset;
     }
 
-      header nav ul li {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-  }
-}
-
     section h2 {
         margin: 0 0 var(--double-spacing-unit) 0;
         grid-column: 1 / 3;
@@ -916,7 +869,6 @@ section#about {
     section .container {
         padding: 48px 24px 0px 24px;
         grid-template-columns: 30fr 23fr;
-        max-width: 1170px;
         /* Tuned to make the feature posters look good */
     }
 
@@ -940,17 +892,15 @@ section#about {
     }
 
     /*--- = Slider  */
-#reel-button.reel-link {
-    display: block;
-    opacity: 1;
-    color: white;
-    z-index: 10;
-    border-color: white;
-    font-size: 18px;
-    margin-top: -4px;
-    text-align: center;
-    background: transparent;
-}
+    #reel-button {
+        display: block;
+        opacity: 1;
+        color: white;
+        z-index: 10;
+        border-color: white;
+        font-size: 18px;
+        margin-top: -4px;
+    }
 
     .reel-button-container {
         margin: 0;
@@ -970,8 +920,6 @@ section#about {
     header nav>ul {
         flex-flow: row nowrap;
         justify-content: space-around;
-        align-items: center;
-        padding-bottom: 6px;
     }
 
     header nav>ul>li {
