@@ -63,24 +63,28 @@
             </li>
           
             <li>
-                 <ul class="social" style="align-items: center;
-                        display: flex;>
-                        <li>
-                            <a href="https://www.imdb.com/name/nm4205213/?ref_=fn_al_nm_4">
-                                <img src="/img/imdbbutton.png" class="" style="
-                                    height: 11px;
-                                   
-                                ">
-                            </a>
-                        </li>
-                    <li><a href="https://www.youtube.com/user/WalkerStudios"><i class="ion-social-youtube"></i></a>
-                    </li>
-                    <li><a href="https://instagram.com/alex_walker47"><i class="ion-social-instagram"></i></a>
-                    </li>
-                   
-
-
-                </ul>
+                 <ul class="social" style="align-items: center; display: flex;">
+    <li>
+        <a href="https://www.imdb.com/name/nm4205213/?ref_=fn_al_nm_4" data-goatcounter-click="ext-imdb.com">
+            <img src="/img/imdbbutton.png" style="height: 14px; margin-top: 6px;">
+        </a>
+    </li>
+    <li>
+        <a href="https://www.youtube.com/@AlexWalker" data-goatcounter-click="ext-youtube.com">
+            <i class="ion-social-youtube"></i>
+        </a>
+    </li>
+    <li>
+        <a href="https://instagram.com/alex_walker47" data-goatcounter-click="ext-instagram.com">
+            <i class="ion-social-instagram"></i>
+        </a>
+    </li>
+    <li>
+        <a href="https://letterboxd.com/awalker47/" data-goatcounter-click="ext-letterboxd.com">
+            <img src="/img/LBbutton.png" style="height: 14px; margin-top: 6px;">
+        </a>
+    </li>
+</ul>
             </li>
          <li class="reel-button-menu">
                     <div class="reel-button-container">
@@ -109,7 +113,7 @@
         <h2>Narrative</h2>
         
         <figure>
-             <h3>You found a secret page  -   Videos are unlisted; do not share       <a href="https://alexwalker.co/img/AlexWalker_fullgearlist.pdf">View Feb 2025 Gear Inventory
+             <h3>You found a secret page  -   Videos are unlisted; do not share   -    <a href="https://alexwalker.co/img/AlexWalker_fullgearlist.pdf">View Feb 2025 Gear Inventory
                         </a></h3>
             <ul class="thumbnails lightbox playbuttons">
                
@@ -506,10 +510,17 @@
 <script type="text/javascript">
 
         $(function () {
-            $('a.stills-image').fancybox({
-                thumbs: false,
-                slideShow: false
-            });
+          $('a.sixteen-by-nine, #reel-button a').fancybox({
+    autoSize: true,
+    width: 1600,
+    height: 900,
+    padding: 0,
+    aspectRatio: true,
+    type: 'iframe',
+    helpers: {
+        media: {}
+    }
+});
 
             $('a.sixteen-by-nine').fancybox({
                 autoSize: true,
