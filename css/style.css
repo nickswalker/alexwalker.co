@@ -17,22 +17,22 @@
 /* --- Inserted for corrected Watch Reels button --- */
 #reel-button.reel-link {
     display: flex;
-    align-items: center;     /* Center text vertically */
-    justify-content: center; /* Center text horizontally */
+    align-items: center;
+    justify-content: center;
     padding: 6px 12px;
-    border: 2px solid #08abd4;
-    color: #08abd4;
+    border: 2px solid white; /* unified white border */
+    color: white; /* unified white text */
     background-color: transparent;
     border-radius: 4px;
     text-decoration: none;
     font-size: 18px;
     font-weight: 600;
-    transition: 0.3s;
-    height: auto;             /* Allow natural flex height */
+    transition: background 0.3s, color 0.3s;
 }
+
 #reel-button.reel-link:hover {
-    background-color: #08abd4;
-    color: white;
+    background-color: white;
+    color: #111;
 }
 
 
@@ -918,16 +918,16 @@ section#about {
     }
 
     /*--- = Slider  */
-    #reel-button.reel-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+#reel-button.reel-link {
+    display: block;
     opacity: 1;
     color: white;
     z-index: 10;
     border-color: white;
     font-size: 18px;
-    margin: 0; /* Remove the -4px margin-top that was messing up centering */
+    margin-top: -4px;
+    text-align: center;
+    background: transparent;
 }
 
     .reel-button-container {
