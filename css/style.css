@@ -16,7 +16,9 @@
 
 /* --- Inserted for corrected Watch Reels button --- */
 #reel-button.reel-link {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center; /* center text vertically */
+    justify-content: center;
     padding: 6px 12px;
     border: 2px solid #08abd4;
     color: #08abd4;
@@ -26,6 +28,7 @@
     font-size: 18px;
     font-weight: 600;
     transition: 0.3s;
+    height: 40px; /* or slightly tweak based on your header height */
 }
 #reel-button.reel-link:hover {
     background-color: #08abd4;
