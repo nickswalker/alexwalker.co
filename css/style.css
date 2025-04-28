@@ -185,6 +185,7 @@ header .container {
 header nav>ul {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 header nav > ul > li {
@@ -967,6 +968,7 @@ section#about {
     header nav>ul {
         flex-flow: row nowrap;
         justify-content: space-around;
+        align-items: center;
     }
 
     header nav>ul>li {
