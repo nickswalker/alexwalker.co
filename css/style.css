@@ -998,9 +998,8 @@ section#about {
         height: unset;
         background-color: unset;
     }
-  #about .text {
-    padding-left: 0;
-    margin-left: 0;
+#about .text {
+    flex-grow: 1;
 }
 
     /*--- = Contact  */
