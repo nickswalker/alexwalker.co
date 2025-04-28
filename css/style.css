@@ -736,7 +736,7 @@ section#about {
 
 #about figure img {
     vertical-align: top;
-    horizontal-align: center;
+    horizontal-align: right;
     object-fit: contain;
     height: 100%;
 }
