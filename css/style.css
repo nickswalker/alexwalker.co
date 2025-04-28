@@ -352,7 +352,7 @@ section {
 section .container {
     overflow: visible;
     position: relative;
-    max-width: 1170px;
+
     margin: 0 auto;
     padding: 36px 0 0 0;
     box-sizing: border-box;
@@ -916,6 +916,7 @@ section#about {
     section .container {
         padding: 48px 24px 0px 24px;
         grid-template-columns: 30fr 23fr;
+        max-width: 1170px;
         /* Tuned to make the feature posters look good */
     }
 
