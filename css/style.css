@@ -1357,3 +1357,19 @@ body.loaded header {
     width: 100%;
   }
 }
+@media screen and (max-width: 900px) and (orientation: portrait) {
+  .fancybox-slide--iframe .fancybox-content {
+    width: 90vw !important;
+    aspect-ratio: 16 / 9 !important;
+    max-width: 90vw;
+    margin: 0 auto;
+    height: auto !important;
+    padding: 0 !important;
+  }
+
+  .fancybox-slide--iframe iframe {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+  }
+}
