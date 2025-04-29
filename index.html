@@ -187,8 +187,14 @@
                 <li class="reel-button-menu">
                     <div class="reel-button-container">
                         <button id="reel-button">
-                            <a href="https://www.youtube.com/embed?listType=playlist&list=PL3F20B91BBDDD03B3&origin=https://alexwalker.co/" data-goatcounter-click="watch-reels">Watch Reels
-                            </a>
+                           <a href="https://www.youtube.com/embed?listType=playlist&list=PL3F20B91BBDDD03B3&origin=https://alexwalker.co/"
+   data-fancybox
+   data-caption="Watch Reels"
+   data-width="1600"
+   data-height="900"
+   class="-by-nine">
+   Watch Reels
+</a>
                         </button>
                     </div>
                 </li>
@@ -933,7 +939,7 @@ StatCounter"></a>
     </noscript>
     <!-- End of Statcounter Code -->
 <script>
-// Global slideshow settings — ensures 7-second interval even when using UI button
+// Global Fancybox settings
 Fancybox.defaults.SlideShow = {
   autoStart: false,
   speed: 7000 // 7 seconds per slide
@@ -956,7 +962,7 @@ $('a.stills-image').fancybox({
   }
 });
 
-// SPACEBAR Slideshow toggle for stills
+// Manual slideshow control for stills via spacebar
 let customSlideshowInterval = null;
 
 $(document).on('keydown', function (e) {
@@ -977,13 +983,12 @@ $(document).on('keydown', function (e) {
             clearInterval(customSlideshowInterval);
             customSlideshowInterval = null;
           }
-        }, 7000); // 7 seconds per slide
+        }, 7000); // 7 seconds
       }
     }
   }
 });
 
-// Cleanup on close
 $(document).on('afterClose.fb', function () {
   if (customSlideshowInterval) {
     clearInterval(customSlideshowInterval);
@@ -991,8 +996,8 @@ $(document).on('afterClose.fb', function () {
   }
 });
 
-// VIDEOS (YouTube, Vimeo, etc.)
-$('a.-by-nine, #reel-button a').fancybox({
+// VIDEO EMBEDS — applies to Watch Reels, trailers, Vimeo, etc.
+$('a[data-fancybox][href*="youtube"], a[data-fancybox][href*="vimeo"], a.-by-nine').fancybox({
   type: 'iframe',
   autoSize: true,
   width: 1600,
@@ -1006,22 +1011,6 @@ $('a.-by-nine, #reel-button a').fancybox({
     media: {}
   },
   idleTime: false
-});
-
-// Other Vimeo embeds
-$('.thumbnails.lightbox a').fancybox({
-  type: 'iframe',
-  autoSize: true,
-  width: 1300,
-  height: 550,
-  padding: 0,
-  aspectRatio: true,
-  iframe: {
-    preload: false
-  },
-  helpers: {
-    media: {}
-  }
 });
 </script>
     <script>
