@@ -1269,3 +1269,75 @@ body.loaded header {
     padding: 0 16px;
   }
 }
+/* DESKTOP — side-by-side layout */
+.bio-flexbox {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* Style image container */
+.bio-image {
+  flex: 0 0 auto;
+  max-width: 320px;
+}
+
+/* Image itself */
+.bio-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Text block beside image */
+.bio-text {
+  flex: 1 1 600px;
+  max-width: 720px;
+}
+
+/* Buttons in a row, wrap if needed */
+.bio-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+  padding-left: 0;
+  list-style: none;
+}
+
+/* Responsive behavior */
+@media screen and (max-width: 1024px) {
+  .bio-flexbox {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 0 24px;
+  }
+
+  .bio-text {
+    text-align: left;
+    max-width: 100%;
+  }
+
+  .bio-buttons {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .bio-flexbox {
+    padding: 0 16px;
+    gap: 16px;
+  }
+
+  .bio-image {
+    max-width: 240px;
+  }
+
+  .bio-buttons {
+    gap: 8px;
+    justify-content: center;
+  }
+}
