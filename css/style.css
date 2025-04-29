@@ -1349,15 +1349,17 @@ body.loaded header {
   }
 }
 #bio-buttons {
-  margin-top: 80px;
-  padding: 40px 0;
+  margin-top: 40px; /* Reduced from 80px */
+  padding: 20px 0;   /* Reduced vertical padding */
 }
 
 #bio-buttons .buttons-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 16px;
+  gap: 16px 24px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 #bio-buttons button {
@@ -1370,6 +1372,9 @@ body.loaded header {
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
+  flex: 1 1 calc(33.333% - 24px); /* 3 buttons per row */
+  min-width: 180px;
+  max-width: 240px;
 }
 
 #bio-buttons button:hover {
@@ -1380,19 +1385,14 @@ body.loaded header {
 #bio-buttons button a {
   text-decoration: none;
   color: inherit;
-  display: inline-block;
+  display: block;
   width: 100%;
   height: 100%;
+  text-align: center;
 }
 
-/* Keep each button only as wide as its label */
-#bio-buttons button {
-  width: auto;
-  min-width: 0;
-}
-
-/* Stack vertically on narrow screens */
-@media screen and (max-width: 640px) {
+/* Mobile adjustments */
+@media screen and (max-width: 768px) {
   #bio-buttons .buttons-container {
     flex-direction: column;
     align-items: center;
@@ -1400,5 +1400,7 @@ body.loaded header {
 
   #bio-buttons button {
     width: auto;
+    max-width: none;
+    flex: none;
   }
 }
