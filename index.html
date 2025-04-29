@@ -81,7 +81,7 @@
 </head>
 
 <body class="home">
-    <section id="slider">
+    <section id="slider" class="scroll-fade">
 
         <div id="slider-container" class="carousel slide custom-slide">
             <ol class="carousel-indicators rectangle-indicators">
@@ -201,7 +201,7 @@
         </nav>
     </header>
     <a id="return-to-top" href="#slider" class="smooth-scroll"><i class="ion-chevron-up"></i></a>
-    <section id="stills">
+    <section id="stills" class="scroll-fade">
         <div class="container columns-span-width">
             <ul class="stills " style="align-items: center; justify-content: center;">
                 <li>
@@ -314,7 +314,7 @@
     </section>
     <br>
     <br>
-    <section id="cinematographer">
+    <section id="cinematographer" class="scroll-fade">
         <div class="container columns-span-width">
             <h2>Cinematographer</h2>
 
@@ -584,7 +584,7 @@
     </section>
 
 
-    <section id="colorist">
+    <section id="colorist" class="scroll-fade">
 
         <div class="container columns-span-width">
             <h2 style="grid-column: auto;">Colorist</h2>
@@ -643,7 +643,7 @@
     </section>
 
 
-    <section id="about">
+    <section id="about" class="scroll-fade">
 
         <div class="container align-items-start">
 
@@ -719,7 +719,7 @@
         </div>
     </section>
 
-    <section id="contact">
+    <section id="contact" class="scroll-fade">
 
         <div class="container">
             <!-- Removed contact form due to spam causing the server to get banned from sending mail to iCloud servers 8/25/19 -->
@@ -1122,6 +1122,25 @@ $(window).on('scroll', blurOnScroll);
     <script>
 document.addEventListener("DOMContentLoaded", function() {
   document.body.classList.add('loaded');
+});
+</script>
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+  const scrollFadeElements = document.querySelectorAll('.scroll-fade');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  scrollFadeElements.forEach(el => {
+    observer.observe(el);
+  });
 });
 </script>
 </body>
