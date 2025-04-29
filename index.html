@@ -927,56 +927,67 @@ StatCounter"></a>
     </noscript>
     <!-- End of Statcounter Code -->
 <script>
-$(document).ready(function() {
-  // Initialize Fancybox for stills
-  $('a.stills-image').fancybox({
+// Initialize STILL images (stills section)
+$('a.stills-image').fancybox({
     loop: true,
     buttons: [
-      "slideShow",
-      "fullScreen",
-      "thumbs",
-      "close"
+        "slideShow",
+        "fullScreen",
+        "thumbs",
+        "close"
     ],
-    slideShow: {
-      autoStart: false,    // Don't start automatically
-      speed: 6000          // Slideshow delay in milliseconds (6 seconds here)
-    },
     afterShow: function(instance, current) {
-      if (!instance.userNotified) {
-        instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Press <strong>Spacebar</strong> to start slideshow</div>');
-        instance.userNotified = true;
-      }
-    }
-  });
-
-  // Initialize Fancybox for videos (trailers, reels, etc.)
-  $('a.trailer, a.reel').fancybox({
-    buttons: [
-      "close"
-    ],
-    youtube: {
-      controls: 1,
-      showinfo: 0
-    },
-    vimeo: {
-      color: 'ffffff'
-    }
-  });
-
-  // Listen for Spacebar to control slideshow for stills
-  $(document).on('keydown', function(e) {
-    if (e.keyCode === 32) { // Spacebar key
-      var instance = $.fancybox.getInstance();
-      if (instance && instance.group.length > 1 && instance.current.type === 'image') {
-        e.preventDefault(); // Prevent scrolling the page
-        if (instance.SlideShow && instance.SlideShow.isActive) {
-          instance.SlideShow.stop();
-        } else {
-          instance.SlideShow.start();
+        if (!instance.userNotified) {
+            instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Press <strong>Spacebar</strong> to start slideshow</div>');
+            instance.userNotified = true;
         }
-      }
     }
-  });
+});
+
+// Initialize VIDEOS (trailers, Watch Reels button)
+$('a.-by-nine, #reel-button a').fancybox({
+    type: 'iframe',
+    autoSize: true,
+    width: 1600,
+    height: 900,
+    padding: 0,
+    aspectRatio: true,
+    iframe: {
+        preload: false
+    },
+    helpers: {
+        media: {}
+    },
+    idleTime: false
+});
+
+// Separate Vimeo videos (if you have any directly linked Vimeo embeds)
+$('.thumbnails.lightbox a').fancybox({
+    type: 'iframe',
+    autoSize: true,
+    width: 1300,
+    height: 550,
+    padding: 0,
+    aspectRatio: true,
+    iframe: {
+        preload: false
+    },
+    helpers: {
+        media: {}
+    }
+});
+
+// Spacebar manual slideshow trigger for stills only
+$(document).on('keydown', function(e) {
+    if ($.fancybox.getInstance() && e.keyCode === 32) { // Spacebar
+        e.preventDefault();
+        var instance = $.fancybox.getInstance();
+        if (instance.SlideShow && instance.SlideShow.isActive) {
+            instance.SlideShow.stop();
+        } else {
+            instance.SlideShow.start();
+        }
+    }
 });
 </script>
     <script>
