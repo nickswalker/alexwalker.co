@@ -463,36 +463,37 @@ window.addEventListener('load', collapseNavIfMobile);
 window.addEventListener('resize', collapseNavIfMobile);
 </script>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const gridItems = document.querySelectorAll(".thumbnails.four-up li");
+  document.addEventListener("DOMContentLoaded", () => {
+    const gridItems = document.querySelectorAll(".thumbnails.four-up li");
 
-  gridItems.forEach((item, index) => {
-    item.classList.add("scroll-fade", "staggered");
-    item.style.setProperty("--delay", `${index * 60}ms`);
-  });
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        // Delay showing visible items right after load
-        setTimeout(() => {
-          entry.target.classList.add("visible");
-        }, 300); // <-- tweak this delay if needed
-        observer.unobserve(entry.target);
-      }
+    gridItems.forEach((item, index) => {
+      item.classList.add("scroll-fade", "staggered");
+      item.style.setProperty("--delay", `${index * 60}ms`);
     });
-  }, {
-    threshold: 0.05
-  });
 
-  document.querySelectorAll(".scroll-fade").forEach(el => {
-    observer.observe(el);
-  });
-});
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
 
-  // Trigger fade-in on page load for elements already in view
-  document.body.classList.add("loaded");
-});
+          // Only delay fade-in if item is already visible on load
+          const delay = entry.boundingClientRect.top < window.innerHeight ? 300 : 0;
+
+          setTimeout(() => {
+            el.classList.add("visible");
+          }, delay + parseInt(el.style.getPropertyValue("--delay")) || 0);
+
+          obs.unobserve(el);
+        }
+      });
+    }, {
+      threshold: 0.05
+    });
+
+    document.querySelectorAll(".scroll-fade").forEach(el => {
+      observer.observe(el);
+    });
+  });
 </script>
     <script>
   window.addEventListener("DOMContentLoaded", () => {
