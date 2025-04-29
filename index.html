@@ -334,32 +334,32 @@
                             </a>
                         </li>
                         <li>
-        <a href="https://www.youtube.com/embed/k5Nw4BMAL-I"
+                    <a href="https://www.youtube.com/embed/k5Nw4BMAL-I"
    data-fancybox
+   data-caption="<a href='https://www.imdb.com/title/tt25566562/' target='_blank' class='external-button'>View on IMDb</a>"
    data-width="1600"
    data-height="900"
-   class="sixteen-by-nine"
-   data-imdb-link="https://www.imdb.com/title/tt25566562/">
+   class="-by-nine">
    <img src="/img/posters/HOAposter.jpg" />
 </a>
                         </li>
                         <li>
-                           <a href="https://player.vimeo.com/video/984991085?h=721137dae6"
+                           <a href="http://player.vimeo.com/video/984991085?h=721137dae6&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
    data-fancybox
+   data-caption="<a href='https://www.imdb.com/title/tt15307512/?ref_=fn_all_ttl_1' target='_blank' class='external-button'>View on IMDb</a>"
    data-width="1600"
    data-height="900"
-   class="sixteen-by-nine"
-   data-imdb-link="https://www.imdb.com/title/tt15307512/">
+   class="sixteen-by-nine">
    <img src="/img/posters/ACINHPoster2.jpg" />
 </a>
                         </li>
                         <li>
-                         <a href="https://www.youtube.com/embed/2-gmX0QuFTo"
+                          <a href="https://www.youtube.com/embed/2-gmX0QuFTo"
    data-fancybox
+   data-caption="<a href='https://linktr.ee/cowboyswithoutborders?fbclid=IwAR3aHW7Q2dtZ2xlfu7-qFYyAnhjXZ9AoVCdDiIt0MWufiNGYwnXxWXBnqRM' target='_blank' class='external-button'>Watch the Full Film</a>"
    data-width="1600"
    data-height="900"
-   class="sixteen-by-nine"
-   data-imdb-link="https://linktr.ee/cowboyswithoutborders">
+   class="sixteen-by-nine">
    <img src="/img/posters/CWOB2.jpg" />
 </a>
                         </li>
@@ -854,39 +854,21 @@
                 }
             });
 
-$('a.sixteen-by-nine, #reel-button a').fancybox({
-  autoSize: true,
-  width: 1600,
-  height: 900,
-  padding: 0,
-  aspectRatio: true,
-  type: 'iframe',
-  helpers: {
-    media: {}
-  },
-  afterShow: function () {
-    var self = this;
-
-    // Remove any previous buttons
-    $('#custom-lightbox-button').remove();
-
-    // Force the wrap to have position: relative
-    $('.fancybox-wrap').css('position', 'relative');
-
-    // Now inject the custom button
-    var imdbLink = $(self.element).attr('data-imdb-link');
-    if (imdbLink) {
-      $('.fancybox-wrap').append(
-        '<div id="custom-lightbox-button" style="position:absolute; bottom:20px; width:100%; text-align:center; z-index:9999;">' +
-          '<a href="' + imdbLink + '" target="_blank" class="external-button">View on IMDb</a>' +
-        '</div>'
-      );
-    }
-  },
-  beforeClose: function () {
-    $('#custom-lightbox-button').remove();
-  }
-});
+            $('a.-by-nine, #reel-button a').fancybox({
+                autoSize: true,
+                width: 1600,
+                height: 900,
+                padding: 0,
+                aspectRatio: true,
+                type: 'iframe',
+                helpers: {
+                    media: {}
+                },
+                 idleTime: false 
+                // iframe: {
+                //     preload: false
+                // }
+            });
             // $('a.-by-nine').fancybox({
             //     autoSize: true,
             //     width: 1600,
