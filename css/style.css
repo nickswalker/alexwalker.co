@@ -1085,6 +1085,27 @@ section#about {
     transition: background 0.3s, color 0.3s;
 }
 
+#custom-lightbox-button .external-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+    padding: 6px 12px;
+    border: 2px solid white;
+    color: white;
+    background-color: transparent;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background 0.3s, color 0.3s;
+}
+
+#custom-lightbox-button .external-button:hover {
+    background-color: white;
+    color: #111;
+}
+
 .fancybox-caption .external-button:hover {
     background-color: white;
     color: #111;
