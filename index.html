@@ -942,10 +942,31 @@ $('a.stills-image').fancybox({
         "thumbs",
         "close"
     ],
-    afterShow: function(instance, current) {
+    afterShow: function (instance, current) {
         if (!instance.userNotified) {
             instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Press <strong>Spacebar</strong> to start slideshow</div>');
             instance.userNotified = true;
+        }
+
+        // Ensure SlideShow plugin is available on the instance
+        if (!instance.SlideShow) {
+            instance.SlideShow = new Fancybox.Plugins.SlideShow(instance);
+        }
+    }
+});
+
+// Spacebar to toggle slideshow
+$(document).on('keydown', function (e) {
+    if ($.fancybox.getInstance() && e.keyCode === 32) {
+        e.preventDefault();
+        var instance = $.fancybox.getInstance();
+        if (!instance.SlideShow) {
+            instance.SlideShow = new Fancybox.Plugins.SlideShow(instance);
+        }
+        if (instance.SlideShow.isActive) {
+            instance.SlideShow.stop();
+        } else {
+            instance.SlideShow.start();
         }
     }
 });
