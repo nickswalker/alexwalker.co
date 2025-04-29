@@ -1341,3 +1341,19 @@ body.loaded header {
     max-width: 260px;
   }
 }
+@media screen and (max-width: 500px) {
+  #about .container.align-items-start figure {
+    max-width: 180px;
+    flex: 0 0 180px;
+  }
+
+  #about .container.align-items-start figure img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  #about .container.align-items-start .bio-text {
+    width: 100%;
+  }
+}
