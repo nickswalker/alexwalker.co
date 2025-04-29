@@ -486,6 +486,11 @@ const scrollFadeObserver = new IntersectionObserver(entries => {
 // Observe all scroll-fade elements (staggered or not)
 document.querySelectorAll(".scroll-fade").forEach(el => scrollFadeObserver.observe(el));
 </script>
+    <script>
+  window.addEventListener("DOMContentLoaded", () => {
+    document.body.classList.add("loaded");
+  });
+</script>
 </body>
 
 </html>
