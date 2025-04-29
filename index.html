@@ -952,9 +952,12 @@ $('a.stills-image').fancybox({
   }
 });
     // Manual slideshow control via spacebar
+let customSlideshowInterval = null;
+
 $(document).on('keydown', function (e) {
-  if ($.fancybox.getInstance() && $.fancybox.getInstance().current.opts.$orig.hasClass('stills-image')) {
-    if (e.code === "Space") {
+  if (e.keyCode === 32) { // Spacebar
+    const instance = $.fancybox.getInstance();
+    if (instance && instance.current && instance.current.opts.$orig.hasClass('stills-image')) {
       e.preventDefault();
 
       if (customSlideshowInterval) {
@@ -962,19 +965,25 @@ $(document).on('keydown', function (e) {
         customSlideshowInterval = null;
       } else {
         customSlideshowInterval = setInterval(function () {
-          const instance = $.fancybox.getInstance();
-          if (instance) {
-            instance.next();
+          const activeInstance = $.fancybox.getInstance();
+          if (activeInstance) {
+            activeInstance.next();
           } else {
             clearInterval(customSlideshowInterval);
             customSlideshowInterval = null;
           }
-        }, 5000); // 5 seconds per slide
+        }, 5000); // 5 seconds
       }
     }
   }
 });
 
+$(document).on('afterClose.fb', function () {
+  if (customSlideshowInterval) {
+    clearInterval(customSlideshowInterval);
+    customSlideshowInterval = null;
+  }
+});
 // Stop custom slideshow if fancybox closes
 $(document).on('afterClose.fb', function () {
   if (customSlideshowInterval) {
