@@ -964,7 +964,7 @@ StatCounter"></a>
     </noscript>
     <!-- End of Statcounter Code -->
 <script>
-// Initialize STILL images
+// Initialize STILL images (stills section)
 $('a.stills-image').fancybox({
     loop: true,
     buttons: [
@@ -1014,34 +1014,16 @@ $('.thumbnails.lightbox a').fancybox({
     }
 });
 
-// Spacebar manual slideshow for stills only
-var fancySlideshowInterval = null;
-
+// Spacebar manual slideshow trigger for stills only
 $(document).on('keydown', function(e) {
-    if ($.fancybox.isOpen) {
-        if (e.keyCode === 32) { // Spacebar
-            e.preventDefault();
-            if (fancySlideshowInterval) {
-                clearInterval(fancySlideshowInterval);
-                fancySlideshowInterval = null;
-            } else {
-                fancySlideshowInterval = setInterval(function() {
-                    if ($.fancybox.isOpen) {
-                        $.fancybox.next();
-                    } else {
-                        clearInterval(fancySlideshowInterval);
-                        fancySlideshowInterval = null;
-                    }
-                }, 5000); // 5 seconds per slide
-            }
+    if ($.fancybox.getInstance() && e.keyCode === 32) { // Spacebar
+        e.preventDefault();
+        var instance = $.fancybox.getInstance();
+        if (instance.SlideShow && instance.SlideShow.isActive) {
+            instance.SlideShow.stop();
+        } else {
+            instance.SlideShow.start();
         }
-    }
-});
-
-$(document).on('afterClose.fb', function() {
-    if (fancySlideshowInterval) {
-        clearInterval(fancySlideshowInterval);
-        fancySlideshowInterval = null;
     }
 });
 </script>
