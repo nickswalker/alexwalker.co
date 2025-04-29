@@ -1226,3 +1226,35 @@ body.loaded header {
     text-align: left;
   }
 }
+@media screen and (max-width: 640px) {
+  #about h2 {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  #about .container.align-items-start {
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    padding: 0 16px;
+    gap: 16px;
+  }
+
+  #about .container.align-items-start figure {
+    width: 100%;
+    max-width: 240px;
+    margin: 0 auto;
+  }
+
+  #about .container.align-items-start figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  #about .container.align-items-start .text {
+    width: 100%;
+    max-width: 100%;
+    text-align: left;
+  }
+}
