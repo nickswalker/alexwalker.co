@@ -1415,6 +1415,6 @@ body.loaded header {
 @media screen and (max-width: 700px) {
   .bio-image {
     max-width: 240px;
-    margin-bottom: 44px;
+    margin-bottom: 64px !important;
   }
 }
