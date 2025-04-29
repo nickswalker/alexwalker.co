@@ -986,6 +986,7 @@ StatCounter"></a>
     </noscript>
     <!-- End of Statcounter Code -->
 <script>
+// Initialize STILL images
 $('a.stills-image').fancybox({
     loop: true,
     buttons: [
@@ -995,7 +996,6 @@ $('a.stills-image').fancybox({
         "close"
     ],
     afterShow: function(instance, current) {
-        // Show a tip message once (only first time Fancybox opens)
         if (!instance.userNotified) {
             instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Press <strong>Spacebar</strong> to start slideshow</div>');
             instance.userNotified = true;
@@ -1003,20 +1003,50 @@ $('a.stills-image').fancybox({
     }
 });
 
-// Custom control of Spacebar slideshow behavior
+// Initialize VIDEOS (trailers, Watch Reels button)
+$('a.-by-nine, #reel-button a').fancybox({
+    type: 'iframe',
+    autoSize: true,
+    width: 1600,
+    height: 900,
+    padding: 0,
+    aspectRatio: true,
+    iframe: {
+        preload: false
+    },
+    helpers: {
+        media: {}
+    },
+    idleTime: false
+});
+
+// Separate Vimeo videos (if you have any directly linked Vimeo embeds)
+$('.thumbnails.lightbox a').fancybox({
+    type: 'iframe',
+    autoSize: true,
+    width: 1300,
+    height: 550,
+    padding: 0,
+    aspectRatio: true,
+    iframe: {
+        preload: false
+    },
+    helpers: {
+        media: {}
+    }
+});
+
+// Spacebar manual slideshow for stills only
 var fancySlideshowInterval = null;
 
 $(document).on('keydown', function(e) {
     if ($.fancybox.isOpen) {
-        if (e.keyCode === 32) { // 32 = spacebar
+        if (e.keyCode === 32) { // Spacebar
             e.preventDefault();
-
             if (fancySlideshowInterval) {
-                // If slideshow is already running, stop it
                 clearInterval(fancySlideshowInterval);
                 fancySlideshowInterval = null;
             } else {
-                // Otherwise start slideshow with 5-second intervals
                 fancySlideshowInterval = setInterval(function() {
                     if ($.fancybox.isOpen) {
                         $.fancybox.next();
@@ -1024,13 +1054,12 @@ $(document).on('keydown', function(e) {
                         clearInterval(fancySlideshowInterval);
                         fancySlideshowInterval = null;
                     }
-                }, 5000); // 5 seconds
+                }, 5000); // 5 seconds per slide
             }
         }
     }
 });
 
-// Stop the slideshow cleanly when Fancybox closes
 $(document).on('afterClose.fb', function() {
     if (fancySlideshowInterval) {
         clearInterval(fancySlideshowInterval);
