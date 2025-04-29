@@ -1147,3 +1147,8 @@ section#about {
     margin-bottom: 24px; /* Adds breathing room below the image */
   }
 }
+@media screen and (max-width: 700px) {
+  header nav > ul > li:not(.logo):not(.reel-button-menu):not(#scroll-down-indicator) {
+    display: none;
+  }
+}
