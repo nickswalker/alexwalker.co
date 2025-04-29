@@ -1196,3 +1196,33 @@ body.loaded header {
 #about .container.align-items-start .text {
   flex: 1 1 500px;
 }
+@media screen and (max-width: 1024px) {
+  #about h2 {
+    text-align: center;
+  }
+
+  #about .container.align-items-start {
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    gap: 24px;
+    padding: 0 24px;
+  }
+
+  #about .container.align-items-start figure {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  #about .container.align-items-start figure img {
+    width: 100%;
+    height: auto;
+  }
+
+  #about .container.align-items-start .text {
+    width: 100%;
+    max-width: 720px;
+    text-align: left;
+  }
+}
