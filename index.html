@@ -867,23 +867,22 @@ $('a.sixteen-by-nine, #reel-button a').fancybox({
     afterShow: function () {
         var self = this;
 
-        // Remove any existing custom buttons (important if opening multiple trailers)
+        // Remove any existing custom buttons first
         $('#custom-lightbox-button').remove();
 
         // Check if the clicked item has a data-imdb-link attribute
         var imdbLink = $(self.element).attr('data-imdb-link');
 
         if (imdbLink) {
-            // Manually inject a button below the iframe
-            $('.fancybox-skin').append(
-                '<div id="custom-lightbox-button" style="position:absolute; bottom:20px; width:100%; text-align:center;">' +
+            // Inject the button directly into the Fancybox wrapper
+            $('.fancybox-wrap').append(
+                '<div id="custom-lightbox-button" style="position:absolute; bottom:20px; width:100%; text-align:center; z-index:9999;">' +
                 '<a href="' + imdbLink + '" target="_blank" class="external-button">View on IMDb</a>' +
                 '</div>'
             );
         }
     },
     beforeClose: function () {
-        // When closing the lightbox, clean up the custom button
         $('#custom-lightbox-button').remove();
     }
 });
