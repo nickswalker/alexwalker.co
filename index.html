@@ -943,15 +943,19 @@ $('a.stills-image').fancybox({
         "close"
     ],
     afterShow: function (instance, current) {
+        if (!instance.SlideShow) {
+            instance.SlideShow = new Fancybox.Plugins.SlideShow(instance);
+        }
+
+        // Show tip only once
         if (!instance.userNotified) {
             instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Press <strong>Spacebar</strong> to start slideshow</div>');
             instance.userNotified = true;
         }
-
-        // Ensure SlideShow plugin is available on the instance
-        if (!instance.SlideShow) {
-            instance.SlideShow = new Fancybox.Plugins.SlideShow(instance);
-        }
+    },
+    slideShow: {
+        autoStart: false,
+        speed: 5000 // 5 seconds between images
     }
 });
 
