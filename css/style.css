@@ -1258,3 +1258,74 @@ body.loaded header {
     text-align: left;
   }
 }
+/* Bio Section Layout */
+.bio-flexbox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.bio-image {
+  flex: 0 0 280px;
+  max-width: 280px;
+}
+
+.bio-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+
+.bio-text {
+  flex: 1 1 500px;
+  max-width: 720px;
+}
+
+.bio-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.bio-buttons button {
+  flex: 0 1 220px;
+  text-align: center;
+}
+
+/* Mobile */
+@media screen and (max-width: 768px) {
+  .bio-flexbox {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .bio-text {
+    flex: 1 1 auto;
+    max-width: 100%;
+  }
+
+  .bio-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* iPad Landscape */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .bio-flexbox {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .bio-text {
+    text-align: left;
+  }
+}
