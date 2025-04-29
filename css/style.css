@@ -1151,4 +1151,16 @@ section#about {
   header nav > ul > li:not(.logo):not(.reel-button-menu):not(#scroll-down-indicator) {
     display: none;
   }
+
+    /* Smooth fade-in for header */
+header {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+body.loaded header {
+  opacity: 1;
+  transform: translateY(0);
+}
 }
