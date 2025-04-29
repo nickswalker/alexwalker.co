@@ -1388,46 +1388,19 @@ body.loaded header {
 .scroll-fade.staggered[data-delay] {
   transition-delay: var(--delay);
 }
-/* Mobile layout fixes (phones) */
-@media screen and (max-width: 700px) {
-  #about .bio-flexbox {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 0 16px;
+@media screen and (max-width: 500px) {
+  #about .container.align-items-start figure {
+    max-width: 180px;
+    flex: 0 0 180px;
   }
 
-  #about .bio-image {
-    max-width: 260px;
+  #about .container.align-items-start figure img {
     width: 100%;
-    margin: 0 auto;
+    height: auto;
+    border-radius: 8px;
   }
 
-  #about .bio-text {
-    max-width: 100%;
+  #about .container.align-items-start .bio-text {
     width: 100%;
-    text-align: left;
-  }
-}
-
-/* iPad Portrait layout (narrow tablets) */
-@media screen and (min-width: 701px) and (max-width: 1024px) {
-  #about .bio-flexbox {
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
-    padding: 0 32px;
-  }
-
-  #about .bio-image {
-    max-width: 320px;
-    width: 100%;
-    margin: 0 auto;
-  }
-
-  #about .bio-text {
-    max-width: 720px;
-    width: 100%;
-    text-align: left;
   }
 }
