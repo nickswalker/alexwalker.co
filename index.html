@@ -995,12 +995,46 @@ $('a.stills-image').fancybox({
         "close"
     ],
     afterShow: function(instance, current) {
-        if (!instance.SlideShow) {
-            instance.SlideShow = new $.fancybox.SlideShow(instance, {
-                progress: false
-            });
+        // Show a tip message once (only first time Fancybox opens)
+        if (!instance.userNotified) {
+            instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Press <strong>Spacebar</strong> to start slideshow</div>');
+            instance.userNotified = true;
         }
-        instance.SlideShow.start();
+    }
+});
+
+// Custom control of Spacebar slideshow behavior
+var fancySlideshowInterval = null;
+
+$(document).on('keydown', function(e) {
+    if ($.fancybox.isOpen) {
+        if (e.keyCode === 32) { // 32 = spacebar
+            e.preventDefault();
+
+            if (fancySlideshowInterval) {
+                // If slideshow is already running, stop it
+                clearInterval(fancySlideshowInterval);
+                fancySlideshowInterval = null;
+            } else {
+                // Otherwise start slideshow with 5-second intervals
+                fancySlideshowInterval = setInterval(function() {
+                    if ($.fancybox.isOpen) {
+                        $.fancybox.next();
+                    } else {
+                        clearInterval(fancySlideshowInterval);
+                        fancySlideshowInterval = null;
+                    }
+                }, 5000); // 5 seconds
+            }
+        }
+    }
+});
+
+// Stop the slideshow cleanly when Fancybox closes
+$(document).on('afterClose.fb', function() {
+    if (fancySlideshowInterval) {
+        clearInterval(fancySlideshowInterval);
+        fancySlideshowInterval = null;
     }
 });
 </script>
