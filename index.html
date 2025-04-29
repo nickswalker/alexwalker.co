@@ -854,7 +854,7 @@
                 }
             });
 
-        $('a.sixteen-by-nine, #reel-button a').fancybox({
+     $('a.sixteen-by-nine, #reel-button a').fancybox({
     autoSize: true,
     width: 1600,
     height: 900,
@@ -864,12 +864,18 @@
     helpers: {
         media: {},
         title: {
-            type: 'inside' // Ensure captions/buttons stay under iframe
+            type: 'inside'
         }
     },
-    idleTime: false, // Prevent toolbar fade
-    afterLoad: function() {
-        $(".fancybox-title").show(); // Force caption area to stay visible
+    afterShow: function() {
+        // Every 2 seconds, force the title (caption/button) to be visible
+        this.forceCaptionVisible = setInterval(function() {
+            $(".fancybox-title").show();
+        }, 2000);
+    },
+    beforeClose: function() {
+        // When Fancybox closes, clear the interval to avoid memory leaks
+        clearInterval(this.forceCaptionVisible);
     }
 });
             // $('a.-by-nine').fancybox({
