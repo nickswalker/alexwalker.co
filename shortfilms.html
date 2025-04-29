@@ -439,11 +439,28 @@ $('a#reel-button, #reel-button a').fancybox({
 });
 </script>
     <script>
-$(window).on('load', function() {
-  if ($(window).width() <= 700) {
-    $('header nav > ul > li').not('.logo').not('.reel-button-menu').not('#scroll-down-indicator').hide();
-  }
-});
+function collapseNavIfMobile() {
+    if (window.innerWidth <= 700) {
+        document.querySelectorAll('header nav > ul > li').forEach(function(li) {
+            if (!li.classList.contains('logo') && !li.classList.contains('reel-button-menu') && li.id !== 'scroll-down-indicator') {
+                li.style.display = 'none';
+            } else {
+                li.style.display = ''; // Reset to default for allowed items
+            }
+        });
+    } else {
+        // On desktop, make sure everything is visible again
+        document.querySelectorAll('header nav > ul > li').forEach(function(li) {
+            li.style.display = '';
+        });
+    }
+}
+
+// Wait until everything is loaded
+window.addEventListener('load', collapseNavIfMobile);
+
+// Also re-check on window resize (optional but good)
+window.addEventListener('resize', collapseNavIfMobile);
 </script>
 </body>
 
