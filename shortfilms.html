@@ -462,33 +462,17 @@ window.addEventListener('load', collapseNavIfMobile);
 // Also re-check on window resize (optional but good)
 window.addEventListener('resize', collapseNavIfMobile);
 </script>
-    <script>
-  const scrollFadeElements = document.querySelectorAll(".scroll-fade");
-
-  const scrollFadeObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("in-view");
-      }
-    });
-  }, {
-    threshold: 0.1
-  });
-
-  scrollFadeElements.forEach(el => scrollFadeObserver.observe(el));
-</script>
-    <script>
+<script>
 // Apply scroll-fade and staggered classes with delays to all thumbnail list items
 document.querySelectorAll('.thumbnails.four-up').forEach(ul => {
   const items = ul.querySelectorAll('li');
   items.forEach((li, i) => {
     li.classList.add('scroll-fade', 'staggered');
-    li.style.setProperty('--delay', `${i * 100}ms`);
+    li.style.setProperty('--delay', `${i * 80}ms`);
   });
 });
 
 // Set up intersection observer to trigger fade-ins
-const scrollFadeElements = document.querySelectorAll(".scroll-fade");
 const scrollFadeObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -499,7 +483,8 @@ const scrollFadeObserver = new IntersectionObserver(entries => {
   threshold: 0.1
 });
 
-scrollFadeElements.forEach(el => scrollFadeObserver.observe(el));
+// Observe all scroll-fade elements (staggered or not)
+document.querySelectorAll(".scroll-fade").forEach(el => scrollFadeObserver.observe(el));
 </script>
 </body>
 
