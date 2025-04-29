@@ -1404,3 +1404,11 @@ body.loaded header {
     width: 100%;
   }
 }
+@media screen and (max-width: 500px) {
+  .thumbnails-container h3,
+  #cinematographer figure > h3,
+  #cinematographer .columns-span-width figure > h3,
+  #cinematographer + div > figure > h3 {
+    text-align: center !important;
+  }
+}
