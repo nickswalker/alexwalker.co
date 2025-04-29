@@ -1412,3 +1412,8 @@ body.loaded header {
     text-align: center !important;
   }
 }
+@media screen and (max-width: 700px) {
+  .bio-image {
+    margin-bottom: 24px;
+  }
+}
