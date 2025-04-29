@@ -919,21 +919,17 @@
                 lastEventLocation = target.scrollTop();
             }
 
-            function blurOnScroll() {
-                const currentScrollY = this.latestKnownScrollY;
-                this.ticking = false;
-                const percentage = currentScrollY / wHeight;
-                if (percentage > 1) {
-                    return;
-                }
-                const opacity = percentage - 0.3;
-                const blurRadius = Math.max((percentage - 0.3) * 25, 0);
-                $toBlur.css({
-                    'opacity': 1.0 - opacity,
-                    '-webkit-filter': 'blur(' + blurRadius + 'px)',
-                    'filter': 'blur(' + blurRadius + 'px)'
-                });
-            }
+       function blurOnScroll() {
+    const currentScrollY = this.latestKnownScrollY;
+    this.ticking = false;
+    const percentage = currentScrollY / wHeight;
+    if (percentage > 1) {
+        return;
+    }
+    const opacity = percentage - 0.3;
+    const blurRadius = Math.max((percentage - 0.3) * 25, 0);
+    $toBlur.attr('style', `opacity: ${1.0 - opacity}; filter: blur(${blurRadius}px) !important; -webkit-filter: blur(${blurRadius}px) !important;`);
+}
             // Smooth scroll-to
             const links = $('.smooth-scroll');
 
