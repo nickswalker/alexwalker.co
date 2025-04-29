@@ -1344,9 +1344,9 @@ body.loaded header {
     text-align: left;
   }
 
- #bio-buttons {
+#bio-buttons {
   margin-top: 40px;
-  padding: 40px 16px;
+  padding: 40px 0;
   background: transparent;
 }
 
@@ -1355,31 +1355,36 @@ body.loaded header {
   flex-wrap: wrap;
   justify-content: center;
   gap: 16px;
-  max-width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Buttons */
 #bio-buttons button {
-  height: 56px;
-  padding: 0 20px;
+  padding: 0 24px;
   border: 2px solid #00bfff;
   background: transparent;
   color: #00bfff;
   font-weight: 700;
   font-size: 18px;
-  line-height: 56px;
   border-radius: 8px;
   white-space: nowrap;
-  transition: background 0.3s, color 0.3s;
   text-align: center;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  min-width: 140px;
+  line-height: 1;
+  transition: background 0.3s, color 0.3s;
 }
 
 #bio-buttons button a {
-  display: block;
-  text-decoration: none;
   color: inherit;
-  line-height: inherit;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  text-align: center;
+  line-height: normal;
 }
 
 /* Mobile layout */
@@ -1390,7 +1395,7 @@ body.loaded header {
   }
 
   #bio-buttons button {
-    width: 100%;
-    max-width: 320px;
+    width: 90vw;
+    max-width: 420px;
   }
 }
