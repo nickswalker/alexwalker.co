@@ -855,36 +855,37 @@
             });
 
 $('a.sixteen-by-nine, #reel-button a').fancybox({
-    autoSize: true,
-    width: 1600,
-    height: 900,
-    padding: 0,
-    aspectRatio: true,
-    type: 'iframe',
-    helpers: {
-        media: {}
-    },
-    afterShow: function () {
-        var self = this;
+  autoSize: true,
+  width: 1600,
+  height: 900,
+  padding: 0,
+  aspectRatio: true,
+  type: 'iframe',
+  helpers: {
+    media: {}
+  },
+  afterShow: function () {
+    var self = this;
 
-        // Remove any existing custom buttons first
-        $('#custom-lightbox-button').remove();
+    // Remove any previous buttons
+    $('#custom-lightbox-button').remove();
 
-        // Check if the clicked item has a data-imdb-link attribute
-        var imdbLink = $(self.element).attr('data-imdb-link');
+    // Force the wrap to have position: relative
+    $('.fancybox-wrap').css('position', 'relative');
 
-        if (imdbLink) {
-            // Inject the button directly into the Fancybox wrapper
-            $('.fancybox-wrap').append(
-                '<div id="custom-lightbox-button" style="position:absolute; bottom:20px; width:100%; text-align:center; z-index:9999;">' +
-                '<a href="' + imdbLink + '" target="_blank" class="external-button">View on IMDb</a>' +
-                '</div>'
-            );
-        }
-    },
-    beforeClose: function () {
-        $('#custom-lightbox-button').remove();
+    // Now inject the custom button
+    var imdbLink = $(self.element).attr('data-imdb-link');
+    if (imdbLink) {
+      $('.fancybox-wrap').append(
+        '<div id="custom-lightbox-button" style="position:absolute; bottom:20px; width:100%; text-align:center; z-index:9999;">' +
+          '<a href="' + imdbLink + '" target="_blank" class="external-button">View on IMDb</a>' +
+        '</div>'
+      );
     }
+  },
+  beforeClose: function () {
+    $('#custom-lightbox-button').remove();
+  }
 });
             // $('a.-by-nine').fancybox({
             //     autoSize: true,
