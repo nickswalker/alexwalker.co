@@ -438,6 +438,13 @@ $('a#reel-button, #reel-button a').fancybox({
     }
 });
 </script>
+    <script>
+$(window).on('load', function() {
+  if ($(window).width() <= 700) {
+    $('header nav > ul > li').not('.logo').not('.reel-button-menu').not('#scroll-down-indicator').hide();
+  }
+});
+</script>
 </body>
 
 </html>
