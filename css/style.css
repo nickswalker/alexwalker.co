@@ -1,3 +1,54 @@
+/* BIO CONTAINER (Desktop - Side by Side) */
+.bio-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 40px;
+}
+
+/* Bio title */
+.bio-container h2 {
+    flex-basis: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Bio Image (Desktop) */
+.bio-image img {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Bio Text */
+.bio-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+/* Mobile - Stack Vertically */
+@media (max-width: 768px) {
+    .bio-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .bio-image img {
+        max-width: 250px; /* Smaller photo on mobile */
+        margin-bottom: 20px;
+    }
+
+    .bio-text {
+        text-align: left;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
 @import url('reset.css');
 @import url('slider-image-positions.css');
 
