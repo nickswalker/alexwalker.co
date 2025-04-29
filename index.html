@@ -344,12 +344,7 @@
 </a>
                         </li>
                         <li>
-                           <a href="http://player.vimeo.com/video/984991085?h=721137dae6&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-   data-fancybox
-   data-caption="<a href='https://www.achristmasinnewhope.com' target='_blank' class='external-button'>Watch the Full Film</a>"
-   data-width="1600"
-   data-height="900"
-   class="sixteen-by-nine">
+                           <a href="https://player.vimeo.com/video/984991085?h=721137dae6&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" data-fancybox data-caption="<a href='https://www.achristmasinnewhope.com' target='_blank' class='external-button'>Watch the Full Film</a>" data-width="1600" data-height="900" class="sixteen-by-nine">
    <img src="/img/posters/ACINHPoster2.jpg" />
 </a>
                         </li>
@@ -370,12 +365,12 @@
 
                         </li>
                         <li>
-                            <a href="http://www.imdb.com/title/tt3626006/">
+                            <a href="https://www.imdb.com/title/tt3626006/">
                                 <img src="/img/posters/book-of-ruth.jpg" />
                             </a>
                         </li>
                         <li>
-                            <a href="http://www.imdb.com/title/tt2056663/">
+                            <a href="https://www.imdb.com/title/tt2056663/">
                                 <img src="/img/posters/no-one-will-know.jpg" />
                             </a>
                         </li>
@@ -625,8 +620,7 @@
 
 
                     <li>
-                        <a href="http://www.youtube-nocookie.com/embed/6q-d8uEI7N8?list=PLsYARrhGsN4strJHzw4EyXHPK517VzJ_U&origin=https://alexwalker.co/"
-                            class="-by-nine" data-year="Rooster Teeth Shorts- Shot by Chad Leathers">
+                        <a href="https://www.youtube-nocookie.com/embed/6q-d8uEI7N8?list=PLsYARrhGsN4strJHzw4EyXHPK517VzJ_U&origin=https://alexwalker.co/" class="-by-nine" data-year="Rooster Teeth Shorts- Shot by Chad Leathers">
                             <img src="/img/colorist/1.jpg">
                         </a>
                     </li>
@@ -667,7 +661,7 @@
   </div>
 </section>
 <section id="bio-buttons" class="scroll-fade">
-  <div class="container buttons-container scroll-fade">
+  <div class="container buttons-container">
     <button class="scroll-fade">
       <a href="https://www.imdb.com/name/nm4205213/" target="_blank" data-goatcounter-click="ext-imdb.com">IMDb</a>
     </button>
@@ -697,18 +691,18 @@
                 <h3>Representation</h3>
                 <p>The Right Eye Inc.
                   <br/><a href="http://therighteye.com/" data-goatcounter-click="ext-righteye">www.therighteye.com</a>
-                    <br />Thomas Turley | turley@therighteye.com
+                    <br />Thomas Turley | <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="562223243a332f16223e33243f313e22332f337835393b">[email&#160;protected]</a>
                     <br />917.209.5445
                     <br /> New York, NY
                 </p>
-                <a href="http://alexwalker.co/secret.html" data-goatcounter-click="secret">
+                <a href="https://alexwalker.co/secret.html" data-goatcounter-click="secret">
                     <img class="representation-logo scroll-fade" src="/img/right-eye.svg" /></a>
             </div>
         </div>
       <div class="copyright scroll-fade">&copy; Alex Walker 2003-<span id="copyright-current-year">2025</span>
         </div>
     </section>
-    <script type="text/javascript">
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript">
         let imageLinks = [{
             media: "(color-gamut: p3)",
             srcset: "/img/slider/1-wide.jpg 3840w",
@@ -934,76 +928,18 @@ StatCounter"></a>
     <!-- End of Statcounter Code -->
 <script>
 // Initialize STILL images (stills section)
-let customSlideshowInterval = null;
-
 $('a.stills-image').fancybox({
-  loop: true,
-  buttons: [
-    "slideShow",
-    "fullScreen",
-    "thumbs",
-    "close"
-  ],
-  afterShow: function (instance, current) {
-    if (!instance.userNotified) {
-      instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Press <strong>Spacebar</strong> to start slideshow</div>');
-      instance.userNotified = true;
-    }
-  }
-});
-    // Manual slideshow control via spacebar
-let customSlideshowInterval = null;
-
-$(document).on('keydown', function (e) {
-  if (e.keyCode === 32) { // Spacebar
-    const instance = $.fancybox.getInstance();
-    if (instance && instance.current && instance.current.opts.$orig.hasClass('stills-image')) {
-      e.preventDefault();
-
-      if (customSlideshowInterval) {
-        clearInterval(customSlideshowInterval);
-        customSlideshowInterval = null;
-      } else {
-        customSlideshowInterval = setInterval(function () {
-          const activeInstance = $.fancybox.getInstance();
-          if (activeInstance) {
-            activeInstance.next();
-          } else {
-            clearInterval(customSlideshowInterval);
-            customSlideshowInterval = null;
-          }
-        }, 17000); // 10 seconds
-      }
-    }
-  }
-});
-
-$(document).on('afterClose.fb', function () {
-  if (customSlideshowInterval) {
-    clearInterval(customSlideshowInterval);
-    customSlideshowInterval = null;
-  }
-});
-// Stop custom slideshow if fancybox closes
-$(document).on('afterClose.fb', function () {
-  if (customSlideshowInterval) {
-    clearInterval(customSlideshowInterval);
-    customSlideshowInterval = null;
-  }
-});
-
-// Spacebar to toggle slideshow
-$(document).on('keydown', function (e) {
-    if ($.fancybox.getInstance() && e.keyCode === 32) {
-        e.preventDefault();
-        var instance = $.fancybox.getInstance();
-        if (!instance.SlideShow) {
-            instance.SlideShow = new Fancybox.Plugins.SlideShow(instance);
-        }
-        if (instance.SlideShow.isActive) {
-            instance.SlideShow.stop();
-        } else {
-            instance.SlideShow.start();
+    loop: true,
+    buttons: [
+        "slideShow",
+        "fullScreen",
+        "thumbs",
+        "close"
+    ],
+    afterShow: function(instance, current) {
+        if (!instance.userNotified) {
+            instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Press <strong>Spacebar</strong> to start slideshow</div>');
+            instance.userNotified = true;
         }
     }
 });
