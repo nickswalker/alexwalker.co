@@ -36,7 +36,7 @@
 <body><div id="top"></a>
 
 
-<header class="dark">
+<header class="dark scroll-fade">
     <nav class="container">
         <ul>
             <li class="logo text-start">
@@ -84,7 +84,7 @@
 
             <li class="reel-button-menu">
                 <div class="reel-button-container">
-                    <button id="reel-button">
+                    <button id="reel-button"class="scroll-fade">
                         <a href="https://www.youtube.com/embed?listType=playlist&list=PL3F20B91BBDDD03B3&origin=https://alexwalker.co/"
                            data-goatcounter-click="watch-reels">Watch Reels
                         </a>
@@ -98,7 +98,7 @@
 <a id="return-to-top" href="#top" class="smooth-scroll"><i class="ion-chevron-up"></i></a>
 <a id="return-to-top" href="#top" class="smooth-scroll"><i class="ion-chevron-up"></i></a>
 
-<section id="short-films">
+<section id="short-films" class="scroll-fade">
 
     <div class="container">
 
@@ -461,6 +461,21 @@ window.addEventListener('load', collapseNavIfMobile);
 
 // Also re-check on window resize (optional but good)
 window.addEventListener('resize', collapseNavIfMobile);
+</script>
+    <script>
+  const scrollFadeElements = document.querySelectorAll(".scroll-fade");
+
+  const scrollFadeObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in-view");
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  scrollFadeElements.forEach(el => scrollFadeObserver.observe(el));
 </script>
 </body>
 
