@@ -989,6 +989,41 @@ StatCounter"></a>
         </div>
     </noscript>
     <!-- End of Statcounter Code -->
+    <script>
+var fancySlideshowInterval = null; // Store slideshow interval
+
+$(document).on('keydown', function(e) {
+    if ($.fancybox.isOpen) {
+        if (e.keyCode === 32) { // 32 = Spacebar
+            e.preventDefault(); // Prevent page scroll
+
+            if (fancySlideshowInterval) {
+                // Slideshow is already running, stop it
+                clearInterval(fancySlideshowInterval);
+                fancySlideshowInterval = null;
+            } else {
+                // Start slideshow: advance every 3 seconds
+                fancySlideshowInterval = setInterval(function() {
+                    if ($.fancybox.isOpen) {
+                        $.fancybox.next();
+                    } else {
+                        clearInterval(fancySlideshowInterval);
+                        fancySlideshowInterval = null;
+                    }
+                }, 3000); // 3000 ms = 3 seconds
+            }
+        }
+    }
+});
+
+// Stop slideshow if Fancybox is closed
+$(document).on('afterClose.fb', function() {
+    if (fancySlideshowInterval) {
+        clearInterval(fancySlideshowInterval);
+        fancySlideshowInterval = null;
+    }
+});
+</script>
 </body>
 
 </html>
