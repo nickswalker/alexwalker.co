@@ -919,17 +919,46 @@
                 lastEventLocation = target.scrollTop();
             }
 
-       function blurOnScroll() {
-    const currentScrollY = this.latestKnownScrollY;
-    this.ticking = false;
-    const percentage = currentScrollY / wHeight;
-    if (percentage > 1) {
+ let latestKnownScrollY = 0;
+let ticking = false;
+const $toBlur = $('#slider-container');
+const windowHeight = $(window).height();
+
+// Update scroll position
+function onScroll() {
+    latestKnownScrollY = window.scrollY || window.pageYOffset;
+    requestTick();
+}
+
+// Request a blur update only if not already requested
+function requestTick() {
+    if (!ticking) {
+        requestAnimationFrame(updateBlur);
+    }
+    ticking = true;
+}
+
+// Update the blur based on scroll
+function updateBlur() {
+    const scrollPercent = latestKnownScrollY / windowHeight;
+    ticking = false;
+
+    if (scrollPercent > 1) {
         return;
     }
-    const opacity = percentage - 0.3;
-    const blurRadius = Math.max((percentage - 0.3) * 25, 0);
-    $toBlur.attr('style', `opacity: ${1.0 - opacity}; filter: blur(${blurRadius}px) !important; -webkit-filter: blur(${blurRadius}px) !important;`);
+
+    const blurRadius = Math.max((scrollPercent - 0.3) * 25, 0);
+    const opacity = 1 - Math.min(scrollPercent, 1);
+
+    $toBlur.css({
+        'filter': `blur(${blurRadius}px)`,
+        '-webkit-filter': `blur(${blurRadius}px)`,
+        'opacity': opacity
+    });
 }
+
+// Hook scroll event
+window.addEventListener('scroll', onScroll, { passive: true });
             // Smooth scroll-to
             const links = $('.smooth-scroll');
 
