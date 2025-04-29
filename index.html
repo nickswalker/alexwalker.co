@@ -1093,6 +1093,31 @@ function setCarouselItems() {
 $(function () {
     setCarouselItems(); // after page fully loads
 });
+        // Initialize scroll-based blur effect
+const $toBlur = $('#slider-container');
+let wHeight = $(window).height();
+
+$(window).on('resize', function () {
+    wHeight = $(window).height();
+});
+
+function blurOnScroll() {
+    const scrollY = $(window).scrollTop();
+    const percentage = scrollY / wHeight;
+    if (percentage > 1) {
+        return;
+    }
+    const opacity = percentage - 0.3;
+    const blurRadius = Math.max((percentage - 0.3) * 25, 0);
+    $toBlur.css({
+        'opacity': 1.0 - opacity,
+        '-webkit-filter': 'blur(' + blurRadius + 'px)',
+        'filter': 'blur(' + blurRadius + 'px)'
+    });
+}
+
+// Attach blur function to scroll
+$(window).on('scroll', blurOnScroll);
 </script>
 </body>
 
