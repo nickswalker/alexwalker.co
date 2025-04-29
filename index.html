@@ -854,21 +854,24 @@
                 }
             });
 
-            $('a.-by-nine, #reel-button a').fancybox({
-                autoSize: true,
-                width: 1600,
-                height: 900,
-                padding: 0,
-                aspectRatio: true,
-                type: 'iframe',
-                helpers: {
-                    media: {}
-                },
-                 idleTime: false 
-                // iframe: {
-                //     preload: false
-                // }
-            });
+        $('a.sixteen-by-nine, #reel-button a').fancybox({
+    autoSize: true,
+    width: 1600,
+    height: 900,
+    padding: 0,
+    aspectRatio: true,
+    type: 'iframe',
+    helpers: {
+        media: {},
+        title: {
+            type: 'inside' // Ensure captions/buttons stay under iframe
+        }
+    },
+    idleTime: false, // Prevent toolbar fade
+    afterLoad: function() {
+        $(".fancybox-title").show(); // Force caption area to stay visible
+    }
+});
             // $('a.-by-nine').fancybox({
             //     autoSize: true,
             //     width: 1600,
