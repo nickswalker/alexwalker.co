@@ -1175,3 +1175,24 @@ body.loaded header {
   opacity: 1;
   transform: translateY(0);
 }
+#about .container.align-items-start {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+#about .container.align-items-start figure {
+  flex: 0 0 300px;
+  margin: 0;
+}
+
+#about .container.align-items-start figure img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+#about .container.align-items-start .text {
+  flex: 1 1 500px;
+}
