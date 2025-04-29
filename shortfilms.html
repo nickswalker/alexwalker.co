@@ -463,28 +463,32 @@ window.addEventListener('load', collapseNavIfMobile);
 window.addEventListener('resize', collapseNavIfMobile);
 </script>
 <script>
-// Apply scroll-fade and staggered classes with delays to all thumbnail list items
-document.querySelectorAll('.thumbnails.four-up').forEach(ul => {
-  const items = ul.querySelectorAll('li');
-  items.forEach((li, i) => {
-    li.classList.add('scroll-fade', 'staggered');
-    li.style.setProperty('--delay', `${i * 80}ms`);
-  });
-});
+document.addEventListener("DOMContentLoaded", () => {
+  const gridItems = document.querySelectorAll(".thumbnails.four-up li");
 
-// Set up intersection observer to trigger fade-ins
-const scrollFadeObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-    }
+  gridItems.forEach((item, index) => {
+    item.classList.add("scroll-fade", "staggered");
+    item.style.setProperty("--delay", `${index * 60}ms`);
   });
-}, {
-  threshold: 0.1
-});
 
-// Observe all scroll-fade elements (staggered or not)
-document.querySelectorAll(".scroll-fade").forEach(el => scrollFadeObserver.observe(el));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target); // Animate only once
+      }
+    });
+  }, {
+    threshold: 0.05
+  });
+
+  document.querySelectorAll(".scroll-fade").forEach(el => {
+    observer.observe(el);
+  });
+
+  // Trigger fade-in on page load for elements already in view
+  document.body.classList.add("loaded");
+});
 </script>
     <script>
   window.addEventListener("DOMContentLoaded", () => {
