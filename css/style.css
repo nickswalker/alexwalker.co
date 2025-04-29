@@ -316,7 +316,7 @@ section .container {
     margin: 0 auto;
     padding: 36px 0 0 0;
     box-sizing: border-box;
-    border-top: 1px solid rgba(0, 0, 0, .1);
+border-top: none !important;
     grid-gap: var(--spacing-unit) var(--spacing-unit);
     display: grid;
     grid-template-columns: [col] 1fr;
