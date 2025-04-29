@@ -1027,6 +1027,73 @@ $(document).on('keydown', function(e) {
     }
 });
 </script>
+    <script>
+let imageLinks = [
+    { media: "(color-gamut: p3)", srcset: "/img/slider/1-wide.jpg 3840w", secondSrcset: "/img/slider/1.jpg 1920w, /img/slider/1-super.jpg 3840w", src: "/img/slider/1.jpg" },
+    { media: "(color-gamut: p3)", srcset: "/img/slider/2-wide.jpg 3840w", secondSrcset: "/img/slider/2.jpg 1920w, /img/slider/2-super.jpg 3840w", src: "/img/slider/2.jpg" },
+    { media: "(color-gamut: p3)", srcset: "/img/slider/3-wide.jpg 3840w", secondSrcset: "/img/slider/3.jpg 1920w, /img/slider/3-super.jpg 3840w", src: "/img/slider/3.jpg" },
+    { media: "(color-gamut: p3)", srcset: "/img/slider/4-wide.jpg 3840w", secondSrcset: "/img/slider/4.jpg 1920w, /img/slider/4-super.jpg 3840w", src: "/img/slider/4.jpg" },
+    { media: "(color-gamut: p3)", srcset: "/img/slider/5-wide.jpg 3840w", secondSrcset: "/img/slider/5.jpg 1920w, /img/slider/5-super.jpg 3840w", src: "/img/slider/5.jpg" }
+];
+
+function setCarouselSlider() {
+    const $carouselContainer = $('#slider-container');
+
+    $carouselContainer.carousel({
+        pause: null,
+        interval: 5000 // 5 seconds per slide
+    });
+
+    const $allIndicators = $carouselContainer.find(".carousel-indicators > *");
+    $allIndicators.each(function (index, element) {
+        $(element).append('<div class="progress-bar"></div>');
+    });
+
+    const $firstProgress = $("[data-slide-to='0'] .progress-bar");
+    $firstProgress.animate({ "width": "100%" }, 5000, "linear");
+
+    const $allProgressBars = $allIndicators.find(".progress-bar");
+
+    $carouselContainer.on('slide.bs.carousel', function (event) {
+        const targetIndex = $(event.relatedTarget).data("index");
+        $allProgressBars.each(function (index, element) {
+            $(element).stop();
+            $(element).css({ "width": 0 });
+        });
+        const indicatorSelector = "*[data-slide-to='" + targetIndex + "']";
+        const $currentIndicator = $allIndicators.filter(indicatorSelector);
+        const $currentProgress = $currentIndicator.find(".progress-bar");
+        $currentProgress.animate({ "width": "100%" }, 5000, "linear");
+    });
+}
+
+function setCarouselItems() {
+    let randomLinks = [];
+    let indexList = [0, 1, 2, 3, 4];
+
+    while (randomLinks.length < 5) {
+        let randomIndex = Math.floor(Math.random() * indexList.length);
+        let index = indexList.splice(randomIndex, 1)[0]; // <-- fix here too
+        randomLinks.push(imageLinks[index]);
+    }
+
+    let realItems = $('#slider-container .carousel-inner').children();
+
+    for (let i = 0; i < realItems.length; i++) {
+        let subChildren = $(realItems[i]).find('picture').children();
+        if (subChildren.length > 2) {
+            $(subChildren[0]).attr('srcset', randomLinks[i].srcset);
+            $(subChildren[1]).attr('srcset', randomLinks[i].secondSrcset);
+            $(subChildren[2]).attr('src', randomLinks[i].src);
+        }
+    }
+    setCarouselSlider();
+}
+
+$(function () {
+    setCarouselItems(); // after page fully loads
+});
+</script>
 </body>
 
 </html>
