@@ -1105,6 +1105,22 @@ document.addEventListener("DOMContentLoaded", function() {
     observer.observe(el);
   });
 });
+        // Initialize VIDEO thumbnails (YouTube / Vimeo trailers and Watch Reels button)
+$('a.-by-nine, .thumbnails.lightbox a').fancybox({
+    type: 'iframe',
+    autoSize: true,
+    width: 1600,
+    height: 900,
+    padding: 0,
+    aspectRatio: true,
+    iframe: {
+        preload: false
+    },
+    helpers: {
+        media: {}
+    },
+    idleTime: false
+});
 </script>
 </body>
 
