@@ -933,9 +933,13 @@ StatCounter"></a>
     </noscript>
     <!-- End of Statcounter Code -->
 <script>
-// Initialize STILL images (stills section)
-let customSlideshowInterval = null;
+// Global slideshow settings — ensures 7-second interval even when using UI button
+Fancybox.defaults.SlideShow = {
+  autoStart: false,
+  speed: 7000 // 7 seconds per slide
+};
 
+// STILL IMAGES (Stills section)
 $('a.stills-image').fancybox({
   loop: true,
   buttons: [
@@ -951,7 +955,8 @@ $('a.stills-image').fancybox({
     }
   }
 });
-    // Manual slideshow control via spacebar
+
+// SPACEBAR Slideshow toggle for stills
 let customSlideshowInterval = null;
 
 $(document).on('keydown', function (e) {
@@ -972,19 +977,13 @@ $(document).on('keydown', function (e) {
             clearInterval(customSlideshowInterval);
             customSlideshowInterval = null;
           }
-        }, 17000); // 10 seconds
+        }, 7000); // 7 seconds per slide
       }
     }
   }
 });
 
-$(document).on('afterClose.fb', function () {
-  if (customSlideshowInterval) {
-    clearInterval(customSlideshowInterval);
-    customSlideshowInterval = null;
-  }
-});
-// Stop custom slideshow if fancybox closes
+// Cleanup on close
 $(document).on('afterClose.fb', function () {
   if (customSlideshowInterval) {
     clearInterval(customSlideshowInterval);
@@ -992,66 +991,37 @@ $(document).on('afterClose.fb', function () {
   }
 });
 
-// Spacebar to toggle slideshow
-$(document).on('keydown', function (e) {
-    if ($.fancybox.getInstance() && e.keyCode === 32) {
-        e.preventDefault();
-        var instance = $.fancybox.getInstance();
-        if (!instance.SlideShow) {
-            instance.SlideShow = new Fancybox.Plugins.SlideShow(instance);
-        }
-        if (instance.SlideShow.isActive) {
-            instance.SlideShow.stop();
-        } else {
-            instance.SlideShow.start();
-        }
-    }
-});
-
-// Initialize VIDEOS (trailers, Watch Reels button)
+// VIDEOS (YouTube, Vimeo, etc.)
 $('a.-by-nine, #reel-button a').fancybox({
-    type: 'iframe',
-    autoSize: true,
-    width: 1600,
-    height: 900,
-    padding: 0,
-    aspectRatio: true,
-    iframe: {
-        preload: false
-    },
-    helpers: {
-        media: {}
-    },
-    idleTime: false
+  type: 'iframe',
+  autoSize: true,
+  width: 1600,
+  height: 900,
+  padding: 0,
+  aspectRatio: true,
+  iframe: {
+    preload: false
+  },
+  helpers: {
+    media: {}
+  },
+  idleTime: false
 });
 
-// Separate Vimeo videos (if you have any directly linked Vimeo embeds)
+// Other Vimeo embeds
 $('.thumbnails.lightbox a').fancybox({
-    type: 'iframe',
-    autoSize: true,
-    width: 1300,
-    height: 550,
-    padding: 0,
-    aspectRatio: true,
-    iframe: {
-        preload: false
-    },
-    helpers: {
-        media: {}
-    }
-});
-
-// Spacebar manual slideshow trigger for stills only
-$(document).on('keydown', function(e) {
-    if ($.fancybox.getInstance() && e.keyCode === 32) { // Spacebar
-        e.preventDefault();
-        var instance = $.fancybox.getInstance();
-        if (instance.SlideShow && instance.SlideShow.isActive) {
-            instance.SlideShow.stop();
-        } else {
-            instance.SlideShow.start();
-        }
-    }
+  type: 'iframe',
+  autoSize: true,
+  width: 1300,
+  height: 550,
+  padding: 0,
+  aspectRatio: true,
+  iframe: {
+    preload: false
+  },
+  helpers: {
+    media: {}
+  }
 });
 </script>
     <script>
