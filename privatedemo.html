@@ -52,54 +52,65 @@
 <header class="dark">
     <nav class="container">
         <ul>
-            <li class="logo">
-                <h1><a href="/">Alex Walker</a></h1>
+            <li class="logo text-start">
+                <h1>
+                    <a href="https://alexwalker.co/#slider">Alex Walker</a>
+                </h1>
             </li>
-            <li><a href="/#cinematographer">Cinematographer</a>
+
+            <li style="display: flex; align-items: center;">
+                <a href="https://alexwalker.co/#cinematographer">Cinematographer</a>
             </li>
-            <li><a href="/#colorist">Colorist</a>
+
+            <li style="display: flex; align-items: center;">
+                <a href="https://alexwalker.co/#colorist">Colorist</a>
             </li>
-            <li><a href="/#about">Bio</a>
+
+            <li style="display: flex; align-items: center;">
+                <a href="https://alexwalker.co/#about">Bio</a>
             </li>
-          
+
             <li>
-                 <ul class="social" style="align-items: center; display: flex;">
-    <li>
-        <a href="https://www.imdb.com/name/nm4205213/?ref_=fn_al_nm_4" data-goatcounter-click="ext-imdb.com">
-            <img src="/img/imdbbutton.png" style="height: 14px; margin-top: 6px;">
-        </a>
-    </li>
-    <li>
-        <a href="https://www.youtube.com/@AlexWalker" data-goatcounter-click="ext-youtube.com">
-            <i class="ion-social-youtube"></i>
-        </a>
-    </li>
-    <li>
-        <a href="https://instagram.com/alex_walker47" data-goatcounter-click="ext-instagram.com">
-            <i class="ion-social-instagram"></i>
-        </a>
-    </li>
-    <li>
-        <a href="https://letterboxd.com/awalker47/" data-goatcounter-click="ext-letterboxd.com">
-            <img src="/img/LBbutton.png" style="height: 14px; margin-top: 6px;">
-        </a>
-    </li>
-</ul>
+                <ul class="social" style="align-items: center; display: flex;">
+                    <li>
+                        <a href="https://www.imdb.com/name/nm4205213/?ref_=fn_al_nm_4" data-goatcounter-click="ext-imdb.com">
+                            <img src="/img/imdbbutton.png" style="height:14px; margin-top:6px;">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/@AlexWalker" data-goatcounter-click="ext-youtube.com">
+                            <i class="ion-social-youtube"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://instagram.com/alex_walker47" data-goatcounter-click="ext-instagram.com">
+                            <i class="ion-social-instagram"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://letterboxd.com/awalker47/" data-goatcounter-click="ext-letterboxd.com">
+                            <img src="/img/LBbutton.png" style="height:14px; margin-top:6px;">
+                        </a>
+                    </li>
+                </ul>
             </li>
-         <li class="reel-button-menu">
-                    <div class="reel-button-container">
-                        <button id="reel-button">
-                            <a href="https://www.youtube.com/embed?listType=playlist&list=PL3F20B91BBDDD03B3&origin=https://alexwalker.co/">Watch Reels
-                            </a>
-                        </button>
-                    </div>
-                </li>
-            <li id="scroll-down-indicator">
-                <a href="#return" id="scroll-down" class="smooth-scroll"><i class="ion-chevron-down"></i></a>
+
+            <li class="reel-button-menu">
+                <div class="reel-button-container">
+                    <button id="reel-button">
+                        <a href="https://www.youtube.com/embed?listType=playlist&list=PL3F20B91BBDDD03B3&origin=https://alexwalker.co/"
+                           data-goatcounter-click="watch-reels">Watch Reels
+                        </a>
+                    </button>
+                </div>
             </li>
+
+            <li id="scroll-down-indicator" style="display: none;"></li>
+
         </ul>
     </nav>
 </header>
+<a id="return-to-top" href="#top" class="smooth-scroll"><i class="ion-chevron-up"></i></a>
 <a id="return-to-top" href="#top" class="smooth-scroll"><i class="ion-chevron-up"></i></a>
 
 <section id="shortfilms">
@@ -119,7 +130,7 @@
                
                 <li>   
 
-                        <a href="https://www.youtube.com/embed/DH82Cr1m75Q" class="sixteen-by-nine" data-year="House of Abraham- Feature Film Trailer"><img src="/img/slider/3-super.jpg"/>
+                        <a href="https://www.youtube.com/embed/k5Nw4BMAL-I" class="sixteen-by-nine" data-year="House of Abraham- Feature Film Trailer"><img src="/img/slider/3-super.jpg"/>
                         </a>
 
                     </li>     <li>   
@@ -640,7 +651,43 @@ src="https://c.statcounter.com/12435982/0/dcc5fdba/1/"
 alt="Web Analytics Made Easy -
 StatCounter"></a></div></noscript>
 <!-- End of Statcounter Code -->
+<script>
+$('a#reel-button, #reel-button a').fancybox({
+    autoSize: true,
+    width: 1600,
+    height: 900,
+    padding: 0,
+    aspectRatio: true,
+    type: 'iframe',
+    helpers: {
+        media: {}
+    }
+});
+</script>
+    <script>
+function collapseNavIfMobile() {
+    if (window.innerWidth <= 700) {
+        document.querySelectorAll('header nav > ul > li').forEach(function(li) {
+            if (!li.classList.contains('logo') && !li.classList.contains('reel-button-menu') && li.id !== 'scroll-down-indicator') {
+                li.style.display = 'none';
+            } else {
+                li.style.display = ''; // Reset to default for allowed items
+            }
+        });
+    } else {
+        // On desktop, make sure everything is visible again
+        document.querySelectorAll('header nav > ul > li').forEach(function(li) {
+            li.style.display = '';
+        });
+    }
+}
 
+// Wait until everything is loaded
+window.addEventListener('load', collapseNavIfMobile);
+
+// Also re-check on window resize (optional but good)
+window.addEventListener('resize', collapseNavIfMobile);
+</script>
 </body>
 
 </html>
