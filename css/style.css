@@ -1427,5 +1427,11 @@ body.loaded header {
 @media screen and (min-width: 701px) {
   #bio-buttons {
     margin-top: 16px !important;
+      @media screen and (min-width: 701px) {
+  #bio-buttons {
+    margin-top: 16px !important;
+    margin-bottom: 48px !important; /* or 32px for a bit less */
+  }
+}
   }
 }
