@@ -1285,3 +1285,41 @@ body.loaded header {
     text-align: left;
   }
 }
+/* BIO SECTION RESPONSIVE FIX */
+.bio-container {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.bio-image {
+  flex: 0 1 300px;
+  text-align: center;
+}
+
+.bio-image img {
+  width: 100%;
+  height: auto;
+  max-width: 300px;
+}
+
+.bio-text {
+  flex: 1 1 300px;
+  max-width: 700px;
+}
+
+@media screen and (max-width: 768px) {
+  .bio-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .bio-text {
+    text-align: left;
+    padding: 0 16px;
+  }
+}
