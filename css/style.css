@@ -1388,3 +1388,23 @@ body.loaded header {
 .scroll-fade.staggered[data-delay] {
   transition-delay: var(--delay);
 }
+@media screen and (max-width: 700px) {
+  #about .bio-flexbox {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 0 16px;
+  }
+
+  #about .bio-image {
+    max-width: 260px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  #about .bio-text {
+    max-width: 100%;
+    width: 100%;
+    text-align: left;
+  }
+}
