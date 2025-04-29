@@ -1286,11 +1286,12 @@ body.loaded header {
 }
 
 .bio-buttons {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 12px;
-  margin-top: 24px;
+  margin-top: 32px;
 }
 
 .bio-buttons button {
