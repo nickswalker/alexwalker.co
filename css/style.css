@@ -1175,86 +1175,55 @@ body.loaded header {
   opacity: 1;
   transform: translateY(0);
 }
-#about .container.align-items-start {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-  align-items: flex-start;
+/* ---------------- About Section Layout Fixes ---------------- */
+
+/* Default (Desktop) Layout */
+#about .bio-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 40px;
 }
 
-#about .container.align-items-start figure {
-  flex: 0 0 300px;
-  margin: 0;
+#about h2 {
+    width: 100%;
+    text-align: center;
 }
 
-#about .container.align-items-start figure img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
+#about .bio-image {
+    flex: 0 0 300px;
 }
 
-#about .container.align-items-start .text {
-  flex: 1 1 500px;
+#about .bio-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
 }
+
+#about .bio-text {
+    flex: 1;
+    max-width: 600px;
+    margin-top: 0;
+}
+
+/* Tablet and Mobile Adjustments */
 @media screen and (max-width: 1024px) {
-  #about h2 {
-    text-align: center;
-  }
+    #about .bio-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
 
-  #about .container.align-items-start {
-    flex-direction: column;
-    align-items: center;
-    text-align: left;
-    gap: 24px;
-    padding: 0 24px;
-  }
+    #about .bio-image {
+        flex: none;
+        width: 70%;
+        max-width: 300px;
+        margin-bottom: 24px;
+    }
 
-  #about .container.align-items-start figure {
-    width: 100%;
-    max-width: 320px;
-    margin: 0 auto;
-  }
-
-  #about .container.align-items-start figure img {
-    width: 100%;
-    height: auto;
-  }
-
-  #about .container.align-items-start .text {
-    width: 100%;
-    max-width: 720px;
-    text-align: left;
-  }
-}
-@media screen and (max-width: 640px) {
-  #about h2 {
-    text-align: center;
-    margin-bottom: 16px;
-  }
-
-  #about .container.align-items-start {
-    flex-direction: column;
-    align-items: center;
-    text-align: left;
-    padding: 0 16px;
-    gap: 16px;
-  }
-
-  #about .container.align-items-start figure {
-    width: 100%;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  #about .container.align-items-start figure img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  #about .container.align-items-start .text {
-    width: 100%;
-    max-width: 100%;
-    text-align: left;
-  }
+    #about .bio-text {
+        flex: none;
+        width: 90%;
+        max-width: 600px;
+    }
 }
