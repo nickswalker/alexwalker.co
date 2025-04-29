@@ -1330,21 +1330,7 @@ body.loaded header {
     max-width: 100%;
   }
 
-  .bio-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-/* iPad Landscape */
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-  .bio-flexbox {
-    flex-direction: row;
-    align-items: flex-start;
-    text-align: left;
-  }
-
-#bio-buttons {
+  #bio-buttons {
   margin-top: 40px;
   padding: 40px 0;
   background: transparent;
@@ -1352,42 +1338,32 @@ body.loaded header {
 
 #bio-buttons .buttons-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* allows wrapping on small screens */
   justify-content: center;
   gap: 16px;
-  max-width: 1200px;
-  margin: 0 auto;
+  flex-direction: row;
 }
 
 #bio-buttons button {
-  padding: 0 24px;
-  border: 2px solid #00bfff;
   background: transparent;
-  color: #00bfff;
+  border: 2px solid #00bfff;
+  padding: 12px 24px;
+  font-size: 16px;
   font-weight: 700;
-  font-size: 18px;
-  border-radius: 8px;
+  color: #00bfff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
   white-space: nowrap;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: 56px;
-  min-width: 140px;
-  line-height: 1;
-  transition: background 0.3s, color 0.3s;
 }
 
 #bio-buttons button a {
   color: inherit;
   text-decoration: none;
-  width: 100%;
-  display: block;
-  text-align: center;
-  line-height: normal;
 }
 
-/* Mobile layout */
+/* Stack buttons vertically on narrow screens */
 @media screen and (max-width: 768px) {
   #bio-buttons .buttons-container {
     flex-direction: column;
@@ -1395,7 +1371,7 @@ body.loaded header {
   }
 
   #bio-buttons button {
-    width: 90vw;
-    max-width: 420px;
+    width: 100%;
+    max-width: 320px;
   }
 }
