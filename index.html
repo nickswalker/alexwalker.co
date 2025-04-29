@@ -919,67 +919,20 @@
                 lastEventLocation = target.scrollTop();
             }
 
- let latestKnownScrollY = 0;
-let ticking = false;
-const $toBlur = $('#slider-container');
-const windowHeight = $(window).height();
+function blurOnScroll(scrollY) {
+    const percentage = scrollY / wHeight;
+    if (percentage > 1) return;
 
-// Update scroll position
-function onScroll() {
-    latestKnownScrollY = window.scrollY || window.pageYOffset;
-    requestTick();
-}
-
-// Request a blur update only if not already requested
-function requestTick() {
-    if (!ticking) {
-        requestAnimationFrame(updateBlur);
-    }
-    ticking = true;
-}
-
-// Update the blur based on scroll
-function updateBlur() {
-    const scrollPercent = latestKnownScrollY / windowHeight;
-    ticking = false;
-
-    if (scrollPercent > 1) {
-        return;
-    }
-
-    const blurRadius = Math.max((scrollPercent - 0.3) * 25, 0);
-    const opacity = 1 - Math.min(scrollPercent, 1);
+    const opacity = Math.max(1.0 - (percentage - 0.3), 0);
+    const blurRadius = Math.max((percentage - 0.3) * 25, 0);
 
     $toBlur.css({
-        'filter': `blur(${blurRadius}px)`,
+        'opacity': opacity,
         '-webkit-filter': `blur(${blurRadius}px)`,
-        'opacity': opacity
+        'filter': `blur(${blurRadius}px)`,
+        'will-change': 'opacity, filter' // <- this forces smoother updates
     });
 }
-
-// Hook scroll event
-window.addEventListener('scroll', onScroll, { passive: true });
-            // Smooth scroll-to
-            const links = $('.smooth-scroll');
-
-            //Handle clicks on elements that send to other parts of the page
-            links.click(function (e) {
-                e.preventDefault();
-                if (!e.currentTarget.hash) {
-                    return;
-                }
-                const element = $(e.currentTarget.hash);
-                if (element) {
-                    goToByScroll(element);
-                }
-            });
-
-            // Scroll down indicator
-            const $scrollDownIndicator = $("#scroll-down-indicator");
-            // Scroll to top button
-            const $returnToTop = $('#return-to-top');
-            // Passive scroll handler
-            window.addEventListener('scroll', onScroll.bind(this), { passive: true });
 
             // Blur scrolling
             const blurScroller = new Scroller(blurOnScroll);
