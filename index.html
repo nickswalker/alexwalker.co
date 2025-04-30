@@ -1110,7 +1110,6 @@ document.addEventListener("DOMContentLoaded", function() {
 let customSlideshowInterval = null;
 let isSlideshowPlaying = false;
 
-// Initialize Fancybox for stills
 $('a.stills-image').fancybox({
   loop: true,
   buttons: [
@@ -1121,17 +1120,16 @@ $('a.stills-image').fancybox({
   ],
   afterShow: function (instance, current) {
     if (!instance.userNotified) {
-      instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Press <strong>Spacebar</strong> to start slideshow</div>');
+      instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Click ▶️ to start slideshow</div>');
       instance.userNotified = true;
     }
     updateSlideshowButton();
   },
-  beforeShow: function (instance, current) {
+  beforeShow: function () {
     updateSlideshowButton();
   }
 });
 
-// Toggle slideshow
 function toggleSlideshow() {
   const instance = $.fancybox.getInstance();
 
@@ -1146,7 +1144,6 @@ function toggleSlideshow() {
   }
 }
 
-// Start
 function startSlideshow() {
   const instance = $.fancybox.getInstance();
   if (!instance) return;
@@ -1164,7 +1161,6 @@ function startSlideshow() {
   }, 7000); // 7 seconds
 }
 
-// Stop
 function stopSlideshow() {
   isSlideshowPlaying = false;
   clearInterval(customSlideshowInterval);
@@ -1172,7 +1168,6 @@ function stopSlideshow() {
   updateSlideshowButton();
 }
 
-// Update button icon
 function updateSlideshowButton() {
   const instance = $.fancybox.getInstance();
   if (!instance || !instance.$refs || !instance.$refs.buttons) return;
@@ -1183,20 +1178,10 @@ function updateSlideshowButton() {
   }
 }
 
-// Spacebar toggle
-$(document).on('keydown', function (e) {
-  if (e.keyCode === 32 && $.fancybox.getInstance()) {
-    e.preventDefault();
-    toggleSlideshow();
-  }
-});
-
-// Stop when closed
 $(document).on('afterClose.fb', function () {
   stopSlideshow();
 });
 
-// Click on slideshow button (works in Fancybox 3)
 $(document).on('click', '[data-fancybox-play]', function (e) {
   e.preventDefault();
   toggleSlideshow();
