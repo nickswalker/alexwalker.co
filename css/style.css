@@ -1430,3 +1430,10 @@ body.loaded header {
     margin-bottom: 58px !important;
   }
 }
+.fancybox-toolbar {
+  font-size: 22px; /* Increase this value to make icons even larger */
+}
+
+.fancybox-toolbar button {
+  padding: 10px;
+}
