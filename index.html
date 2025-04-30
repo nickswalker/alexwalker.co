@@ -1106,6 +1106,87 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 </script>
+    <script>
+// Initialize STILL images (stills section)
+$('a.stills-image').fancybox({
+  loop: true,
+  buttons: ["slideShow", "fullScreen", "thumbs", "close"],
+  afterShow: function (instance, current) {
+    if (!instance.userNotified) {
+      instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Press <strong>Spacebar</strong> to start slideshow</div>');
+      instance.userNotified = true;
+    }
+  }
+});
+
+let slideshowInterval = null;
+const SLIDESHOW_DELAY = 7000;
+
+// Manual slideshow control via spacebar for stills only
+$(document).on('keydown', function (e) {
+  if (e.keyCode === 32) { // spacebar
+    const instance = $.fancybox.getInstance();
+    if (instance && instance.current && instance.current.opts.$orig.hasClass('stills-image')) {
+      e.preventDefault();
+      if (slideshowInterval) {
+        clearInterval(slideshowInterval);
+        slideshowInterval = null;
+      } else {
+        slideshowInterval = setInterval(() => {
+          const activeInstance = $.fancybox.getInstance();
+          if (activeInstance && activeInstance.current && activeInstance.current.opts.$orig.hasClass('stills-image')) {
+            activeInstance.next();
+          } else {
+            clearInterval(slideshowInterval);
+            slideshowInterval = null;
+          }
+        }, SLIDESHOW_DELAY);
+      }
+    }
+  }
+});
+
+// Stop slideshow when Fancybox closes
+$(document).on('afterClose.fb', function () {
+  if (slideshowInterval) {
+    clearInterval(slideshowInterval);
+    slideshowInterval = null;
+  }
+});
+
+// Initialize VIDEOS (trailers, Watch Reels, etc.)
+$('a.-by-nine, #reel-button a').fancybox({
+  type: 'iframe',
+  autoSize: true,
+  width: 1600,
+  height: 900,
+  padding: 0,
+  aspectRatio: true,
+  iframe: {
+    preload: false
+  },
+  helpers: {
+    media: {}
+  },
+  idleTime: false
+});
+
+// Additional video embeds (like Vimeo)
+$('.thumbnails.lightbox a').fancybox({
+  type: 'iframe',
+  autoSize: true,
+  width: 1300,
+  height: 550,
+  padding: 0,
+  aspectRatio: true,
+  iframe: {
+    preload: false
+  },
+  helpers: {
+    media: {}
+  }
+});
+</script>
 </body>
 
 </html>
