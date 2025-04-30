@@ -1447,3 +1447,8 @@ body.loaded header {
     text-align: center;
   }
 }
+@media screen and (max-width: 1024px) {
+  #contact .representation h3 {
+    text-align: left !important;
+  }
+}
