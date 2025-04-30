@@ -1187,6 +1187,31 @@ $(document).on('click', '[data-fancybox-play]', function (e) {
   toggleSlideshow();
 });
 </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const $returnToTop = $('#return-to-top');
+    let wHeight = window.innerHeight;
+    let lastEventLocation = 0;
+
+    function onScroll() {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const lastBelow = lastEventLocation >= wHeight;
+        const currentBelow = scrollTop >= wHeight;
+
+        if (lastBelow ^ currentBelow) {
+            if (currentBelow) {
+                $returnToTop.fadeIn(400);
+            } else {
+                $returnToTop.fadeOut(400);
+            }
+        }
+
+        lastEventLocation = scrollTop;
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+});
+</script>
 </body>
 
 </html>
