@@ -1106,23 +1106,23 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 </script>
-    <script>
-// Initialize STILL images (stills section)
+<script>
+const SLIDESHOW_DELAY = 7000;
+let slideshowInterval = null;
+
+// Fancybox for stills with spacebar hint
 $('a.stills-image').fancybox({
   loop: true,
   buttons: ["slideShow", "fullScreen", "thumbs", "close"],
   afterShow: function (instance, current) {
-    if (!instance.userNotified) {
+    if (!instance.userNotified && instance.current && instance.current.opts.$orig.hasClass('stills-image')) {
       instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Press <strong>Spacebar</strong> to start slideshow</div>');
       instance.userNotified = true;
     }
   }
 });
 
-let slideshowInterval = null;
-const SLIDESHOW_DELAY = 7000;
-
-// Manual slideshow control via spacebar for stills only
+// Manual slideshow control for stills via spacebar
 $(document).on('keydown', function (e) {
   if (e.keyCode === 32) { // spacebar
     const instance = $.fancybox.getInstance();
@@ -1133,9 +1133,9 @@ $(document).on('keydown', function (e) {
         slideshowInterval = null;
       } else {
         slideshowInterval = setInterval(() => {
-          const activeInstance = $.fancybox.getInstance();
-          if (activeInstance && activeInstance.current && activeInstance.current.opts.$orig.hasClass('stills-image')) {
-            activeInstance.next();
+          const active = $.fancybox.getInstance();
+          if (active && active.current && active.current.opts.$orig.hasClass('stills-image')) {
+            active.next();
           } else {
             clearInterval(slideshowInterval);
             slideshowInterval = null;
@@ -1146,7 +1146,7 @@ $(document).on('keydown', function (e) {
   }
 });
 
-// Stop slideshow when Fancybox closes
+// Stop slideshow if lightbox closes
 $(document).on('afterClose.fb', function () {
   if (slideshowInterval) {
     clearInterval(slideshowInterval);
@@ -1154,7 +1154,7 @@ $(document).on('afterClose.fb', function () {
   }
 });
 
-// Initialize VIDEOS (trailers, Watch Reels, etc.)
+// Fancybox for YouTube/Vimeo videos and Reel button
 $('a.-by-nine, #reel-button a').fancybox({
   type: 'iframe',
   autoSize: true,
@@ -1171,7 +1171,7 @@ $('a.-by-nine, #reel-button a').fancybox({
   idleTime: false
 });
 
-// Additional video embeds (like Vimeo)
+// Fancybox for other embedded video links
 $('.thumbnails.lightbox a').fancybox({
   type: 'iframe',
   autoSize: true,
