@@ -500,6 +500,40 @@ window.addEventListener('resize', collapseNavIfMobile);
     document.body.classList.add("loaded");
   });
 </script>
+    <script>
+  // Wait until all images are fully loaded
+  window.addEventListener("load", () => {
+    const gridItems = document.querySelectorAll(".thumbnails.four-up li");
+
+    gridItems.forEach((item, index) => {
+      item.classList.add("scroll-fade", "staggered");
+      item.style.setProperty("--delay", `${index * 60}ms`);
+    });
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = entry.boundingClientRect.top < window.innerHeight ? 300 : 0;
+
+          setTimeout(() => {
+            el.classList.add("visible");
+          }, delay + parseInt(el.style.getPropertyValue("--delay")) || 0);
+
+          obs.unobserve(el);
+        }
+      });
+    }, {
+      threshold: 0.05
+    });
+
+    document.querySelectorAll(".scroll-fade").forEach(el => {
+      observer.observe(el);
+    });
+
+    document.body.classList.add("loaded");
+  });
+</script>
 </body>
 
 </html>
