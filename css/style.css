@@ -1437,3 +1437,13 @@ body.loaded header {
 .fancybox-toolbar button {
   padding: 10px;
 }
+@media screen and (max-width: 900px) {
+  .thumbnails-container h3,
+  #colorist h3,
+  .representation h3,
+  #cinematographer h3,
+  #about h2,
+  #contact h3 {
+    text-align: center;
+  }
+}
