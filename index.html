@@ -1087,29 +1087,11 @@ document.addEventListener("DOMContentLoaded", function() {
   document.body.classList.add('loaded');
 });
 </script>
-    <script>
-document.addEventListener("DOMContentLoaded", function() {
-  const scrollFadeElements = document.querySelectorAll('.scroll-fade');
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, {
-    threshold: 0.1
-  });
-
-  scrollFadeElements.forEach(el => {
-    observer.observe(el);
-  });
-});
-</script>
-<script>
+   <script>
 const SLIDESHOW_DELAY = 7000;
 let slideshowInterval = null;
 let fancyboxInstance = null;
+let slideshowButton = null;
 
 // Initialize Fancybox for stills
 $('a.stills-image').fancybox({
@@ -1118,30 +1100,33 @@ $('a.stills-image').fancybox({
   afterShow: function (instance, current) {
     fancyboxInstance = instance;
 
-    // Hint text
     if (!instance.userNotified && current && current.opts.$orig.hasClass('stills-image')) {
       instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Press <strong>Spacebar</strong> to start slideshow</div>');
       instance.userNotified = true;
     }
+
+    // Track button on open
+    slideshowButton = instance.$refs.toolbar && instance.$refs.toolbar.find('[data-fancybox-play]');
+    updateSlideshowIcon();
   },
   btnTpl: {
     slideShow: `
-      <button data-fancybox-play class="fancybox-button fancybox-button--play" title="Start slideshow">
-        <svg viewBox="0 0 40 40">
+      <button data-fancybox-play class="fancybox-button fancybox-button--play" title="Toggle slideshow">
+        <svg viewBox="0 0 40 40" class="fancybox-slide-icon">
           <path d="M13,12 L27,20 L13,28 Z" />
         </svg>
       </button>`
   }
 });
 
-// Watch for click on Fancybox's custom Play button
+// Handle click on custom play button
 $(document).on('click', '[data-fancybox-play]', function () {
   toggleSlideshow();
 });
 
-// Spacebar toggles slideshow
+// Handle spacebar
 $(document).on('keydown', function (e) {
-  if (e.keyCode === 32) { // Spacebar
+  if (e.keyCode === 32) {
     const instance = $.fancybox.getInstance();
     if (instance && instance.current && instance.current.opts.$orig.hasClass('stills-image')) {
       e.preventDefault();
@@ -1150,7 +1135,7 @@ $(document).on('keydown', function (e) {
   }
 });
 
-// Toggle slideshow function
+// Start/stop slideshow
 function toggleSlideshow() {
   if (!fancyboxInstance || !fancyboxInstance.current) return;
 
@@ -1168,39 +1153,30 @@ function toggleSlideshow() {
       }
     }, SLIDESHOW_DELAY);
   }
+  updateSlideshowIcon();
 }
 
-// Stop slideshow when lightbox closes
+// Update icon between play and pause
+function updateSlideshowIcon() {
+  if (!slideshowButton) return;
+
+  const icon = slideshowButton.find('svg path');
+  if (slideshowInterval) {
+    // Pause icon
+    icon.attr('d', 'M15,12 H18 V28 H15 Z M22,12 H25 V28 H22 Z');
+  } else {
+    // Play icon
+    icon.attr('d', 'M13,12 L27,20 L13,28 Z');
+  }
+}
+
+// Clear slideshow on close
 $(document).on('afterClose.fb', function () {
   if (slideshowInterval) {
     clearInterval(slideshowInterval);
     slideshowInterval = null;
   }
-});
-
-// Fancybox for videos (Watch Reels, trailers, etc)
-$('a.-by-nine, #reel-button a').fancybox({
-  type: 'iframe',
-  autoSize: true,
-  width: 1600,
-  height: 900,
-  padding: 0,
-  aspectRatio: true,
-  iframe: { preload: false },
-  helpers: { media: {} },
-  idleTime: false
-});
-
-// Vimeo / embedded video links
-$('.thumbnails.lightbox a').fancybox({
-  type: 'iframe',
-  autoSize: true,
-  width: 1300,
-  height: 550,
-  padding: 0,
-  aspectRatio: true,
-  iframe: { preload: false },
-  helpers: { media: {} }
+  updateSlideshowIcon();
 });
 </script>
 </body>
