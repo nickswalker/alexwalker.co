@@ -1109,44 +1109,68 @@ document.addEventListener("DOMContentLoaded", function() {
 <script>
 const SLIDESHOW_DELAY = 7000;
 let slideshowInterval = null;
+let fancyboxInstance = null;
 
-// Fancybox for stills with spacebar hint
+// Initialize Fancybox for stills
 $('a.stills-image').fancybox({
   loop: true,
   buttons: ["slideShow", "fullScreen", "thumbs", "close"],
   afterShow: function (instance, current) {
-    if (!instance.userNotified && instance.current && instance.current.opts.$orig.hasClass('stills-image')) {
+    fancyboxInstance = instance;
+
+    // Hint text
+    if (!instance.userNotified && current && current.opts.$orig.hasClass('stills-image')) {
       instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Press <strong>Spacebar</strong> to start slideshow</div>');
       instance.userNotified = true;
     }
+  },
+  btnTpl: {
+    slideShow: `
+      <button data-fancybox-play class="fancybox-button fancybox-button--play" title="Start slideshow">
+        <svg viewBox="0 0 40 40">
+          <path d="M13,12 L27,20 L13,28 Z" />
+        </svg>
+      </button>`
   }
 });
 
-// Manual slideshow control for stills via spacebar
+// Watch for click on Fancybox's custom Play button
+$(document).on('click', '[data-fancybox-play]', function () {
+  toggleSlideshow();
+});
+
+// Spacebar toggles slideshow
 $(document).on('keydown', function (e) {
-  if (e.keyCode === 32) { // spacebar
+  if (e.keyCode === 32) { // Spacebar
     const instance = $.fancybox.getInstance();
     if (instance && instance.current && instance.current.opts.$orig.hasClass('stills-image')) {
       e.preventDefault();
-      if (slideshowInterval) {
-        clearInterval(slideshowInterval);
-        slideshowInterval = null;
-      } else {
-        slideshowInterval = setInterval(() => {
-          const active = $.fancybox.getInstance();
-          if (active && active.current && active.current.opts.$orig.hasClass('stills-image')) {
-            active.next();
-          } else {
-            clearInterval(slideshowInterval);
-            slideshowInterval = null;
-          }
-        }, SLIDESHOW_DELAY);
-      }
+      toggleSlideshow();
     }
   }
 });
 
-// Stop slideshow if lightbox closes
+// Toggle slideshow function
+function toggleSlideshow() {
+  if (!fancyboxInstance || !fancyboxInstance.current) return;
+
+  if (slideshowInterval) {
+    clearInterval(slideshowInterval);
+    slideshowInterval = null;
+  } else {
+    slideshowInterval = setInterval(() => {
+      const active = $.fancybox.getInstance();
+      if (active && active.current && active.current.opts.$orig.hasClass('stills-image')) {
+        active.next();
+      } else {
+        clearInterval(slideshowInterval);
+        slideshowInterval = null;
+      }
+    }, SLIDESHOW_DELAY);
+  }
+}
+
+// Stop slideshow when lightbox closes
 $(document).on('afterClose.fb', function () {
   if (slideshowInterval) {
     clearInterval(slideshowInterval);
@@ -1154,7 +1178,7 @@ $(document).on('afterClose.fb', function () {
   }
 });
 
-// Fancybox for YouTube/Vimeo videos and Reel button
+// Fancybox for videos (Watch Reels, trailers, etc)
 $('a.-by-nine, #reel-button a').fancybox({
   type: 'iframe',
   autoSize: true,
@@ -1162,16 +1186,12 @@ $('a.-by-nine, #reel-button a').fancybox({
   height: 900,
   padding: 0,
   aspectRatio: true,
-  iframe: {
-    preload: false
-  },
-  helpers: {
-    media: {}
-  },
+  iframe: { preload: false },
+  helpers: { media: {} },
   idleTime: false
 });
 
-// Fancybox for other embedded video links
+// Vimeo / embedded video links
 $('.thumbnails.lightbox a').fancybox({
   type: 'iframe',
   autoSize: true,
@@ -1179,12 +1199,8 @@ $('.thumbnails.lightbox a').fancybox({
   height: 550,
   padding: 0,
   aspectRatio: true,
-  iframe: {
-    preload: false
-  },
-  helpers: {
-    media: {}
-  }
+  iframe: { preload: false },
+  helpers: { media: {} }
 });
 </script>
 </body>
