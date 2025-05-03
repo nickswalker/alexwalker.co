@@ -1453,37 +1453,32 @@ body.loaded header {
   }
 }
 @media screen and (max-width: 700px) {
-  .playbuttons.thumbnails a::before {
-    white-space: normal !important;
-    height: auto !important;
-    line-height: 1.2em !important;
-    font-size: 12px !important;
-    padding: 8px 12px !important;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.65), transparent) !important;
-    position: absolute !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    text-align: left !important;
-    z-index: 2 !important;
-    display: flex;
-    align-items: flex-end;
-  }
-
-  .playbuttons.thumbnails li {
+  .thumbnails.playbuttons a {
     position: relative;
+    overflow: hidden;
   }
 
-  .playbuttons.thumbnails img {
-    display: block;
+  .thumbnails.playbuttons a::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    height: auto;
+    height: 30%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.65), transparent);
+    pointer-events: none;
+    z-index: 1;
   }
 
-  .playbuttons.thumbnails a {
-    position: relative;
-    display: block;
-    height: 100%;
+  .thumbnails.playbuttons a span {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    font-size: 13px;
+    color: white;
+    z-index: 2;
+    white-space: normal;
+    line-height: 1.2;
+    max-width: calc(100% - 16px);
   }
 }
