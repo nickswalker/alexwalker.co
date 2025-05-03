@@ -1452,3 +1452,14 @@ body.loaded header {
     text-align: left !important;
   }
 }
+@media screen and (max-width: 700px) {
+  .playbuttons.thumbnails a::before {
+    white-space: normal;
+    height: auto;
+    line-height: 1.2em;
+    font-size: 12px;
+    padding-right: 10px;
+    padding-left: 10px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent); /* Optional, improves readability */
+  }
+}
