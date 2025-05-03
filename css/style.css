@@ -1467,16 +1467,23 @@ body.loaded header {
     box-sizing: border-box !important;
     text-align: left !important;
     z-index: 2 !important;
+    display: flex;
+    align-items: flex-end;
   }
 
-  .playbuttons.thumbnails a {
-    position: relative !important;
-    display: block !important;
+  .playbuttons.thumbnails li {
+    position: relative;
   }
 
   .playbuttons.thumbnails img {
     display: block;
     width: 100%;
     height: auto;
+  }
+
+  .playbuttons.thumbnails a {
+    position: relative;
+    display: block;
+    height: 100%;
   }
 }
