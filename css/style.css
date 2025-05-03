@@ -1458,8 +1458,17 @@ body.loaded header {
     height: auto;
     line-height: 1.2em;
     font-size: 12px;
-    padding-right: 10px;
-    padding-left: 10px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent); /* Optional, improves readability */
+    padding: 8px 10px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+  }
+
+  .playbuttons.thumbnails a {
+    position: relative; /* Ensure the ::before overlays the image */
   }
 }
