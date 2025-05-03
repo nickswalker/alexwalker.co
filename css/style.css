@@ -1454,21 +1454,21 @@ body.loaded header {
 }
 @media screen and (max-width: 700px) {
   .playbuttons.thumbnails a::before {
-    white-space: normal;
-    height: auto;
-    line-height: 1.2em;
-    font-size: 12px;
-    padding: 8px 10px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: left;
+    white-space: normal !important;
+    height: auto !important;
+    line-height: 1.2em !important;
+    font-size: 12px !important;
+    padding: 8px 10px !important;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent) !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    text-align: left !important;
   }
 
   .playbuttons.thumbnails a {
-    position: relative; /* Ensure the ::before overlays the image */
+    position: relative !important;
   }
 }
