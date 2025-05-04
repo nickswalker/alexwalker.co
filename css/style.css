@@ -1452,12 +1452,16 @@ body.loaded header {
     text-align: left !important;
   }
 }
-@media screen and (max-width: 700px) {
+ @media screen and (max-width: 700px) {
   .playbuttons.thumbnails a::before {
     white-space: normal !important;
     height: auto !important;
     line-height: 1.2em;
     padding-right: 10px;
     background: none !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    display: block;
+    overflow-wrap: break-word;
   }
 }
