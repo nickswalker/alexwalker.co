@@ -1083,85 +1083,91 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 <script>
-let customSlideshowInterval = null;
-let isSlideshowPlaying = false;
+  // STILL IMAGES: Fancybox init with captions + manual slideshow
+  let customSlideshowInterval = null;
 
-$('a.stills-image').fancybox({
-  loop: true,
-  buttons: [
-    "slideShow",
-    "fullScreen",
-    "thumbs",
-    "close"
-  ],
-  afterShow: function (instance, current) {
-    if (!instance.userNotified) {
-      instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Click ▶️ to start slideshow</div>');
-      instance.userNotified = true;
+  $('a.stills-image').fancybox({
+    loop: true,
+    buttons: [
+      "slideShow",
+      "fullScreen",
+      "thumbs",
+      "close"
+    ],
+    caption: function(instance, item) {
+      return item.opts.$orig.attr('data-caption') || '';
+    },
+    afterShow: function (instance, current) {
+      if (!instance.userNotified) {
+        instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Press <strong>Spacebar</strong> to start slideshow</div>');
+        instance.userNotified = true;
+      }
     }
-    updateSlideshowButton();
-  },
-  beforeShow: function () {
-    updateSlideshowButton();
-  }
-});
+  });
 
-function toggleSlideshow() {
-  const instance = $.fancybox.getInstance();
+  // Slideshow start/stop using Play button only
+  $(document).on('click', '.fancybox-button--play', function () {
+    const instance = $.fancybox.getInstance();
 
-  if (!instance || !instance.current || !instance.current.opts.$orig.hasClass('stills-image')) {
-    return;
-  }
+    if (!instance || !instance.current || !instance.current.opts.$orig.hasClass('stills-image')) return;
 
-  if (isSlideshowPlaying) {
-    stopSlideshow();
-  } else {
-    startSlideshow();
-  }
-}
-
-function startSlideshow() {
-  const instance = $.fancybox.getInstance();
-  if (!instance) return;
-
-  isSlideshowPlaying = true;
-  updateSlideshowButton();
-
-  customSlideshowInterval = setInterval(function () {
-    const activeInstance = $.fancybox.getInstance();
-    if (activeInstance) {
-      activeInstance.next();
+    if (customSlideshowInterval) {
+      clearInterval(customSlideshowInterval);
+      customSlideshowInterval = null;
+      $(this).removeClass('is-playing');
     } else {
-      stopSlideshow();
+      customSlideshowInterval = setInterval(function () {
+        const activeInstance = $.fancybox.getInstance();
+        if (activeInstance) {
+          activeInstance.next();
+        } else {
+          clearInterval(customSlideshowInterval);
+          customSlideshowInterval = null;
+        }
+      }, 7000); // 7 seconds per slide
+      $(this).addClass('is-playing');
     }
-  }, 7000); // 7 seconds
-}
+  });
 
-function stopSlideshow() {
-  isSlideshowPlaying = false;
-  clearInterval(customSlideshowInterval);
-  customSlideshowInterval = null;
-  updateSlideshowButton();
-}
+  $(document).on('afterClose.fb', function () {
+    if (customSlideshowInterval) {
+      clearInterval(customSlideshowInterval);
+      customSlideshowInterval = null;
+    }
+    $('.fancybox-button--play').removeClass('is-playing');
+  });
 
-function updateSlideshowButton() {
-  const instance = $.fancybox.getInstance();
-  if (!instance || !instance.$refs || !instance.$refs.buttons) return;
+  // VIDEO LINKS: All types
+  $('a.-by-nine, #reel-button a').fancybox({
+    type: 'iframe',
+    autoSize: true,
+    width: 1600,
+    height: 900,
+    padding: 0,
+    aspectRatio: true,
+    iframe: {
+      preload: false
+    },
+    helpers: {
+      media: {}
+    }
+  });
 
-  const $buttons = instance.$refs.buttons.find('[data-fancybox-play]');
-  if ($buttons.length) {
-    $buttons.html(isSlideshowPlaying ? '❚❚' : '▶️');
-  }
-}
-
-$(document).on('afterClose.fb', function () {
-  stopSlideshow();
-});
-
-$(document).on('click', '[data-fancybox-play]', function (e) {
-  e.preventDefault();
-  toggleSlideshow();
-});
+  // Extra fallback for other iframe-based links
+  $('.thumbnails.lightbox a').fancybox({
+    type: 'iframe',
+    autoSize: true,
+    width: 1300,
+    height: 550,
+    padding: 0,
+    aspectRatio: true,
+    iframe: {
+      preload: false
+    },
+    helpers: {
+      media: {}
+    }
+  });
 </script>
     <script>
 document.addEventListener("DOMContentLoaded", function () {
