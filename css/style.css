@@ -1465,3 +1465,32 @@ body.loaded header {
     overflow-wrap: break-word;
   }
 }
+.custom-caption {
+  font-size: 14px;
+  color: #ccc;
+  padding: 10px;
+  z-index: 9999;
+  position: absolute;
+}
+
+.custom-caption.desktop {
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  max-width: 40%;
+  text-align: right;
+  border-radius: 4px;
+}
+
+.custom-caption.mobile {
+  position: relative;
+  bottom: auto;
+  right: auto;
+  background: none;
+  color: #fff;
+  text-align: center;
+  padding: 10px 15px;
+  font-size: 15px;
+  max-width: 90%;
+  margin: 0 auto;
+}
