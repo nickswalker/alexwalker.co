@@ -1485,3 +1485,22 @@ body.loaded header {
     border-radius: 4px;
   }
 }
+@media screen and (max-width: 700px) {
+  .playbuttons.thumbnails a::before {
+    font-size: 11px !important;
+    bottom: 8px !important;
+    left: 8px !important;
+    width: auto !important;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+    padding: 4px 6px !important;
+    box-sizing: border-box;
+    max-width: 100%;
+    white-space: normal !important;
+    line-height: 1.3 !important;
+  }
+
+  .thumbnails li {
+    position: relative;
+    overflow: hidden;
+  }
+}
