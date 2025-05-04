@@ -1083,10 +1083,9 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 <script>
-  // STILL IMAGES: Fancybox init with captions + manual slideshow
   let customSlideshowInterval = null;
 
-  $('a.stills-image').fancybox({
+  Fancybox.bind('a.stills-image', {
     loop: true,
     buttons: [
       "slideShow",
@@ -1094,30 +1093,33 @@ document.addEventListener("DOMContentLoaded", function() {
       "thumbs",
       "close"
     ],
-    caption: function(instance, item) {
-      return item.opts.$orig.attr('data-caption') || '';
-    },
-    afterShow: function (instance, current) {
-      if (!instance.userNotified) {
-        instance.$caption.append('<div style="margin-top:10px; font-size:14px; color:#ccc;">Press <strong>Spacebar</strong> to start slideshow</div>');
-        instance.userNotified = true;
-      }
+    caption: function (fancybox, slide) {
+      const caption = slide.caption || slide.$trigger?.dataset?.caption || '';
+      if (!caption) return false;
+
+      const isMobile = window.innerWidth <= 768;
+
+      return `
+        <div class="custom-caption ${isMobile ? 'mobile' : 'desktop'}">
+          ${caption}
+        </div>
+      `;
     }
   });
 
-  // Slideshow start/stop using Play button only
+  // Manual slideshow start/stop via the Play button only
   $(document).on('click', '.fancybox-button--play', function () {
-    const instance = $.fancybox.getInstance();
+    const instance = Fancybox.getInstance();
 
-    if (!instance || !instance.current || !instance.current.opts.$orig.hasClass('stills-image')) return;
+    if (!instance || !instance.current || !instance.current.$trigger?.classList.contains('stills-image')) return;
 
     if (customSlideshowInterval) {
       clearInterval(customSlideshowInterval);
       customSlideshowInterval = null;
       $(this).removeClass('is-playing');
     } else {
-      customSlideshowInterval = setInterval(function () {
-        const activeInstance = $.fancybox.getInstance();
+      customSlideshowInterval = setInterval(() => {
+        const activeInstance = Fancybox.getInstance();
         if (activeInstance) {
           activeInstance.next();
         } else {
@@ -1125,6 +1127,7 @@ document.addEventListener("DOMContentLoaded", function() {
           customSlideshowInterval = null;
         }
       }, 7000); // 7 seconds per slide
+
       $(this).addClass('is-playing');
     }
   });
@@ -1137,7 +1140,7 @@ document.addEventListener("DOMContentLoaded", function() {
     $('.fancybox-button--play').removeClass('is-playing');
   });
 
-  // VIDEO LINKS: All types
+  // VIDEO: Lightbox for YouTube, Vimeo, etc.
   $('a.-by-nine, #reel-button a').fancybox({
     type: 'iframe',
     autoSize: true,
@@ -1153,7 +1156,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // Extra fallback for other iframe-based links
+  // Fallback: any other iframe-based thumbnails
   $('.thumbnails.lightbox a').fancybox({
     type: 'iframe',
     autoSize: true,
