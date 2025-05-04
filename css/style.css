@@ -1455,7 +1455,7 @@ body.loaded header {
 @media screen and (max-width: 700px) {
   .thumbnails.playbuttons a {
     position: relative;
-    overflow: hidden;
+    display: block;
   }
 
   .thumbnails.playbuttons a::before {
@@ -1464,21 +1464,24 @@ body.loaded header {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 30%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.65), transparent);
+    height: 35%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+    z-index: 0;
     pointer-events: none;
-    z-index: 1;
   }
 
   .thumbnails.playbuttons a span {
     position: absolute;
     bottom: 8px;
     left: 8px;
-    font-size: 13px;
+    right: 8px;
+    z-index: 1;
     color: white;
-    z-index: 2;
+    font-size: 14px;
+    line-height: 1.3;
     white-space: normal;
-    line-height: 1.2;
-    max-width: calc(100% - 16px);
+    background: rgba(0, 0, 0, 0.35);
+    padding: 4px 6px;
+    border-radius: 4px;
   }
 }
