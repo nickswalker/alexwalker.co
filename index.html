@@ -1097,10 +1097,8 @@ document.addEventListener("DOMContentLoaded", function() {
       const caption = slide.caption || slide.$trigger?.dataset?.caption || '';
       if (!caption) return false;
 
-      const isMobile = window.innerWidth <= 768;
-
       return `
-        <div class="custom-caption ${isMobile ? 'mobile' : 'desktop'}">
+        <div class="custom-caption right-aligned">
           ${caption}
         </div>
       `;
