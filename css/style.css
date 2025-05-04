@@ -1511,3 +1511,60 @@ body.loaded header {
   width: auto;
   max-width: 95%;
 }
+/* Override parent default to allow right alignment */
+.fancybox__caption {
+  text-align: initial !important;
+}
+.custom-caption.right-aligned {
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+  max-width: 30%;
+  background: none;
+  padding: 0;
+  text-align: right;
+  color: white;
+  font-size: 14px;
+  line-height: 1.4;
+  z-index: 1000;
+}
+.fancybox-caption,
+.fancybox-caption:before {
+  border-top: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+/* Right-align captions for stills only */
+.fancybox-caption .custom-caption.right-aligned {
+  text-align: right;
+  padding: 40px 60px 40px 40px; /* top, right, bottom, left */
+  white-space: normal;
+  line-height: 1.5;
+  font-size: 16px;
+  color: white;
+  background: none;
+  float: none;
+  max-width: 100%;
+}
+
+/* Remove Fancybox default caption background, line, and shadow */
+.fancybox-caption {
+  background: none !important;
+  border-top: none !important;
+  box-shadow: none !important;
+}
+
+/* OPTIONAL: remove :before border line in some themes */
+.fancybox-caption:before {
+  display: none !important;
+}
+.fancybox-caption .custom-caption.right-aligned strong {
+  font-weight: bold;
+  color: #C89126; /* or any highlight color */
+}
+.fancybox-bg {
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  transition: backdrop-filter 0.3s ease, background-color 0.3s ease !important;
+}
