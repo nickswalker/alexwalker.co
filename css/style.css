@@ -1454,10 +1454,10 @@ body.loaded header {
 }
 @media screen and (max-width: 700px) {
   .playbuttons.thumbnails a::before {
-    max-width: 100% !important;
     white-space: normal !important;
-    word-wrap: break-word !important;
-    overflow-wrap: break-word !important;
-    box-sizing: border-box !important;
+    height: auto !important;
+    line-height: 1.2em;
+    padding-right: 10px;
+    background: none !important;
   }
 }
