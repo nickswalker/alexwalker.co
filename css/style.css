@@ -1558,9 +1558,22 @@ body.loaded header {
 .fancybox-caption:before {
   display: none !important;
 }
+.fancybox-caption .custom-caption.right-aligned {
+  text-align: right;
+  padding: 10px 14px;
+  line-height: 1.5;
+  font-size: 16px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  display: inline-block;
+  max-width: 80%;
+  margin: 0 24px 24px auto;
+}
+
 .fancybox-caption .custom-caption.right-aligned strong {
   font-weight: bold;
-  color: #C89126; /* or any highlight color */
+  color: #C89126; /* warm gold highlight */
 }
 .fancybox-bg {
   backdrop-filter: blur(24px) !important;
