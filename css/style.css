@@ -1494,3 +1494,12 @@ body.loaded header {
   max-width: 90%;
   margin: 0 auto;
 }
+/* Always right-align captions for stills */
+.fancybox__caption .custom-caption.right-aligned {
+  text-align: right;
+  margin-right: 24px;
+  margin-left: auto;
+  max-width: 80%;
+  font-size: 14px;
+  color: #ccc;
+}
