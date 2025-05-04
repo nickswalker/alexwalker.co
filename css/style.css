@@ -1503,3 +1503,11 @@ body.loaded header {
   font-size: 14px;
   color: #ccc;
 }
+/* Ensure only stills captions are right-aligned */
+.fancybox__caption .custom-caption.right-aligned {
+  text-align: right !important;
+  margin-right: 24px;
+  margin-left: auto;
+  width: auto;
+  max-width: 95%;
+}
