@@ -1581,6 +1581,49 @@ body.loaded header {
   background-color: rgba(0, 0, 0, 0.6) !important;
   transition: backdrop-filter 0.3s ease, background-color 0.3s ease !important;
 }
+/* Realistic glass dome distortion for #return-to-top button */
+#return-to-top {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 1000;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow:
+    inset 0 0 1px rgba(255, 255, 255, 0.4),
+    0 10px 25px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px) brightness(1.2);
+  filter: url(#glass-sphere);
+  transition: all 0.3s ease;
+}
+
+#return-to-top i {
+  font-size: 28px;
+  color: white;
+  position: relative;
+  top: 1px;
+}
+
+/* SVG distortion filter using a Base64 normal map */
+svg#glass-sphere-filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+body::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
 #return-to-top {
   position: fixed;
   bottom: 40px;
@@ -1589,31 +1632,50 @@ body.loaded header {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  display: flex;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.05)),
+    radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.2), transparent),
+    rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(6px) saturate(1.2);
+  -webkit-backdrop-filter: blur(6px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow:
+    inset 0 0 1px rgba(255, 255, 255, 0.3),
+    0 8px 20px rgba(0, 0, 0, 0.25);
+  display: none;
   align-items: center;
   justify-content: center;
+}
+#return-to-top i {
+  position: relative;
+  top: 15px;          /* Adjust this value to move it vertically */
+  left: -2.5px;       /* Adjust this to fine-tune horizontal centering */
+  font-size: 24px;
+  color: white;
+    
+}
 
-  background:
-    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.05)),
-    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.2), transparent),
-    rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(6px) saturate(1.8) contrast(1.4);
-  -webkit-backdrop-filter: blur(6px) saturate(1.8) contrast(1.4);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow:
-    inset 0 0 0 0.5px rgba(255, 255, 255, 0.4),
-    0 10px 25px rgba(0, 0, 0, 0.3),
-    0 0 2px rgba(255, 255, 255, 0.5);
-  transition: all 0.3s ease;
-  filter: url(#glass-lens);
+#return-to-top {
+  display: flex;
+  align-items: center;     /* Vertical centering */
+  justify-content: center; /* Horizontal centering */
 }
 
 #return-to-top i {
-  font-size: 28px;
+  position: static;        /* Reset any relative positioning */
+  font-size: 24px;
   color: white;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  top: 15.25px;
-  left: 18.25px;
+}
+#return-to-top {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#return-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
