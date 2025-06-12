@@ -312,7 +312,7 @@
                         <li>
                     <a href="https://www.youtube.com/embed/k5Nw4BMAL-I"
    data-fancybox
-   data-caption="<a href='https://linktr.ee/houseofabrahammovie?utm_source=linktree_profile_share&ltsid=51dee596-214a-4730-b54e-7d9e40c607f0' target='_blank' class='external-button'>Coming to theaters June 13th! Learn More Here</a>"
+   data-caption="<a href='https://www.imdb.com/title/tt25566562/' target='_blank' class='external-button'>View on IMDb</a>"
    data-width="1600"
    data-height="900"
    class="-by-nine">
@@ -564,7 +564,7 @@
             <figure>
                 <ul class="thumbnails playbuttons">
                     <li>
-                        <a href="https://www.youtube.com/embed/4ZoO401mAnk" class="-by-nine" data-year="The Deserving- Feature Film Shot by Koshi Kiyokawa">
+                        <a href="https://www.youtube.com/embed/uLlvFymAxIA" class="-by-nine" data-year="The Deserving- Feature Film Shot by Koshi Kiyokawa">
                             <img src="img/colorist/deserv.jpg" />
                         </a>
                     </li>
@@ -623,11 +623,11 @@
       </figure>
 
       <div class="bio-text scroll-fade">
-        <p>	Alex is a cinematographer and colorist based in Austin, Texas, working across film, television, and commercial projects.</p>
+        <p>Based in Austin, Texas, Alex makes images for screens. He has brought his talents to a wide range of projects, from feature films to ad campaigns, documentaries, and TV shows.</p>
 
-        <p>Alex recently completed work on House of Abraham, directed by Lisa Belcher and starring Natasha Henstridge, Lukas Hassel, and Lin Shaye, which is being released theatrically by Abramorama. He also served as cinematographer and colorist for Texas Cult House, directed by Julia Barnett and starring Ryan Cooper and Adrianne Palicki, which premiered at Austin Film Festival 2024 and will soon be available on streaming platforms. Among his other projects is A Christmas In New Hope, directed by Julia Barnett and starring Katrina Bowden, Ryan Cooper, and Adrianne Palicki, which also had a theatrical release and is now streaming.</p>
+        <p>Alex recently completed work on House of Abraham, directed by Lisa Belcher and starring Natasha Henstridge, Lukas Hassel, and Lin Shaye, which is set for a theatrical release. He also served as cinematographer and colorist for Texas Cult House, directed by Julia Barnett and starring Ryan Cooper and Adrianne Palicki, which premiered at Austin Film Festival 2024 and will soon be available on streaming platforms. Among his other recent projects is A Christmas In New Hope, directed by Julia Barnett and starring Katrina Bowden, Ryan Cooper, and Adrianne Palicki, which also had a theatrical release and is now streaming.</p>
 <p>Alex’s nonfiction work spans presidential campaigns, true crime stories, and cowboy life — all part of an ongoing effort to better understand our reality. He’s filmed across the U.S., Mexico, and South America, from nuclear reactors in Texas to ranches in Patagonia. His commercial work has also earned industry recognition.</p>
-        <p>In addition to shooting, he leads finishing and color work for a range of projects, collaborating closely with directors and distributors. Outside of production, Alex is an avid iPhone photographer. He also collects screen-used and replica props from sci-fi films — part personal obsession, part study of the worlds filmmakers build.</p>
+        <p>In addition to shooting, he leads finishing and color work for a range of projects, collaborating closely with directors and distributors. Outside of production, Alex collects screen-used and replica props from sci-fi films — part personal obsession, part study of the worlds filmmakers build.</p>
 
 
 
@@ -652,7 +652,7 @@
       <a href="https://letterboxd.com/awalker47/" target="_blank" data-goatcounter-click="ext-letterboxd.com">Letterboxd</a>
     </button>
     <button class="scroll-fade">
-      <a href="img/AlexWalker_fullgearlist.pdf" target="_blank" data-goatcounter-click="gear-list">Gear List - Updated May 2025</a>
+      <a href="img/AlexWalker_fullgearlist.pdf" target="_blank" data-goatcounter-click="gear-list">Gear List - Updated Feb. 2025</a>
     </button>
     <button class="scroll-fade">
       <a href="https://www.yourprops.com/view_items.php?user_name=Alex+Walker" target="_blank" data-goatcounter-click="ext-yourprops.com">Movie Prop Collection</a>
@@ -707,16 +707,20 @@ $(document).ready(function () {
     }
   });
 
-  // Return-to-top arrow fade logic
+     // Return-to-top arrow fade logic
   const $returnToTop = $('#return-to-top');
-  let lastEventLocation = 0;
+  let shown = false;
   $(window).on('scroll', function () {
     const scrollTop = $(this).scrollTop();
-    const below = scrollTop >= wHeight;
-    if ((lastEventLocation >= wHeight) ^ below) {
-      $returnToTop.fadeToggle(400);
+    const shouldShow = scrollTop >= wHeight;
+
+    if (shouldShow && !shown) {
+      $returnToTop.addClass('visible');
+      shown = true;
+    } else if (!shouldShow && shown) {
+      $returnToTop.removeClass('visible');
+      shown = false;
     }
-    lastEventLocation = scrollTop;
   });
 
   // Carousel setup
@@ -834,8 +838,8 @@ $('a.stills-image').fancybox({
 });
 </script>
     
-    </html>
-    
+
 </body>
 
 
+    </html>
