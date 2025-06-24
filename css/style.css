@@ -1679,3 +1679,19 @@ body::after {
   opacity: 1;
   pointer-events: auto;
 }
+const $returnToTop = $('#return-to-top');
+const wHeight = $(window).height();
+let shown = false;
+
+$(window).on('scroll', function () {
+  const scrollTop = $(this).scrollTop();
+  const shouldShow = scrollTop >= (wHeight * 0.4); // Appears after 40% of viewport height
+
+  if (shouldShow && !shown) {
+    $returnToTop.addClass('visible');
+    shown = true;
+  } else if (!shouldShow && shown) {
+    $returnToTop.removeClass('visible');
+    shown = false;
+  }
+});
