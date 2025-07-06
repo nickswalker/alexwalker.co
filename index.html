@@ -201,14 +201,12 @@
             </ul>
         </nav>
     </header>
-   <sv-liquid-glass id="return-to-top"
-  class="smooth-scroll"
-  onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+<sv-liquid-glass id="return-to-top"
   styles='{
     "style": {
-      "roundness": 50,
-      "padding_x": 2,
-      "padding_y": 2
+      "roundness": 100,
+      "padding_x": 0.5,
+      "padding_y": 0.5
     },
     "text": {
       "content": "↑"
@@ -216,12 +214,14 @@
     "edit": false,
     "font_family": "Inter",
     "size_weight": 500,
-    "font_size": 2.5,
+    "font_size": 1,
     "color": {
       "accent": "#D7DADD"
     }
   }'
-  contrast="light">
+  contrast="light"
+  onclick="window.scrollTo({top: 0, behavior: \"smooth\"})"
+  class="smooth-scroll">
 </sv-liquid-glass>
     <section id="stills" class="scroll-fade">
     <div class="container columns-span-width">
