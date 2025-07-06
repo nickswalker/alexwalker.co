@@ -1582,16 +1582,7 @@ right: calc(5vw + env(safe-area-inset-right, 0px));
   height: 80px;
   z-index: 999;
 }
-#return-to-top {
-  position: fixed;
-  bottom: clamp(16px, 5vh, 40px);
-  right:  clamp(16px, 5vw, 40px);
-  width:  80px;
-  height: 80px;
-  transform: none !important;
-  pointer-events: auto;
-  z-index: 999;
-}
+
 
 @media (max-width: 480px) {
   #return-to-top {
