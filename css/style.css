@@ -1552,7 +1552,7 @@ body.loaded header {
 height: 5px;
 font-size: 10px;
   bottom: calc(105px + env(safe-area-inset-bottom, 0px));
-right: calc(70px + env(safe-area-inset-right, 0px));
+right: calc(5vw + env(safe-area-inset-right, 0px));
   z-index: 9967;
   display: none;
   cursor: pointer;
