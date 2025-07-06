@@ -1574,3 +1574,11 @@ right: calc(5vw + env(safe-area-inset-right, 0px));
 .fancybox-button--fullscreen {
   display: none !important;
 }
+#glass-wrapper {
+  position: fixed;
+  bottom: 105px;
+  right: 70px;
+  width: 80px;
+  height: 80px;
+  z-index: 999;
+}
