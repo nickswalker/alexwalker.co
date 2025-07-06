@@ -34,6 +34,7 @@
         type='text/css'>
     <script src="packages/fancybox/jquery.fancybox.min.js"></script>
     <script src="packages/bootstrap/js/bootstrap-carousel.js"></script>
+    <script type="module" crossorigin src="https://glass.danilofiumi.com/web-comps/boundle.js"></script>
     <script src="js/scroller.js"></script>
   <script type="application/ld+json">
     {
@@ -200,7 +201,28 @@
             </ul>
         </nav>
     </header>
-    <a id="return-to-top" href="#slider" class="smooth-scroll"><i class="ion-chevron-up"></i></a>
+   <sv-liquid-glass id="return-to-top"
+  class="smooth-scroll"
+  onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+  styles='{
+    "style": {
+      "roundness": 50,
+      "padding_x": 2,
+      "padding_y": 2
+    },
+    "text": {
+      "content": "↑"
+    },
+    "edit": false,
+    "font_family": "Inter",
+    "size_weight": 500,
+    "font_size": 2.5,
+    "color": {
+      "accent": "#D7DADD"
+    }
+  }'
+  contrast="light">
+</sv-liquid-glass>
     <section id="stills" class="scroll-fade">
     <div class="container columns-span-width">
   <ul class="stills" style="align-items: center; justify-content: center;">
@@ -669,7 +691,7 @@
                 <h3>Representation</h3>
                 <p>The Right Eye Inc.
                   <br/><a href="http://therighteye.com/" data-goatcounter-click="ext-righteye">www.therighteye.com</a>
-                    <br />Thomas Turley | turley@therighteye.com
+                    <br />Thomas Turley | <a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="d6a2a3a4bab3af96a2beb3a4bfb1bea2b3afb3f8b5b9bb">[email&#160;protected]</a>
                     <br />917.209.5445
                     <br />New York, NY
                 </p>
@@ -681,7 +703,7 @@
         </div>
         </div>
     </section>
- <script>
+ <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 $(document).ready(function () {
   // Scroll-fade setup
   document.body.classList.add("loaded");
@@ -713,7 +735,7 @@ $(document).ready(function () {
   let shown = false;
   $(window).on('scroll', function () {
     const scrollTop = $(this).scrollTop();
-    const shouldShow = scrollTop >= wHeight;
+   const shouldShow = scrollTop >= 100;
 
     if (shouldShow && !shown) {
       $returnToTop.addClass('visible');
