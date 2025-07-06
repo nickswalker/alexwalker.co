@@ -860,7 +860,61 @@ $('a.stills-image').fancybox({
   });
 });
 </script>
-    
+    <script>
+  function createGlassButton(isDarkMode) {
+    const styles = {
+      style: {
+        roundness: 100,
+        padding_x: 0.35,
+        padding_y: 0.35
+      },
+      text: {
+        content: "↑"
+      },
+      edit: false,
+      font_family: "Inter",
+      size_weight: 500,
+      font_size: 1.2,
+      color: {
+        accent: isDarkMode ? "#ffffff" : "#000000"
+      }
+    };
+
+    const button = document.createElement("sv-liquid-glass");
+    button.id = "return-to-top";
+    button.className = "smooth-scroll";
+    button.setAttribute("contrast", "light");
+    button.setAttribute("styles", JSON.stringify(styles));
+    button.setAttribute("onclick", "window.scrollTo({top: 0, behavior: 'smooth'})");
+
+    return button;
+  }
+
+  function updateGlassButton() {
+    const isDarkMode = window.matchMedia &&
+                       window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    const oldButton = document.getElementById("return-to-top");
+    if (!oldButton) return;
+
+    const parent = oldButton.parentNode;
+    const newButton = createGlassButton(isDarkMode);
+
+    // Retain visibility if currently shown
+    if (oldButton.classList.contains("visible")) {
+      newButton.classList.add("visible");
+    }
+
+    parent.replaceChild(newButton, oldButton);
+  }
+
+  // Initialize on page load
+  window.addEventListener("DOMContentLoaded", updateGlassButton);
+
+  // Re-run when system appearance changes
+  window.matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener('change', updateGlassButton);
+</script>
 
 </body>
 
