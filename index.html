@@ -915,7 +915,17 @@ $('a.stills-image').fancybox({
   window.matchMedia('(prefers-color-scheme: dark)')
     .addEventListener('change', updateGlassButton);
 </script>
-
+<script>
+  $(document).ready(function () {
+    $.fancybox.defaults.buttons = [
+      "zoom",
+      "slideShow",
+      "fullScreen",
+      "thumbs",
+      "close"
+    ];
+  });
+</script>
 </body>
 
 
