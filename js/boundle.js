@@ -493,13 +493,13 @@ var Ar=Object.defineProperty;var Rr=(t,e,a)=>e in t?Ar(t,e,{enumerable:!0,config
 			left: calc(0% - var(--border-width) / 2);
 			padding: var(--border-width);
 			box-sizing: border-box;
-			background: conic-gradient(
-					from var(--angle-1) at 50% 50%,
-					rgba(0, 0, 0, 0.5),
-					rgba(0, 0, 0, 0) 5% 40%,
-					rgba(0, 0, 0, 0.5) 50%,
-					rgba(0, 0, 0, 0) 60% 95%,
-					rgba(0, 0, 0, 0.5)
+			background:   conic-gradient(
+      from var(--angle-1) at 50% 50%,
+      rgba(254,254,254,0.25),     /* overall highlight softened */
+      rgba(254,254,254,0) 12% 28%, /* tiny, faint clear band */
+      rgba(254,254,254,0.25) 50%,  /* mid-point fallback */
+      rgba(254,254,254,0) 72% 88%, /* second clear band */
+      rgba(254,254,254,0.25)
 				),
 				linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));
 			-webkit-mask:
