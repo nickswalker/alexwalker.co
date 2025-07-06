@@ -1551,8 +1551,8 @@ body.loaded header {
     width: 5px;
 height: 5px;
 font-size: 10px;
-  bottom: calc(105px + env(safe-area-inset-bottom, 0px));
-right: calc(5vw + env(safe-area-inset-right, 0px));
+  bottom: calc(126px + env(safe-area-inset-bottom, 1px));
+right: calc(14vw + env(safe-area-inset-right, 1px));
   z-index: 9967;
   display: none;
   cursor: pointer;
@@ -1587,7 +1587,7 @@ right: calc(5vw + env(safe-area-inset-right, 0px));
 @media (max-width: 480px) {
   #return-to-top {
     right: 12px;
-    bottom: 12px;
+    bottom: calc(14vw + env(safe-area-inset-right, 1px));
     width:  64px;
     height: 64px;
   }
