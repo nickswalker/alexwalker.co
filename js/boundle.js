@@ -582,13 +582,33 @@ var Ar=Object.defineProperty;var Rr=(t,e,a)=>e in t?Ar(t,e,{enumerable:!0,config
                 border-radius: inherit;
                 mix-blend-mode: lighten;
                 opacity: 0.7;
-                background: conic-gradient(
-                    from 0deg,
-                    #e7ffff 0%,
-                    ${(o().color.accent||"#aaf")??""} 25%,
-                    #fff 50%,
-                    ${(o().color.accent||"#aaf")??""} 75%,
-                    #e7ffff 100%
+               background: 
+  /* softened edge glow */
+  conic-gradient(
+    from 0deg,
+
+    /* lightest rim, now 30% alpha */
+    rgba(231,255,255,0.3) 0%,
+
+    /* accent color, softened to 30% alpha */
+    rgba(170,170,255,0.3) 25%,
+
+    /* pure white, softened to 30% alpha */
+    rgba(255,255,255,0.3) 50%,
+
+    /* accent again, softened */
+    rgba(170,170,255,0.3) 75%,
+
+    /* lightest rim again */
+    rgba(231,255,255,0.3) 100%
+  ),
+
+  /* underlying shadow, softened */
+  linear-gradient(
+    180deg,
+    rgba(0,0,0,0.25),
+    rgba(0,0,0,0.25)
+
                 );
                 animation: rotate-gradient 4s ease-in-out infinite;
             `)),X0(3,$,()=>J0),D(k,$)};Ae(p,k=>{v(f)&&k(g)})}var m=M(p,2);V0(m,()=>o().color.accent,k=>{var $=go();ze(()=>{Re($,`tint absolute top-0 h-full w-full opacity-[30%] ${(o().color.accent=="#D7DADD"?"hidden":"")??""}`),R($,"style",`background-color:${o().color.accent??""};`)}),D(k,$)});var w=M(m,2),P=U(w),S=U(P),z=U(S);{var y=k=>{var $=x0("❤️ Glass");D(k,$)},te=k=>{var $=xr(),xt=ft($);{var qt=vt=>{var ot=x0("Glassify →");D(vt,ot)};Ae(xt,vt=>{r()&&vt(qt)},!0)}D(k,$)};Ae(z,k=>{r()=="mobile"?k(y):k(te,!1)})}Y(S),He(S,k=>T(c,k),()=>v(c)),Y(P),Y(w);var ge=M(w,4);Y(u),He(u,k=>i=k,()=>i);var Be=M(u,2),Oe=M(Be,2);{var N=k=>{var $=mo();D(k,$)},F=k=>{var $=vo();D(k,$)};Ae(Oe,k=>{x()=="dark"||x()=="dark-contrast"?k(N):k(F,!1)})}return ze(()=>{sr(_,"--roundness",o().style.roundness*10),Re(P,`${v(s)??""} text-nowrap`),R(P,"style",`
