@@ -1571,3 +1571,6 @@ font-size: 10px;
   content: none !important;
   display: none !important;
 }
+.fancybox-button--fullscreen {
+  display: none !important;
+}
