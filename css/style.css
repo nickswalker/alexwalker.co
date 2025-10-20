@@ -612,11 +612,17 @@ li.coming-soon a::before {
 }
 
 .clients {
-    column-count: 2;
-    text-align: center;
-    color: var(--alt-text-color);
-    display: block;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px 28px;                 /* row / column spacing */
+  max-width: 900px;              /* keeps the block visually tight */
+  margin: 0 auto;                /* centers the grid */
+  padding: 0;
+  list-style: none;
+  text-align: left;              /* use center if you prefer */
+  color: var(--alt-text-color);
 }
+.clients li { margin: 0; line-height: 1.6; }
 
 /*--- = Stills	*/
 #stills {
