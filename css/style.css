@@ -1602,3 +1602,23 @@ right: calc(14vw + env(safe-area-inset-right, 1px));
     height: 1.2em;
   }
 }
+/* Clients list — mobile fix (phones only) */
+@media screen and (max-width: 500px) {
+  .clients {
+    column-count: initial !important;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding-left: 0;
+    text-align: center;
+    overflow-x: hidden;
+  }
+
+  .clients li {
+    list-style: none;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
