@@ -12,21 +12,26 @@ jobs:
     steps:
       - name: 📂 set up
         uses: actions/checkout@v4
+
       - name: 💎 set up ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1.2
-      - run:  yes | gem update --system --force
+
+      - run: yes | gem update --system --force
+
       - name: 🔨 install dependencies & build site
         uses: limjh16/jekyll-action-ts@v2
         with:
           enable_cache: true
+
       - name: cache HTMLProofer
         id: cache-htmlproofer
         uses: actions/cache@v4
         with:
           path: tmp/.htmlproofer
           key: ${{ runner.os }}-htmlproofer
+
       - name: run tests
         run: |
           bundle exec htmlproofer ./_site\
@@ -34,14 +39,16 @@ jobs:
             --assume-extension .html\
             --no-enforce-https\
             --ignore-missing-alt\
-            --ignore-urls '/vimeo.com/,/twitter.com/,/instagram.com/'\
+            --ignore-urls '/vimeo.com/,/twitter.com/,/instagram.com/,/letterboxd.com/'\
             --swap-urls 'https?\:\/\/alexwalker\.co:'\
             --cache '{ "timeframe": { "external": "30d" } }'
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: site
           path: _site
+
   deploy:
     runs-on: ubuntu-latest
     needs: [jekyll-build]
@@ -51,6 +58,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: site
+
       - name: Setup SSH Keys and known_hosts
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
@@ -60,16 +68,19 @@ jobs:
           ssh-keyscan ssh.nickwalker.us >> ~/.ssh/known_hosts
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+
       - name: 🚀 deploy
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-        run: "rsync -havz * www-data@ssh.nickwalker.us:/var/www/alexwalker.co/"
+        run: rsync -havz * www-data@ssh.nickwalker.us:/var/www/alexwalker.co/
+
       - name: purge Cloudflare cache
         uses: jakejarvis/cloudflare-purge-action@v0.3.0
         env:
           CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
           CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
           CLOUDFLARE_KEY: ${{ secrets.CLOUDFLARE_KEY }}
+
   deploy-staging:
     runs-on: ubuntu-latest
     needs: [jekyll-build]
@@ -79,6 +90,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: site
+
       - name: Setup SSH Keys and known_hosts
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
@@ -88,7 +100,8 @@ jobs:
           ssh-keyscan ssh.nickwalker.us >> ~/.ssh/known_hosts
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+
       - name: 🚀 deploy to staging
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-        run: "rsync -havz --delete ./ www-data@ssh.nickwalker.us:/var/www/testing.alexwalker.co/ --exclude=/.well-known"
+        run: rsync -havz --delete ./ www-data@ssh.nickwalker.us:/var/www/testing.alexwalker.co/ --exclude=/.well-known
