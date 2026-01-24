@@ -39,11 +39,8 @@ jobs:
             --assume-extension .html \
             --no-enforce-https \
             --ignore-missing-alt \
-            --url-ignore "/letterboxd\.com/" \
-            --url-ignore "/vimeo\.com/" \
-            --url-ignore "/twitter\.com/" \
-            --url-ignore "/instagram\.com/" \
-            --swap-urls "https?\:\/\/alexwalker\.co:" \
+            --ignore-urls '/vimeo\.com/,/twitter\.com/,/instagram\.com/,/letterboxd\.com/' \
+            --swap-urls 'https?\:\/\/alexwalker\.co:' \
             --cache '{ "timeframe": { "external": "30d" } }'
 
       - name: Upload build artifact
