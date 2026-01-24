@@ -30,17 +30,20 @@ jobs:
         uses: actions/cache@v4
         with:
           path: tmp/.htmlproofer
-          key: ${{ runner.os }}-htmlproofer
+          key: ${{ runner.os }}-htmlproofer-v2
 
       - name: run tests
         run: |
-          bundle exec htmlproofer ./_site\
-            --only-4xx\
-            --assume-extension .html\
-            --no-enforce-https\
-            --ignore-missing-alt\
-            --ignore-urls '/vimeo.com/,/twitter.com/,/instagram.com/,/letterboxd.com/'\
-            --swap-urls 'https?\:\/\/alexwalker\.co:'\
+          bundle exec htmlproofer ./_site \
+            --only-4xx \
+            --assume-extension .html \
+            --no-enforce-https \
+            --ignore-missing-alt \
+            --url-ignore "/letterboxd\.com/" \
+            --url-ignore "/vimeo\.com/" \
+            --url-ignore "/twitter\.com/" \
+            --url-ignore "/instagram\.com/" \
+            --swap-urls "https?\:\/\/alexwalker\.co:" \
             --cache '{ "timeframe": { "external": "30d" } }'
 
       - name: Upload build artifact
