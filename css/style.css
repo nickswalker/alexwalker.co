@@ -1598,6 +1598,9 @@ right: calc(14vw + env(safe-area-inset-right, 1px));
     height: 64px;
   }
   #return-to-top svg {
+
+
+
     width: 1.2em;
     height: 1.2em;
   }
@@ -1621,4 +1624,7 @@ right: calc(14vw + env(safe-area-inset-right, 1px));
     white-space: normal;
     overflow-wrap: anywhere;
   }
+}
+.centered-subheading {
+  text-align: center;
 }
