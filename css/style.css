@@ -1628,3 +1628,26 @@ right: calc(14vw + env(safe-area-inset-right, 1px));
 .centered-subheading {
   text-align: center;
 }
+// Create a glass container
+const container = new Container({
+  borderRadius: 24,
+  type: 'pill',
+  tintOpacity: 0.3
+})
+
+// Add glass buttons to container
+const button1 = new Button({
+  text: 'Action',
+  size: 24,
+  type: 'pill'
+})
+
+const button2 = new Button({
+  text: '✓',
+  size: 24,
+  type: 'circle'
+})
+
+container.addChild(button1)
+container.addChild(button2)
+document.body.appendChild(container.element)
