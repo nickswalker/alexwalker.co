@@ -592,14 +592,14 @@ class Button extends Container {
 
       const gl = this.gl_refs.gl
 
-      // Update texture from parent container's current rendered output
+      // UPDATE TEXTURE FROM PARENT CONTAINER'S CURRENT RENDERED OUTPUT
       const containerCanvas = this.parent.canvas
       gl.bindTexture(gl.TEXTURE_2D, this.gl_refs.texture)
       gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, gl.RGBA, gl.UNSIGNED_BYTE, containerCanvas)
 
       gl.clear(gl.COLOR_BUFFER_BIT)
 
-      // Update button and container positions in case layout changed
+      // Update button and container positions (in case layout changed)
       const buttonPosition = this.getPosition()
       const containerPosition = this.parent.getPosition()
       gl.uniform2f(this.gl_refs.buttonPositionLoc, buttonPosition.x, buttonPosition.y)
@@ -608,16 +608,13 @@ class Button extends Container {
       gl.drawArrays(gl.TRIANGLES, 0, 6)
     }
 
-    // Initial render
-    render()
+    // Render every frame to keep sampling parent's live output
+    const animationLoop = () => {
+      render()
+      requestAnimationFrame(animationLoop)
+    }
 
-    // Re-render on scroll
-    const handleScroll = () => render()
-    window.addEventListener('scroll', handleScroll, { passive: true })
-
-    // Re-render on resize
-    const handleResize = () => render()
-    window.addEventListener('resize', handleResize, { passive: true })
+    animationLoop()
 
     // Store render function for external calls
     this.render = render

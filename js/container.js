@@ -4,54 +4,6 @@ class Container {
   static isCapturing = false
   static waitingForSnapshot = []
 
-  static recaptureTimeout = null
-
-  static recapturePageSnapshot() {
-    if (Container.isCapturing) return
-
-    Container.isCapturing = true
-
-    html2canvas(document.body, {
-      scale: 1,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: null,
-      ignoreElements: function (element) {
-        return (
-          element.classList.contains('glass-container') ||
-          element.classList.contains('glass-button') ||
-          element.classList.contains('glass-button-text')
-        )
-      }
-    })
-      .then(snapshot => {
-        Container.pageSnapshot = snapshot
-        Container.isCapturing = false
-
-        Container.instances.forEach(instance => {
-          if (!instance.gl_refs.gl || !instance.gl_refs.texture) return
-
-          const img = new Image()
-          img.src = snapshot.toDataURL()
-
-          img.onload = () => {
-            const gl = instance.gl_refs.gl
-            gl.bindTexture(gl.TEXTURE_2D, instance.gl_refs.texture)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img)
-
-            if (instance.gl_refs.textureSizeLoc) {
-              gl.uniform2f(instance.gl_refs.textureSizeLoc, img.width, img.height)
-            }
-
-            if (instance.render) instance.render()
-          }
-        })
-      })
-      .catch(error => {
-        console.error('html2canvas recapture error:', error)
-        Container.isCapturing = false
-      })
-  }
 
   constructor(options = {}) {
     this.width = 0 // Will be set from DOM
@@ -223,7 +175,7 @@ class Container {
   }
 
   setupCanvas() {
-    this.gl = this.canvas.getContext('webgl', { preserveDrawingBuffer: false })
+    this.gl = this.canvas.getContext('webgl', { preserveDrawingBuffer: true })
     if (!this.gl) {
       console.error('WebGL not supported')
       return
@@ -705,20 +657,7 @@ class Container {
     render()
 
     const handleScroll = () => render()
-    window.addEventListener(
-      'scroll',
-      () => {
-        handleScroll()
-
-        if (!Container.recaptureTimeout) {
-          Container.recaptureTimeout = setTimeout(() => {
-            Container.recaptureTimeout = null
-            Container.recapturePageSnapshot()
-          }, 200)
-        }
-      },
-      { passive: true }
-    )
+    window.addEventListener('scroll', handleScroll, { passive: true })
 
     // Store render function for external calls
     this.render = render
