@@ -223,7 +223,7 @@ class Container {
   }
 
   setupCanvas() {
-    this.gl = this.canvas.getContext('webgl', { preserveDrawingBuffer: true })
+    this.gl = this.canvas.getContext('webgl', { preserveDrawingBuffer: false })
     if (!this.gl) {
       console.error('WebGL not supported')
       return
