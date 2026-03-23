@@ -855,6 +855,9 @@ $('a.stills-image').fancybox({
     tintOpacity: 0.630
   };
 
+  let returnToTopButton = null;
+  let glassBuilt = false;
+
   function applyGlassSettingsToInstance(instance) {
     if (!instance || !instance.gl_refs || !instance.gl_refs.gl) return;
 
@@ -880,7 +883,7 @@ $('a.stills-image').fancybox({
 
   function buildReturnToTopButton() {
     const wrapper = document.getElementById('glass-wrapper');
-    if (!wrapper) return;
+    if (!wrapper || glassBuilt) return;
 
     wrapper.innerHTML = '';
 
@@ -900,14 +903,21 @@ $('a.stills-image').fancybox({
 
     wrapper.appendChild(button.element);
 
-    requestAnimationFrame(() => {
+    returnToTopButton = button;
+    glassBuilt = true;
+
+    setTimeout(() => {
       applyGlassSettingsToInstance(button);
-    });
+      if (typeof button.updateSizeFromDOM === 'function') {
+        button.updateSizeFromDOM();
+      }
+      if (typeof button.render === 'function') {
+        button.render();
+      }
+    }, 300);
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    buildReturnToTopButton();
-
     const wrapper = document.getElementById('glass-wrapper');
     let shown = false;
 
@@ -917,6 +927,15 @@ $('a.stills-image').fancybox({
       if (shouldShow && !shown) {
         wrapper.classList.add('visible');
         shown = true;
+
+        if (!glassBuilt) {
+          buildReturnToTopButton();
+        } else if (returnToTopButton && typeof returnToTopButton.render === 'function') {
+          setTimeout(() => {
+            applyGlassSettingsToInstance(returnToTopButton);
+            returnToTopButton.render();
+          }, 100);
+        }
       } else if (!shouldShow && shown) {
         wrapper.classList.remove('visible');
         shown = false;
