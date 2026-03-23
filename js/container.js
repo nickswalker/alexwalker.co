@@ -4,7 +4,6 @@ class Container {
   static isCapturing = false
   static waitingForSnapshot = []
 
-  // ✅ ADDED: live recapture support
   static recaptureTimeout = null
 
   static recapturePageSnapshot() {
@@ -29,7 +28,6 @@ class Container {
         Container.pageSnapshot = snapshot
         Container.isCapturing = false
 
-        // ✅ Update ALL instances with new texture
         Container.instances.forEach(instance => {
           if (!instance.gl_refs.gl || !instance.gl_refs.texture) return
 
@@ -38,23 +36,11 @@ class Container {
 
           img.onload = () => {
             const gl = instance.gl_refs.gl
-
             gl.bindTexture(gl.TEXTURE_2D, instance.gl_refs.texture)
-            gl.texImage2D(
-              gl.TEXTURE_2D,
-              0,
-              gl.RGBA,
-              gl.RGBA,
-              gl.UNSIGNED_BYTE,
-              img
-            )
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img)
 
             if (instance.gl_refs.textureSizeLoc) {
-              gl.uniform2f(
-                instance.gl_refs.textureSizeLoc,
-                img.width,
-                img.height
-              )
+              gl.uniform2f(instance.gl_refs.textureSizeLoc, img.width, img.height)
             }
 
             if (instance.render) instance.render()
@@ -68,165 +54,63 @@ class Container {
   }
 
   constructor(options = {}) {
-    this.width = 0
-    this.height = 0
+    this.width = 0 // Will be set from DOM
+    this.height = 0 // Will be set from DOM
     this.borderRadius = options.borderRadius || 48
-    this.type = options.type || 'rounded'
-    this.tintOpacity =
-      options.tintOpacity !== undefined ? options.tintOpacity : 0.2
+    this.type = options.type || 'rounded' // "rounded", "circle", or "pill"
+    this.tintOpacity = options.tintOpacity !== undefined ? options.tintOpacity : 0.2
 
     this.canvas = null
     this.element = null
     this.gl = null
     this.gl_refs = {}
     this.webglInitialized = false
-    this.children = []
+    this.children = [] // Child buttons/components
 
+    // Add to instances
     Container.instances.push(this)
+
+    // Initialize
     this.init()
   }
 
-  updateSizeFromDOM() {
-    requestAnimationFrame(() => {
-      const rect = this.element.getBoundingClientRect()
-      const newWidth = Math.ceil(rect.width)
-      const newHeight = Math.ceil(rect.height)
+  addChild(child) {
+    this.children.push(child)
+    child.parent = this
 
-      if (newWidth !== this.width || newHeight !== this.height) {
-        this.width = newWidth
-        this.height = newHeight
+    // Add child's element to container
+    if (child.element && this.element) {
+      this.element.appendChild(child.element)
+    }
 
-        this.canvas.width = newWidth
-        this.canvas.height = newHeight
-        this.canvas.style.width = newWidth + 'px'
-        this.canvas.style.height = newHeight + 'px'
+    // If child is a button, set up nested glass
+    if (child instanceof Button) {
+      child.setupAsNestedGlass()
+    }
 
-        if (this.gl_refs.gl) {
-          this.gl_refs.gl.viewport(0, 0, newWidth, newHeight)
-          this.gl_refs.gl.uniform2f(
-            this.gl_refs.resolutionLoc,
-            newWidth,
-            newHeight
-          )
-        }
-      }
-    })
-  }
-
-  init() {
-    this.createElement()
-    this.setupCanvas()
+    // Update container size based on actual DOM size
     this.updateSizeFromDOM()
 
-    if (Container.pageSnapshot) {
-      this.initWebGL()
-    } else if (Container.isCapturing) {
-      Container.waitingForSnapshot.push(this)
-    } else {
-      Container.isCapturing = true
-      Container.waitingForSnapshot.push(this)
-      this.capturePageSnapshot()
+    return child
+  }
+
+  removeChild(child) {
+    const index = this.children.indexOf(child)
+    if (index > -1) {
+      this.children.splice(index, 1)
+      child.parent = null
+
+      if (child.element && this.element.contains(child.element)) {
+        this.element.removeChild(child.element)
+      }
+
+      // Update container size after removing child
+      this.updateSizeFromDOM()
     }
   }
 
-  createElement() {
-    this.element = document.createElement('div')
-    this.element.className = 'glass-container'
-
-    this.canvas = document.createElement('canvas')
-    this.canvas.style.position = 'absolute'
-    this.canvas.style.top = '0'
-    this.canvas.style.left = '0'
-    this.canvas.style.width = '100%'
-    this.canvas.style.height = '100%'
-    this.canvas.style.zIndex = '-1'
-
-    this.element.appendChild(this.canvas)
-  }
-
-  setupCanvas() {
-    this.gl = this.canvas.getContext('webgl', {
-      preserveDrawingBuffer: true
-    })
-  }
-
-  capturePageSnapshot() {
-    html2canvas(document.body).then(snapshot => {
-      Container.pageSnapshot = snapshot
-      Container.isCapturing = false
-
-      const waiting = Container.waitingForSnapshot.slice()
-      Container.waitingForSnapshot = []
-
-      waiting.forEach(container => {
-        if (!container.webglInitialized) {
-          container.initWebGL()
-        }
-      })
-    })
-  }
-
-  initWebGL() {
-    if (!Container.pageSnapshot || !this.gl) return
-
-    const img = new Image()
-    img.src = Container.pageSnapshot.toDataURL()
-
-    img.onload = () => {
-      this.setupShader(img)
-      this.webglInitialized = true
-    }
-  }
-
-  setupShader(image) {
-    const gl = this.gl
-
-    const texture = gl.createTexture()
-    gl.bindTexture(gl.TEXTURE_2D, texture)
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
-
-    this.gl_refs = {
-      gl,
-      texture
-    }
-
-    this.startRenderLoop()
-  }
-
-  startRenderLoop() {
-    const render = () => {
-      if (!this.gl_refs.gl) return
-
-      const gl = this.gl_refs.gl
-      gl.clear(gl.COLOR_BUFFER_BIT)
-      gl.drawArrays(gl.TRIANGLES, 0, 6)
-    }
-
-    render()
-
-    const handleScroll = () => render()
-
-    // ✅ PATCHED scroll handler
-    window.addEventListener(
-      'scroll',
-      () => {
-        handleScroll()
-
-        if (!Container.recaptureTimeout) {
-          Container.recaptureTimeout = setTimeout(() => {
-            Container.recaptureTimeout = null
-            Container.recapturePageSnapshot()
-          }, 200)
-        }
-      },
-      { passive: true }
-    )
-
-    this.render = render
-  }
-}    // Wait for next frame to ensure DOM layout is complete
+  updateSizeFromDOM() {
+    // Wait for next frame to ensure DOM layout is complete
     requestAnimationFrame(() => {
       const rect = this.element.getBoundingClientRect()
       let newWidth = Math.ceil(rect.width)
@@ -821,7 +705,20 @@ class Container {
     render()
 
     const handleScroll = () => render()
-    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener(
+      'scroll',
+      () => {
+        handleScroll()
+
+        if (!Container.recaptureTimeout) {
+          Container.recaptureTimeout = setTimeout(() => {
+            Container.recaptureTimeout = null
+            Container.recapturePageSnapshot()
+          }, 200)
+        }
+      },
+      { passive: true }
+    )
 
     // Store render function for external calls
     this.render = render
