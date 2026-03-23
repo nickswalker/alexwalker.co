@@ -1,0 +1,93 @@
+.glass-container,
+.glass-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  isolation: isolate;
+  -webkit-backdrop-filter: blur(var(--lg-blur, 15px)) saturate(1.35) brightness(1.08);
+  backdrop-filter: blur(var(--lg-blur, 15px)) saturate(1.35) brightness(1.08);
+  background:
+    linear-gradient(180deg,
+      rgba(255,255,255, calc(0.18 + var(--lg-tint, 0.30) * 0.30)) 0%,
+      rgba(255,255,255, calc(0.07 + var(--lg-tint, 0.30) * 0.18)) 44%,
+      rgba(255,255,255, calc(0.12 + var(--lg-tint, 0.30) * 0.24)) 100%);
+  border: 1px solid rgba(255,255,255,0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.45),
+    inset 0 -1px 0 rgba(255,255,255,0.10),
+    0 10px 30px rgba(0,0,0,0.18),
+    0 2px 10px rgba(0,0,0,0.10);
+  transform: translateZ(0);
+}
+
+.glass-container::before,
+.glass-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(120% 95% at 25% 12%, rgba(255,255,255,0.50), rgba(255,255,255,0.16) 24%, rgba(255,255,255,0.00) 52%),
+    radial-gradient(110% 100% at 72% 88%, rgba(255,255,255, calc(var(--lg-rim, 0.043) * 2.2)), rgba(255,255,255,0) 40%),
+    radial-gradient(140% 140% at 50% 50%, rgba(255,255,255, calc(var(--lg-base, 0.000) * 1.3)), rgba(255,255,255,0) 48%);
+  mix-blend-mode: screen;
+}
+
+.glass-container::after,
+.glass-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.18),
+    inset 0 calc(8px + var(--lg-ripple, 0.1) * 8px) calc(20px + var(--lg-corner, 0.078) * 60px) rgba(255,255,255,0.08),
+    inset 0 calc(-10px - var(--lg-edge, 0) * 80px) calc(22px + var(--lg-edge-distance, 0.41) * 40px) rgba(0,0,0,0.06);
+}
+
+.glass-container-rounded,
+.glass-button-rounded {
+  border-radius: var(--lg-radius, 24px);
+}
+
+.glass-container-circle,
+.glass-button-circle {
+  border-radius: 9999px;
+}
+
+.glass-container-pill,
+.glass-button-pill {
+  border-radius: 9999px;
+}
+
+.glass-button {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  min-width: 48px;
+  min-height: 48px;
+}
+
+.glass-button:active {
+  transform: translateY(1px) scale(0.985);
+}
+
+.glass-button-text {
+  position: relative;
+  z-index: 2;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 600;
+  line-height: 1;
+  color: rgba(255,255,255,0.95);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(calc(var(--lg-warp, 0) * -0.5px));
+}
