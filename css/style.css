@@ -1552,51 +1552,11 @@ body.loaded header {
   background-color: rgba(0, 0, 0, 0.6) !important;
   transition: backdrop-filter 0.3s ease, background-color 0.3s ease !important;
 }
-#return-to-top {
-  position: fixed;
-    width: 5px;
-height: 5px;
-font-size: 10px;
-  bottom: calc(126px + env(safe-area-inset-bottom, 1px));
-right: calc(14vw + env(safe-area-inset-right, 1px));
-  z-index: 9967;
-  display: none;
-  cursor: pointer;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
 
-#return-to-top.visible {
-  display: block;
-  pointer-events: auto;
-  opacity: 1;
-}
-#return-to-top::before,
-#return-to-top::after {
-  content: none !important;
-  display: none !important;
-}
 .fancybox-button--fullscreen {
   display: none !important;
 }
-#glass-wrapper {
-  position: fixed;
-  bottom: 105px;
-  right: 70px;
-  width: 80px;
-  height: 80px;
-  z-index: 999;
-}
 
-
-@media (max-width: 480px) {
-  #return-to-top {
-    right: 12px;
-    bottom: calc(14vw + env(safe-area-inset-right, 1px));
-    width:  64px;
-    height: 64px;
-  }
   #return-to-top svg {
 
 
@@ -1628,26 +1588,42 @@ right: calc(14vw + env(safe-area-inset-right, 1px));
 .centered-subheading {
   text-align: center;
 }
-// Create a glass container
-const container = new Container({
-  borderRadius: 24,
-  type: 'pill',
-  tintOpacity: 0.3
-})
+#glass-wrapper {
+  position: fixed;
+  bottom: calc(126px + env(safe-area-inset-bottom, 1px));
+  right: calc(14vw + env(safe-area-inset-right, 1px));
+  width: 80px;
+  height: 80px;
+  z-index: 9967;
+  display: none;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 
-// Add glass buttons to container
-const button1 = new Button({
-  text: 'Action',
-  size: 24,
-  type: 'pill'
-})
+#glass-wrapper.visible {
+  display: block;
+  pointer-events: auto;
+  opacity: 1;
+}
 
-const button2 = new Button({
-  text: '✓',
-  size: 24,
-  type: 'circle'
-})
+#return-to-top {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
 
-container.addChild(button1)
-container.addChild(button2)
-document.body.appendChild(container.element)
+#return-to-top::before,
+#return-to-top::after {
+  content: none !important;
+  display: none !important;
+}
+
+@media (max-width: 480px) {
+  #glass-wrapper {
+    right: 12px;
+    bottom: calc(14vw + env(safe-area-inset-right, 1px));
+    width: 64px;
+    height: 64px;
+  }
+}
