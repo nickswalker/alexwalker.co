@@ -1630,7 +1630,7 @@ body.loaded header {
 @media (max-width: 480px) {
   #glass-wrapper {
     right: 12px;
-    bottom: calc(2vw + env(safe-area-inset-bottom, 1px));
+    bottom: calc(18px + env(safe-area-inset-bottom, 1px));
     width: 64px;
     height: 64px;
   }
