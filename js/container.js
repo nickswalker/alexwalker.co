@@ -8,13 +8,15 @@ class Container {
 
   static getSnapshotPath() {
     const width = window.innerWidth
+    const height = window.innerHeight
     const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLandscape = width > height
 
     let size
     if (width <= 767) {
-      size = 'mobile'
+      size = isLandscape ? 'mobile-landscape' : 'mobile'
     } else if (width <= 1023) {
-      size = 'tablet'
+      size = isLandscape ? 'tablet-landscape' : 'tablet'
     } else {
       size = 'desktop'
     }
