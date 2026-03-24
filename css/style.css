@@ -1561,6 +1561,24 @@ body.loaded header {
   width: 1.2em;
   height: 1.2em;
 }
+
+#return-to-top {
+  color: rgba(0, 0, 0, 0.75);
+}
+
+#return-to-top svg {
+  fill: rgba(0, 0, 0, 0.75);
+}
+
+@media (prefers-color-scheme: dark) {
+  #return-to-top {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  #return-to-top svg {
+    fill: rgba(255, 255, 255, 0.9);
+  }
+}
 /* Clients list — mobile fix (phones only) */
 @media screen and (max-width: 700px) {
   .clients {
