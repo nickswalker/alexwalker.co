@@ -1639,8 +1639,8 @@ body.loaded header {
 @media screen and (max-width: 1023px) and (orientation: landscape),
        screen and (max-height: 500px) and (orientation: landscape) {
   #glass-wrapper {
-    right: calc(8px + env(safe-area-inset-right, 0px)) !important;
-    bottom: calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+    right: calc(20px + env(safe-area-inset-right, 0px)) !important;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px)) !important;
     width: 64px !important;
     height: 64px !important;
     left: auto !important;
