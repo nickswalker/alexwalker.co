@@ -1557,26 +1557,21 @@ body.loaded header {
   display: none !important;
 }
 
-  #return-to-top svg {
-
-
-
-    width: 1.2em;
-    height: 1.2em;
-  }
+ #return-to-top svg {
+  width: 1.2em;
+  height: 1.2em;
 }
 /* Clients list — mobile fix (phones only) */
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 700px) {
   .clients {
-    column-count: initial !important;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
-    max-width: 100%;
-    margin: 0 auto;
-    padding-left: 0;
-    text-align: center;
-    overflow-x: hidden;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding-left: 0 !important;
+    text-align: center !important;
+    overflow-x: hidden !important;
   }
 
   .clients li {
@@ -1616,8 +1611,8 @@ body.loaded header {
 
 @media (max-width: 480px) {
   #glass-wrapper {
-    right: 12px;
-    bottom: calc(14vw + env(safe-area-inset-right, 1px));
+    right: 24px;
+    bottom: calc(8vw + env(safe-area-inset-bottom, 1px));
     width: 64px;
     height: 64px;
   }
