@@ -4,6 +4,59 @@ class Container {
   static isCapturing = false
   static waitingForSnapshot = []
 
+  static listenersInitialized = false
+
+  static getSnapshotPath() {
+    const width = window.innerWidth
+    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+
+    let size
+    if (width <= 767) {
+      size = 'mobile'
+    } else if (width <= 1023) {
+      size = 'tablet'
+    } else {
+      size = 'desktop'
+    }
+
+    const theme = isDark ? 'dark' : 'light'
+    return `img/glass-${size}-${theme}.jpg`
+  }
+
+  static refreshSnapshotForAllInstances() {
+    if (Container.isCapturing) return
+
+    Container.isCapturing = true
+    const path = Container.getSnapshotPath()
+    const img = new Image()
+
+    img.onload = () => {
+      Container.pageSnapshot = img
+      Container.isCapturing = false
+
+      Container.instances.forEach(instance => {
+        if (!instance.gl_refs.gl || !instance.gl_refs.texture) return
+
+        const gl = instance.gl_refs.gl
+        gl.bindTexture(gl.TEXTURE_2D, instance.gl_refs.texture)
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img)
+
+        if (instance.gl_refs.textureSizeLoc) {
+          gl.uniform2f(instance.gl_refs.textureSizeLoc, img.width, img.height)
+        }
+
+        if (instance.render) instance.render()
+      })
+    }
+
+    img.onerror = error => {
+      console.error('Snapshot image failed to load:', path, error)
+      Container.isCapturing = false
+    }
+
+    img.src = path
+  }
+
 
   constructor(options = {}) {
     this.width = 0 // Will be set from DOM
@@ -131,6 +184,23 @@ class Container {
     // Get initial size from DOM
     this.updateSizeFromDOM()
 
+    if (!Container.listenersInitialized) {
+      Container.listenersInitialized = true
+
+      let resizeTimeout = null
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout)
+        resizeTimeout = setTimeout(() => {
+          Container.refreshSnapshotForAllInstances()
+        }, 300)
+      })
+
+      const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)')
+      colorSchemeQuery.addEventListener('change', () => {
+        Container.refreshSnapshotForAllInstances()
+      })
+    }
+
     // Handle page snapshot
     if (Container.pageSnapshot) {
       // Snapshot already exists, initialize immediately
@@ -192,52 +262,40 @@ class Container {
   }
 
   capturePageSnapshot() {
-    console.log('Capturing page snapshot...')
-    html2canvas(document.body, {
-      scale: 1,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: null,
-      ignoreElements: function (element) {
-        // Ignore all glass elements
-        return (
-          element.classList.contains('glass-container') ||
-          element.classList.contains('glass-button') ||
-          element.classList.contains('glass-button-text')
-        )
-      }
-    })
-      .then(snapshot => {
-        console.log('Page snapshot captured')
-        Container.pageSnapshot = snapshot
-        Container.isCapturing = false
+    const path = Container.getSnapshotPath()
+    console.log('Loading page snapshot from:', path)
 
-        // Initialize WebGL for all waiting containers
-        const waitingContainers = Container.waitingForSnapshot.slice()
-        Container.waitingForSnapshot = []
+    const img = new Image()
 
-        waitingContainers.forEach(container => {
-          if (!container.webglInitialized) {
-            container.initWebGL()
-          }
-        })
+    img.onload = () => {
+      console.log('Page snapshot image loaded')
+      Container.pageSnapshot = img
+      Container.isCapturing = false
+
+      const waitingContainers = Container.waitingForSnapshot.slice()
+      Container.waitingForSnapshot = []
+
+      waitingContainers.forEach(container => {
+        if (!container.webglInitialized) {
+          container.initWebGL()
+        }
       })
-      .catch(error => {
-        console.error('html2canvas error:', error)
-        Container.isCapturing = false
-        Container.waitingForSnapshot = []
-      })
+    }
+
+    img.onerror = error => {
+      console.error('Snapshot image failed to load:', path, error)
+      Container.isCapturing = false
+      Container.waitingForSnapshot = []
+    }
+
+    img.src = path
   }
 
   initWebGL() {
     if (!Container.pageSnapshot || !this.gl) return
 
-    const img = new Image()
-    img.src = Container.pageSnapshot.toDataURL()
-    img.onload = () => {
-      this.setupShader(img)
-      this.webglInitialized = true
-    }
+    this.setupShader(Container.pageSnapshot)
+    this.webglInitialized = true
   }
 
   setupShader(image) {
