@@ -1562,8 +1562,8 @@ body.loaded header {
   height: 1.2em;
 }
 
-#return-to-top {
-  color: rgba(0, 0, 0, 0.75);
+#return-to-top .glass-button-text {
+  color: rgba(0, 0, 0, 0.75) !important;
 }
 
 #return-to-top svg {
@@ -1571,8 +1571,8 @@ body.loaded header {
 }
 
 @media (prefers-color-scheme: dark) {
-  #return-to-top {
-    color: rgba(255, 255, 255, 0.9);
+  #return-to-top .glass-button-text {
+    color: rgba(255, 255, 255, 0.9) !important;
   }
 
   #return-to-top svg {
