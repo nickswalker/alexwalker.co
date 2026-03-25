@@ -1630,9 +1630,32 @@ body.loaded header {
 
 @media (max-width: 480px) {
   #glass-wrapper {
-    right: 12px;
-    bottom: calc(2vw + env(safe-area-inset-bottom, 1px));
+    right: 24px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 1px));
     width: 64px;
     height: 64px;
+  }
+}
+
+@media screen and (max-width: 1023px) and (orientation: landscape),
+       screen and (max-height: 500px) and (orientation: landscape) {
+  #glass-wrapper {
+    right: calc(20px + env(safe-area-inset-right, 0px)) !important;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px)) !important;
+    width: 64px !important;
+    height: 64px !important;
+    left: auto !important;
+    top: auto !important;
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) and (pointer: coarse) {
+  #glass-wrapper {
+    right: calc(20px + env(safe-area-inset-right, 0px)) !important;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px)) !important;
+    width: 64px !important;
+    height: 64px !important;
+    left: auto !important;
+    top: auto !important;
   }
 }
