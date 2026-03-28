@@ -24,6 +24,8 @@
     <link rel="manifest" href="manifest.json">
 
     <link media="all" type="text/css" rel="stylesheet" href="css/style.css">
+    <link media="all" type="text/css" rel="stylesheet" href="css/styles.css">
+    <link media="all" type="text/css" rel="stylesheet" href="css/glass.css">
     <link media="all" type="text/css" rel="stylesheet"
         href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link media="all" type="text/css" rel="stylesheet" href="packages/bootstrap/css/bootstrap-carousel.css">
@@ -34,7 +36,7 @@
         type='text/css'>
     <script src="packages/fancybox/jquery.fancybox.min.js"></script>
     <script src="packages/bootstrap/js/bootstrap-carousel.js"></script>
-        <script src="js/scroller.js"></script>
+<script src="js/scroller.js"></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -200,28 +202,7 @@
             </ul>
         </nav>
     </header>
-<div id="glass-wrapper"><sv-liquid-glass id="return-to-top"
-  styles='{
-    "style": {
-      "roundness": 100,
-      "padding_x": 0.5,
-      "padding_y": 0.5
-    },
-    "text": {
-      "content": "▲"
-    },
-    "edit": false,
-    "font_family": "Inter",
-    "size_weight": 500,
-    "font_size": 1,
-    "color": {
-      "accent": "#D7DADD"
-    }
-  }'
-  contrast="light"
-  onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-  class="smooth-scroll">
-</sv-liquid-glass></div>
+<div id="glass-wrapper"></div>
     <section id="stills" class="scroll-fade">
     <div class="container columns-span-width">
   <ul class="stills" style="align-items: center; justify-content: center;">
@@ -717,7 +698,7 @@
         </div>
         </div>
     </section>
- <script>
+<script>
 $(document).ready(function () {
   // Scroll-fade setup
   document.body.classList.add("loaded");
@@ -744,21 +725,7 @@ $(document).ready(function () {
     }
   });
 
-     // Return-to-top arrow fade logic
-  const $returnToTop = $('#return-to-top');
-  let shown = false;
-  $(window).on('scroll', function () {
-    const scrollTop = $(this).scrollTop();
-   const shouldShow = scrollTop >= 100;
 
-    if (shouldShow && !shown) {
-      $returnToTop.addClass('visible');
-      shown = true;
-    } else if (!shouldShow && shown) {
-      $returnToTop.removeClass('visible');
-      shown = false;
-    }
-  });
 
   // Carousel setup
   let imageLinks = [...Array(5).keys()].map(i => ({
@@ -848,86 +815,201 @@ $('a.stills-image').fancybox({
     $('.fancybox-button--play').removeClass('is-playing');
   });
 
-  // Fancybox: VIDEO LIGHTBOX (YouTube, Vimeo, etc.)
-  $('a.-by-nine, #reel-button a').fancybox({
+  let mobileVideoScrollTop = 0;
+  let mobileVideoBodyLocked = false;
+
+  function isMobileVideoViewport() {
+    return window.matchMedia('(max-width: 767px)').matches;
+  }
+
+  function lockMobileVideoBackground() {
+    if (!isMobileVideoViewport() || mobileVideoBodyLocked) return;
+
+    mobileVideoScrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+    document.body.style.position = 'fixed';
+    document.body.style.top = '-' + mobileVideoScrollTop + 'px';
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+    mobileVideoBodyLocked = true;
+  }
+
+  function unlockMobileVideoBackground() {
+    if (!mobileVideoBodyLocked) return;
+
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    window.scrollTo(0, mobileVideoScrollTop);
+    mobileVideoBodyLocked = false;
+  }
+
+  const mobileSafeVideoFancyboxOptions = {
     type: 'iframe',
     autoSize: true,
-    width: 1600,
-    height: 900,
     padding: 0,
     aspectRatio: true,
     iframe: { preload: false },
     helpers: { media: {} },
+    beforeShow: function () {
+      lockMobileVideoBackground();
+    },
+    afterClose: function () {
+      unlockMobileVideoBackground();
+    }
+  };
+
+  // Fancybox: VIDEO LIGHTBOX (YouTube, Vimeo, etc.)
+  $('a.-by-nine, #reel-button a').fancybox($.extend({}, mobileSafeVideoFancyboxOptions, {
+    width: 1600,
+    height: 900,
     idleTime: false
-  });
+  }));
 
   // Fancybox: OTHER VIDEO THUMBNAILS
-  $('.thumbnails.lightbox a').fancybox({
-    type: 'iframe',
-    autoSize: true,
+  $('.thumbnails.lightbox a').fancybox($.extend({}, mobileSafeVideoFancyboxOptions, {
     width: 1300,
-    height: 550,
-    padding: 0,
-    aspectRatio: true,
-    iframe: { preload: false },
-    helpers: { media: {} }
-  });
+    height: 550
+  }));
 });
 </script>
-    <script>
-  function createGlassButton(isDarkMode) {
-    const styles = {
-      style: {
-        roundness: 100,
-        padding_x: 0.35,
-        padding_y: 0.35
-      },
-      text: {
-        content: "↑"
-      },
-      edit: false,
-      font_family: "Inter",
-      size_weight: 500,
-      font_size: 1.2,
-      color: {
-        accent: isDarkMode ? "#ffffff" : "#000000"
+   <script>
+  window.glassControls = {
+    edgeIntensity: 0.000,
+    rimIntensity: 0.043,
+    baseIntensity: 0.000,
+    edgeDistance: 0.410,
+    rimDistance: 0.250,
+    baseDistance: 0.160,
+    cornerBoost: 0.078,
+    rippleEffect: 0.100,
+    blurRadius: 15.000,
+    tintOpacity: 0.630
+  };
+
+  let returnToTopButton = null;
+  let glassBuilt = false;
+  let glassRefreshQueued = false;
+
+  function refreshReturnToTopGlass() {
+    if (!returnToTopButton || !glassBuilt) return;
+    if (glassRefreshQueued) return;
+
+    glassRefreshQueued = true;
+
+    requestAnimationFrame(() => {
+      glassRefreshQueued = false;
+
+      if (typeof returnToTopButton.updateSizeFromDOM === 'function') {
+        returnToTopButton.updateSizeFromDOM();
       }
-    };
 
-    const button = document.createElement("sv-liquid-glass");
-    button.id = "return-to-top";
-    button.className = "smooth-scroll";
-    button.setAttribute("contrast", "light");
-    button.setAttribute("styles", JSON.stringify(styles));
-    button.setAttribute("onclick", "window.scrollTo({top: 0, behavior: 'smooth'})");
+      applyGlassSettingsToInstance(returnToTopButton);
 
-    return button;
+      if (typeof returnToTopButton.render === 'function') {
+        returnToTopButton.render();
+      }
+    });
   }
 
-  function updateGlassButton() {
-    const isDarkMode = window.matchMedia &&
-                       window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function applyGlassSettingsToInstance(instance) {
+    if (!instance || !instance.gl_refs || !instance.gl_refs.gl) return;
 
-    const oldButton = document.getElementById("return-to-top");
-    if (!oldButton) return;
+    const gl = instance.gl_refs.gl;
+    const refs = instance.gl_refs;
+    const controls = window.glassControls;
 
-    const parent = oldButton.parentNode;
-    const newButton = createGlassButton(isDarkMode);
+    if (refs.edgeIntensityLoc) gl.uniform1f(refs.edgeIntensityLoc, controls.edgeIntensity);
+    if (refs.rimIntensityLoc) gl.uniform1f(refs.rimIntensityLoc, controls.rimIntensity);
+    if (refs.baseIntensityLoc) gl.uniform1f(refs.baseIntensityLoc, controls.baseIntensity);
+    if (refs.edgeDistanceLoc) gl.uniform1f(refs.edgeDistanceLoc, controls.edgeDistance);
+    if (refs.rimDistanceLoc) gl.uniform1f(refs.rimDistanceLoc, controls.rimDistance);
+    if (refs.baseDistanceLoc) gl.uniform1f(refs.baseDistanceLoc, controls.baseDistance);
+    if (refs.cornerBoostLoc) gl.uniform1f(refs.cornerBoostLoc, controls.cornerBoost);
+    if (refs.rippleEffectLoc) gl.uniform1f(refs.rippleEffectLoc, controls.rippleEffect);
+    if (refs.blurRadiusLoc) gl.uniform1f(refs.blurRadiusLoc, controls.blurRadius);
+    if (refs.tintOpacityLoc) gl.uniform1f(refs.tintOpacityLoc, controls.tintOpacity);
 
-    // Retain visibility if currently shown
-    if (oldButton.classList.contains("visible")) {
-      newButton.classList.add("visible");
+    if (typeof instance.render === 'function') {
+      instance.render();
     }
-
-    parent.replaceChild(newButton, oldButton);
   }
 
-  // Initialize on page load
-  window.addEventListener("DOMContentLoaded", updateGlassButton);
+  function buildReturnToTopButton() {
+    const wrapper = document.getElementById('glass-wrapper');
+    if (!wrapper || glassBuilt) return;
 
-  // Re-run when system appearance changes
-  window.matchMedia('(prefers-color-scheme: dark)')
-    .addEventListener('change', updateGlassButton);
+    wrapper.innerHTML = '';
+
+    const button = new Button({
+      text: '↑',
+      size: 28,
+      type: 'circle',
+      tintOpacity: 0.630,
+      warp: false,
+      onClick: () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    button.element.id = 'return-to-top';
+    button.element.classList.add('smooth-scroll');
+
+    wrapper.appendChild(button.element);
+
+    returnToTopButton = button;
+    glassBuilt = true;
+
+    setTimeout(() => {
+      applyGlassSettingsToInstance(button);
+
+      if (typeof button.updateSizeFromDOM === 'function') {
+        button.updateSizeFromDOM();
+      }
+
+      if (typeof button.render === 'function') {
+        button.render();
+      }
+    }, 300);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const wrapper = document.getElementById('glass-wrapper');
+    let shown = false;
+
+    $(window).on('scroll', function () {
+      const shouldShow = $(this).scrollTop() >= 100;
+
+      if (shouldShow && !shown) {
+        wrapper.classList.add('visible');
+        shown = true;
+
+        if (!glassBuilt) {
+          buildReturnToTopButton();
+          setTimeout(() => {
+            refreshReturnToTopGlass();
+          }, 350);
+        } else {
+          refreshReturnToTopGlass();
+        }
+      } else if (!shouldShow && shown) {
+        wrapper.classList.remove('visible');
+        shown = false;
+      }
+
+      if (shouldShow && glassBuilt) {
+        refreshReturnToTopGlass();
+      }
+    });
+
+    $(window).on('resize', function () {
+      if (glassBuilt) {
+        refreshReturnToTopGlass();
+      }
+    });
+  });
 </script>
 <script>
   $(document).ready(function () {
@@ -939,8 +1021,12 @@ $('a.stills-image').fancybox({
     ];
   });
 </script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" data-cf-beacon='{"version":"2024.11.0","token":"755850673b1f4c3fb0816dd7dc641448","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'></script>
-</body>
 
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="js/container.js"></script>
+<script src="js/button.js"></script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" data-cf-beacon='{"version":"2024.11.0","token":"755850673b1f4c3fb0816dd7dc641448","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'></script>
+</body>
+ 
 
     </html>
