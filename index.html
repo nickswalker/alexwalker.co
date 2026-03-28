@@ -1026,7 +1026,94 @@ $('a.stills-image').fancybox({
 <script src="js/container.js"></script>
 <script src="js/button.js"></script>
     <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" data-cf-beacon='{"version":"2024.11.0","token":"755850673b1f4c3fb0816dd7dc641448","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'></script>
-</body>
+<script>
+$(function () {
+  let mobileVideoScrollTop = 0;
+  let mobileVideoBodyLocked = false;
+
+  function isMobileVideoViewport() {
+    return window.matchMedia('(max-width: 767px)').matches;
+  }
+
+  function lockMobileVideoBackground() {
+    if (!isMobileVideoViewport() || mobileVideoBodyLocked) return;
+
+    mobileVideoScrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+
+    document.documentElement.style.scrollBehavior = 'auto';
+    document.body.style.position = 'fixed';
+    document.body.style.top = '-' + mobileVideoScrollTop + 'px';
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+
+    mobileVideoBodyLocked = true;
+  }
+
+  function unlockMobileVideoBackground() {
+    if (!mobileVideoBodyLocked) return;
+
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    document.documentElement.style.scrollBehavior = '';
+
+    window.scrollTo(0, mobileVideoScrollTop);
+    mobileVideoBodyLocked = false;
+  }
+
+  const primaryVideoSelector = [
+    '#reel-button a',
+    'a.-by-nine',
+    'a.sixteen-by-nine',
+    'a[data-fancybox]:not(.stills-image)'
+  ].join(', ');
+
+  const secondaryVideoSelector = '.thumbnails.lightbox a';
+
+  $(primaryVideoSelector).off('click.fb-start');
+  $(secondaryVideoSelector).off('click.fb-start');
+
+  $(primaryVideoSelector).fancybox({
+    type: 'iframe',
+    autoSize: true,
+    padding: 0,
+    aspectRatio: true,
+    iframe: { preload: false },
+    helpers: { media: {} },
+    idleTime: false,
+    width: 1600,
+    height: 900,
+    beforeLoad: function () {
+      lockMobileVideoBackground();
+    },
+    afterClose: function () {
+      unlockMobileVideoBackground();
+    }
+  });
+
+  $(secondaryVideoSelector).fancybox({
+    type: 'iframe',
+    autoSize: true,
+    padding: 0,
+    aspectRatio: true,
+    iframe: { preload: false },
+    helpers: { media: {} },
+    idleTime: false,
+    width: 1300,
+    height: 550,
+    beforeLoad: function () {
+      lockMobileVideoBackground();
+    },
+    afterClose: function () {
+      unlockMobileVideoBackground();
+    }
+  });
+});
+</script>
+    </body>
  
 
     </html>
