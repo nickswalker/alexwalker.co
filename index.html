@@ -1112,6 +1112,77 @@ $(function () {
     }
   });
 });
+</script><script>
+(function () {
+  let mobileVideoScrollTop = 0;
+  let mobileVideoLocked = false;
+
+  function isMobileViewport() {
+    return window.matchMedia('(max-width: 767px)').matches;
+  }
+
+  function isVideoTrigger(el) {
+    if (!el) return false;
+
+    return !!el.closest(
+      '#reel-button a, a.-by-nine, a.sixteen-by-nine, .thumbnails.lightbox a, a[data-fancybox]:not(.stills-image)'
+    );
+  }
+
+  function lockBackground() {
+    if (!isMobileViewport() || mobileVideoLocked) return;
+
+    mobileVideoScrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+
+    document.documentElement.style.scrollBehavior = 'auto';
+    document.documentElement.style.position = 'fixed';
+    document.documentElement.style.width = '100%';
+    document.documentElement.style.overflowY = 'scroll';
+
+    document.body.style.position = 'fixed';
+    document.body.style.top = '-' + mobileVideoScrollTop + 'px';
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+
+    mobileVideoLocked = true;
+  }
+
+  function unlockBackground() {
+    if (!mobileVideoLocked) return;
+
+    document.documentElement.style.scrollBehavior = '';
+    document.documentElement.style.position = '';
+    document.documentElement.style.width = '';
+    document.documentElement.style.overflowY = '';
+
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+
+    window.scrollTo(0, mobileVideoScrollTop);
+    mobileVideoLocked = false;
+  }
+
+  document.addEventListener('click', function (event) {
+    if (!isMobileViewport()) return;
+    if (!isVideoTrigger(event.target)) return;
+
+    lockBackground();
+  }, true);
+
+  $(document).on('afterClose.fb', function () {
+    unlockBackground();
+  });
+
+  $(window).on('pageshow resize orientationchange', function () {
+    if (!mobileVideoLocked) return;
+
+    document.body.style.top = '-' + mobileVideoScrollTop + 'px';
+  });
+})();
 </script>
     </body>
  
