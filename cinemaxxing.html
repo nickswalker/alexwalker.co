@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cinemaxxing — Austin's Weekly Cinema Digest</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Cinemaxxing — Austin's Weekly Premium Cinema Schedule</title>
 
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230e0e0f'/><text x='16' y='23' font-family='system-ui,sans-serif' font-size='20' font-weight='900' text-anchor='middle' fill='%23e8a000'>C</text></svg>">
@@ -55,8 +55,8 @@
   }
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.6;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden;}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-bottom:1px solid var(--border);}
@@ -70,7 +70,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:fl
 .eyebrow{font-family:'Outfit',sans-serif;font-size:0.7rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;}
 
 /* LOGO PLACEHOLDER */
-.logo-placeholder{display:inline-block;font-family:'Syne',sans-serif;font-size:clamp(2.8rem,6vw,4.5rem);font-weight:800;letter-spacing:-0.03em;color:var(--text);opacity:.35;font-style:italic;margin-bottom:.25rem;line-height:1;}
+.logo-placeholder{display:inline-block;font-family:'Syne',sans-serif;font-size:clamp(1.8rem,8vw,4.5rem);font-weight:800;letter-spacing:-0.03em;color:var(--text);opacity:.35;font-style:italic;margin-bottom:.25rem;line-height:1;max-width:100%;}
 .logo-placeholder-note{font-size:.7rem;color:var(--text3);font-weight:400;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.75rem;display:block;}
 
 h1{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,4vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1.5rem;color:var(--text);}
@@ -249,7 +249,10 @@ footer a:hover{color:var(--accent);}
     <span class="pill p-event">Special Events</span>
   </div>
 
-  <p style="margin-top:1.25rem;font-size:.78rem;color:var(--text3);">By <a href="https://alexwalker.co" target="_blank" style="color:var(--text2);text-decoration:none;border-bottom:1px solid var(--border);">alexwalker.co</a></p>
+  <p style="margin-top:1.25rem;font-size:.78rem;color:var(--text3);">
+    <a href="https://www.instagram.com/cinemaxxing_/" target="_blank" style="color:var(--text2);text-decoration:none;border-bottom:1px solid var(--border);">@cinemaxxing_</a>
+  </p>
+  <p style="margin-top:.5rem;font-size:.78rem;color:var(--text3);">By <a href="https://alexwalker.co" target="_blank" style="color:var(--text2);text-decoration:none;border-bottom:1px solid var(--border);">alexwalker.co</a> &amp; Alex Anderson</p>
 </section>
 
 <section class="preview">
