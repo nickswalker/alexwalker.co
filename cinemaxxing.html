@@ -108,114 +108,95 @@ h1 .accent{color:var(--accent);}
 .section-inner{max-width:820px;margin:0 auto;}
 .section-label{font-family:'Outfit',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-align:center;margin-bottom:2rem;}
 
-/* EMAIL MOCKUP — matches actual email layout */
-.email-mock{background:#0d0d0e;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.07);max-width:600px;margin:0 auto;font-family:'Outfit',sans-serif;}
-.mock-chrome{background:#1c1b1a;padding:.5rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid rgba(255,255,255,.06);}
+/* ──────────────────────────────────────────────────────────────────────────
+   Embedded email preview — visually mirrors the live email by reusing the
+   email's exact CSS tokens. Truncated and fades out after the first few films
+   (a teaser, not the whole email). Stand-alone — no iframe, no Flask required.
+   ────────────────────────────────────────────────────────────────────────── */
+.email-mock{background:#0e0e0e;border-radius:12px;overflow:hidden;border:1px solid #303030;max-width:640px;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;}
+.mock-chrome{background:#161616;padding:.5rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid #2a2a2a;}
 .dots{display:flex;gap:5px;}
 .dot{width:10px;height:10px;border-radius:50%;}
-.mock-addr{flex:1;background:rgba(255,255,255,.05);border-radius:3px;padding:.2rem .75rem;font-size:.68rem;color:rgba(255,255,255,.28);}
-.mock-body{padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;}
+.mock-addr{flex:1;background:rgba(255,255,255,.06);border-radius:3px;padding:.2rem .75rem;font-size:.68rem;color:#888;text-align:center;}
 
-/* Header card */
-.em-header-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:1.25rem 1.5rem;text-align:center;position:relative;}
-.em-edition{position:absolute;top:.75rem;left:.75rem;font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,160,0,.6);font-family:'Outfit',sans-serif;}
-.em-eyebrow{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,224,208,.3);margin-bottom:.5rem;font-family:'Outfit',sans-serif;}
-.em-title{font-family:'Syne',sans-serif;font-size:1.75rem;font-weight:800;letter-spacing:-.02em;color:#e8e0d0;margin-bottom:.2rem;}
-.em-dates{font-size:.75rem;color:rgba(232,224,208,.5);margin-bottom:.5rem;}
-.em-rule{width:28px;height:1px;background:#e8a000;margin:.5rem auto;}
-.em-tag{font-size:.7rem;color:rgba(232,224,208,.3);font-style:italic;margin-bottom:.3rem;}
-.em-credit{font-size:.6rem;color:rgba(232,224,208,.25);}
-.em-credit a{color:#e8a000;}
+.ep-fade{position:relative;max-height:980px;overflow:hidden;}
+.ep-fade::after{content:'';position:absolute;left:0;right:0;bottom:0;height:280px;background:linear-gradient(to bottom, rgba(14,14,14,0) 0%, rgba(14,14,14,.85) 60%, rgba(14,14,14,1) 100%);pointer-events:none;}
+.ep-content{padding:24px 16px;display:flex;flex-direction:column;gap:16px;}
+.ep-card{background:#161616;border:1px solid #303030;border-radius:12px;overflow:hidden;}
 
-/* Format stats card */
-.em-stats-card{display:flex;border:1px solid rgba(255,255,255,.07);border-radius:8px;overflow:hidden;}
-.em-stat{flex:1;padding:.65rem .5rem;text-align:center;border-right:1px solid rgba(255,255,255,.07);}
-.em-stat:last-child{border-right:none;}
-.em-stat-num{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;line-height:1;margin-bottom:.2rem;}
-.em-stat-label{font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(232,224,208,.3);}
-.s-70mm .em-stat-num{color:#d88080;}
-.s-70mm{border-color:#6e282880;}
-.s-imax .em-stat-num{color:#e8a000;}
-.s-imax{border-color:#a0680040;}
-.s-35mm .em-stat-num{color:#88cc88;}
-.s-35mm{border-color:#2a603040;}
-.s-dolby .em-stat-num{color:#6da4d8;}
-.s-dolby{border-color:#1a4a8840;}
-.s-hdr .em-stat-num{color:rgba(232,224,208,.6);}
+.ep-header{padding:32px 28px 28px;text-align:center;position:relative;}
+.ep-edition{position:absolute;top:14px;left:18px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#f0f0f0;}
+.ep-pills{display:flex;justify-content:center;gap:8px;margin-bottom:22px;}
+.ep-pill{display:inline-flex;align-items:center;gap:6px;border:1px solid #303030;border-radius:999px;padding:5px 12px;font-size:11px;font-weight:500;letter-spacing:.2px;color:#f0f0f0;text-decoration:none;opacity:.85;}
+.ep-pill svg{flex-shrink:0;display:block;}
+.ep-eyebrow{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#f0f0f0;margin-bottom:12px;}
+.ep-title{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:30px;font-weight:800;color:#fff;margin:0 0 8px;letter-spacing:-.5px;line-height:1.2;}
+.ep-dates{font-size:14px;color:#f0f0f0;margin:0;}
+.ep-accent{display:inline-block;width:40px;height:2px;background:linear-gradient(90deg,#c07800,#e8a000);border-radius:1px;margin:16px auto 0;}
+.ep-subtag{text-align:center;font-size:11px;font-style:italic;font-weight:300;color:#f0f0f0;margin:18px 0 0;letter-spacing:.3px;}
+.ep-credit{text-align:center;margin:6px 0 0;font-size:11px;line-height:1.6;color:#f0f0f0;}
+.ep-credit a{color:#7ab0e8;text-decoration:none;}
+.ep-credit-plus{color:#a0a0a0;margin:0 6px;}
 
-/* Section header card */
-.em-section-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:.8rem 1rem;}
-.em-section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
-.em-section-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:#e8e0d0;letter-spacing:-.01em;}
-.em-section-desc{font-size:.6rem;color:rgba(232,224,208,.4);margin-left:.6rem;}
-.em-imax-badge{font-family:'Syne',sans-serif;font-size:.65rem;font-weight:800;color:#e8a000;letter-spacing:.08em;}
+.ep-stats{display:flex;gap:8px;padding:16px;}
+.ep-stat{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:14px 6px;border-radius:8px;border:1.5px solid #303030;background:#1c1c1c;}
+.ep-stat.is-zero{opacity:.4;}
+.ep-stat-num{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:22px;font-weight:800;line-height:1.1;letter-spacing:-.5px;}
+.ep-stat-label{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:6px;opacity:.85;}
+.ep-s-70mm{border-color:#6e2828;color:#d88080;}
+.ep-s-imax{border-color:#a06800;color:#e8a000;}
+.ep-s-35mm{border-color:#2a4030;color:#88cc88;}
+.ep-s-dolby{border-color:#2a5898;color:#6da4d8;}
+.ep-s-hdr{background:linear-gradient(#1c1c1c,#1c1c1c) padding-box,linear-gradient(135deg,#ff6868,#ffb84d,#ffe066,#5fd49a,#5aa3f0,#c266ff) border-box;border:1.5px solid transparent;color:#fff;}
+.ep-frown{display:inline-flex;align-items:center;opacity:.7;}
 
-/* Film cards */
-.em-film{background:#0d0d0e;border-radius:6px;border:1px solid rgba(255,255,255,.06);overflow:hidden;margin-bottom:.5rem;}
-.em-film:last-child{margin-bottom:0;}
-.em-film-imax{border-color:rgba(232,160,0,.25);background:rgba(232,160,0,.03);}
-.em-film-top{display:flex;align-items:flex-start;gap:.65rem;padding:.65rem .7rem .4rem;}
-.em-poster{width:32px;height:46px;border-radius:2px;flex-shrink:0;}
-.em-film-meta{flex:1;min-width:0;}
-.em-film-title-row{display:flex;align-items:center;gap:.4rem;margin-bottom:.15rem;}
-.em-film-name{font-size:.75rem;font-weight:600;color:#e8e0d0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.em-badge{font-size:.5rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.1rem .3rem;border-radius:2px;flex-shrink:0;}
-.b-imax{background:rgba(232,160,0,.18);color:#e8a000;border:1px solid rgba(232,160,0,.35);}
-.b-event{background:rgba(180,180,180,.1);color:rgba(232,224,208,.5);border:1px solid rgba(232,224,208,.12);}
-.em-theater{font-size:.62rem;color:rgba(232,224,208,.4);}
-.em-city{font-size:.55rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(232,224,208,.35);margin-left:auto;flex-shrink:0;align-self:flex-start;padding-top:.15rem;}
+.ep-section-head{padding:20px 28px;background:#131313;border-bottom:1px solid #2a2a2a;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:96px;box-sizing:border-box;}
+.ep-section-name{font-size:22px;font-weight:800;color:#f4f4f4;letter-spacing:-.5px;flex:1;margin:0;}
+.ep-section-desc{font-size:11px;font-weight:300;color:#f0f0f0;margin-left:6px;}
+.ep-section-logo{flex-shrink:0;opacity:.55;}
+.ep-films{padding:12px 16px;}
 
-/* Showtime rows — date / times / tickets */
-.em-showtimes{border-top:1px solid rgba(255,255,255,.05);}
-.em-showrow{display:flex;align-items:center;gap:.5rem;padding:.35rem .7rem;border-bottom:1px solid rgba(255,255,255,.04);}
-.em-showrow:last-child{border-bottom:none;}
-.em-date{font-size:.6rem;font-weight:500;color:rgba(232,224,208,.6);width:68px;flex-shrink:0;}
-.em-times-group{flex:1;display:flex;gap:.35rem;flex-wrap:wrap;}
-.em-time{font-size:.6rem;color:rgba(232,224,208,.5);}
-.em-tickets{font-size:.58rem;color:#e8a000;white-space:nowrap;flex-shrink:0;border:1px solid rgba(232,160,0,.3);border-radius:2px;padding:.1rem .4rem;}
+.ep-film{padding:14px 12px;border-radius:8px;margin-bottom:10px;background:#1c1c1c;border:1px solid #303030;}
+.ep-film:last-child{margin-bottom:0;}
+.ep-film.is-imax{border:2px solid #c08000;}
+.ep-film-row{display:flex;align-items:flex-start;gap:12px;}
+.ep-poster{width:44px;height:65px;border-radius:4px;flex-shrink:0;opacity:.88;}
+.ep-film-info{flex:1;min-width:0;}
+.ep-film-title-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:2px;}
+.ep-film-title{font-size:13px;font-weight:600;color:#f0f0f0;line-height:1.3;}
+.ep-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:3px;white-space:nowrap;}
+.ep-badge-imax{background:linear-gradient(135deg,#c07800,#e8a000);color:#0a0600;}
+.ep-theater-attr{font-size:10px;color:#f0f0f0;margin:2px 0 6px;line-height:1.3;}
+.ep-theater-attr a{color:#f0f0f0;text-decoration:none;}
+.ep-showtime-rows{display:flex;flex-direction:column;gap:8px;margin-top:6px;}
+.ep-showtime-row{display:flex;align-items:flex-start;gap:14px;}
+.ep-showtime-date{font-size:11px;font-weight:600;color:#f0f0f0;min-width:72px;padding-top:3px;}
+.ep-showtime-times{display:flex;flex-wrap:wrap;gap:4px 8px;flex:1;min-width:0;padding-top:2px;}
+.ep-time-chip{font-size:11px;font-weight:600;color:#f0f0f0;}
+.ep-tickets-link{font-size:10px;font-weight:700;letter-spacing:.5px;color:#f0f0f0;border:1px solid #4a4a4a;border-radius:3px;padding:2px 8px;flex-shrink:0;text-decoration:none;}
 
-.em-foot{text-align:center;font-size:.55rem;color:rgba(232,224,208,.15);padding:.5rem 0 .25rem;border-top:1px solid rgba(255,255,255,.05);}
-
-/* EMAIL MOCKUP — light mode overrides */
 @media (prefers-color-scheme: light) {
-  .email-mock{background:#f0ebe0;border:1px solid rgba(26,21,20,.1);}
-  .mock-chrome{background:#e8e3d8;border-bottom:1px solid rgba(26,21,20,.08);}
-  .mock-addr{background:rgba(0,0,0,.06);color:rgba(26,21,20,.35);}
-  .em-header-card{background:rgba(255,255,255,.7);border:1px solid rgba(26,21,20,.08);}
-  .em-edition{color:rgba(160,104,0,.7);}
-  .em-eyebrow{color:rgba(26,21,20,.3);}
-  .em-title{color:#1a1514;}
-  .em-dates{color:rgba(26,21,20,.45);}
-  .em-tag{color:rgba(26,21,20,.3);}
-  .em-credit{color:rgba(26,21,20,.25);}
-  .em-credit a{color:#a06800;}
-  .em-stats-card{border:1px solid rgba(26,21,20,.08);}
-  .em-stat{border-right:1px solid rgba(26,21,20,.08);}
-  .em-stat-label{color:rgba(26,21,20,.3);}
-  .s-70mm .em-stat-num{color:#8b2828;}
-  .s-imax .em-stat-num{color:#a06800;}
-  .s-imax{border-color:rgba(160,104,0,.25);}
-  .s-35mm .em-stat-num{color:#2a6030;}
-  .s-dolby .em-stat-num{color:#1a4a88;}
-  .s-hdr .em-stat-num{color:rgba(26,21,20,.5);}
-  .em-section-card{background:rgba(255,255,255,.7);border:1px solid rgba(26,21,20,.08);}
-  .em-section-title{color:#1a1514;}
-  .em-section-desc{color:rgba(26,21,20,.4);}
-  .em-imax-badge{color:#a06800;}
-  .em-film{background:#fff;border:1px solid rgba(26,21,20,.07);}
-  .em-film-imax{border-color:rgba(160,104,0,.2);background:rgba(160,104,0,.04);}
-  .em-film-name{color:#1a1514;}
-  .em-theater{color:rgba(26,21,20,.4);}
-  .em-city{color:rgba(26,21,20,.3);}
-  .em-showtimes{border-top:1px solid rgba(26,21,20,.06);}
-  .em-showrow{border-bottom:1px solid rgba(26,21,20,.04);}
-  .em-date{color:rgba(26,21,20,.6);}
-  .em-time{color:rgba(26,21,20,.5);}
-  .em-tickets{color:#a06800;border:1px solid rgba(160,104,0,.3);}
-  .b-imax{background:rgba(160,104,0,.1);color:#a06800;border:1px solid rgba(160,104,0,.3);}
-  .b-event{background:rgba(26,21,20,.05);color:rgba(26,21,20,.45);border:1px solid rgba(26,21,20,.12);}
-  .em-foot{color:rgba(26,21,20,.2);border-top:1px solid rgba(26,21,20,.06);}
-  .em-rule{background:#a06800;}
+  .email-mock{background:#e8e8e8;border-color:#b4b4b4;}
+  .mock-chrome{background:#ffffff;border-bottom-color:#c8c8c8;}
+  .mock-addr{background:rgba(0,0,0,.06);color:#666;}
+  .ep-fade::after{background:linear-gradient(to bottom, rgba(232,232,232,0) 0%, rgba(232,232,232,.85) 60%, rgba(232,232,232,1) 100%);}
+  .ep-card{background:#ffffff;border-color:#b4b4b4;}
+  .ep-edition,.ep-eyebrow,.ep-dates,.ep-subtag,.ep-credit,.ep-pill,.ep-section-desc,.ep-theater-attr,.ep-theater-attr a,.ep-showtime-date,.ep-time-chip,.ep-film-title,.ep-tickets-link{color:#050505;}
+  .ep-credit a{color:#1d4d8a;}
+  .ep-credit-plus{color:#4a4a4a;}
+  .ep-title{color:#000;}
+  .ep-pill{border-color:#b4b4b4;}
+  .ep-stat{background:#f7f7f7;border-color:#b4b4b4;}
+  .ep-section-head{background:#f0f0f0;border-bottom-color:#c8c8c8;}
+  .ep-section-name{color:#050505;}
+  .ep-film{background:#f7f7f7;border-color:#c4c4c4;}
+  .ep-film.is-imax{border-color:#a06000;}
+  .ep-tickets-link{border-color:#888;}
+  .ep-s-70mm{border-color:#a04040;color:#8b2828;}
+  .ep-s-imax{border-color:#a06000;color:#a06000;}
+  .ep-s-35mm{border-color:#2a6030;color:#2a6030;}
+  .ep-s-dolby{border-color:#1a4a88;color:#1a4a88;}
+  .ep-s-hdr{background:linear-gradient(#f7f7f7,#f7f7f7) padding-box,linear-gradient(135deg,#c43030,#c47a00,#b8a000,#2a8050,#1a4a88,#6a3a9a) border-box;color:#1a1514;}
 }
 
 /* FEATURES */
@@ -252,8 +233,6 @@ footer a:hover{color:var(--accent);}
   .form-wrap{flex-direction:column;}
   h1{font-size:1.75rem;}
   nav{padding:.85rem 1.25rem;}
-  .em-stats-card{flex-wrap:wrap;}
-  .em-stat{min-width:33%;}
 }
 </style>
 </head>
@@ -311,182 +290,137 @@ footer a:hover{color:var(--accent);}
         <div class="mock-addr">Cinemaxxing — May 4 – May 10, 2026</div>
       </div>
 
-      <div class="mock-body">
+      <div class="ep-fade">
+        <div class="ep-content">
 
-        <!-- Header card -->
-        <div class="em-header-card">
-          <div class="em-edition">Edition #3</div>
-          <div class="em-eyebrow">Weekly Austin Premium Cinema Schedule</div>
-          <div class="em-title">Cinemaxxing</div>
-          <div class="em-dates">May 4 – May 10, 2026</div>
-          <div class="em-rule"></div>
-          <div class="em-tag">Sometimes you have to drive a few hours for 70mm…</div>
-          <div class="em-credit">alexwalker.co + Alex Anderson</div>
-        </div>
-
-        <!-- Format stats -->
-        <div class="em-stats-card">
-          <div class="em-stat s-70mm">
-            <div class="em-stat-num">0</div>
-            <div class="em-stat-label">70MM</div>
-          </div>
-          <div class="em-stat s-imax">
-            <div class="em-stat-num">5</div>
-            <div class="em-stat-label">IMAX</div>
-          </div>
-          <div class="em-stat s-35mm">
-            <div class="em-stat-num">2</div>
-            <div class="em-stat-label">35MM</div>
-          </div>
-          <div class="em-stat s-dolby">
-            <div class="em-stat-num">8</div>
-            <div class="em-stat-label">Dolby</div>
-          </div>
-          <div class="em-stat s-hdr">
-            <div class="em-stat-num">5</div>
-            <div class="em-stat-label">4K HDR</div>
-          </div>
-        </div>
-
-        <!-- True IMAX section -->
-        <div class="em-section-card">
-          <div class="em-section-header">
-            <div style="display:flex;align-items:baseline;gap:.5rem;">
-              <span class="em-section-title">True IMAX</span>
-              <span class="em-section-desc">full-size screens only · 70mm film and digital laser</span>
+          <!-- ── Header card ── -->
+          <div class="ep-card ep-header">
+            <span class="ep-edition">Edition #3</span>
+            <div class="ep-pills">
+              <span class="ep-pill">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                </svg>
+                @cinemaxxing_
+              </span>
+              <span class="ep-pill">Sign up a friend ↗</span>
             </div>
-            <span class="em-imax-badge">IMAX</span>
+            <div class="ep-eyebrow">Weekly Austin Premium Cinema Schedule</div>
+            <h1 class="ep-title">Cinemaxxing</h1>
+            <div class="ep-dates">May 4 – May 10, 2026</div>
+            <div class="ep-accent"></div>
+            <div class="ep-subtag">Sometimes you have to drive a few hours for 70mm…</div>
+            <div class="ep-credit">
+              <a href="https://alexwalker.co">alexwalker.co</a><span class="ep-credit-plus">+</span><span>Alex Anderson</span>
+            </div>
           </div>
 
-          <!-- Film: Mortal Kombat II -->
-          <div class="em-film em-film-imax">
-            <div class="em-film-top">
-              <svg class="em-poster" viewBox="0 0 32 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="32" height="46" rx="2" fill="#1a1208"/>
-                <rect x="3" y="4" width="26" height="26" rx="1" fill="rgba(180,100,20,0.5)"/>
-                <rect x="3" y="34" width="16" height="2" rx="1" fill="rgba(255,255,255,0.12)"/>
-                <rect x="3" y="39" width="20" height="2" rx="1" fill="rgba(255,255,255,0.07)"/>
-              </svg>
-              <div class="em-film-meta">
-                <div class="em-film-title-row">
-                  <span class="em-film-name">Mortal Kombat II</span>
-                  <span class="em-badge b-imax">IMAX</span>
+          <!-- ── Format summary stats ── -->
+          <div class="ep-card">
+            <div class="ep-stats">
+              <div class="ep-stat ep-s-70mm is-zero">
+                <div class="ep-stat-num">
+                  0
+                  <span class="ep-frown">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="9" cy="10" r="0.9" fill="currentColor"/>
+                      <circle cx="15" cy="10" r="0.9" fill="currentColor"/>
+                      <path d="M9 16c1-1.5 5-1.5 6 0"/>
+                    </svg>
+                  </span>
                 </div>
-                <div class="em-theater">Bob Bullock IMAX ↗</div>
+                <div class="ep-stat-label">70mm</div>
               </div>
-              <div class="em-city">Austin</div>
-            </div>
-            <div class="em-showtimes">
-              <div class="em-showrow">
-                <span class="em-date">Fri May 8</span>
-                <div class="em-times-group">
-                  <span class="em-time">4:30 PM</span>
-                  <span class="em-time">7:30 PM</span>
-                </div>
-                <span class="em-tickets">Tickets →</span>
+              <div class="ep-stat ep-s-imax">
+                <div class="ep-stat-num">5</div>
+                <div class="ep-stat-label">IMAX</div>
               </div>
-              <div class="em-showrow">
-                <span class="em-date">Sat May 9</span>
-                <div class="em-times-group">
-                  <span class="em-time">4:30 PM</span>
-                  <span class="em-time">7:30 PM</span>
-                </div>
-                <span class="em-tickets">Tickets →</span>
+              <div class="ep-stat ep-s-35mm">
+                <div class="ep-stat-num">2</div>
+                <div class="ep-stat-label">35mm</div>
               </div>
-              <div class="em-showrow">
-                <span class="em-date">Sun May 10</span>
-                <div class="em-times-group">
-                  <span class="em-time">4:30 PM</span>
-                  <span class="em-time">7:30 PM</span>
-                </div>
-                <span class="em-tickets">Tickets →</span>
+              <div class="ep-stat ep-s-dolby">
+                <div class="ep-stat-num">8</div>
+                <div class="ep-stat-label">Dolby</div>
+              </div>
+              <div class="ep-stat ep-s-hdr">
+                <div class="ep-stat-num">5</div>
+                <div class="ep-stat-label">4K HDR</div>
               </div>
             </div>
           </div>
 
-          <!-- Film: Michael -->
-          <div class="em-film em-film-imax">
-            <div class="em-film-top">
-              <svg class="em-poster" viewBox="0 0 32 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="32" height="46" rx="2" fill="#080c18"/>
-                <rect x="3" y="4" width="26" height="28" rx="1" fill="rgba(40,80,180,0.45)"/>
-                <rect x="3" y="36" width="14" height="2" rx="1" fill="rgba(255,255,255,0.1)"/>
-                <rect x="3" y="41" width="22" height="2" rx="1" fill="rgba(255,255,255,0.06)"/>
-              </svg>
-              <div class="em-film-meta">
-                <div class="em-film-title-row">
-                  <span class="em-film-name">Michael</span>
-                  <span class="em-badge b-imax">IMAX</span>
-                </div>
-                <div class="em-theater">AMC Rivercenter 11 with Alamo IMAX ↗</div>
-              </div>
-              <div class="em-city">San Antonio</div>
-            </div>
-            <div class="em-showtimes">
-              <div class="em-showrow">
-                <span class="em-date">Tue May 5</span>
-                <div class="em-times-group">
-                  <span class="em-time">2:30 PM</span>
-                  <span class="em-time">5:40 PM</span>
-                  <span class="em-time">7:00 PM</span>
-                </div>
-                <span class="em-tickets">Tickets →</span>
-              </div>
-              <div class="em-showrow">
-                <span class="em-date">Wed May 6</span>
-                <div class="em-times-group">
-                  <span class="em-time">3:25 PM</span>
-                  <span class="em-time">5:00 PM</span>
-                  <span class="em-time">6:30 PM</span>
-                  <span class="em-time">8:10 PM</span>
-                </div>
-                <span class="em-tickets">Tickets →</span>
+          <!-- ── True IMAX section card ── -->
+          <div class="ep-card">
+            <div class="ep-section-head">
+              <p class="ep-section-name">True IMAX <span class="ep-section-desc">full-size screens only · 70mm film and digital laser</span></p>
+              <div class="ep-section-logo">
+                <img src="https://www.google.com/s2/favicons?domain=imax.com&sz=64" width="40" height="40" alt="IMAX" style="border-radius:8px;display:block;">
               </div>
             </div>
-          </div>
+            <div class="ep-films">
+              <div class="ep-film is-imax">
+                <div class="ep-film-row">
+                  <svg class="ep-poster" viewBox="0 0 44 65" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="44" height="65" rx="4" fill="#2a1a08"/>
+                    <rect x="4" y="4" width="36" height="40" rx="2" fill="rgba(180,100,20,0.55)"/>
+                  </svg>
+                  <div class="ep-film-info">
+                    <div class="ep-film-title-row">
+                      <span class="ep-film-title">Mortal Kombat II</span>
+                      <span class="ep-badge ep-badge-imax">IMAX</span>
+                    </div>
+                    <p class="ep-theater-attr"><a href="#">Bob Bullock IMAX ↗</a></p>
+                    <div class="ep-showtime-rows">
+                      <div class="ep-showtime-row">
+                        <span class="ep-showtime-date">Fri May 8</span>
+                        <div class="ep-showtime-times"><span class="ep-time-chip">4:30 PM</span><span class="ep-time-chip">7:30 PM</span></div>
+                        <a class="ep-tickets-link">Tickets →</a>
+                      </div>
+                      <div class="ep-showtime-row">
+                        <span class="ep-showtime-date">Sat May 9</span>
+                        <div class="ep-showtime-times"><span class="ep-time-chip">4:30 PM</span><span class="ep-time-chip">7:30 PM</span></div>
+                        <a class="ep-tickets-link">Tickets →</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-        </div><!-- /True IMAX section -->
-
-        <!-- Paramount section (cinephile programming) -->
-        <div class="em-section-card" style="border-color:rgba(255,255,255,.06);">
-          <div class="em-section-header">
-            <span class="em-section-title">Paramount Theatre</span>
-          </div>
-          <div class="em-film">
-            <div class="em-film-top">
-              <svg class="em-poster" viewBox="0 0 32 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="32" height="46" rx="2" fill="#120810"/>
-                <rect x="3" y="4" width="26" height="28" rx="1" fill="rgba(120,60,160,0.4)"/>
-                <rect x="3" y="36" width="18" height="2" rx="1" fill="rgba(255,255,255,0.1)"/>
-                <rect x="3" y="41" width="12" height="2" rx="1" fill="rgba(255,255,255,0.06)"/>
-              </svg>
-              <div class="em-film-meta">
-                <div class="em-film-title-row">
-                  <span class="em-film-name">Chinatown (1974)</span>
-                  <span class="em-badge b-event">35mm</span>
+              <div class="ep-film is-imax">
+                <div class="ep-film-row">
+                  <svg class="ep-poster" viewBox="0 0 44 65" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="44" height="65" rx="4" fill="#0a1428"/>
+                    <rect x="4" y="4" width="36" height="44" rx="2" fill="rgba(40,80,180,0.45)"/>
+                  </svg>
+                  <div class="ep-film-info">
+                    <div class="ep-film-title-row">
+                      <span class="ep-film-title">Project Hail Mary</span>
+                      <span class="ep-badge ep-badge-imax">IMAX</span>
+                    </div>
+                    <p class="ep-theater-attr"><a href="#">Bob Bullock IMAX ↗</a></p>
+                    <div class="ep-showtime-rows">
+                      <div class="ep-showtime-row">
+                        <span class="ep-showtime-date">Tue May 5</span>
+                        <div class="ep-showtime-times"><span class="ep-time-chip">2:30 PM</span><span class="ep-time-chip">5:40 PM</span><span class="ep-time-chip">7:00 PM</span></div>
+                        <a class="ep-tickets-link">Tickets →</a>
+                      </div>
+                      <div class="ep-showtime-row">
+                        <span class="ep-showtime-date">Wed May 6</span>
+                        <div class="ep-showtime-times"><span class="ep-time-chip">3:25 PM</span><span class="ep-time-chip">5:00 PM</span><span class="ep-time-chip">8:10 PM</span></div>
+                        <a class="ep-tickets-link">Tickets →</a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="em-theater">Summer Classic Film Series ↗</div>
-              </div>
-              <div class="em-city">Austin</div>
-            </div>
-            <div class="em-showtimes">
-              <div class="em-showrow">
-                <span class="em-date">Sat May 9</span>
-                <div class="em-times-group"><span class="em-time">7:30 PM</span></div>
-                <span class="em-tickets">Tickets →</span>
-              </div>
-              <div class="em-showrow">
-                <span class="em-date">Sun May 10</span>
-                <div class="em-times-group"><span class="em-time">5:00 PM</span></div>
-                <span class="em-tickets">Tickets →</span>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="em-foot">Cinemaxxing · Edition #3 · May 4–10, 2026 · Unsubscribe · View filtered screenings ↗</div>
-
-      </div>
+        </div><!-- /ep-content -->
+      </div><!-- /ep-fade -->
     </div>
   </div>
 </section>
@@ -577,22 +511,65 @@ footer a:hover{color:var(--accent);}
 </section>
 
 <footer>
-  <p>Cinemaxxing · Austin, TX · <a href="mailto:alex@alexwalker.co">Contact</a> · <a href="#">Unsubscribe</a></p>
+  <p>Cinemaxxing · Austin, TX · <a href="mailto:hello@cinemaxxing.co">hello@cinemaxxing.co</a></p>
 </footer>
 
 <script>
-function submitA(){
-  const v=document.getElementById('email-a').value;
-  if(!v||!v.includes('@'))return;
-  document.getElementById('email-a').closest('.form-wrap').style.display='none';
-  document.getElementById('success-a').style.display='block';
+async function submitForm(inputId, successId) {
+  const input = document.getElementById(inputId);
+  const wrap  = input.closest('.form-wrap');
+  const success = document.getElementById(successId);
+  const email = (input.value || '').trim();
+  if (!email || !email.includes('@')) {
+    input.focus();
+    input.style.borderColor = '#c43030';
+    return;
+  }
+  input.disabled = true;
+  const button = wrap.querySelector('button');
+  if (button) { button.disabled = true; button.textContent = 'Subscribing…'; }
+  try {
+    const resp = await fetch('https://nexus.tail1c6f41.ts.net/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    const data = await resp.json().catch(() => ({}));
+    if (resp.ok && data.ok) {
+      wrap.style.display = 'none';
+      success.style.display = 'block';
+      success.textContent = data.status === 'already_subscribed'
+        ? "You're already subscribed. See you Monday."
+        : "You're in. See you Monday.";
+    } else {
+      input.disabled = false;
+      if (button) { button.disabled = false; button.textContent = 'Subscribe'; }
+      input.style.borderColor = '#c43030';
+      success.style.display = 'block';
+      success.style.color = '#c43030';
+      success.textContent = (data && data.message) || 'Something went wrong. Try again.';
+    }
+  } catch (err) {
+    input.disabled = false;
+    if (button) { button.disabled = false; button.textContent = 'Subscribe'; }
+    success.style.display = 'block';
+    success.style.color = '#c43030';
+    success.textContent = 'Network error. Try again in a moment.';
+  }
 }
-function submitA2(){
-  const v=document.getElementById('email-a2').value;
-  if(!v||!v.includes('@'))return;
-  document.getElementById('email-a2').closest('.form-wrap').style.display='none';
-  document.getElementById('success-a2').style.display='block';
-}
+function submitA()  { submitForm('email-a',  'success-a');  }
+function submitA2() { submitForm('email-a2', 'success-a2'); }
+
+// Enter key in input also submits
+document.querySelectorAll('.form-wrap input').forEach(inp => {
+  inp.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const btn = inp.closest('.form-wrap').querySelector('button');
+      if (btn) btn.click();
+    }
+  });
+});
 </script>
 </body>
 </html>
