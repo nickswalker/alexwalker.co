@@ -571,5 +571,11 @@ document.querySelectorAll('.form-wrap input').forEach(inp => {
   });
 });
 </script>
+
+<!-- Anonymous visitor counter — pings the Tailscale-funneled Flask backend
+     on every page load. Hashed (IP + UA + day), no cookies, no third party. -->
+<img src="https://nexus.tail1c6f41.ts.net/p.gif" alt="" width="1" height="1"
+     style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;"
+     referrerpolicy="no-referrer-when-downgrade" loading="eager" decoding="async">
 </body>
 </html>
