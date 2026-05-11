@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+{% include head.html %}
+
+<body>
+<div id="top"></div>
+
+{% include site-header.html %}
+<a id="return-to-top" href="#top" class="smooth-scroll"><i class="ion-chevron-up"></i></a>
+
+{{ content }}
+
+<section class="copyright">
+    <div class="copyright">&copy; Alex Walker 2003-<span id="copyright-current-year">2017</span></div>
+</section>
+
+{% include footer-scripts.html %}
+</body>
+
+</html>
