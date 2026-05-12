@@ -384,6 +384,10 @@ header .social li {
     align-items: center;
     line-height: 1;
     flex: 0 0 auto;
+    transition: opacity 200ms ease;
+}
+header .social li:hover {
+    opacity: 1;
 }
 header .social li a {
     display: flex;
@@ -395,6 +399,13 @@ header .social li i {
     font-size: 16px;
     line-height: 1;
     flex-shrink: 0;
+    transition: color 200ms ease;
+}
+header .social li:hover .ion-social-youtube {
+    color: #FF0000;
+}
+header .social li:hover .ion-social-instagram {
+    color: #E4405F;
 }
 header .social li img {
     margin-top: 0 !important;
@@ -557,18 +568,13 @@ section h2 {
     }
 }
 
-/* Tablet + desktop: when the page has scrolled past the cinematographer section
-   and the scroll-down arrow has faded, push the Watch Reels button all the way
-   to the right edge of the header container (mirroring Alex Walker's inset on
-   the left). margin-left: auto absorbs the free space; the transition smooths
-   the slide. */
+/* Tablet + desktop: when the page has scrolled past the cinematographer
+   section, shift the Watch Reels button rightward so its right edge mirrors
+   the Alex Walker logo's left inset from the viewport edge. The exact shift
+   amount is computed by initReelButtonShift in scroll.js (depends on viewport
+   width) and applied as an inline transform. The transition smooths it. */
 .reel-button-menu {
-    transition: margin-left 420ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-@media screen and (min-width: 701px) {
-    body.past-cinematographer .reel-button-menu {
-        margin-left: auto;
-    }
+    transition: transform 420ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #slider {

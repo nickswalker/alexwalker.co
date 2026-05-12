@@ -13,6 +13,7 @@ import {
     initSliderScrollBlur,
     initSectionPassed,
     initStickyHeaderState,
+    initReelButtonShift,
 } from './scroll.js';
 
 function ready(fn) {
@@ -32,6 +33,7 @@ ready(() => {
     safe('staggeredThumbs', () => initStaggeredThumbs());
     safe('scrollFade', () => initScrollFade());
     safe('stickyHeader', () => initStickyHeaderState());
+    safe('reelButtonShift', () => initReelButtonShift());
     document.body.classList.add('loaded');
 
     const slider = document.getElementById('slider-container');

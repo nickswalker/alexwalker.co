@@ -127,6 +127,43 @@ export function initSectionPassed(sectionSelector, bodyClass) {
     update();
 }
 
+// On tablet/desktop, when body.past-cinematographer fires, compute exactly how
+// far the Watch Reels button needs to translate so its right edge mirrors the
+// Alex Walker logo's left inset (the header container's right padding).
+// Other nav items keep their natural space-between distribution.
+export function initReelButtonShift() {
+    const reel = document.querySelector('.reel-button-menu');
+    if (!reel) return;
+    const container = reel.closest('.container');
+    if (!container) return;
+
+    function apply() {
+        // Mobile uses its own margin-left: auto rule; skip shift there.
+        if (window.matchMedia('(max-width: 700px)').matches) {
+            reel.style.transform = '';
+            return;
+        }
+        if (!document.body.classList.contains('past-cinematographer')) {
+            reel.style.transform = '';
+            return;
+        }
+        // Clear any prior transform before measuring so the calc is from the
+        // natural flex position, not the post-transform position.
+        reel.style.transform = '';
+        const reelRect = reel.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        const shift = Math.max(0, containerRect.right - reelRect.right);
+        if (shift > 0) reel.style.transform = `translateX(${shift}px)`;
+    }
+
+    // Run after layout settles and on every relevant event.
+    requestAnimationFrame(apply);
+    window.addEventListener('scroll', apply, { passive: true });
+    window.addEventListener('resize', apply, { passive: true });
+    // Re-apply when past-cinematographer is toggled (MutationObserver on body class)
+    new MutationObserver(apply).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+}
+
 // Slider blur+opacity tied to scroll position (index.html hero only).
 // rAF-throttled so we never paint more than once per frame.
 export function initSliderScrollBlur(selector = '#slider-container') {
