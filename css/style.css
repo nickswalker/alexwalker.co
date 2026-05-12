@@ -1840,36 +1840,24 @@ body.loaded header {
   overflow: visible;
 }
 
+/* All touch devices (iPhone + iPad, every orientation) — compact bottom-right placement */
+@media (hover: none) {
+  #glass-wrapper {
+    left: auto;
+    top: auto;
+    right: max(24px, env(safe-area-inset-right, 0px) + 16px);
+    bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+    width: 70px;
+    height: 70px;
+  }
+}
+
+/* iPhone-size: tighter still, with the smaller 65px button */
 @media (max-width: 480px) {
   #glass-wrapper {
-    right: max(24px, env(safe-area-inset-right, 0px) + 16px);
-    bottom: calc(40px + env(safe-area-inset-bottom, 0px));
-    /* Match the JS-rendered button size (size 26 × 2.5 = 65px circle). */
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
     width: 65px;
     height: 65px;
-  }
-}
-
-@media screen and (max-width: 1023px) and (orientation: landscape),
-       screen and (max-height: 500px) and (orientation: landscape) {
-  #glass-wrapper {
-    right: calc(20px + env(safe-area-inset-right, 0px)) !important;
-    bottom: calc(20px + env(safe-area-inset-bottom, 0px)) !important;
-    width: 64px !important;
-    height: 64px !important;
-    left: auto !important;
-    top: auto !important;
-  }
-}
-
-@media screen and (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) and (pointer: coarse) {
-  #glass-wrapper {
-    right: calc(20px + env(safe-area-inset-right, 0px)) !important;
-    bottom: calc(20px + env(safe-area-inset-bottom, 0px)) !important;
-    width: 64px !important;
-    height: 64px !important;
-    left: auto !important;
-    top: auto !important;
   }
 }
 
