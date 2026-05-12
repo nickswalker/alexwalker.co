@@ -2773,12 +2773,14 @@ html.lightbox-up-pseudo-fs { overflow: hidden; }
 }
 /* iOS — surface the provider's own controls (Vimeo or YouTube). Their FS
    button is the only path to true native iOS fullscreen for an iframe embed
-   (calls webkitEnterFullscreen internally on the underlying <video>). Before
-   the video starts (.is-loaded), our poster + big-play still cover the iframe
-   for the clean pre-roll look. After playback begins, hit/big-play are removed
-   so taps reach the provider's UI. */
+   (calls webkitEnterFullscreen internally on the underlying <video>).
+   The full-coverage hit overlay is removed entirely here — it was blocking
+   the iframe from receiving taps, preventing access to the provider's UI.
+   The big-play button becomes the playback trigger directly (JS-wired) and
+   stays visible until first play, then is removed on .is-loaded. */
 .up--ios-native-controls iframe { pointer-events: auto !important; }
-.up--ios-native-controls.is-loaded .up__hit { display: none; }
+.up--ios-native-controls .up__hit { display: none; }
+.up--ios-native-controls .up__big-play { pointer-events: auto; cursor: pointer; }
 .up--ios-native-controls.is-loaded .up__big-play { display: none; }
 .up__chrome > * { pointer-events: auto; }
 .up__scrub {

@@ -411,6 +411,14 @@ export function mountPlayer(root) {
 
     hit.addEventListener('click', () => togglePlay());
     playBtn.addEventListener('click', togglePlay);
+    // iOS native-controls mode (provider UI handles everything once playing).
+    // Wire the big-play directly so the user can start playback without our
+    // full-coverage hit overlay sitting on top of the iframe and intercepting
+    // every tap that would otherwise reach the provider's controls.
+    if (root.classList.contains('up--ios-native-controls')) {
+        const bigPlayEl = root.querySelector('.up__big-play');
+        if (bigPlayEl) bigPlayEl.addEventListener('click', togglePlay);
+    }
     muteBtn.addEventListener('click', async (e) => {
         e.stopPropagation();
         const m = await adapter.getMuted();
