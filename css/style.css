@@ -1,3 +1,21 @@
+/* === fonts === */
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url('/fonts/OpenSans-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url('/fonts/OpenSans-latin-italic.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* === reset === */
 /* =Reset
 --------------------------------------------------------------*/
@@ -76,6 +94,14 @@ table {
     --half-spacing-unit: calc(var(--spacing-unit) / 2);
     --double-spacing-unit: calc(var(--spacing-unit) * 2);
     --grid-gap: 1px;
+    /* Brand blue — matches the masthead bar (was #08abd4 across the site) */
+    --brand-blue: #1E9CDC;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --brand-blue: #4FB8EE;
+    }
 }
 
 .hide-dot li {
@@ -87,8 +113,8 @@ table {
 
 body {
     line-height: 1.5;
-    font-weight: 300;
-    font-family: -apple-system, BlinkMacSystemFont, "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-family: 'Instrument Sans', 'Helvetica Neue', Helvetica, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
     color: var(--text-color);
     background-color: var(--background-color);
 }
@@ -166,11 +192,11 @@ input[type="submit"] {
     font-size: 18px;
     margin-bottom: var(--half-spacing-unit);
     font-weight: 600;
-    border: 2px solid #08abd4;
+    border: 2px solid var(--brand-blue);
     border-radius: 4px;
     padding: 6px 12px;
     background-color: transparent;
-    color: #08abd4;
+    color: var(--brand-blue);
     transition: 0.3s;
 }
 
@@ -187,12 +213,12 @@ button>a:link {
 }
 
 button#reel-button:hover {
-    background-color: #08abd4;
+    background-color: var(--brand-blue);
     color: white;
 }
 
 button:hover {
-    background-color: #08abd4;
+    background-color: var(--brand-blue);
     color: white;
 }
 
@@ -200,20 +226,64 @@ button:hover {
 -------------------------------------------------------------- */
 
 header {
-    background-color: rgba(255, 255, 255, .85);
+    --bar-blue: #1E9CDC;
+    --bar-ink: #0A0A0A;
+    --header-bg: rgba(255, 255, 255, .85);
+    background-color: var(--header-bg);
+    background-image: linear-gradient(to right, var(--bar-blue), var(--bar-blue));
+    background-size: 100% 3px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
     z-index: 900;
-    border-bottom: 3px solid #08abd4;
     box-sizing: border-box;
     transition: background-color .4s;
     color: black;
-    overflow: hidden;
+    overflow: visible;
     -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
+    /* Box-shadow above the header in the header's bg color — covers any
+       sub-pixel sliver between viewport top and the stuck header. */
+    box-shadow: 0 -2px 0 0 var(--header-bg);
 }
+header.dark {
+    --header-bg: rgba(0, 0, 0, .75);
+}
+
+@media (prefers-color-scheme: dark) {
+    header {
+        --bar-blue: #4FB8EE;
+        --bar-ink: #F5F4EF;
+    }
+}
+
+/* Instrument Sans for branded/heading text across the site */
+h1, h2, h3,
+header nav ul li a,
+button,
+input[type="submit"],
+.external-button,
+.lightbox__counter {
+    font-family: 'Instrument Sans', 'Helvetica Neue', 'Helvetica', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    letter-spacing: -0.015em;
+}
+
+/* "Alex Walker" wordmark — tightest tracking per the user-provided spec */
+.logo h1,
+.logo h1 a,
+.logo h1 a span {
+    font-family: 'Instrument Sans', 'Helvetica Neue', 'Helvetica', sans-serif !important;
+    font-size: 28px;
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    white-space: nowrap;
+}
+.logo h1 a .name-bold { font-weight: 600; color: inherit; }
+.logo h1 a .name-light { font-weight: 400; color: inherit; letter-spacing: -0.02em; }
 
 header .container {
     display: block;
-    padding: var(--half-spacing-unit);
+    padding: 0 var(--half-spacing-unit);
+    height: 100%;
 }
 
 @supports (padding: max(0px)) {
@@ -226,32 +296,36 @@ header .container {
 header nav>ul {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    min-height: 54px;
 }
 
 header nav>ul>li {
-    flex: 0 1 100%;
+    flex: 0 0 auto;
     text-align: center;
-    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+header nav>ul>li > a {
+    line-height: 1;
 }
 
-header nav>ul>li:nth-of-type(3) {
-    margin-top: var(--half-spacing-unit);
-}
 
 header {
     position: -webkit-sticky;
-    position: -moz-sticky;
-    position: -o-sticky;
-    position: -ms-sticky;
     position: sticky;
-    /* margin-top: -53px;  // This is causing problems with chrome because of lack of sticky support*/
-    top: 0px;
+    /* -1px stick boundary eats sub-pixel rounding gap; the 1px is clipped off
+       above viewport so it's not visible. */
+    top: -1px;
 }
 
 /*--- = Dark Mode  */
 header.dark {
     color: white;
-    background-color: rgba(0, 0, 0, .75);
+    --header-bg: rgba(0, 0, 0, .75);
+    background-color: var(--header-bg);
 }
 
 header.dark h1,
@@ -281,7 +355,7 @@ nav ul li:hover {
 }
 
 .logo {
-    margin-bottom: var(--half-spacing-unit);
+    margin-bottom: 0;
     display: unset;
 }
 
@@ -295,16 +369,69 @@ header li {
     display: none;
 }
 
+header .social {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 header .social li {
-    padding: 0 6px;
+    padding: 0;
     opacity: .5;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    flex: 0 0 auto;
+}
+header .social li a {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+}
+header .social li i {
+    display: block;
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+header .social li img {
+    margin-top: 0 !important;
+    display: block;
+    height: 14px;
+    width: auto;
+    flex-shrink: 0;
 }
 
 #scroll-down-indicator {
-    flex: 0 1 auto;
-    display: unset;
+    flex: 0 0 auto;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    overflow: hidden;
+    transition: opacity 320ms ease-in-out, width 360ms cubic-bezier(0.4, 0, 0.2, 1), margin 360ms cubic-bezier(0.4, 0, 0.2, 1);
 }
-
+/* When the page is past the cinematographer section, collapse the arrow's
+   width so the Watch Reels button eases over to fill the gap. */
+body.past-cinematographer #scroll-down-indicator {
+    opacity: 0 !important;
+    pointer-events: none;
+    width: 0 !important;
+    margin: 0 !important;
+}
+#scroll-down-indicator a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    line-height: 1;
+}
+#scroll-down-indicator a i {
+    display: block;
+    line-height: 1;
+    height: 1em;
+}
 .social li {
     display: inline-block;
 
@@ -402,11 +529,30 @@ section h2 {
 .reel-button-container {
     display: flex;
     justify-content: center;
-    margin-top: -4px;
+    align-items: center;
 }
 
 #reel-button {
     margin: 0;
+    /* White outline + white text at every viewport size (was previously only
+       set in the min-width: 900px media query, which left mobile defaulting to
+       the blue brand button). */
+    color: white;
+    border-color: white;
+}
+#reel-button a,
+#reel-button a:link,
+#reel-button a:visited {
+    color: white !important;
+}
+/* Mobile only: push the Watch Reels button to the right of the flex bar so when
+   the scroll-down indicator collapses its width to 0, the reel button is already
+   pinned to the right edge. On wider screens the natural space-between layout
+   distributes all the nav items correctly. */
+@media screen and (max-width: 700px) {
+    .reel-button-menu {
+        margin-left: auto;
+    }
 }
 
 #slider {
@@ -496,11 +642,13 @@ section h2 {
 .carousel-indicators.rectangle-indicators .progress-bar {
     height: 100%;
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: var(--brand-blue);
+    box-shadow: 0 0 6px rgba(8, 171, 212, 0.5);
     top: 0;
     left: 0;
     width: 0;
     opacity: 0;
+    pointer-events: none;
 }
 
 .carousel-indicators.rectangle-indicators>*.active>.progress-bar {
@@ -590,7 +738,6 @@ section h2 {
     margin: 0 0 6px 10px;
     width: 100%;
     z-index: 1;
-
 }
 
 .reels .black-text::before {
@@ -890,6 +1037,7 @@ section#about {
         opacity: .5;
         font-size: 21px;
         max-height: auto !important;
+        margin-left: 4px;
     }
 
     header li {
@@ -934,7 +1082,6 @@ section#about {
         z-index: 10;
         border-color: white;
         font-size: 18px;
-        margin-top: -4px;
     }
 
     .reel-button-container {
@@ -1191,7 +1338,7 @@ section#about {
 header {
   opacity: 0;
   transform: translateY(-10px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
 }
 
 body.loaded header {
@@ -1202,8 +1349,9 @@ body.loaded header {
 /* Scroll Reveal Fade-In for Sections */
 .scroll-fade {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transform: translateY(10px);
+  transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1), transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
 }
 
 .scroll-fade.visible {
@@ -1339,9 +1487,9 @@ body.loaded header {
   padding: 8px 16px;
   min-width: 120px;
   height: 44px;
-  border: 2px solid #08abd4;
+  border: 2px solid var(--brand-blue);
   background: transparent;
-  color: #08abd4;
+  color: var(--brand-blue);
   font-weight: 600;
   font-size: 16px;
   border-radius: 6px;
@@ -1360,7 +1508,7 @@ body.loaded header {
 }
 
 #bio-buttons button:hover {
-  background: #08abd4;
+  background: var(--brand-blue);
   color: #fff;
 }
 
@@ -1410,8 +1558,8 @@ body.loaded header {
 }
 .scroll-fade.staggered {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transform: translateY(10px);
+  transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1), transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: opacity, transform;
 }
 
@@ -1694,10 +1842,11 @@ body.loaded header {
 
 @media (max-width: 480px) {
   #glass-wrapper {
-    right: 24px;
-    bottom: calc(12px + env(safe-area-inset-bottom, 1px));
-    width: 64px;
-    height: 64px;
+    right: max(24px, env(safe-area-inset-right, 0px) + 16px);
+    bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+    /* Match the JS-rendered button size (size 26 × 2.5 = 65px circle). */
+    width: 65px;
+    height: 65px;
   }
 }
 
@@ -1796,14 +1945,25 @@ body {
 /* Glass Button Styles */
 .glass-button {
   position: relative;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   pointer-events: auto;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box; /* Ensure padding doesn't affect size calculations */
+  box-sizing: border-box;
+}
+
+/* Absolutely no CSS drop-shadow on the return-to-top wrapper or anything inside */
+#glass-wrapper,
+#glass-wrapper *,
+#glass-wrapper *::before,
+#glass-wrapper *::after,
+.glass-button,
+.glass-container {
+  box-shadow: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
 }
 
 .glass-button-circle {
@@ -1823,4 +1983,436 @@ body {
   color: white;
   font-family: system-ui, -apple-system, sans-serif;
   white-space: nowrap;
+}
+
+/* === lightbox === */
+:root {
+    --lb-text: #fff;
+    --lb-icon: rgba(255, 255, 255, 0.85);
+    --lb-icon-active: #fff;
+    --lb-thumb-size: 64px;
+}
+
+/* Note: we deliberately don't set overflow:hidden on html during lightbox-open,
+   because that makes html a (non-scrolling) scroll container and breaks
+   position: sticky on the header — the menu would vanish on open and reappear
+   on close. Page-scroll prevention is handled by the dialog's wheel/touchmove
+   guard in lightbox.js instead. */
+html.lightbox-open {
+    overscroll-behavior: none;
+}
+
+/* Closed dialog: UA default of display: none applies. Only style when open. */
+dialog.lightbox[open] {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    max-width: 100vw;
+    max-height: 100vh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--lb-text);
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 320ms cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: none;
+    --dismiss-progress: 0;
+    --lb-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+dialog.lightbox[open].is-open { opacity: 1; }
+
+/* Backdrop — eased fade for blur + dim on open/close, and during dismiss drag.
+   Class-based animation (works without @starting-style support): backdrop starts
+   transparent + unblurred, then .is-open ramps it up. Saturation moves with blur. */
+dialog.lightbox::backdrop {
+    background: rgba(10, 10, 10, 0);
+    backdrop-filter: blur(0) saturate(100%);
+    -webkit-backdrop-filter: blur(0) saturate(100%);
+    transition: background-color 360ms cubic-bezier(0.4, 0, 0.2, 1),
+                backdrop-filter 360ms cubic-bezier(0.4, 0, 0.2, 1),
+                -webkit-backdrop-filter 360ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+dialog.lightbox.is-open::backdrop {
+    background: rgba(10, 10, 10, calc(0.55 * (1 - var(--dismiss-progress, 0))));
+    backdrop-filter:
+        blur(calc(10px * (1 - var(--dismiss-progress, 0))))
+        saturate(calc(100% + 50% * (1 - var(--dismiss-progress, 0))));
+    -webkit-backdrop-filter:
+        blur(calc(10px * (1 - var(--dismiss-progress, 0))))
+        saturate(calc(100% + 50% * (1 - var(--dismiss-progress, 0))));
+}
+
+/* Chrome (toolbar, nav arrows, counter, caption, thumbs) — fades in on open,
+   and fades with the dismiss-progress when dragging down. */
+dialog.lightbox .lightbox__toolbar,
+dialog.lightbox .lightbox__nav,
+dialog.lightbox .lightbox__counter,
+dialog.lightbox .lightbox__caption,
+dialog.lightbox .lightbox__thumbs {
+    opacity: 0;
+    transition: opacity 320ms var(--lb-ease) 80ms, bottom 220ms var(--lb-ease);
+}
+dialog.lightbox[open].is-open .lightbox__toolbar,
+dialog.lightbox[open].is-open .lightbox__nav,
+dialog.lightbox[open].is-open .lightbox__counter,
+dialog.lightbox[open].is-open .lightbox__caption,
+dialog.lightbox[open].is-open .lightbox__thumbs {
+    opacity: calc(1 - var(--dismiss-progress, 0));
+}
+
+/* Panels (the image / iframe) fade in on open. Note: no transform — iOS Safari
+   has well-documented bugs rendering iframes (YouTube embeds) inside transformed
+   parents. Sticking to plain opacity keeps every device happy. */
+dialog.lightbox .lightbox__panel {
+    opacity: 0;
+    transition: opacity 360ms var(--lb-ease);
+}
+dialog.lightbox[open].is-open .lightbox__panel {
+    opacity: 1;
+}
+
+/* Caption shifts up when the thumbnails strip is open */
+dialog.lightbox:has(.lightbox__thumbs:not([hidden])) .lightbox__caption {
+    bottom: calc(24px + var(--lb-thumb-size) + 24px);
+}
+
+/* Cinema mode — hides chrome and shrinks padding so the image fills more space */
+dialog.lightbox.is-cinema .lightbox__toolbar > *:not(.lightbox__btn--close),
+dialog.lightbox.is-cinema .lightbox__counter,
+dialog.lightbox.is-cinema .lightbox__caption,
+dialog.lightbox.is-cinema .lightbox__thumbs,
+dialog.lightbox.is-cinema .lightbox__nav {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+dialog.lightbox.is-cinema .lightbox__panel { padding: 16px; }
+/* In cinema, the backdrop goes darker and more blurred */
+dialog.lightbox.is-cinema::backdrop {
+    background: rgba(2, 2, 4, 0.92) !important;
+    backdrop-filter: blur(40px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(40px) saturate(140%) !important;
+}
+
+/* Native Fullscreen API state (collapses any margins; just in case the dialog
+   was nested or chrome injects defaults) */
+dialog.lightbox[open]:fullscreen,
+dialog.lightbox[open]:-webkit-full-screen {
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    background: rgba(8, 8, 10, 0.98) !important;
+}
+
+/* Respect the hidden attribute even when display is set on the class */
+dialog.lightbox [hidden] { display: none !important; }
+
+.lightbox__toolbar {
+    position: absolute;
+    top: max(16px, env(safe-area-inset-top, 16px));
+    right: max(16px, env(safe-area-inset-right, 16px));
+    display: flex;
+    gap: 4px;
+    z-index: 10;
+}
+
+.lightbox__btn,
+.lightbox__nav {
+    background: transparent;
+    border: 0;
+    color: var(--lb-icon);
+    cursor: pointer;
+    padding: 10px;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 150ms ease, transform 150ms ease;
+    -webkit-tap-highlight-color: transparent;
+}
+.lightbox__btn:hover,
+.lightbox__nav:hover { color: var(--lb-icon-active); }
+.lightbox__btn:focus-visible,
+.lightbox__nav:focus-visible {
+    outline: 2px solid var(--lb-icon-active);
+    outline-offset: 2px;
+}
+.lightbox__btn--play.is-playing { color: var(--lb-icon-active); }
+.lightbox__btn--thumbs.is-active { color: var(--lb-icon-active); }
+
+/* Icons drawn with masks for color control */
+.lightbox__icon-close,
+.lightbox__icon-play,
+.lightbox__icon-fullscreen,
+.lightbox__icon-thumbs,
+.lightbox__icon-arrow {
+    width: 24px;
+    height: 24px;
+    background: currentColor;
+    display: block;
+}
+.lightbox__icon-close {
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M18.3 5.71 12 12.01l-6.3-6.3-1.4 1.41 6.3 6.3-6.3 6.3 1.4 1.42 6.3-6.3 6.3 6.3 1.4-1.42-6.3-6.3 6.3-6.3z'/></svg>") center/contain no-repeat;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M18.3 5.71 12 12.01l-6.3-6.3-1.4 1.41 6.3 6.3-6.3 6.3 1.4 1.42 6.3-6.3 6.3 6.3 1.4-1.42-6.3-6.3 6.3-6.3z'/></svg>") center/contain no-repeat;
+}
+.lightbox__icon-play {
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M8 5v14l11-7z'/></svg>") center/contain no-repeat;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M8 5v14l11-7z'/></svg>") center/contain no-repeat;
+}
+.is-playing .lightbox__icon-play {
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6 5h4v14H6zm8 0h4v14h-4z'/></svg>") center/contain no-repeat;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6 5h4v14H6zm8 0h4v14h-4z'/></svg>") center/contain no-repeat;
+}
+.lightbox__icon-fullscreen {
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z'/></svg>") center/contain no-repeat;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z'/></svg>") center/contain no-repeat;
+}
+.lightbox__icon-thumbs {
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M3 4h4v4H3zm7 0h4v4h-4zm7 0h4v4h-4zM3 10h4v4H3zm7 0h4v4h-4zm7 0h4v4h-4zM3 16h4v4H3zm7 0h4v4h-4zm7 0h4v4h-4z'/></svg>") center/contain no-repeat;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M3 4h4v4H3zm7 0h4v4h-4zm7 0h4v4h-4zM3 10h4v4H3zm7 0h4v4h-4zm7 0h4v4h-4zM3 16h4v4H3zm7 0h4v4h-4zm7 0h4v4h-4z'/></svg>") center/contain no-repeat;
+}
+.lightbox__icon-arrow {
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9.4 6 8 7.4l4.6 4.6L8 16.6 9.4 18l6-6z'/></svg>") center/contain no-repeat;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9.4 6 8 7.4l4.6 4.6L8 16.6 9.4 18l6-6z'/></svg>") center/contain no-repeat;
+}
+.lightbox__nav--prev .lightbox__icon-arrow { transform: rotate(180deg); }
+
+.lightbox__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 56px;
+    height: 56px;
+    z-index: 5;
+}
+.lightbox__nav--prev { left: 12px; }
+.lightbox__nav--next { right: 12px; }
+
+.lightbox__stage {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: stretch;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    min-height: 0;
+    padding: 0;
+    cursor: grab;
+    user-select: none;
+}
+.lightbox__stage::-webkit-scrollbar { display: none; }
+.lightbox__stage.is-dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+}
+
+.lightbox__panel {
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 100%;
+    height: 100%;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 72px 24px;
+    box-sizing: border-box;
+}
+.lightbox__panel img,
+.lightbox__panel iframe { -webkit-user-drag: none; user-drag: none; }
+
+.lightbox__image {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+    display: block;
+    user-select: none;
+    cursor: zoom-in;
+    transition: transform 250ms cubic-bezier(0.2, 0, 0.2, 1);
+}
+.lightbox__panel.is-zoomed .lightbox__image {
+    transform: scale(2);
+    cursor: zoom-out;
+}
+.lightbox__iframe-wrap {
+    /* Capped smaller on desktop so there's whitespace alongside for future content */
+    width: min(60vw, 900px);
+    max-height: 70vh;
+    aspect-ratio: 16 / 9;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+.lightbox__iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #000;
+    display: block;
+}
+
+/* Caption floats over the stage at lower-right, like the original site. */
+.lightbox__caption {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    max-width: min(40ch, 40vw);
+    padding: 14px 18px;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 6px;
+    text-align: right;
+    color: var(--lb-text);
+    font-size: 14px;
+    line-height: 1.5;
+    z-index: 20;
+}
+/* When the caption holds only an .external-button (e.g. video lightboxes),
+   drop the dark frame so the button stands on its own. */
+.lightbox__caption--bare {
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+/* Strip absolute positioning from any nested legacy markup so it stays inside the caption box */
+.lightbox__caption > div {
+    position: static !important;
+    background: transparent !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: inherit !important;
+}
+.lightbox__caption a { color: inherit; text-decoration: underline; }
+.lightbox__caption strong {
+    color: #C89126 !important; /* warm gold for the title */
+    font-weight: 600 !important;
+    display: inline-block !important;
+    margin-bottom: 4px !important;
+}
+
+/* "Watch the Full Film" style buttons inside video captions — mirror the Watch Reels button */
+.lightbox__caption .external-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12px !important;
+    padding: 6px 12px !important;
+    border: 2px solid var(--brand-blue) !important;
+    border-radius: 4px !important;
+    background-color: transparent !important;
+    color: var(--brand-blue) !important;
+    text-decoration: none !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    line-height: 1.2;
+    transition: background-color 0.3s, color 0.3s !important;
+}
+.lightbox__caption .external-button:hover {
+    background-color: var(--brand-blue) !important;
+    color: #fff !important;
+}
+
+/* Counter chip ("3 / 16") — top-left corner, evenly inset matching the toolbar */
+.lightbox__counter {
+    position: absolute;
+    top: max(16px, env(safe-area-inset-top, 16px));
+    left: max(16px, env(safe-area-inset-left, 16px));
+    z-index: 10;
+    padding: 6px 12px;
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--lb-text);
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+}
+
+.lightbox__thumbs {
+    flex: 0 0 auto;
+    display: flex;
+    gap: 4px;
+    padding: 8px 12px;
+    overflow-x: auto;
+    background: rgba(0, 0, 0, 0.45);
+    scrollbar-width: thin;
+}
+.lightbox__thumb {
+    flex: 0 0 auto;
+    width: var(--lb-thumb-size);
+    height: var(--lb-thumb-size);
+    padding: 0;
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 2px;
+    cursor: pointer;
+    overflow: hidden;
+    opacity: 0.6;
+    transition: opacity 150ms ease, border-color 150ms ease;
+}
+.lightbox__thumb.is-active { opacity: 1; border-color: #fff; }
+.lightbox__thumb:hover { opacity: 1; }
+.lightbox__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+@media (max-width: 700px) {
+    .lightbox__stage { padding: 56px 12px 12px; }
+    .lightbox__nav { width: 44px; height: 44px; }
+    .lightbox__nav--prev { left: 4px; }
+    .lightbox__nav--next { right: 4px; }
+    .lightbox__iframe-wrap {
+        width: 100%;
+        max-height: 100%;
+    }
+    .lightbox__caption {
+        right: 12px;
+        left: auto; /* size to content, not full-width */
+        bottom: 72px; /* clear of thumbs strip */
+        max-width: min(36ch, 70vw);
+        padding: 10px 14px;
+        font-size: 13px;
+        width: max-content;
+    }
+    /* When thumbs strip is hidden, caption can sit closer to bottom */
+    dialog.lightbox:has(.lightbox__thumbs[hidden]) .lightbox__caption {
+        bottom: 16px;
+    }
+    /* Video iframe lightbox has no thumbs and no caption block to clear */
+    dialog.lightbox:not(:has(.lightbox__image)) .lightbox__caption {
+        bottom: 16px;
+    }
+    :root { --lb-thumb-size: 48px; }
+}
+
+/* View Transitions: smooth crossfade between gallery items */
+@supports (view-transition-name: foo) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation-duration: 250ms;
+    }
 }

@@ -22,18 +22,16 @@
     <link rel="apple-touch-icon-precomposed" href="/img/touch-icon.png"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link media="all" type="text/css" rel="stylesheet" href="/css/style.css">
     <link media="all" type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    {%- if page.carousel_css %}
-    <link media="all" type="text/css" rel="stylesheet" href="/packages/bootstrap/css/bootstrap-carousel.css">
-    {%- endif %}
-    <link media="all" type="text/css" rel="stylesheet" href="/packages/fancybox/jquery.fancybox.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600,700' rel='stylesheet' type='text/css'>
-    <script src="/packages/fancybox/jquery.fancybox.min.js"></script>
-    <script src="/packages/bootstrap/js/bootstrap-carousel.js"></script>
-    <script src="/js/scroller.js"></script>
+    <script type="module" src="/js/site.js"></script>
+    <!-- Glass return-to-top button (renders into #glass-wrapper if present) -->
+    <script defer src="/js/container.js"></script>
+    <script defer src="/js/button.js"></script>
+    <script defer src="/js/glass-return-to-top.js"></script>
     {%- if page.four_columns_grid %}
 
     <style type="text/css">
