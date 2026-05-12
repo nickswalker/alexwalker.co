@@ -43,6 +43,12 @@ ready(() => {
         safe('carousel', () => new Carousel(slider, { interval: 5000 }));
         safe('sliderBlur', () => initSliderScrollBlur('#slider-container'));
         safe('sectionPassed', () => initSectionPassed('#cinematographer', 'past-cinematographer'));
+    } else {
+        // Project / sub-pages don't have the homepage hero or the
+        // cinematographer section. Lock the reel-button in its
+        // post-cinematographer position so the menu bar matches what the
+        // user sees on the homepage after scrolling past that section.
+        document.body.classList.add('past-cinematographer');
     }
 
     safe('lightboxes', () => autoInitLightboxes());

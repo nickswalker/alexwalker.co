@@ -161,12 +161,21 @@ export function initReelButtonShift() {
     // first added, leading to wildly wrong projections. Stable baseline
     // sidesteps the issue.
     let preCollapseReelRight = null;
+    // Whether the scroll-down indicator participates in the flex layout. On
+    // index.html it does (width: 44px) and will collapse to 0 when past-
+    // cinematographer fires, contributing NATURAL_SHIFT to the reel's drift.
+    // On project pages the partial sets it to display:none, so it contributes
+    // no natural shift — without this flag the reel would end up 36.67px
+    // further right than its homepage counterpart.
+    let arrowInLayout = false;
 
     function captureBaseline() {
         if (window.matchMedia('(max-width: 700px)').matches) return;
         if (document.body.classList.contains('past-cinematographer')) return;
         if (reel.style.transform) reel.style.transform = '';
         preCollapseReelRight = reel.getBoundingClientRect().right;
+        const sd = document.getElementById('scroll-down-indicator');
+        arrowInLayout = !!(sd && getComputedStyle(sd).display !== 'none');
     }
 
     function applyShift() {
@@ -179,22 +188,25 @@ export function initReelButtonShift() {
             return;
         }
         // Derive the post-collapse natural reel position from the captured
-        // pre-collapse baseline + the known natural shift. If we never got a
-        // chance to capture (e.g. page loaded already-scrolled, class set
-        // before init), fall back to the current reel.right minus lastShift
-        // minus the natural shift — which assumes the layout has reflowed.
+        // pre-collapse baseline. Add the NATURAL_SHIFT only if the arrow is
+        // actually in the flex layout (homepage). On project pages the arrow
+        // is display:none, so the reel doesn't redistribute at all — its
+        // natural post-state equals its pre-state.
         let postCollapseReelRight;
         if (preCollapseReelRight !== null) {
-            postCollapseReelRight = preCollapseReelRight + NATURAL_SHIFT;
+            postCollapseReelRight = preCollapseReelRight + (arrowInLayout ? NATURAL_SHIFT : 0);
         } else {
             postCollapseReelRight = reel.getBoundingClientRect().right - lastShift;
         }
         const containerRect = container.getBoundingClientRect();
         const targetRight = containerRect.right - SECTION_GUTTER;
-        const newShift = Math.max(0, targetRight - postCollapseReelRight);
+        // Allow negative shifts so project pages (where the reel naturally
+        // sits AT content-right) can move LEFT to match the homepage's
+        // content-right - 24 final position.
+        const newShift = targetRight - postCollapseReelRight;
         if (Math.abs(newShift - lastShift) < 0.5) return;
         lastShift = newShift;
-        reel.style.transform = newShift > 0 ? `translateX(${newShift}px)` : '';
+        reel.style.transform = Math.abs(newShift) > 0.5 ? `translateX(${newShift}px)` : '';
     }
 
     let reverseTimeout = null;

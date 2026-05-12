@@ -68,19 +68,42 @@
         wrapper.innerHTML = '';
 
         const isMobile = window.matchMedia('(max-width: 480px)').matches;
+        const scrollToTop = () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
         const button = new Button({
             text: '↑',
             size: isMobile ? 26 : 28,
             type: 'circle',
             tintOpacity: 0.630,
             warp: false,
-            onClick: () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+            onClick: scrollToTop,
         });
         button.element.id = 'return-to-top';
         button.element.classList.add('smooth-scroll');
         wrapper.appendChild(button.element);
+
+        // iOS-specific quirk: while the page has momentum-scroll inertia, the
+        // first finger contact gets consumed as "stop the scroll" instead of
+        // a tap — touchend doesn't reliably fire, and the synthetic click is
+        // skipped entirely. Handling touchstart instead fires the action the
+        // moment the finger lands on the button, even mid-momentum.
+        // preventDefault suppresses the synthetic mouse-event chain so the
+        // Button's own click handler doesn't re-fire on the same gesture.
+        let touchHandled = false;
+        button.element.addEventListener('touchstart', (e) => {
+            if (e.cancelable) e.preventDefault();
+            if (touchHandled) return;
+            touchHandled = true;
+            scrollToTop();
+        }, { passive: false });
+        // Reset for the next tap sequence so subsequent taps still work.
+        button.element.addEventListener('touchend', () => {
+            touchHandled = false;
+        }, { passive: true });
+        button.element.addEventListener('touchcancel', () => {
+            touchHandled = false;
+        }, { passive: true });
 
         returnToTopButton = button;
         glassBuilt = true;

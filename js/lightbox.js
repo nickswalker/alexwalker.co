@@ -1,4 +1,5 @@
 import { sendVideoPixel } from './pixel.js';
+import { buildPlayerMarkup, mountPlayer, parseVideoUrl, loadYouTubeApi, loadVimeoApi } from './uniform-player.js';
 
 // Native-dialog lightbox: images (gallery) + iframes (video).
 // Features: keyboard nav, swipe, captions, slideshow, fullscreen, thumbs,
@@ -174,18 +175,40 @@ export class Lightbox {
         const FLICK_THRESHOLD = 0.45;  // px/ms — moderate horizontal flick (panel advance)
         const FLICK_STRONG = 1.4;      // px/ms — strong flick (skips multiple)
 
+        // Pan state — drag while zoomed translates the image instead of
+        // scrolling the gallery. Tracked separately from gallery drag.
+        let panImg = null;
+        let panInitialTx = 0, panInitialTy = 0;
+
         this.stage.addEventListener('pointerdown', (e) => {
             if (e.pointerType !== 'mouse') return;
             if (e.button !== 0) return;
             if (e.target.closest('iframe, button, a')) return;
-            // Don't initiate gallery drag while a panel is zoomed
-            if (e.target.closest('.lightbox__panel.is-zoomed')) return;
+            // Don't engage gallery-drag (and its setPointerCapture) for clicks
+            // inside the uniform video player. Capturing the pointer routes
+            // the subsequent click event to the stage instead of the player's
+            // hit/play/mute/fullscreen targets, breaking every player button.
+            if (e.target.closest('.up')) return;
+            const zoomedPanel = e.target.closest('.lightbox__panel.is-zoomed');
             dragPointer = e.pointerId;
             dragStartX = e.clientX;
             dragStartY = e.clientY;
-            dragStartScroll = this.stage.scrollLeft;
             dragMoved = false;
-            velSamples = [{ t: performance.now(), x: e.clientX, y: e.clientY }];
+            if (zoomedPanel) {
+                // Pan mode: track pan offset; do not engage gallery scroll.
+                // Disable the CSS transform transition so each pointermove
+                // updates the position instantly — otherwise the 250ms
+                // tween causes panning to feel laggy.
+                panImg = zoomedPanel.querySelector('.lightbox__image');
+                panImg.style.transition = 'none';
+                const t = this._getImageTranslate(panImg);
+                panInitialTx = t.x;
+                panInitialTy = t.y;
+            } else {
+                panImg = null;
+                dragStartScroll = this.stage.scrollLeft;
+                velSamples = [{ t: performance.now(), x: e.clientX, y: e.clientY }];
+            }
             this.stage.setPointerCapture(e.pointerId);
             this.stage.classList.add('is-dragging');
         });
@@ -194,6 +217,10 @@ export class Lightbox {
             const dx = e.clientX - dragStartX;
             const dy = e.clientY - dragStartY;
             if (Math.abs(dx) > 4 || Math.abs(dy) > 4) dragMoved = true;
+            if (panImg) {
+                this._setImageTranslate(panImg, panInitialTx + dx, panInitialTy + dy);
+                return;
+            }
             this.stage.scrollLeft = dragStartScroll - dx;
             const now = performance.now();
             velSamples.push({ t: now, x: e.clientX, y: e.clientY });
@@ -209,8 +236,24 @@ export class Lightbox {
             const dy = e.clientY - dragStartY;
             this.stage.releasePointerCapture(e.pointerId);
             this.stage.classList.remove('is-dragging');
-            this._setDismissDrag(0);
             const moved = dragMoved;
+            if (panImg) {
+                // Finish pan. Restore transitions for subsequent zoom-in/out
+                // animations. If user did NOT actually move (just clicked on
+                // a zoomed image), the click will toggle zoom out. If they
+                // panned, suppress the click so zoom doesn't toggle.
+                panImg.style.transition = '';
+                panImg = null;
+                dragStartX = dragStartY = null;
+                dragPointer = null;
+                if (moved) {
+                    const stop = (ev) => { ev.stopPropagation(); ev.preventDefault(); this.stage.removeEventListener('click', stop, true); };
+                    this.stage.addEventListener('click', stop, true);
+                    setTimeout(() => this.stage.removeEventListener('click', stop, true), 60);
+                }
+                return;
+            }
+            this._setDismissDrag(0);
             // Compute average horizontal + vertical velocity over recent samples (px/ms).
             let velocity = 0;
             let velY = 0;
@@ -254,9 +297,18 @@ export class Lightbox {
         this.stage.addEventListener('pointerup', endDrag);
         this.stage.addEventListener('pointercancel', endDrag);
 
-        // Double-click on mouse → zoom toggle
-        this.stage.addEventListener('dblclick', (e) => {
-            const img = e.target.closest('.lightbox__image');
+        // Single click on a still toggles zoom: zoom in centered on click,
+        // click again zooms out. The pointerdown/pointerup pipeline above
+        // suppresses this click when the user drags (gallery scroll OR pan).
+        // Note: when pointer-capture is in play, the click's e.target is the
+        // captured stage element, not the visually clicked image. Fall back
+        // to elementFromPoint so the captured-pointer case still works.
+        this.stage.addEventListener('click', (e) => {
+            let img = e.target.closest('.lightbox__image');
+            if (!img) {
+                const el = document.elementFromPoint(e.clientX, e.clientY);
+                img = el && el.closest && el.closest('.lightbox__image');
+            }
             if (img) this._toggleZoomAt(img, e.clientX, e.clientY);
         });
 
@@ -274,6 +326,11 @@ export class Lightbox {
         const VERTICAL_FLICK_VELOCITY = 0.5;
         const VERTICAL_FLICK_MIN_DY = 20;
 
+        // Touch pan state — drag while zoomed translates the image instead
+        // of doing the dismiss / horizontal-swipe behaviors.
+        let touchPanImg = null;
+        let touchPanInitialTx = 0, touchPanInitialTy = 0;
+
         this.stage.addEventListener('touchstart', (e) => {
             if (e.touches.length !== 1) return;
             const t = e.touches[0];
@@ -282,6 +339,16 @@ export class Lightbox {
             touchDir = null;
             touchStartTime = performance.now();
             touchVelSamples = [{ t: touchStartTime, y: t.clientY }];
+            const zoomedPanel = document.elementFromPoint(t.clientX, t.clientY)?.closest('.lightbox__panel.is-zoomed');
+            if (zoomedPanel) {
+                touchPanImg = zoomedPanel.querySelector('.lightbox__image');
+                touchPanImg.style.transition = 'none';
+                const cur = this._getImageTranslate(touchPanImg);
+                touchPanInitialTx = cur.x;
+                touchPanInitialTy = cur.y;
+            } else {
+                touchPanImg = null;
+            }
         }, { passive: true });
 
         this.stage.addEventListener('touchmove', (e) => {
@@ -289,6 +356,13 @@ export class Lightbox {
             const t = e.touches[0];
             const dx = t.clientX - touchStartX;
             const dy = t.clientY - touchStartY;
+            if (touchPanImg) {
+                // Pan the zoomed image. preventDefault to block native page
+                // scroll + the dismiss/swipe handlers below.
+                e.preventDefault();
+                this._setImageTranslate(touchPanImg, touchPanInitialTx + dx, touchPanInitialTy + dy);
+                return;
+            }
             if (touchDir === null && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) {
                 touchDir = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
             }
@@ -307,8 +381,25 @@ export class Lightbox {
         this.stage.addEventListener('touchend', (e) => {
             const t = e.changedTouches?.[0];
             if (!t) return;
+            const dx = t.clientX - touchStartX;
             const dy = t.clientY - touchStartY;
             const elapsed = performance.now() - touchStartTime;
+
+            if (touchPanImg) {
+                // Restore the CSS transition that was disabled during the
+                // pan (see touchmove). The image stays at its current
+                // translated position; subsequent zoom-in/out will animate
+                // smoothly back.
+                touchPanImg.style.transition = '';
+                touchPanImg = null;
+                touchDir = null;
+                // Tap-on-zoomed-image (no movement) is handled by the
+                // synthetic click event that fires after touchend — we
+                // deliberately do not call _toggleZoomAt here, to avoid
+                // double-toggling (touchend + click).
+                return;
+            }
+
             // Compute instantaneous velocity from the last ~100ms of samples.
             let velY = 0;
             if (touchVelSamples.length >= 2) {
@@ -327,20 +418,9 @@ export class Lightbox {
                 return;
             }
             if (touchDir === 'v') this._setDismissDrag(0);
-
-            // Double-tap zoom — only when the second tap is close in time and space to the first
-            if (touchDir === null && elapsed < 250) {
-                const now = performance.now();
-                if (now - lastTapTime < 300 && Math.hypot(t.clientX - lastTapX, t.clientY - lastTapY) < 30) {
-                    const img = document.elementFromPoint(t.clientX, t.clientY)?.closest('.lightbox__image');
-                    if (img) this._toggleZoomAt(img, t.clientX, t.clientY);
-                    lastTapTime = 0;
-                } else {
-                    lastTapTime = now;
-                    lastTapX = t.clientX;
-                    lastTapY = t.clientY;
-                }
-            }
+            // Single tap on a non-zoomed still → zoom in. We don't call
+            // _toggleZoomAt here; the synthetic `click` event that follows
+            // touchend handles it via the listener bound to this.stage.
             touchDir = null;
         }, { passive: true });
 
@@ -562,19 +642,29 @@ export class Lightbox {
                 const w = item.width || 1600;
                 const h = item.height || 900;
                 wrap.style.aspectRatio = `${w} / ${h}`;
-                const iframe = document.createElement('iframe');
-                iframe.className = 'lightbox__iframe';
-                // Use the exact iframe attribute set from YouTube's official embed code —
-                // a minor difference (missing referrerpolicy, missing web-share allow,
-                // missing title) is enough to make iOS Safari refuse to render some embeds.
-                iframe.setAttribute('src', enhanceVideoSrc(item.href));
-                iframe.setAttribute('title', 'Video player');
-                iframe.setAttribute('frameborder', '0');
-                iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-                iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-                iframe.setAttribute('allowfullscreen', '');
-                wrap.appendChild(iframe);
-                panel.appendChild(wrap);
+                const parsed = parseVideoUrl(item.href);
+                if (parsed) {
+                    // Use our local thumbnail as the poster for YouTube only —
+                    // YouTube's default thumbnail is generic and undesirable.
+                    // Vimeo's own thumbnail is generally what the user wants,
+                    // so we skip the local poster there.
+                    const poster = parsed.provider === 'youtube' ? item.thumb : null;
+                    wrap.innerHTML = buildPlayerMarkup({ ...parsed, poster });
+                    panel.appendChild(wrap);
+                    mountPlayer(wrap.querySelector('.up'));
+                } else {
+                    // Fallback: raw iframe (legacy/unknown video host).
+                    const iframe = document.createElement('iframe');
+                    iframe.className = 'lightbox__iframe';
+                    iframe.setAttribute('src', enhanceVideoSrc(item.href));
+                    iframe.setAttribute('title', 'Video player');
+                    iframe.setAttribute('frameborder', '0');
+                    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+                    iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+                    iframe.setAttribute('allowfullscreen', '');
+                    wrap.appendChild(iframe);
+                    panel.appendChild(wrap);
+                }
             }
             this.stage.appendChild(panel);
         };
@@ -633,15 +723,30 @@ export class Lightbox {
         const willZoom = !panel.classList.contains('is-zoomed');
         this.stage.querySelectorAll('.lightbox__panel.is-zoomed').forEach(p => {
             p.classList.remove('is-zoomed');
-            p.querySelector('.lightbox__image').style.transformOrigin = '';
+            const i = p.querySelector('.lightbox__image');
+            i.style.transformOrigin = '';
+            i.style.transform = '';   // Reset any pan offset from a previous zoom.
         });
         if (willZoom) {
             const rect = img.getBoundingClientRect();
             const ox = ((clientX - rect.left) / rect.width) * 100;
             const oy = ((clientY - rect.top) / rect.height) * 100;
             img.style.transformOrigin = `${ox}% ${oy}%`;
+            img.style.transform = '';   // Start fresh with no pan.
             panel.classList.add('is-zoomed');
         }
+    }
+
+    // Pan helpers — inline transform uses `translate(...) scale(2)` so that
+    // the translate values match screen-pixel deltas 1:1 (translate applied
+    // AFTER the scale in the matrix multiplication, per CSS spec).
+    _getImageTranslate(img) {
+        const t = img.style.transform || '';
+        const m = t.match(/translate\(([-\d.]+)px,\s*([-\d.]+)px\)/);
+        return m ? { x: parseFloat(m[1]), y: parseFloat(m[2]) } : { x: 0, y: 0 };
+    }
+    _setImageTranslate(img, x, y) {
+        img.style.transform = `translate(${x}px, ${y}px) scale(2)`;
     }
 
     _setDismissDrag(dy) {
@@ -816,6 +921,14 @@ export function autoInitLightboxes(opts = {}) {
         items.forEach((item, i) => {
             item.el.addEventListener('click', (e) => {
                 e.preventDefault();
+                // Preload the right video API so by the time the user clicks
+                // play, the iframe can be created synchronously and the
+                // browser's user-gesture autoplay grace period is still
+                // valid. Suppresses the "click play to start" pause
+                // indicator that YouTube otherwise shows.
+                const p = parseVideoUrl(item.href);
+                if (p && p.provider === 'youtube') loadYouTubeApi();
+                else if (p && p.provider === 'vimeo') loadVimeoApi();
                 lb.open(i);
             });
         });

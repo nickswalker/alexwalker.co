@@ -1910,6 +1910,14 @@ body.loaded header {
   height: 100%;
   cursor: pointer;
   overflow: visible;
+  /* iOS Safari otherwise waits ~300ms after the first tap to see if a
+     second tap is coming (potential double-tap zoom). manipulation tells
+     the browser to fire `click` on the first tap immediately. */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+#glass-wrapper {
+  touch-action: manipulation;
 }
 
 /* All touch devices (iPhone + iPad, every orientation) — compact bottom-right placement */
@@ -2478,3 +2486,157 @@ dialog.lightbox [hidden] { display: none !important; }
         animation-duration: 250ms;
     }
 }
+
+/* ── Uniform video player ─────────────────────────────────────────────
+   Shared chrome that wraps every YouTube and Vimeo embed in the lightbox
+   so the controls look identical regardless of provider. The native
+   player UI is stripped via URL params and we layer our own on top.
+   The iframe doesn't render until first click — our custom poster sits
+   above it until then, so the provider's default thumbnail never shows.
+*/
+.up {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+}
+.up iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    pointer-events: none;
+    background: #000;
+}
+.up__poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+    transition: opacity 120ms ease;
+    z-index: 1;
+}
+.up.is-loaded .up__poster { opacity: 0; }
+.up__hit {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+.up__big-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 72px; height: 72px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 220ms ease, transform 220ms ease;
+    z-index: 3;
+}
+.up[data-state="paused"] .up__big-play,
+.up[data-state="ended"]  .up__big-play { opacity: 1; }
+.up__big-play svg {
+    width: 28px; height: 28px;
+    fill: #fff;
+    transform: translateX(2px);
+}
+.up__spinner {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 44px; height: 44px;
+    margin: -22px 0 0 -22px;
+    border: 3px solid rgba(255, 255, 255, 0.18);
+    border-top-color: rgba(255, 255, 255, 0.85);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 120ms ease;
+    z-index: 3;
+    animation: up-spin 0.85s linear infinite;
+}
+.up[data-state="loading"] .up__spinner   { opacity: 1; }
+.up[data-state="loading"] .up__big-play  { opacity: 0; }
+@keyframes up-spin { to { transform: rotate(360deg); } }
+.up__chrome {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 36px 14px 12px;
+    background: linear-gradient(to top, rgba(0,0,0,.75) 0%, rgba(0,0,0,.5) 60%, rgba(0,0,0,0) 100%);
+    opacity: 0;
+    transition: opacity 220ms ease;
+    pointer-events: none;
+    z-index: 4;
+}
+.up:hover                       .up__chrome,
+.up[data-state="paused"]        .up__chrome,
+.up[data-state="ended"]         .up__chrome,
+.up.is-touching                 .up__chrome { opacity: 1; }
+.up__chrome > * { pointer-events: auto; }
+.up__scrub {
+    position: relative;
+    height: 4px;
+    background: rgba(255,255,255,.18);
+    border-radius: 2px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: height 160ms ease;
+}
+.up__scrub:hover { height: 6px; }
+.up__scrub-buffer,
+.up__scrub-progress {
+    position: absolute;
+    inset: 0 auto 0 0;
+    border-radius: 2px;
+    pointer-events: none;
+}
+.up__scrub-buffer   { background: rgba(255,255,255,.35); width: 0%; }
+.up__scrub-progress { background: #fff; width: 0%; }
+.up__scrub-knob {
+    position: absolute;
+    top: 50%;
+    width: 12px; height: 12px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    left: 0%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 160ms ease;
+}
+.up__scrub:hover .up__scrub-knob { opacity: 1; }
+.up__toolbar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #fff;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+}
+.up__btn {
+    width: 32px; height: 32px;
+    background: none;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0;
+    border-radius: 4px;
+    opacity: .92;
+    transition: opacity 160ms ease, background 160ms ease;
+}
+.up__btn:hover { opacity: 1; background: rgba(255,255,255,.12); }
+.up__btn svg { width: 18px; height: 18px; fill: currentColor; }
+.up__time   { color: rgba(255,255,255,.92); font-size: 11px; letter-spacing: .3px; }
+.up__spacer { flex: 1 1 auto; }
