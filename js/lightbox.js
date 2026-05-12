@@ -52,33 +52,34 @@ function enhanceVideoSrc(href) {
 }
 
 let bodyLockCount = 0;
-let savedScrollY = 0;
 
-// Robust scroll lock: video iframes propagate scroll/wheel events to the
-// parent on iOS, so disabling overflow alone isn't enough. Pin <body> with
-// position: fixed + negative top, then restore the scroll position on
-// unlock. The lightbox <dialog> covers the viewport so the sticky header
-// being temporarily un-stuck is invisible.
+// Scroll lock via overflow:hidden. The previous position:fixed + negative-top
+// trick caused a one-frame paint shift on iOS when toggled off (the page
+// briefly snapped to scroll=0 before window.scrollTo restored it), which
+// looked like a flash plus a "page renders in a slightly different position"
+// on every subsequent lightbox close. overflow:hidden preserves the scroll
+// position natively so there's no restore step at all.
+//
+// The lightbox <dialog> itself eats touchmove/wheel inside its bounds
+// (see addEventListener wiring further down), so background scroll-through
+// from inside the dialog is still blocked.
 function lockBody() {
     if (bodyLockCount++ > 0) return;
-    savedScrollY = window.scrollY;
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${savedScrollY}px`;
-    document.body.style.left = '0';
-    document.body.style.right = '0';
-    document.body.style.width = '100%';
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    // Compensate for the disappearing vertical scrollbar on desktop so the
+    // page doesn't shift horizontally when locked.
+    const sbw = window.innerWidth - document.documentElement.clientWidth;
+    if (sbw > 0) document.body.style.paddingRight = `${sbw}px`;
     document.documentElement.classList.add('lightbox-open');
 }
 function unlockBody() {
     if (--bodyLockCount > 0) return;
     bodyLockCount = 0;
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.left = '';
-    document.body.style.right = '';
-    document.body.style.width = '';
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
     document.documentElement.classList.remove('lightbox-open');
-    window.scrollTo(0, savedScrollY);
 }
 
 export class Lightbox {

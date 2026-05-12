@@ -97,6 +97,12 @@ function fmt(sec) {
     return `${m}:${String(s).padStart(2, '0')}`;
 }
 
+// iOS Safari detection (also catches iPadOS reporting as MacIntel-with-touch).
+const IS_IOS = typeof navigator !== 'undefined' && (
+    /iPad|iPhone|iPod/.test(navigator.userAgent)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+);
+
 class YouTubeAdapter {
     constructor(container, { id, list }) {
         this.container = container;
@@ -112,9 +118,13 @@ class YouTubeAdapter {
         this.container.appendChild(slot);
         loadYouTubeApi().then(() => {
             const playerVars = {
-                controls: 0, modestbranding: 1, rel: 0,
+                // On iOS we surface YouTube's own controls — their fullscreen
+                // button is the only path to true native iOS FS for an iframe
+                // embed. Desktop/Android keep our uniform custom chrome.
+                controls: IS_IOS ? 1 : 0,
+                modestbranding: 1, rel: 0,
                 iv_load_policy: 3, disablekb: 1, playsinline: 1,
-                fs: 0, autoplay: 1,
+                fs: IS_IOS ? 1 : 0, autoplay: 1,
                 // Muted-autoplay is universally allowed by browsers. We
                 // load muted so the video starts INSTANTLY (no "click to
                 // play" overlay), then unmute the moment the first 'play'
@@ -172,6 +182,13 @@ class YouTubeAdapter {
     async setMuted(b) { await this._ready; b ? this.player.mute() : this.player.unMute(); }
     async getMuted()  { await this._ready; return this.player.isMuted(); }
     getDuration()     { return this.player ? this.player.getDuration() : 0; }
+    // iOS fullscreen for YouTube — no native path exists (YouTube IFrame API
+    // doesn't expose fullscreen, and rebuilding the iframe sans playsinline
+    // either fails autoplay restrictions or surfaces YouTube's own controls
+    // on top of ours). Caller (mountPlayer) handles iOS YouTube via a CSS
+    // pseudo-fullscreen on the .up root — the player fills the viewport with
+    // our custom chrome intact, no provider UI collisions.
+    iosFullscreen() { return false; }
     teardown() {
         try { this.player && this.player.destroy && this.player.destroy(); } catch (_) {}
         this.player = null;
@@ -200,11 +217,14 @@ class VimeoAdapter {
             this.player = new Vimeo.Player(slot, {
                 id: this.videoId,
                 h: this.hash || undefined,
-                controls: false, title: false, byline: false, portrait: false,
+                // iOS uses Vimeo's own UI — only path to native iOS FS for
+                // an iframe embed is the provider's internal fullscreen call
+                // (Vimeo's FS button triggers webkitEnterFullscreen on the
+                // underlying <video>, which is the actual fullscreen iOS
+                // hides the URL bar for). Desktop/Android keep our custom
+                // uniform chrome via controls: false.
+                controls: IS_IOS, title: false, byline: false, portrait: false,
                 playsinline: true, dnt: true, responsive: true,
-                // Autoplay only if we lazy-loaded (the iframe is created in
-                // direct response to the user's click). Eager-loaded iframes
-                // are visible from page load and must NOT autoplay.
                 autoplay: !this.eager,
             });
             this.player.ready().then(() => this._resolveReady());
@@ -230,6 +250,22 @@ class VimeoAdapter {
     async setMuted(b) { await this._ready; this.player.setMuted(b); }
     async getMuted()  { await this._ready; return this.player.getMuted(); }
     getDuration()     { return this._duration; }
+    // Vimeo's Player.js implements requestFullscreen() with an iOS path that
+    // calls webkitEnterFullscreen on the underlying <video>. Must be called
+    // SYNCHRONOUSLY from the gesture handler so user activation survives.
+    // Returns true to signal the click handler that the FS request was
+    // dispatched and no further fallback is needed.
+    iosFullscreen() {
+        this._ensureIframe();
+        if (this.player && typeof this.player.requestFullscreen === 'function') {
+            try { this.player.requestFullscreen(); } catch (_) {}
+        } else {
+            this._ready.then(() => {
+                try { this.player.requestFullscreen(); } catch (_) {}
+            });
+        }
+        return true;
+    }
     teardown() {
         try { this.player && this.player.destroy && this.player.destroy(); } catch (_) {}
         this.player = null;
@@ -298,6 +334,22 @@ export function mountPlayer(root) {
     const playBtn = root.querySelector('.up__btn--playpause');
     const muteBtn = root.querySelector('.up__btn--mute');
     const fsBtn = root.querySelector('.up__btn--fs');
+    const chromeEl = root.querySelector('.up__chrome');
+    const isIOS = IS_IOS;
+    // iOS YouTube: YouTube's native controls (controls=1) carry the only path
+    // to true iOS fullscreen. Hide our chrome so we don't double-up UIs, and
+    // let the iframe receive taps so the user can reach YouTube's controls.
+    // Pre-playback our poster + big-play still cover the iframe (lazy load),
+    // so the "hidden until playback" pre-roll look is preserved.
+    // iOS for either provider: the provider's own controls are the only path
+    // to true native iOS fullscreen, so we surface them and stand down our
+    // custom chrome to avoid double UIs. Pre-playback our poster + big-play
+    // still cover the iframe (lazy YT load, or eager Vimeo with poster atop).
+    if (isIOS && (provider === 'youtube' || provider === 'vimeo')) {
+        if (chromeEl) chromeEl.hidden = true;
+        if (fsBtn) fsBtn.hidden = true;
+        root.classList.add('up--ios-native-controls');
+    }
     const curEl = root.querySelector('.up__cur');
     const durEl = root.querySelector('.up__dur');
     const iconPlay = playBtn.querySelector('.icon-play');
@@ -365,15 +417,29 @@ export function mountPlayer(root) {
         adapter.setMuted(!m);
         setMutedUI(!m);
     });
-    fsBtn.addEventListener('click', async (e) => {
+    fsBtn.addEventListener('click', (e) => {
         e.stopPropagation();
+        if (root.classList.contains('is-pseudo-fs')) {
+            root.classList.remove('is-pseudo-fs');
+            document.documentElement.classList.remove('lightbox-up-pseudo-fs');
+            return;
+        }
         if (document.fullscreenElement) {
             document.exitFullscreen();
-        } else if (root.requestFullscreen) {
-            root.requestFullscreen();
-        } else if (root.webkitRequestFullscreen) {
-            root.webkitRequestFullscreen();
+            return;
         }
+        if (isIOS) {
+            // Vimeo iOS: CSS pseudo-fullscreen — fullscreening the iframe via
+            // Vimeo's player.requestFullscreen hid our chrome (controls:false
+            // gives Vimeo nothing to show either). Pseudo-FS keeps our chrome.
+            // YouTube iOS: this code path doesn't run (button is hidden — user
+            // hits YouTube's own fullscreen button inside their native chrome).
+            root.classList.add('is-pseudo-fs');
+            document.documentElement.classList.add('lightbox-up-pseudo-fs');
+            return;
+        }
+        if (root.requestFullscreen) root.requestFullscreen();
+        else if (root.webkitRequestFullscreen) root.webkitRequestFullscreen();
     });
     scrub.addEventListener('click', (e) => {
         const r = scrub.getBoundingClientRect();

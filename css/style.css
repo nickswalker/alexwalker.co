@@ -98,6 +98,9 @@ table {
     --brand-blue: #1E9CDC;
     /* Complementary orange for the Watch Reels CTA (opposite hue from blue). */
     --brand-orange: #DC631E;
+    /* Shared easing curve. Material's "standard" curve — accelerates softly,
+       decelerates gently, feels natural for hovers, fades, slides, anything. */
+    --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -200,7 +203,7 @@ input[type="submit"] {
     padding: 6px 16px;
     background-color: transparent;
     color: var(--brand-blue);
-    transition: 0.3s;
+    transition: 0.3s var(--ease-standard);
 }
 
 figure img {
@@ -239,7 +242,7 @@ header {
     background-repeat: no-repeat;
     z-index: 900;
     box-sizing: border-box;
-    transition: background-color .4s;
+    transition: background-color .4s var(--ease-standard);
     color: black;
     overflow: visible;
     -webkit-backdrop-filter: blur(4px);
@@ -347,7 +350,7 @@ header.dark nav ul li a {
 
 nav ul li a {
     /* border-bottom: 1px solid rgba(8,171,212, 0); */
-    transition: .4s;
+    transition: .4s var(--ease-standard);
     text-shadow: 0 0 10px rgba(255, 255, 255, 1);
     overflow: visible;
     display: block;
@@ -491,7 +494,7 @@ body.past-cinematographer #scroll-down-indicator {
     display: inline-block;
     color: #333;
     vertical-align: middle;
-    transition: .4s;
+    transition: .4s var(--ease-standard);
 }
 
 .logo h1 a:link,
@@ -640,7 +643,7 @@ section h2 {
     width: 100%;
     position: relative;
     overflow: hidden;
-    transition: .3s;
+    transition: .3s var(--ease-standard);
 }
 
 .carousel-inner {
@@ -653,7 +656,7 @@ section h2 {
     left: 0;
     height: 100%;
     width: 100%;
-    transition: .4s;
+    transition: .4s var(--ease-standard);
 }
 
 #slider-container .item picture>* {
@@ -781,7 +784,7 @@ section h2 {
 .thumbnails img {
     display: block;
     margin: 0 auto;
-    transition: 0.3s;
+    transition: 0.3s var(--ease-standard);
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -926,13 +929,27 @@ li.coming-soon a::before {
   display: flex;
   align-items: center;
   justify-content: center;
+  --lb-scale: 1;       /* per-logo optical-weight multiplier; default = medium */
+  --lb-base: 64px;     /* row height before scaling (overridden at small widths) */
 }
+/* Optical-weight tiers — heavy wordmarks scale DOWN, thin ones scale UP, so
+   the row reads as visually even regardless of the source art's ink density.
+   Note: several source PNGs (Nissan, Boeing, MTV, Discovery) include padding
+   around the mark, so they need bigger heights to compensate. */
+.clients--logos .logo-ibm,
+.clients--logos .logo-dell        { --lb-scale: 0.88; }
+.clients--logos .logo-mtv         { --lb-scale: 1.08; }
+.clients--logos .logo-boeing      { --lb-scale: 1.18; }
+.clients--logos .logo-nissan      { --lb-scale: 1.22; }
+.clients--logos .logo-discovery   { --lb-scale: 1.30; }
+.clients--logos .logo-vimeo       { --lb-scale: 1.18; }
+
 .clients--logos li > a,
 .clients--logos li > img {
   display: block;
   width: 100%;
   max-width: 180px;
-  height: 64px;
+  height: calc(var(--lb-base) * var(--lb-scale));
   object-fit: contain;
   filter: brightness(0);
   opacity: 0.6;
@@ -943,7 +960,7 @@ li.coming-soon a::before {
   display: block;
   width: 100%;
   max-width: 180px;
-  height: 64px;
+  height: calc(var(--lb-base) * var(--lb-scale));
   object-fit: contain;
   filter: brightness(0);
   opacity: 0.6;
@@ -984,7 +1001,7 @@ li.coming-soon a::before {
 
 .stills li {
     overflow: hidden;
-    transition: .2s;
+    transition: .2s var(--ease-standard);
 }
 
 /*We're using 16 images, so remove the stray one when we have rows of 3*/
@@ -998,7 +1015,7 @@ li.coming-soon a::before {
 
 .stills img {
     display: block;
-    transition: 0.3s;
+    transition: 0.3s var(--ease-standard);
 }
 
 .stills img:hover {
@@ -1086,7 +1103,7 @@ section#about {
 #contact a {
     opacity: 0.5;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.3s var(--ease-standard);
 }
 
 #contact a:hover {
@@ -1095,7 +1112,7 @@ section#about {
 
 #contact .representation-logo {
     opacity: 0.5;
-    transition: 0.3s;
+    transition: 0.3s var(--ease-standard);
 }
 
 #contact .representation-logo:hover {
@@ -1387,7 +1404,7 @@ section#about {
     font-size: 16px;
     font-weight: 600;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 1px rgba(0, 0, 0, 0.2);
-    transition: background 0.3s, color 0.3s;
+    transition: background 0.3s var(--ease-standard), color 0.3s var(--ease-standard);
 }
 
 #custom-lightbox-button .external-button {
@@ -1404,7 +1421,7 @@ section#about {
     font-size: 16px;
     font-weight: 600;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 1px rgba(0, 0, 0, 0.2);
-    transition: background 0.3s, color 0.3s;
+    transition: background 0.3s var(--ease-standard), color 0.3s var(--ease-standard);
 }
 
 #custom-lightbox-button .external-button:hover {
@@ -1617,7 +1634,7 @@ body.loaded header {
   font-weight: 600;
   font-size: 16px;
   border-radius: 9999px;
-  transition: background 0.3s, color 0.3s;
+  transition: background 0.3s var(--ease-standard), color 0.3s var(--ease-standard);
   white-space: nowrap;
 }
 
@@ -1939,11 +1956,11 @@ body.loaded header {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px 24px;
   }
+  .clients--logos li { --lb-base: 52px; }
   .clients--logos li > a,
   .clients--logos li > img,
   .clients--logos li > a > img {
     max-width: 140px;
-    height: 52px;
   }
 }
 .centered-subheading {
@@ -2132,6 +2149,23 @@ body {
    guard in lightbox.js instead. */
 html.lightbox-open {
     overscroll-behavior: none;
+}
+/* Slide + fade the sticky header out when a lightbox is open, then back in
+   on close. Slower than the dialog fade so the motion is perceptible even
+   while the lightbox is materializing on top. Same easing as the lightbox
+   keeps the open/close motion unified. */
+header {
+    transition:
+        opacity 480ms cubic-bezier(0.4, 0, 0.2, 1),
+        transform 480ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* Only animate the menu bar out when it's actually in its top-stuck state.
+   .is-stuck is toggled by initStickyHeaderState in scroll.js whenever the
+   header's bounding box top sits at or above the viewport top. */
+html.lightbox-open header.is-stuck {
+    opacity: 0;
+    transform: translateY(-100%);
+    pointer-events: none;
 }
 /* Suppress iOS Safari's translucent tap-highlight overlay on every
    element that can trigger or close a lightbox. Without this the
@@ -2485,7 +2519,7 @@ dialog.lightbox [hidden] { display: none !important; }
     font-weight: 600 !important;
     line-height: 1.2;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 1px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s, color 0.3s !important;
+    transition: background-color 0.3s var(--ease-standard), color 0.3s var(--ease-standard) !important;
 }
 .lightbox__caption .external-button:hover {
     background-color: var(--brand-blue) !important;
@@ -2593,6 +2627,49 @@ dialog.lightbox [hidden] { display: none !important; }
     user-select: none;
     -webkit-user-select: none;
 }
+/* Fullscreen — drop the 16:9 lock so the player fills the viewport. The
+   inner iframe already has position:absolute inset:0 width/height:100% so
+   it follows .up's new dimensions naturally. NOT using display:flex here
+   because Vimeo's "responsive" mode wraps the iframe in a padding-bottom
+   aspect-ratio container, which collapses to zero inside a flex parent. */
+.up:fullscreen,
+.up:-webkit-full-screen,
+.up.is-pseudo-fs {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    height: 100lvh;       /* large viewport — extends behind iOS URL bar */
+    aspect-ratio: auto;
+    max-width: none;
+    max-height: none;
+}
+/* Vimeo's responsive mode wraps the iframe in <div style="padding-bottom:
+   56.25%; position:relative"> which gives a 16:9 box at the parent's width.
+   In fullscreen that wrapper is only ~56% as tall as the viewport, leaving
+   a black band below the video. Force every Vimeo wrapper inside .up__embed
+   to fill so the iframe goes edge-to-edge. */
+.up:fullscreen .up__embed,
+.up:fullscreen .up__embed > *,
+.up:-webkit-full-screen .up__embed,
+.up:-webkit-full-screen .up__embed > *,
+.up.is-pseudo-fs .up__embed,
+.up.is-pseudo-fs .up__embed > * {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+/* Pseudo-fullscreen variant — no top-layer, so we promote .up above the
+   lightbox dialog and cover the page. */
+.up.is-pseudo-fs {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483647;
+    background: #000;
+}
+html.lightbox-up-pseudo-fs { overflow: hidden; }
 .up iframe {
     position: absolute;
     inset: 0;
@@ -2669,10 +2746,24 @@ dialog.lightbox [hidden] { display: none !important; }
     pointer-events: none;
     z-index: 4;
 }
-.up:hover                       .up__chrome,
+/* :hover separated from the others so we can gate it behind a real pointer.
+   iOS Safari's sticky-hover would otherwise keep the chrome visible the
+   entire playback after the first tap. */
 .up[data-state="paused"]        .up__chrome,
 .up[data-state="ended"]         .up__chrome,
 .up.is-touching                 .up__chrome { opacity: 1; }
+@media (hover: hover) {
+    .up:hover .up__chrome { opacity: 1; }
+}
+/* iOS — surface the provider's own controls (Vimeo or YouTube). Their FS
+   button is the only path to true native iOS fullscreen for an iframe embed
+   (calls webkitEnterFullscreen internally on the underlying <video>). Before
+   the video starts (.is-loaded), our poster + big-play still cover the iframe
+   for the clean pre-roll look. After playback begins, hit/big-play are removed
+   so taps reach the provider's UI. */
+.up--ios-native-controls iframe { pointer-events: auto !important; }
+.up--ios-native-controls.is-loaded .up__hit { display: none; }
+.up--ios-native-controls.is-loaded .up__big-play { display: none; }
 .up__chrome > * { pointer-events: auto; }
 .up__scrub {
     position: relative;

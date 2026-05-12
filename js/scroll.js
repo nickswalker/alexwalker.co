@@ -72,13 +72,28 @@ export function initScrollFade(selector = '.scroll-fade') {
         document.querySelectorAll(selector).forEach(el => el.classList.add('visible'));
         return;
     }
+    // Elements that are already in the viewport when the observer attaches
+    // get their .visible class staggered so the cascade is actually visible
+    // — without the stagger, the JS+CSS sequence completes faster than the
+    // browser's first paint and the user misses the fade entirely.
+    // Below-the-fold elements get no stagger — they fade as they enter view.
+    const INITIAL_STAGGER_MS = 90;
+    let initialBatchSeen = 0;
+    let initialBatchDone = false;
+    // Anything firing after this timestamp counts as scroll-triggered.
+    setTimeout(() => { initialBatchDone = true; }, 1500);
+
     const observer = new IntersectionObserver((entries, obs) => {
         for (const entry of entries) {
             if (!entry.isIntersecting) continue;
             const el = entry.target;
             const itemDelay = parseInt(el.style.getPropertyValue('--delay')) || 0;
-            if (itemDelay > 0) {
-                setTimeout(() => el.classList.add('visible'), itemDelay);
+            const cascadeDelay = !initialBatchDone
+                ? (initialBatchSeen++ * INITIAL_STAGGER_MS)
+                : 0;
+            const total = itemDelay + cascadeDelay;
+            if (total > 0) {
+                setTimeout(() => el.classList.add('visible'), total);
             } else {
                 el.classList.add('visible');
             }
@@ -86,10 +101,10 @@ export function initScrollFade(selector = '.scroll-fade') {
         }
     }, {
         threshold: 0,
-        // Extend the effective viewport ~18% below its bottom so elements
-        // start fading in while they're still below the fold. Avoids the
-        // empty-page feeling on long grids (short films, posters).
-        rootMargin: '0px 0px 18% 0px',
+        // Shrink the effective viewport up from the bottom so elements only
+        // start fading in once they're solidly visible — otherwise the fade
+        // plays off-screen and the user sees nothing animate.
+        rootMargin: '0px 0px -12% 0px',
     });
     document.querySelectorAll(selector).forEach(el => observer.observe(el));
 }
@@ -246,13 +261,29 @@ export function initReelButtonShift() {
     requestAnimationFrame(() => {
         if (document.body.classList.contains('past-cinematographer')) applyShift();
     });
-    // On resize, only recapture when the reel is in its pristine natural
-    // state — no inline transform, no past-cinematographer. Otherwise the
-    // baseline gets corrupted by mid-transition measurements.
+    // On resize, recapture so the projection stays correct at the new width.
+    // - Pristine state (not past, no transform): straightforward captureBaseline.
+    // - Past-cinematographer: the captured pre-collapse baseline is now stale
+    //   because the viewport changed. Strip the inline transform briefly to
+    //   read the POST-collapse natural position at the new width, then derive
+    //   the pre-collapse baseline by subtracting NATURAL_SHIFT (only if the
+    //   scroll-down arrow is in flex layout — homepage; on project pages it's
+    //   display:none and contributes no natural shift).
     window.addEventListener('resize', () => {
-        if (!document.body.classList.contains('past-cinematographer')
-            && !reel.style.transform) {
+        const isPast = document.body.classList.contains('past-cinematographer');
+        if (!isPast && !reel.style.transform) {
             captureBaseline();
+        } else if (isPast && !window.matchMedia('(max-width: 700px)').matches) {
+            const prevTransform = reel.style.transform;
+            reel.style.transform = '';
+            // Force a synchronous layout read so we measure the untransformed
+            // position. Reading offsetLeft is the cheap canonical way.
+            void reel.offsetLeft;
+            const sd = document.getElementById('scroll-down-indicator');
+            arrowInLayout = !!(sd && getComputedStyle(sd).display !== 'none');
+            const postCollapseRight = reel.getBoundingClientRect().right;
+            preCollapseReelRight = postCollapseRight - (arrowInLayout ? NATURAL_SHIFT : 0);
+            reel.style.transform = prevTransform;
         }
         applyShift();
     }, { passive: true });
