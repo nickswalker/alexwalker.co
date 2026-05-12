@@ -597,7 +597,7 @@ section h2 {
    amount is computed by initReelButtonShift in scroll.js (depends on viewport
    width) and applied as an inline transform. The transition smooths it. */
 .reel-button-menu {
-    transition: transform 420ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 360ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #slider {

@@ -155,38 +155,31 @@ export function initReelButtonShift() {
         const reelRect = reel.getBoundingClientRect();
         const containerRect = container.getBoundingClientRect();
         const paddingRight = parseFloat(getComputedStyle(container).paddingRight) || 0;
-        // Target: where the arrow's LEFT edge sat at rest, NOT the screen
-        // edge. The reel slides over to occupy the arrow's former position,
-        // not all the way to the container's content-right.
+        // Project where the reel will naturally settle once the scroll-down
+        // indicator finishes collapsing. With 7 flex items and space-between,
+        // the reel (item 6 of 7) sits 5 gaps from the left — so when the
+        // arrow's remaining width is redistributed across 6 gaps, the reel
+        // naturally shifts right by 5/6 of that remaining width.
+        // Using the indicator's CURRENT width (which may be mid-transition or
+        // fully collapsed) keeps the math correct in every state.
+        const currentArrowWidth = scrollDown ? scrollDown.getBoundingClientRect().width : 0;
+        const naturalShiftRemaining = currentArrowWidth * 5 / 6;
+        const projectedRight = reelRect.right + naturalShiftRemaining;
         const targetRight = containerRect.right - paddingRight - ARROW_WIDTH;
-        const shift = Math.max(0, targetRight - reelRect.right);
+        const shift = Math.max(0, targetRight - projectedRight);
         if (shift > 0) reel.style.transform = `translateX(${shift}px)`;
     }
 
     function onPastChange(nowPast) {
         if (!nowPast) {
-            // Going back: clear shift now so the reel rides the natural
-            // redistribution back into place.
             reel.style.transform = '';
             return;
         }
-        // Going forward: wait for scroll-down's width transition to finish
-        // before measuring — otherwise we measure mid-flight and overshoot.
-        if (!scrollDown) { applyShift(); return; }
-        let fired = false;
-        const finish = () => {
-            if (fired) return;
-            fired = true;
-            scrollDown.removeEventListener('transitionend', onEnd);
-            applyShift();
-        };
-        const onEnd = (e) => {
-            if (e.target === scrollDown && e.propertyName === 'width') finish();
-        };
-        scrollDown.addEventListener('transitionend', onEnd);
-        // Fallback in case the transition is skipped or never started
-        // (e.g., reduced-motion, indicator already collapsed).
-        setTimeout(finish, 500);
+        // Apply immediately so the reel's transform transition runs in
+        // PARALLEL with the scroll-down indicator's collapse — not after it.
+        // The projection inside applyShift accounts for the natural
+        // redistribution that's about to happen.
+        applyShift();
     }
 
     // Initial state — if page loads already past cinematographer.
