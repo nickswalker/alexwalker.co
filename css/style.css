@@ -241,8 +241,11 @@ header {
     overflow: visible;
     -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
-    /* Box-shadow above the header in the header's bg color — covers any
-       sub-pixel sliver between viewport top and the stuck header. */
+}
+/* Sub-pixel-gap cover only when the header is actually stuck to the top.
+   .is-stuck is toggled by site.js based on scroll position so the box-shadow
+   isn't visible above the header when the user is at the top of the page. */
+header.is-stuck {
     box-shadow: 0 -2px 0 0 var(--header-bg);
 }
 header.dark {
@@ -555,14 +558,16 @@ section h2 {
 }
 
 /* Tablet + desktop: when the page has scrolled past the cinematographer section
-   and the scroll-down arrow has faded, shift the Watch Reels button rightward
-   to visibly fill the gap. Smooth eased transition matches the arrow's fade. */
+   and the scroll-down arrow has faded, push the Watch Reels button all the way
+   to the right edge of the header container (mirroring Alex Walker's inset on
+   the left). margin-left: auto absorbs the free space; the transition smooths
+   the slide. */
 .reel-button-menu {
-    transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: margin-left 420ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 @media screen and (min-width: 701px) {
     body.past-cinematographer .reel-button-menu {
-        transform: translateX(56px);
+        margin-left: auto;
     }
 }
 
@@ -1826,10 +1831,10 @@ body.loaded header {
 }
 #glass-wrapper {
   position: fixed;
-  bottom: calc(126px + env(safe-area-inset-bottom, 1px));
-  right: calc(14vw + env(safe-area-inset-right, 1px));
-  width: 80px;
-  height: 80px;
+  bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+  right: calc(40px + env(safe-area-inset-right, 0px));
+  width: 70px;
+  height: 70px;
   z-index: 9967;
   visibility: hidden;
   pointer-events: none;

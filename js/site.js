@@ -12,6 +12,7 @@ import {
     initStaggeredThumbs,
     initSliderScrollBlur,
     initSectionPassed,
+    initStickyHeaderState,
 } from './scroll.js';
 
 function ready(fn) {
@@ -30,6 +31,7 @@ ready(() => {
     safe('copyrightYear', () => initCopyrightYear());
     safe('staggeredThumbs', () => initStaggeredThumbs());
     safe('scrollFade', () => initScrollFade());
+    safe('stickyHeader', () => initStickyHeaderState());
     document.body.classList.add('loaded');
 
     const slider = document.getElementById('slider-container');

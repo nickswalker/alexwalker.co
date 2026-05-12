@@ -97,6 +97,22 @@ export function initStaggeredThumbs(selector = '.thumbnails.four-up li', step = 
     });
 }
 
+// Toggle .is-stuck on the sticky header once it pins to the top of the viewport.
+// Used by CSS to render a subtle box-shadow above the header that covers the
+// sub-pixel gap *only when the header is actually stuck*, not while at rest.
+export function initStickyHeaderState(selector = 'header') {
+    const header = document.querySelector(selector);
+    if (!header) return;
+    function update() {
+        // getBoundingClientRect().top <= 0 means the header is at or above the
+        // viewport top — i.e. sticky is engaged.
+        header.classList.toggle('is-stuck', header.getBoundingClientRect().top <= 0);
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+}
+
 // Toggle a body class when the user has scrolled past a section's top.
 // Used to fade the scroll-down indicator after the cinematographer section appears.
 export function initSectionPassed(sectionSelector, bodyClass) {
