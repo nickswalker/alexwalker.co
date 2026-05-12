@@ -1,3 +1,5 @@
+import { sendVideoPixel } from './pixel.js';
+
 // Native-dialog lightbox: images (gallery) + iframes (video).
 // Features: keyboard nav, swipe, captions, slideshow, fullscreen, thumbs,
 // mobile body-scroll-lock, lazy iframe load, View Transitions when supported.
@@ -49,19 +51,33 @@ function enhanceVideoSrc(href) {
 }
 
 let bodyLockCount = 0;
+let savedScrollY = 0;
 
-// Lock the page WITHOUT using position: fixed — that breaks position: sticky on the
-// header (and causes the slider blur to snap when window.scrollY resets to 0).
-// Just disable overflow on html/body. The dialog covers the viewport anyway, and
-// the wheel/touch handlers on the stage prevent scroll-chain.
+// Robust scroll lock: video iframes propagate scroll/wheel events to the
+// parent on iOS, so disabling overflow alone isn't enough. Pin <body> with
+// position: fixed + negative top, then restore the scroll position on
+// unlock. The lightbox <dialog> covers the viewport so the sticky header
+// being temporarily un-stuck is invisible.
 function lockBody() {
     if (bodyLockCount++ > 0) return;
+    savedScrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${savedScrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
     document.documentElement.classList.add('lightbox-open');
 }
 function unlockBody() {
     if (--bodyLockCount > 0) return;
     bodyLockCount = 0;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
     document.documentElement.classList.remove('lightbox-open');
+    window.scrollTo(0, savedScrollY);
 }
 
 export class Lightbox {
@@ -151,9 +167,11 @@ export class Lightbox {
         let dragPointer = null;
         let dragMoved = false;
         // Velocity tracking — sample the last few moves for a stable read at release.
-        let velSamples = []; // {t, x}
-        const DISMISS_DRAG_Y = 140;
-        const FLICK_THRESHOLD = 0.45;  // px/ms — moderate flick
+        let velSamples = []; // {t, x, y}
+        const DISMISS_DRAG_Y = 120;
+        const DISMISS_FLICK_VELOCITY = 0.5; // px/ms — vertical flick speed to dismiss
+        const DISMISS_FLICK_MIN_DY = 20;    // minimum travel paired with flick velocity
+        const FLICK_THRESHOLD = 0.45;  // px/ms — moderate horizontal flick (panel advance)
         const FLICK_STRONG = 1.4;      // px/ms — strong flick (skips multiple)
 
         this.stage.addEventListener('pointerdown', (e) => {
@@ -167,7 +185,7 @@ export class Lightbox {
             dragStartY = e.clientY;
             dragStartScroll = this.stage.scrollLeft;
             dragMoved = false;
-            velSamples = [{ t: performance.now(), x: e.clientX }];
+            velSamples = [{ t: performance.now(), x: e.clientX, y: e.clientY }];
             this.stage.setPointerCapture(e.pointerId);
             this.stage.classList.add('is-dragging');
         });
@@ -178,7 +196,7 @@ export class Lightbox {
             if (Math.abs(dx) > 4 || Math.abs(dy) > 4) dragMoved = true;
             this.stage.scrollLeft = dragStartScroll - dx;
             const now = performance.now();
-            velSamples.push({ t: now, x: e.clientX });
+            velSamples.push({ t: now, x: e.clientX, y: e.clientY });
             while (velSamples.length > 1 && now - velSamples[0].t > 100) velSamples.shift();
             // Vertical drag: move ONLY the current image; fade everything else.
             // Works in both directions — drag up or down to dismiss.
@@ -193,17 +211,22 @@ export class Lightbox {
             this.stage.classList.remove('is-dragging');
             this._setDismissDrag(0);
             const moved = dragMoved;
-            // Compute average velocity over the recent samples (px / ms)
+            // Compute average horizontal + vertical velocity over recent samples (px/ms).
             let velocity = 0;
+            let velY = 0;
             if (velSamples.length >= 2) {
                 const first = velSamples[0];
                 const last = velSamples[velSamples.length - 1];
                 const dt = Math.max(last.t - first.t, 1);
                 velocity = (last.x - first.x) / dt;
+                velY = (last.y - first.y) / dt;
             }
             dragStartX = dragStartY = null;
             dragPointer = null;
-            if (Math.abs(dy) > DISMISS_DRAG_Y) { this.close(); return; }
+            const isVerticalFlick = Math.abs(velY) >= DISMISS_FLICK_VELOCITY
+                && Math.abs(dy) >= DISMISS_FLICK_MIN_DY
+                && Math.sign(velY) === Math.sign(dy);
+            if (Math.abs(dy) > DISMISS_DRAG_Y || isVerticalFlick) { this.close(); return; }
             // Inertial flick: high horizontal velocity → advance one or more panels.
             // Wraps around at the ends when loop is enabled.
             if (this.items.length > 1 && Math.abs(velocity) > FLICK_THRESHOLD) {
@@ -242,7 +265,14 @@ export class Lightbox {
         let touchStartX = 0, touchStartY = 0, touchDir = null;
         let touchStartTime = 0;
         let lastTapTime = 0, lastTapX = 0, lastTapY = 0;
-        const VERTICAL_DISMISS_THRESHOLD = 120;
+        let touchVelSamples = [];
+        // Slow-drag fallback distance. A fast flick dismisses with far less
+        // travel — see velocity check in touchend.
+        const VERTICAL_DISMISS_THRESHOLD = 90;
+        // Pixels-per-millisecond. A "flick" reaching this speed dismisses
+        // even after only ~20px of travel.
+        const VERTICAL_FLICK_VELOCITY = 0.5;
+        const VERTICAL_FLICK_MIN_DY = 20;
 
         this.stage.addEventListener('touchstart', (e) => {
             if (e.touches.length !== 1) return;
@@ -251,6 +281,7 @@ export class Lightbox {
             touchStartY = t.clientY;
             touchDir = null;
             touchStartTime = performance.now();
+            touchVelSamples = [{ t: touchStartTime, y: t.clientY }];
         }, { passive: true });
 
         this.stage.addEventListener('touchmove', (e) => {
@@ -263,7 +294,13 @@ export class Lightbox {
             }
             if (touchDir === 'v') {
                 e.preventDefault();
-                this._setDismissDrag(dy); // dy can be negative for upward drag
+                this._setDismissDrag(dy);
+                const now = performance.now();
+                touchVelSamples.push({ t: now, y: t.clientY });
+                // Keep only samples from the last 100ms for a fresh velocity reading.
+                while (touchVelSamples.length > 1 && now - touchVelSamples[0].t > 100) {
+                    touchVelSamples.shift();
+                }
             }
         }, { passive: false });
 
@@ -272,7 +309,19 @@ export class Lightbox {
             if (!t) return;
             const dy = t.clientY - touchStartY;
             const elapsed = performance.now() - touchStartTime;
-            if (touchDir === 'v' && Math.abs(dy) > VERTICAL_DISMISS_THRESHOLD) {
+            // Compute instantaneous velocity from the last ~100ms of samples.
+            let velY = 0;
+            if (touchVelSamples.length >= 2) {
+                const first = touchVelSamples[0];
+                const last = touchVelSamples[touchVelSamples.length - 1];
+                const dt = Math.max(last.t - first.t, 1);
+                velY = (last.y - first.y) / dt; // px/ms, signed
+            }
+            const isFlick = Math.abs(velY) >= VERTICAL_FLICK_VELOCITY
+                && Math.abs(dy) >= VERTICAL_FLICK_MIN_DY
+                && Math.sign(velY) === Math.sign(dy); // direction matches drag
+            const isSlowDrag = Math.abs(dy) > VERTICAL_DISMISS_THRESHOLD;
+            if (touchDir === 'v' && (isFlick || isSlowDrag)) {
                 this.close();
                 touchDir = null;
                 return;
@@ -415,6 +464,14 @@ export class Lightbox {
             // Jump (no animation) to the starting panel
             this._scrollToIndex(this.index, 'instant');
         });
+
+        // Beacon the backend so the stats card can show which videos were
+        // actually opened. Images aren't beaconed — pageviews already cover
+        // image-gallery interest.
+        const item = this.items[this.index];
+        if (item && item.type === 'iframe') {
+            try { sendVideoPixel(item.href); } catch (_) {}
+        }
     }
 
     close() {
@@ -750,7 +807,7 @@ export function autoInitLightboxes(opts = {}) {
             nav: items.length > 1,
             slideshow: isGallery,
             thumbs: isGallery,
-            fullscreen: isImage,
+            fullscreen: false,
             caption: (item) => item.caption || '',
             ...opts,
         });

@@ -3,6 +3,7 @@
 
 import { autoInitLightboxes } from './lightbox.js';
 import { Carousel, shuffleCarouselImages } from './carousel.js';
+import { sendPagePixel } from './pixel.js';
 import {
     initSmoothScroll,
     initReturnToTop,
@@ -45,6 +46,7 @@ ready(() => {
     }
 
     safe('lightboxes', () => autoInitLightboxes());
+    safe('visitPixel', () => sendPagePixel());
 
     // Return-to-top button is the glass-button on every page now (see js/glass-return-to-top.js)
 });

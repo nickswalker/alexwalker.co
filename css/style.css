@@ -96,6 +96,8 @@ table {
     --grid-gap: 1px;
     /* Brand blue — matches the masthead bar (was #08abd4 across the site) */
     --brand-blue: #1E9CDC;
+    /* Complementary orange for the Watch Reels CTA (opposite hue from blue). */
+    --brand-orange: #DC631E;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -193,8 +195,9 @@ input[type="submit"] {
     margin-bottom: var(--half-spacing-unit);
     font-weight: 600;
     border: 2px solid var(--brand-blue);
-    border-radius: 4px;
-    padding: 6px 12px;
+    /* Pill — large radius collapses to the height of the element */
+    border-radius: 9999px;
+    padding: 6px 16px;
     background-color: transparent;
     color: var(--brand-blue);
     transition: 0.3s;
@@ -228,7 +231,7 @@ button:hover {
 header {
     --bar-blue: #1E9CDC;
     --bar-ink: #0A0A0A;
-    --header-bg: rgba(255, 255, 255, .92);
+    --header-bg: rgba(255, 255, 255, .85);
     background-color: var(--header-bg);
     background-image: linear-gradient(to right, var(--bar-blue), var(--bar-blue));
     background-size: 100% 3px;
@@ -249,7 +252,7 @@ header {
     padding-top: 1px;
 }
 header.dark {
-    --header-bg: rgba(0, 0, 0, .92);
+    --header-bg: rgba(0, 0, 0, .75);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -329,7 +332,7 @@ header {
 /*--- = Dark Mode  */
 header.dark {
     color: white;
-    --header-bg: rgba(0, 0, 0, .92);
+    --header-bg: rgba(0, 0, 0, .75);
     background-color: var(--header-bg);
 }
 
@@ -422,9 +425,9 @@ header .social li svg {
     flex-shrink: 0;
 }
 /* Default: desaturated. On hover-capable devices (mouse), reveal brand
-   colors on hover. On touch devices we deliberately do NOT reset on tap
-   because iOS Safari's sticky :hover would leave the colors persisting
-   indefinitely after a tap. */
+   colors on hover. On touch devices :active flashes the colored version
+   during the tap press — visible for a split second before nav. We avoid
+   :hover on touch because iOS Safari makes it sticky after a tap. */
 header .social li svg {
     filter: grayscale(1);
     transition: filter 200ms ease;
@@ -433,6 +436,10 @@ header .social li svg {
     header .social li:hover svg {
         filter: none;
     }
+}
+header .social li a:active svg {
+    filter: none;
+    transition: none;
 }
 header .social li svg.brand-imdb {
     height: 14px;
@@ -576,11 +583,10 @@ section h2 {
 
 #reel-button {
     margin: 0;
-    /* White outline + white text at every viewport size (was previously only
-       set in the min-width: 900px media query, which left mobile defaulting to
-       the blue brand button). */
     color: white;
     border-color: white;
+    /* Subtle drop shadow for legibility against the slider/page behind. */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 #reel-button a,
 #reel-button a:link,
@@ -618,10 +624,12 @@ section h2 {
 #slider {
     padding: 0;
     /* Leave room for the 54px header below the slider so it's always
-       visible at the bottom of the initial viewport, regardless of screen
-       size. dvh accounts for iOS Safari's dynamic toolbar. */
+       visible at the bottom of the initial viewport — including iPad
+       Safari with its top toolbar showing on first load. 100svh is the
+       SMALLEST viewport height (worst case: all browser UI visible), so
+       it guarantees the header is on-screen regardless of toolbar state. */
     height: calc(100vh - 54px);
-    height: calc(100dvh - 54px);
+    height: calc(100svh - 54px);
     overflow: hidden;
     background-color: black;
 }
@@ -1142,10 +1150,10 @@ section#about {
     #reel-button {
         display: block;
         opacity: 1;
-        color: white;
         z-index: 10;
-        border-color: white;
         font-size: 18px;
+        /* color + border are set at the base level (orange) — don't
+           override them here. */
     }
 
     .reel-button-container {
@@ -1153,10 +1161,8 @@ section#about {
     }
 
 
-    #slider {
-        /* Take up the full height, but leave room for the navbar to appear on screen as well*/
-        height: calc(100vh - 54px);
-    }
+    /* #slider height is now set at the base level using 100svh so the
+       header is visible on first load across every screen size. */
 
     /*--- = Navigation  */
     .logo {
@@ -1320,14 +1326,15 @@ section#about {
     align-items: center;
     justify-content: center;
     margin-top: 16px;
-    padding: 6px 12px;
+    padding: 6px 16px;
     border: 2px solid white;
     color: white;
     background-color: transparent;
-    border-radius: 4px;
+    border-radius: 9999px;
     text-decoration: none;
     font-size: 16px;
     font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 1px rgba(0, 0, 0, 0.2);
     transition: background 0.3s, color 0.3s;
 }
 
@@ -1336,14 +1343,15 @@ section#about {
     align-items: center;
     justify-content: center;
     margin-top: 16px;
-    padding: 6px 12px;
+    padding: 6px 16px;
     border: 2px solid white;
     color: white;
     background-color: transparent;
-    border-radius: 4px;
+    border-radius: 9999px;
     text-decoration: none;
     font-size: 16px;
     font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 1px rgba(0, 0, 0, 0.2);
     transition: background 0.3s, color 0.3s;
 }
 
@@ -1548,7 +1556,7 @@ body.loaded header {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 16px;
+  padding: 8px 20px;
   min-width: 120px;
   height: 44px;
   border: 2px solid var(--brand-blue);
@@ -1556,7 +1564,7 @@ body.loaded header {
   color: var(--brand-blue);
   font-weight: 600;
   font-size: 16px;
-  border-radius: 6px;
+  border-radius: 9999px;
   transition: background 0.3s, color 0.3s;
   white-space: nowrap;
 }
@@ -2314,6 +2322,7 @@ dialog.lightbox [hidden] { display: none !important; }
     max-height: 70vh;
     aspect-ratio: 16 / 9;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+    position: relative;
 }
 .lightbox__iframe {
     width: 100%;
@@ -2368,15 +2377,16 @@ dialog.lightbox [hidden] { display: none !important; }
     align-items: center;
     justify-content: center;
     margin-top: 12px !important;
-    padding: 6px 12px !important;
+    padding: 6px 16px !important;
     border: 2px solid var(--brand-blue) !important;
-    border-radius: 4px !important;
+    border-radius: 9999px !important;
     background-color: transparent !important;
     color: var(--brand-blue) !important;
     text-decoration: none !important;
     font-size: 16px !important;
     font-weight: 600 !important;
     line-height: 1.2;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 1px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s, color 0.3s !important;
 }
 .lightbox__caption .external-button:hover {

@@ -1,2 +1,32 @@
 <script data-goatcounter="https://alexwalker.co/stats/count"
         async src="//alexwalker.co/stats/count.js" data-proofer-ignore></script>
+
+<!-- Anonymous visitor counter — pings the Tailscale-funneled Flask backend
+     on every page load. Hashed (IP + UA + day), no cookies, no third party.
+     The ?s=alexwalker tag namespaces this site so the backend can separate
+     it from cinemaxxing pings going to the same /p.gif endpoint.
+     The ?me= param (if present on the page URL) is forwarded so personal
+     bookmarks like alexwalker.co?me=alex2026 get labelled in the visitors
+     admin page. JS-disabled clients fall back to anonymous via <noscript>. -->
+<noscript>
+  <img src="https://nexus.tail1c6f41.ts.net/p.gif?s=alexwalker" alt="" width="1" height="1"
+       style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;"
+       referrerpolicy="no-referrer-when-downgrade" data-proofer-ignore>
+</noscript>
+<script>
+  (function () {
+    var me = new URLSearchParams(window.location.search).get('me');
+    var src = 'https://nexus.tail1c6f41.ts.net/p.gif?s=alexwalker'
+              + (me ? '&me=' + encodeURIComponent(me) : '');
+    var img = document.createElement('img');
+    img.src = src;
+    img.alt = '';
+    img.width = 1;
+    img.height = 1;
+    img.style.cssText = 'position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;';
+    img.referrerPolicy = 'no-referrer-when-downgrade';
+    img.decoding = 'async';
+    img.setAttribute('data-proofer-ignore', '');
+    document.body.appendChild(img);
+  })();
+</script>

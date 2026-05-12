@@ -84,7 +84,13 @@ export function initScrollFade(selector = '.scroll-fade') {
             }
             obs.unobserve(el);
         }
-    }, { threshold: 0.05 });
+    }, {
+        threshold: 0,
+        // Extend the effective viewport ~18% below its bottom so elements
+        // start fading in while they're still below the fold. Avoids the
+        // empty-page feeling on long grids (short films, posters).
+        rootMargin: '0px 0px 18% 0px',
+    });
     document.querySelectorAll(selector).forEach(el => observer.observe(el));
 }
 
@@ -120,7 +126,10 @@ export function initSectionPassed(sectionSelector, bodyClass) {
     if (!section) return;
     function update() {
         const rect = section.getBoundingClientRect();
-        document.body.classList.toggle(bodyClass, rect.top <= 80);
+        // Toggle when the section's top edge is at or above viewport top.
+        // Stays active until the user scrolls UP past the section's top —
+        // not at an arbitrary 80px buffer below it.
+        document.body.classList.toggle(bodyClass, rect.top <= 0);
     }
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update, { passive: true });
@@ -136,55 +145,105 @@ export function initReelButtonShift() {
     if (!reel) return;
     const container = reel.closest('.container');
     if (!container) return;
-    const scrollDown = document.getElementById('scroll-down-indicator');
     // The reel button's final right edge should align with the section
     // content's right edge (where thumbnails/posters end). Sections use
     // padding-right: 24px at >=700px viewports.
     const SECTION_GUTTER = 24;
+    // With 7 flex items + space-between, when the scroll-down indicator
+    // (44px) collapses to 0, the reel (item 6 of 7) shifts right by 5/6 of
+    // the freed width — i.e. 36.67px. Captured as a constant so the
+    // projection doesn't depend on mid-flight gBCR readings.
+    const NATURAL_SHIFT = (5 / 6) * 44;
+    let lastShift = 0;
+    // Pre-collapse natural reel.right captured when past-cinematographer is
+    // NOT set. Refresh-while-scrolled was failing because gBCR returned
+    // inconsistent scroll-down/reel positions at the moment the class was
+    // first added, leading to wildly wrong projections. Stable baseline
+    // sidesteps the issue.
+    let preCollapseReelRight = null;
+
+    function captureBaseline() {
+        if (window.matchMedia('(max-width: 700px)').matches) return;
+        if (document.body.classList.contains('past-cinematographer')) return;
+        if (reel.style.transform) reel.style.transform = '';
+        preCollapseReelRight = reel.getBoundingClientRect().right;
+    }
 
     function applyShift() {
         if (window.matchMedia('(max-width: 700px)').matches) {
-            reel.style.transform = '';
+            if (lastShift !== 0) { lastShift = 0; reel.style.transform = ''; }
             return;
         }
         if (!document.body.classList.contains('past-cinematographer')) {
-            reel.style.transform = '';
+            if (lastShift !== 0) { lastShift = 0; reel.style.transform = ''; }
             return;
         }
-        reel.style.transform = '';
-        const reelRect = reel.getBoundingClientRect();
+        // Derive the post-collapse natural reel position from the captured
+        // pre-collapse baseline + the known natural shift. If we never got a
+        // chance to capture (e.g. page loaded already-scrolled, class set
+        // before init), fall back to the current reel.right minus lastShift
+        // minus the natural shift — which assumes the layout has reflowed.
+        let postCollapseReelRight;
+        if (preCollapseReelRight !== null) {
+            postCollapseReelRight = preCollapseReelRight + NATURAL_SHIFT;
+        } else {
+            postCollapseReelRight = reel.getBoundingClientRect().right - lastShift;
+        }
         const containerRect = container.getBoundingClientRect();
-        // Project where the reel will naturally settle once the scroll-down
-        // indicator finishes collapsing. With 7 flex items and space-between,
-        // the reel (item 6 of 7) sits 5 gaps from the left — so when the
-        // arrow's remaining width is redistributed across 6 gaps, the reel
-        // naturally shifts right by 5/6 of that remaining width.
-        const currentArrowWidth = scrollDown ? scrollDown.getBoundingClientRect().width : 0;
-        const naturalShiftRemaining = currentArrowWidth * 5 / 6;
-        const projectedRight = reelRect.right + naturalShiftRemaining;
-        // Target: same right inset as the body content (thumbnails/posters).
         const targetRight = containerRect.right - SECTION_GUTTER;
-        const shift = Math.max(0, targetRight - projectedRight);
-        if (shift > 0) reel.style.transform = `translateX(${shift}px)`;
+        const newShift = Math.max(0, targetRight - postCollapseReelRight);
+        if (Math.abs(newShift - lastShift) < 0.5) return;
+        lastShift = newShift;
+        reel.style.transform = newShift > 0 ? `translateX(${newShift}px)` : '';
     }
 
+    let reverseTimeout = null;
     function onPastChange(nowPast) {
+        clearTimeout(reverseTimeout);
         if (!nowPast) {
-            reel.style.transform = '';
+            // Reverse direction: delay so the scroll-down indicator has time
+            // to start visibly reappearing before the reel slides back.
+            reverseTimeout = setTimeout(() => {
+                if (!document.body.classList.contains('past-cinematographer')) {
+                    lastShift = 0;
+                    reel.style.transform = '';
+                    // DO NOT captureBaseline here — the CSS transform
+                    // transition is still animating back to none, so gBCR
+                    // would return a mid-animation value and poison the
+                    // baseline for the next forward cycle.
+                }
+            }, 100);
             return;
         }
-        // Apply immediately so the reel's transform transition runs in
-        // PARALLEL with the scroll-down indicator's collapse — not after it.
-        // The projection inside applyShift accounts for the natural
-        // redistribution that's about to happen.
         applyShift();
     }
 
-    // Initial state — if page loads already past cinematographer.
+    // Capture the baseline NOW — initSectionPassed runs later in site.js,
+    // so at this moment past-cinematographer is guaranteed not yet set and
+    // no transition is in flight.
+    captureBaseline();
+    // Also recapture after window.load (fonts/images can shift the reel's
+    // natural position once they're decoded). Same safety: past-cinematographer
+    // is either still false, or already long since stabilized.
+    window.addEventListener('load', () => {
+        captureBaseline();
+        applyShift();
+    });
+    // Initial state — if the page loads already past cinematographer
+    // (refresh while scrolled), apply the shift from the captured baseline.
     requestAnimationFrame(() => {
         if (document.body.classList.contains('past-cinematographer')) applyShift();
     });
-    window.addEventListener('resize', applyShift, { passive: true });
+    // On resize, only recapture when the reel is in its pristine natural
+    // state — no inline transform, no past-cinematographer. Otherwise the
+    // baseline gets corrupted by mid-transition measurements.
+    window.addEventListener('resize', () => {
+        if (!document.body.classList.contains('past-cinematographer')
+            && !reel.style.transform) {
+            captureBaseline();
+        }
+        applyShift();
+    }, { passive: true });
 
     let prevPast = document.body.classList.contains('past-cinematographer');
     new MutationObserver(() => {
