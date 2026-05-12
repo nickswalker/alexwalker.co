@@ -228,7 +228,7 @@ button:hover {
 header {
     --bar-blue: #1E9CDC;
     --bar-ink: #0A0A0A;
-    --header-bg: rgba(255, 255, 255, .85);
+    --header-bg: rgba(255, 255, 255, .92);
     background-color: var(--header-bg);
     background-image: linear-gradient(to right, var(--bar-blue), var(--bar-blue));
     background-size: 100% 3px;
@@ -241,15 +241,15 @@ header {
     overflow: visible;
     -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
-}
-/* Sub-pixel-gap cover only when the header is actually stuck to the top.
-   .is-stuck is toggled by site.js based on scroll position so the box-shadow
-   isn't visible above the header when the user is at the top of the page. */
-header.is-stuck {
-    box-shadow: 0 -2px 0 0 var(--header-bg);
+    /* Overlap preceding content by 1px to eat any sub-pixel rounding gap
+       that otherwise renders as a thin dark line above the header on
+       hi-DPI displays. Paired with padding-top: 1px below so the content
+       area is unchanged. */
+    margin-top: -1px;
+    padding-top: 1px;
 }
 header.dark {
-    --header-bg: rgba(0, 0, 0, .75);
+    --header-bg: rgba(0, 0, 0, .92);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -300,7 +300,11 @@ header nav>ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    min-height: 54px;
+    min-height: 51px;
+    /* The 3px blue separator lives at the bottom of the header via
+       background-image. Reserve that 3px so flex children center vertically
+       within the DARK region (top 51px), not the full 54px box. */
+    padding-bottom: 3px;
 }
 
 header nav>ul>li {
@@ -319,15 +323,13 @@ header nav>ul>li > a {
 header {
     position: -webkit-sticky;
     position: sticky;
-    /* -1px stick boundary eats sub-pixel rounding gap; the 1px is clipped off
-       above viewport so it's not visible. */
-    top: -1px;
+    top: 0;
 }
 
 /*--- = Dark Mode  */
 header.dark {
     color: white;
-    --header-bg: rgba(0, 0, 0, .75);
+    --header-bg: rgba(0, 0, 0, .92);
     background-color: var(--header-bg);
 }
 
@@ -419,15 +421,18 @@ header .social li svg {
     width: auto;
     flex-shrink: 0;
 }
-/* Default: desaturated. Hover (or focus/tap on touch): brand color. */
+/* Default: desaturated. On hover-capable devices (mouse), reveal brand
+   colors on hover. On touch devices we deliberately do NOT reset on tap
+   because iOS Safari's sticky :hover would leave the colors persisting
+   indefinitely after a tap. */
 header .social li svg {
     filter: grayscale(1);
     transition: filter 200ms ease;
 }
-header .social li:hover svg,
-header .social li a:focus-visible svg,
-header .social li a:active svg {
-    filter: none;
+@media (hover: hover) {
+    header .social li:hover svg {
+        filter: none;
+    }
 }
 header .social li svg.brand-imdb {
     height: 14px;
@@ -591,6 +596,16 @@ section h2 {
     }
 }
 
+/* Tablet portrait (701-899px): give content sections the same side gutter
+   as tablet landscape so thumbnails/posters aren't pinned to the screen
+   edges. The 900px+ media query below overrides this with its own padding. */
+@media screen and (min-width: 701px) and (max-width: 899px) {
+    section .container {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}
+
 /* Tablet + desktop: when the page has scrolled past the cinematographer
    section, shift the Watch Reels button rightward so its right edge mirrors
    the Alex Walker logo's left inset from the viewport edge. The exact shift
@@ -602,7 +617,11 @@ section h2 {
 
 #slider {
     padding: 0;
-    height: 80vh;
+    /* Leave room for the 54px header below the slider so it's always
+       visible at the bottom of the initial viewport, regardless of screen
+       size. dvh accounts for iOS Safari's dynamic toolbar. */
+    height: calc(100vh - 54px);
+    height: calc(100dvh - 54px);
     overflow: hidden;
     background-color: black;
 }

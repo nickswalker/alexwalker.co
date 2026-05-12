@@ -137,10 +137,10 @@ export function initReelButtonShift() {
     const container = reel.closest('.container');
     if (!container) return;
     const scrollDown = document.getElementById('scroll-down-indicator');
-    // Scroll-down indicator's natural width (CSS-defined). The reel slides
-    // over to land at the arrow's former LEFT edge — i.e., where the arrow
-    // visually started — not at the container's content-right edge.
-    const ARROW_WIDTH = 44;
+    // The reel button's final right edge should align with the section
+    // content's right edge (where thumbnails/posters end). Sections use
+    // padding-right: 24px at >=700px viewports.
+    const SECTION_GUTTER = 24;
 
     function applyShift() {
         if (window.matchMedia('(max-width: 700px)').matches) {
@@ -154,18 +154,16 @@ export function initReelButtonShift() {
         reel.style.transform = '';
         const reelRect = reel.getBoundingClientRect();
         const containerRect = container.getBoundingClientRect();
-        const paddingRight = parseFloat(getComputedStyle(container).paddingRight) || 0;
         // Project where the reel will naturally settle once the scroll-down
         // indicator finishes collapsing. With 7 flex items and space-between,
         // the reel (item 6 of 7) sits 5 gaps from the left — so when the
         // arrow's remaining width is redistributed across 6 gaps, the reel
         // naturally shifts right by 5/6 of that remaining width.
-        // Using the indicator's CURRENT width (which may be mid-transition or
-        // fully collapsed) keeps the math correct in every state.
         const currentArrowWidth = scrollDown ? scrollDown.getBoundingClientRect().width : 0;
         const naturalShiftRemaining = currentArrowWidth * 5 / 6;
         const projectedRight = reelRect.right + naturalShiftRemaining;
-        const targetRight = containerRect.right - paddingRight - ARROW_WIDTH;
+        // Target: same right inset as the body content (thumbnails/posters).
+        const targetRight = containerRect.right - SECTION_GUTTER;
         const shift = Math.max(0, targetRight - projectedRight);
         if (shift > 0) reel.style.transform = `translateX(${shift}px)`;
     }
