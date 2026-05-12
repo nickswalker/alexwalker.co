@@ -2068,14 +2068,18 @@ body {
    guard in lightbox.js instead. */
 html.lightbox-open {
     overscroll-behavior: none;
-    /* Paint both <html> and <body> black while a lightbox is open. The
-       dialog's backdrop only animates to 55% black during the open/close
-       transition, so any show-through used to flash white. Covering both
-       layers handles iOS's address-bar repaint (which fires the instant
-       we set body { position: fixed } for the scroll lock). */
-    background-color: #000;
 }
-html.lightbox-open body { background-color: #000; }
+/* Suppress iOS Safari's translucent tap-highlight overlay on every
+   element that can trigger or close a lightbox. Without this the
+   highlight flashes white/gray on tap and looks like an unwanted
+   flash on open/close. */
+a, button,
+.lightbox__btn, .lightbox__nav, .lightbox__thumb,
+.stills-image, .sixteen-by-nine,
+.up, .up *,
+dialog.lightbox {
+    -webkit-tap-highlight-color: transparent;
+}
 
 /* Closed dialog: UA default of display: none applies. Only style when open. */
 dialog.lightbox[open] {
