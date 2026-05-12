@@ -242,16 +242,17 @@ const VOL_SVG   = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 
 const MUTE_SVG  = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm14 .7L15.3 8 13 10.3 10.7 8 9 9.7 11.3 12 9 14.3 10.7 16 13 13.7 15.3 16 17 14.3 14.7 12z"/></svg>';
 const FS_SVG    = '<svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>';
 
-export function buildPlayerMarkup({ provider, id, list, hash, poster }) {
+export function buildPlayerMarkup({ provider, id, list, hash, poster, autoplay }) {
     const posterAttr = poster ? ` data-poster="${poster}"` : '';
     const hashAttr = hash ? ` data-hash="${hash}"` : '';
     const listAttr = list ? ` data-list="${list}"` : '';
     const idAttr = id ? ` data-id="${id}"` : '';
+    const autoplayAttr = autoplay ? ' data-autoplay="1"' : '';
     const posterImg = poster
         ? `<img class="up__poster" src="${poster}" alt="" aria-hidden="true">`
         : '';
     return `
-<div class="up" data-provider="${provider}"${idAttr}${listAttr}${hashAttr}${posterAttr} data-state="paused">
+<div class="up" data-provider="${provider}"${idAttr}${listAttr}${hashAttr}${posterAttr}${autoplayAttr} data-state="paused">
   ${posterImg}
   <div class="up__embed"></div>
   <div class="up__hit" aria-hidden="true"></div>
@@ -385,6 +386,13 @@ export function mountPlayer(root) {
         clearTimeout(root._touchTimer);
         root._touchTimer = setTimeout(() => root.classList.remove('is-touching'), 2500);
     }, { passive: true });
+
+    // Opt-in autoplay (data-autoplay="1"). Used by the Watch Reels button
+    // where the user has already signalled "play this" by clicking the
+    // top-level CTA — having to click again on the lightbox is redundant.
+    if (root.dataset.autoplay === '1') {
+        requestPlay();
+    }
 
     return adapter;
 }

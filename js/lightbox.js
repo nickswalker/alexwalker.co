@@ -644,12 +644,8 @@ export class Lightbox {
                 wrap.style.aspectRatio = `${w} / ${h}`;
                 const parsed = parseVideoUrl(item.href);
                 if (parsed) {
-                    // Use our local thumbnail as the poster for YouTube only —
-                    // YouTube's default thumbnail is generic and undesirable.
-                    // Vimeo's own thumbnail is generally what the user wants,
-                    // so we skip the local poster there.
                     const poster = parsed.provider === 'youtube' ? item.thumb : null;
-                    wrap.innerHTML = buildPlayerMarkup({ ...parsed, poster });
+                    wrap.innerHTML = buildPlayerMarkup({ ...parsed, poster, autoplay: !!item.autoplay });
                     panel.appendChild(wrap);
                     mountPlayer(wrap.querySelector('.up'));
                 } else {
@@ -902,6 +898,7 @@ export function autoInitLightboxes(opts = {}) {
             width: parseInt(el.dataset.width) || null,
             height: parseInt(el.dataset.height) || null,
             thumb: el.querySelector('img')?.src || null,
+            autoplay: el.dataset.autoplay === '1',
         });
     });
 
