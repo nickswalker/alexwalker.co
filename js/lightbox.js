@@ -62,23 +62,31 @@ let savedScrollY = 0;
 function lockBody() {
     if (bodyLockCount++ > 0) return;
     savedScrollY = window.scrollY;
+    // Apply the dark .lightbox-open class FIRST so html + body are already
+    // painted black by the time we set position: fixed below. Otherwise iOS
+    // collapses its address bar in response to the fixed body and repaints
+    // with the still-white body background, producing a white flash on
+    // touch screens.
+    document.documentElement.classList.add('lightbox-open');
     document.body.style.position = 'fixed';
     document.body.style.top = `-${savedScrollY}px`;
     document.body.style.left = '0';
     document.body.style.right = '0';
     document.body.style.width = '100%';
-    document.documentElement.classList.add('lightbox-open');
 }
 function unlockBody() {
     if (--bodyLockCount > 0) return;
     bodyLockCount = 0;
+    // Mirror the lock order: clear position FIRST (which re-expands the
+    // address bar on iOS), then drop the dark class. Body bg stays dark
+    // through the toolbar's repaint, so no flash on close either.
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.style.left = '';
     document.body.style.right = '';
     document.body.style.width = '';
-    document.documentElement.classList.remove('lightbox-open');
     window.scrollTo(0, savedScrollY);
+    document.documentElement.classList.remove('lightbox-open');
 }
 
 export class Lightbox {

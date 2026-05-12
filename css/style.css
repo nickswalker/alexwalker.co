@@ -2068,13 +2068,14 @@ body {
    guard in lightbox.js instead. */
 html.lightbox-open {
     overscroll-behavior: none;
-    /* The body's white default background otherwise flashes through the
-       semi-transparent backdrop during the 320ms open/close transition,
-       most visibly on touch screens where the iOS dynamic toolbar
-       collapse can trigger an extra repaint. Painting html black keeps
-       the underneath dark for the entire transition. */
+    /* Paint both <html> and <body> black while a lightbox is open. The
+       dialog's backdrop only animates to 55% black during the open/close
+       transition, so any show-through used to flash white. Covering both
+       layers handles iOS's address-bar repaint (which fires the instant
+       we set body { position: fixed } for the scroll lock). */
     background-color: #000;
 }
+html.lightbox-open body { background-color: #000; }
 
 /* Closed dialog: UA default of display: none applies. Only style when open. */
 dialog.lightbox[open] {
