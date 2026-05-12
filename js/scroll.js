@@ -136,44 +136,65 @@ export function initReelButtonShift() {
     if (!reel) return;
     const container = reel.closest('.container');
     if (!container) return;
+    const scrollDown = document.getElementById('scroll-down-indicator');
 
-    // Track the currently-applied shift so we can compute deltas without
-    // wiping the transform mid-frame (which caused scroll jitter from the
-    // 420ms transition fighting sub-pixel re-measurements).
-    let lastShift = 0;
-
-    function compute() {
-        // Mobile uses its own margin-left: auto rule; skip shift there.
+    // Measure the natural gap and apply translateX so reel.right meets
+    // container.right. Caller must ensure layout has settled before invoking
+    // (scroll-down indicator's width transition must be complete).
+    function applyShift() {
         if (window.matchMedia('(max-width: 700px)').matches) {
-            if (lastShift !== 0) { lastShift = 0; reel.style.transform = ''; }
+            reel.style.transform = '';
             return;
         }
         if (!document.body.classList.contains('past-cinematographer')) {
-            if (lastShift !== 0) { lastShift = 0; reel.style.transform = ''; }
+            reel.style.transform = '';
             return;
         }
-        // Measure with current transform applied; compute additional delta
-        // needed so the reel's right edge meets the container's right edge.
+        reel.style.transform = '';
         const reelRect = reel.getBoundingClientRect();
         const containerRect = container.getBoundingClientRect();
-        const delta = containerRect.right - reelRect.right;
-        // Ignore sub-pixel jitter so scroll-driven layout micro-shifts don't
-        // re-trigger the transition every frame.
-        if (Math.abs(delta) < 0.5) return;
-        lastShift = Math.max(0, lastShift + delta);
-        reel.style.transform = lastShift > 0 ? `translateX(${lastShift}px)` : '';
+        const shift = Math.max(0, containerRect.right - reelRect.right);
+        if (shift > 0) reel.style.transform = `translateX(${shift}px)`;
     }
 
-    requestAnimationFrame(compute);
-    window.addEventListener('resize', compute, { passive: true });
-    // Only re-run when past-cinematographer actually toggles — not on every
-    // class mutation (is-stuck flips on every scroll tick).
+    function onPastChange(nowPast) {
+        if (!nowPast) {
+            // Going back: clear shift now so the reel rides the natural
+            // redistribution back into place.
+            reel.style.transform = '';
+            return;
+        }
+        // Going forward: wait for scroll-down's width transition to finish
+        // before measuring — otherwise we measure mid-flight and overshoot.
+        if (!scrollDown) { applyShift(); return; }
+        let fired = false;
+        const finish = () => {
+            if (fired) return;
+            fired = true;
+            scrollDown.removeEventListener('transitionend', onEnd);
+            applyShift();
+        };
+        const onEnd = (e) => {
+            if (e.target === scrollDown && e.propertyName === 'width') finish();
+        };
+        scrollDown.addEventListener('transitionend', onEnd);
+        // Fallback in case the transition is skipped or never started
+        // (e.g., reduced-motion, indicator already collapsed).
+        setTimeout(finish, 500);
+    }
+
+    // Initial state — if page loads already past cinematographer.
+    requestAnimationFrame(() => {
+        if (document.body.classList.contains('past-cinematographer')) applyShift();
+    });
+    window.addEventListener('resize', applyShift, { passive: true });
+
     let prevPast = document.body.classList.contains('past-cinematographer');
     new MutationObserver(() => {
         const nowPast = document.body.classList.contains('past-cinematographer');
         if (nowPast !== prevPast) {
             prevPast = nowPast;
-            compute();
+            onPastChange(nowPast);
         }
     }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
 }

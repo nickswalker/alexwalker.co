@@ -405,7 +405,11 @@ header .social li:hover .ion-social-youtube {
     color: #FF0000;
 }
 header .social li:hover .ion-social-instagram {
-    color: #E1306C;
+    background: linear-gradient(45deg, #FEDA75, #FA7E1E, #D62976, #962FBF, #4F5BD5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
 }
 header .social li img,
 header .social li svg {
