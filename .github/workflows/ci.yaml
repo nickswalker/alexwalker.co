@@ -39,7 +39,7 @@ jobs:
             --assume-extension .html \
             --no-enforce-https \
             --ignore-missing-alt \
-            --ignore-urls '/vimeo\.com/,/twitter\.com/,/instagram\.com/,/letterboxd\.com/,/fonts\.googleapis\.com/,/nexus\.tail1c6f41\.ts\.net/' \
+            --ignore-urls '/vimeo\.com/,/twitter\.com/,/instagram\.com/,/letterboxd\.com/,/fonts\.googleapis\.com/,/fonts\.gstatic\.com/,/nexus\.tail1c6f41\.ts\.net/' \
             --swap-urls 'https?\:\/\/alexwalker\.co:' \
             --cache '{ "timeframe": { "external": "30d" } }'
 
