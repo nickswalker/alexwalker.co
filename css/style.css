@@ -908,14 +908,18 @@ li.coming-soon a::before {
 .clients li { margin: 0; line-height: 1.6; }
 
 /* Logo grid variant — evenly spaced, monochrome, scales on every breakpoint.
-   auto-fit keeps rows full at every width; aspect-ratio + object-fit keep each
-   logo optically balanced regardless of source aspect ratio. */
+   Source PNGs are transparent with light-gray content, so we recolor via
+   filter: black on light mode, white on dark mode. Column counts are fixed
+   per breakpoint so 12 logos always fill full rows (no left-aligned orphans). */
 .clients--logos {
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 32px 48px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 36px 48px;
   max-width: 1100px;
   align-items: center;
   justify-items: center;
+}
+@media (max-width: 1000px) {
+  .clients--logos { grid-template-columns: repeat(3, 1fr); gap: 30px 32px; }
 }
 .clients--logos li {
   width: 100%;
@@ -927,24 +931,33 @@ li.coming-soon a::before {
 .clients--logos li > img {
   display: block;
   width: 100%;
-  max-width: 160px;
-  height: 56px;
+  max-width: 180px;
+  height: 64px;
   object-fit: contain;
-  filter: brightness(0) invert(1);
-  opacity: 0.78;
+  filter: brightness(0);
+  opacity: 0.6;
   transition: opacity 200ms ease;
 }
-.clients--logos li > a { height: auto; }
+.clients--logos li > a { height: auto; filter: none; opacity: 1; }
 .clients--logos li > a > img {
   display: block;
   width: 100%;
-  max-width: 160px;
-  height: 56px;
+  max-width: 180px;
+  height: 64px;
   object-fit: contain;
-  filter: brightness(0) invert(1);
+  filter: brightness(0);
+  opacity: 0.6;
+  transition: opacity 200ms ease;
 }
-.clients--logos li > a:hover { opacity: 1; }
-.clients--logos li > a:hover > img { filter: brightness(0) invert(1); }
+.clients--logos li > a:hover > img { opacity: 0.95; }
+@media (prefers-color-scheme: dark) {
+  .clients--logos li > img,
+  .clients--logos li > a > img {
+    filter: brightness(0) invert(1);
+    opacity: 0.78;
+  }
+  .clients--logos li > a:hover > img { opacity: 1; }
+}
 
 /*--- = Stills	*/
 #stills {
@@ -1923,14 +1936,14 @@ body.loaded header {
   }
 
   .clients--logos {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 24px 28px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 24px;
   }
   .clients--logos li > a,
   .clients--logos li > img,
   .clients--logos li > a > img {
-    max-width: 120px;
-    height: 44px;
+    max-width: 140px;
+    height: 52px;
   }
 }
 .centered-subheading {
