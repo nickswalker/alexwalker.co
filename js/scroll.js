@@ -137,10 +137,11 @@ export function initReelButtonShift() {
     const container = reel.closest('.container');
     if (!container) return;
     const scrollDown = document.getElementById('scroll-down-indicator');
+    // Scroll-down indicator's natural width (CSS-defined). The reel slides
+    // over to land at the arrow's former LEFT edge — i.e., where the arrow
+    // visually started — not at the container's content-right edge.
+    const ARROW_WIDTH = 44;
 
-    // Measure the natural gap and apply translateX so reel.right meets
-    // container.right. Caller must ensure layout has settled before invoking
-    // (scroll-down indicator's width transition must be complete).
     function applyShift() {
         if (window.matchMedia('(max-width: 700px)').matches) {
             reel.style.transform = '';
@@ -153,11 +154,11 @@ export function initReelButtonShift() {
         reel.style.transform = '';
         const reelRect = reel.getBoundingClientRect();
         const containerRect = container.getBoundingClientRect();
-        // Target the container's CONTENT-right edge (inside the padding) —
-        // that's where the scroll-down arrow's right edge sat under
-        // space-between. Aligning to border-right overshoots by paddingRight.
         const paddingRight = parseFloat(getComputedStyle(container).paddingRight) || 0;
-        const targetRight = containerRect.right - paddingRight;
+        // Target: where the arrow's LEFT edge sat at rest, NOT the screen
+        // edge. The reel slides over to occupy the arrow's former position,
+        // not all the way to the container's content-right.
+        const targetRight = containerRect.right - paddingRight - ARROW_WIDTH;
         const shift = Math.max(0, targetRight - reelRect.right);
         if (shift > 0) reel.style.transform = `translateX(${shift}px)`;
     }
