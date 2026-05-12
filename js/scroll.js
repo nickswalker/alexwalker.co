@@ -153,7 +153,12 @@ export function initReelButtonShift() {
         reel.style.transform = '';
         const reelRect = reel.getBoundingClientRect();
         const containerRect = container.getBoundingClientRect();
-        const shift = Math.max(0, containerRect.right - reelRect.right);
+        // Target the container's CONTENT-right edge (inside the padding) —
+        // that's where the scroll-down arrow's right edge sat under
+        // space-between. Aligning to border-right overshoots by paddingRight.
+        const paddingRight = parseFloat(getComputedStyle(container).paddingRight) || 0;
+        const targetRight = containerRect.right - paddingRight;
+        const shift = Math.max(0, targetRight - reelRect.right);
         if (shift > 0) reel.style.transform = `translateX(${shift}px)`;
     }
 

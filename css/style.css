@@ -419,12 +419,22 @@ header .social li svg {
     width: auto;
     flex-shrink: 0;
 }
+/* Default: desaturated. Hover (or focus/tap on touch): brand color. */
+header .social li svg {
+    filter: grayscale(1);
+    transition: filter 200ms ease;
+}
+header .social li:hover svg,
+header .social li a:focus-visible svg,
+header .social li a:active svg {
+    filter: none;
+}
 header .social li svg.brand-imdb {
     height: 14px;
     width: 28px;
 }
 header .social li svg.brand-letterboxd {
-    height: 10px;
+    height: 11px;
     width: auto;
 }
 
