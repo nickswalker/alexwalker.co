@@ -907,6 +907,45 @@ li.coming-soon a::before {
 }
 .clients li { margin: 0; line-height: 1.6; }
 
+/* Logo grid variant — evenly spaced, monochrome, scales on every breakpoint.
+   auto-fit keeps rows full at every width; aspect-ratio + object-fit keep each
+   logo optically balanced regardless of source aspect ratio. */
+.clients--logos {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 32px 48px;
+  max-width: 1100px;
+  align-items: center;
+  justify-items: center;
+}
+.clients--logos li {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.clients--logos li > a,
+.clients--logos li > img {
+  display: block;
+  width: 100%;
+  max-width: 160px;
+  height: 56px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.78;
+  transition: opacity 200ms ease;
+}
+.clients--logos li > a { height: auto; }
+.clients--logos li > a > img {
+  display: block;
+  width: 100%;
+  max-width: 160px;
+  height: 56px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+.clients--logos li > a:hover { opacity: 1; }
+.clients--logos li > a:hover > img { filter: brightness(0) invert(1); }
+
 /*--- = Stills	*/
 #stills {
     margin-bottom: 0;
@@ -1863,9 +1902,10 @@ body.loaded header {
     fill: rgba(255, 255, 255, 0.9);
   }
 }
-/* Clients list — mobile fix (phones only) */
+/* Clients list — mobile fix (phones only). Scoped to the legacy text variant
+   so the logo grid keeps its auto-fit columns on small screens. */
 @media screen and (max-width: 700px) {
-  .clients {
+  .clients:not(.clients--logos) {
     display: grid !important;
     grid-template-columns: 1fr !important;
     gap: 8px !important;
@@ -1876,10 +1916,21 @@ body.loaded header {
     overflow-x: hidden !important;
   }
 
-  .clients li {
+  .clients:not(.clients--logos) li {
     list-style: none;
     white-space: normal;
     overflow-wrap: anywhere;
+  }
+
+  .clients--logos {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 24px 28px;
+  }
+  .clients--logos li > a,
+  .clients--logos li > img,
+  .clients--logos li > a > img {
+    max-width: 120px;
+    height: 44px;
   }
 }
 .centered-subheading {
