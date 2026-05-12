@@ -405,14 +405,23 @@ header .social li:hover .ion-social-youtube {
     color: #FF0000;
 }
 header .social li:hover .ion-social-instagram {
-    color: #E4405F;
+    color: #E1306C;
 }
-header .social li img {
+header .social li img,
+header .social li svg {
     margin-top: 0 !important;
     display: block;
     height: 14px;
     width: auto;
     flex-shrink: 0;
+}
+header .social li svg.brand-imdb {
+    height: 14px;
+    width: 28px;
+}
+header .social li svg.brand-letterboxd {
+    height: 10px;
+    width: auto;
 }
 
 #scroll-down-indicator {

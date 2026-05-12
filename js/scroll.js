@@ -137,31 +137,45 @@ export function initReelButtonShift() {
     const container = reel.closest('.container');
     if (!container) return;
 
-    function apply() {
+    // Track the currently-applied shift so we can compute deltas without
+    // wiping the transform mid-frame (which caused scroll jitter from the
+    // 420ms transition fighting sub-pixel re-measurements).
+    let lastShift = 0;
+
+    function compute() {
         // Mobile uses its own margin-left: auto rule; skip shift there.
         if (window.matchMedia('(max-width: 700px)').matches) {
-            reel.style.transform = '';
+            if (lastShift !== 0) { lastShift = 0; reel.style.transform = ''; }
             return;
         }
         if (!document.body.classList.contains('past-cinematographer')) {
-            reel.style.transform = '';
+            if (lastShift !== 0) { lastShift = 0; reel.style.transform = ''; }
             return;
         }
-        // Clear any prior transform before measuring so the calc is from the
-        // natural flex position, not the post-transform position.
-        reel.style.transform = '';
+        // Measure with current transform applied; compute additional delta
+        // needed so the reel's right edge meets the container's right edge.
         const reelRect = reel.getBoundingClientRect();
         const containerRect = container.getBoundingClientRect();
-        const shift = Math.max(0, containerRect.right - reelRect.right);
-        if (shift > 0) reel.style.transform = `translateX(${shift}px)`;
+        const delta = containerRect.right - reelRect.right;
+        // Ignore sub-pixel jitter so scroll-driven layout micro-shifts don't
+        // re-trigger the transition every frame.
+        if (Math.abs(delta) < 0.5) return;
+        lastShift = Math.max(0, lastShift + delta);
+        reel.style.transform = lastShift > 0 ? `translateX(${lastShift}px)` : '';
     }
 
-    // Run after layout settles and on every relevant event.
-    requestAnimationFrame(apply);
-    window.addEventListener('scroll', apply, { passive: true });
-    window.addEventListener('resize', apply, { passive: true });
-    // Re-apply when past-cinematographer is toggled (MutationObserver on body class)
-    new MutationObserver(apply).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    requestAnimationFrame(compute);
+    window.addEventListener('resize', compute, { passive: true });
+    // Only re-run when past-cinematographer actually toggles — not on every
+    // class mutation (is-stuck flips on every scroll tick).
+    let prevPast = document.body.classList.contains('past-cinematographer');
+    new MutationObserver(() => {
+        const nowPast = document.body.classList.contains('past-cinematographer');
+        if (nowPast !== prevPast) {
+            prevPast = nowPast;
+            compute();
+        }
+    }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
 }
 
 // Slider blur+opacity tied to scroll position (index.html hero only).
