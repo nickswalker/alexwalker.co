@@ -1963,6 +1963,22 @@ body.loaded header {
     max-width: 140px;
   }
 }
+/* In-app browsers (Instagram, etc.) sometimes report a viewport wider than
+   the device's actual width, missing the 700px breakpoint above and
+   rendering the logos at desktop sizes on a phone. Catch any touch-primary
+   device under tablet-landscape width as "mobile" for the logo grid. */
+@media (pointer: coarse) and (max-width: 1100px) {
+  .clients--logos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 24px;
+  }
+  .clients--logos li { --lb-base: 52px; }
+  .clients--logos li > a,
+  .clients--logos li > img,
+  .clients--logos li > a > img {
+    max-width: 140px;
+  }
+}
 .centered-subheading {
   text-align: center;
 }
