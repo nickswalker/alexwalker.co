@@ -926,7 +926,7 @@ li.coming-soon a::before {
   .clients--logos li { --lb-base: 70px; }
   .clients--logos li > a,
   .clients--logos li > img,
-  .clients--logos li > a > img { max-width: 200px; }
+  .clients--logos li > a > img { max-width: calc(200px * var(--lb-scale)); }
 }
 .clients--logos li {
   width: 100%;
@@ -951,9 +951,9 @@ li.coming-soon a::before {
    around the mark, so they need bigger heights to compensate. */
 .clients--logos .logo-ibm,
 .clients--logos .logo-dell        { --lb-scale: 0.88; }
-.clients--logos .logo-viceland    { --lb-scale: 1.22; }
+.clients--logos .logo-viceland    { --lb-scale: 1.55; }
 .clients--logos .logo-mtv         { --lb-scale: 1.08; }
-.clients--logos .logo-heb         { --lb-scale: 1.45; }
+.clients--logos .logo-heb         { --lb-scale: 1.80; }
 .clients--logos .logo-weather     { --lb-scale: 1.10; }
 .clients--logos .logo-vimeo       { --lb-scale: 1.18; }
 .clients--logos .logo-discovery   { --lb-scale: 1.48; }
@@ -963,7 +963,10 @@ li.coming-soon a::before {
 .clients--logos li > img {
   display: block;
   width: 100%;
-  max-width: 210px;
+  /* Scale both dimensions together so wide-wordmark logos can actually grow.
+     With a fixed max-width, object-fit: contain pinned them by width and
+     made --lb-scale bumps invisible. */
+  max-width: calc(210px * var(--lb-scale));
   height: calc(var(--lb-base) * var(--lb-scale));
   object-fit: contain;
   filter: brightness(0);
@@ -974,7 +977,7 @@ li.coming-soon a::before {
 .clients--logos li > a > img {
   display: block;
   width: 100%;
-  max-width: 210px;
+  max-width: calc(210px * var(--lb-scale));
   height: calc(var(--lb-base) * var(--lb-scale));
   object-fit: contain;
   filter: brightness(0);
@@ -1975,7 +1978,7 @@ body.loaded header {
   .clients--logos li > a,
   .clients--logos li > img,
   .clients--logos li > a > img {
-    max-width: 160px;
+    max-width: calc(160px * var(--lb-scale));
   }
 }
 /* Meta in-app WebViews (Instagram, Threads, FB) report viewports/layout in
@@ -1999,7 +2002,7 @@ html.is-instagram-webview .clients--logos li {
 html.is-instagram-webview .clients--logos li > a,
 html.is-instagram-webview .clients--logos li > img,
 html.is-instagram-webview .clients--logos li > a > img {
-  max-width: 160px !important;
+  max-width: calc(160px * var(--lb-scale)) !important;
   min-width: 0 !important;
 }
 /* Crisper rendering of the small monochrome logos in WebView contexts where

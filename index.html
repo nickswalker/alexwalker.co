@@ -45,15 +45,18 @@
           for (var i = 0; i < items.length; i++) {
             items[i].style.setProperty('--lb-base', '60px', 'important');
             items[i].style.setProperty('min-width', '0', 'important');
+            // max-width scales with per-logo --lb-scale via CSS calc; we
+            // don't pin a pixel value here so wide wordmarks can grow.
+            items[i].style.removeProperty('max-width');
             var img = items[i].querySelector('img');
             if (img) {
-              img.style.setProperty('max-width', '160px', 'important');
               img.style.setProperty('min-width', '0', 'important');
+              img.style.removeProperty('max-width');
             }
             var a = items[i].querySelector('a > img');
             if (a) {
-              a.style.setProperty('max-width', '160px', 'important');
               a.style.setProperty('min-width', '0', 'important');
+              a.style.removeProperty('max-width');
             }
           }
         }
