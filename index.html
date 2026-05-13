@@ -33,16 +33,28 @@
         function applyInline() {
           var grid = document.querySelector('.clients--logos');
           if (!grid) return;
-          grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
-          grid.style.gap = '24px';
-          grid.style.maxWidth = '100%';
+          // Use setProperty with 'important' so inline-style !important wins
+          // against any !important rule in the cascade (the legacy
+          // .clients:not(.clients--logos) 1fr rule has been observed to leak
+          // through in some WebView builds with buggy :not() handling).
+          grid.style.setProperty('grid-template-columns', 'repeat(2, 1fr)', 'important');
+          grid.style.setProperty('gap', '24px', 'important');
+          grid.style.setProperty('max-width', '100%', 'important');
+          grid.style.setProperty('display', 'grid', 'important');
           var items = grid.querySelectorAll('li');
           for (var i = 0; i < items.length; i++) {
-            items[i].style.setProperty('--lb-base', '52px');
+            items[i].style.setProperty('--lb-base', '52px', 'important');
+            items[i].style.setProperty('min-width', '0', 'important');
             var img = items[i].querySelector('img');
-            if (img) img.style.maxWidth = '140px';
+            if (img) {
+              img.style.setProperty('max-width', '140px', 'important');
+              img.style.setProperty('min-width', '0', 'important');
+            }
             var a = items[i].querySelector('a > img');
-            if (a) a.style.maxWidth = '140px';
+            if (a) {
+              a.style.setProperty('max-width', '140px', 'important');
+              a.style.setProperty('min-width', '0', 'important');
+            }
           }
         }
         if (document.readyState === 'loading') {

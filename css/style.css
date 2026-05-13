@@ -1976,17 +1976,31 @@ body.loaded header {
    ways that defeat our normal mobile breakpoint. Detected in JS in the head
    and tagged on <html>; rules below win specificity AND use !important so
    the WebView can't fall back to the desktop layout. iPad and Safari are
-   unaffected — they don't pick up this UA tag. */
+   unaffected — they don't pick up this UA tag.
+   Extra defense: explicitly restate display:grid and re-apply column rule
+   in case the legacy .clients:not(.clients--logos) rule leaks through a
+   buggy :not() implementation in the WebView. */
 html.is-instagram-webview .clients--logos {
+  display: grid !important;
   grid-template-columns: repeat(2, 1fr) !important;
   gap: 24px !important;
   max-width: 100% !important;
 }
-html.is-instagram-webview .clients--logos li { --lb-base: 52px !important; }
+html.is-instagram-webview .clients--logos li {
+  --lb-base: 52px !important;
+  min-width: 0 !important;
+}
 html.is-instagram-webview .clients--logos li > a,
 html.is-instagram-webview .clients--logos li > img,
 html.is-instagram-webview .clients--logos li > a > img {
   max-width: 140px !important;
+  min-width: 0 !important;
+}
+/* Crisper rendering of the small monochrome logos in WebView contexts where
+   the default downscale can look aliased. */
+html.is-instagram-webview .clients--logos img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: auto;
 }
 .centered-subheading {
   text-align: center;
