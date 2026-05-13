@@ -926,12 +926,21 @@ li.coming-soon a::before {
 }
 .clients--logos li {
   width: 100%;
+  /* CRITICAL: grid items default to min-width: auto which equals an image's
+     intrinsic width. If a logo's natural pixel width is 800px, the grid cell
+     expands to 800px, blowing out the layout and forcing each logo onto its
+     own row. min-width: 0 lets the cell respect its 1fr track instead. This
+     is what was breaking Instagram WebView's render of the logo grid. */
+  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   --lb-scale: 1;       /* per-logo optical-weight multiplier; default = medium */
   --lb-base: 64px;     /* row height before scaling (overridden at small widths) */
 }
+.clients--logos li > a,
+.clients--logos li > img,
+.clients--logos li > a > img { min-width: 0; }
 /* Optical-weight tiers — heavy wordmarks scale DOWN, thin ones scale UP, so
    the row reads as visually even regardless of the source art's ink density.
    Note: several source PNGs (Nissan, Boeing, MTV, Discovery) include padding
@@ -1963,19 +1972,21 @@ body.loaded header {
     max-width: 140px;
   }
 }
-/* Instagram in-app WebView reports a viewport that doesn't trip the 700px
-   mobile breakpoint, so the logos render at desktop dimensions on a phone.
-   Detected in JS (site.js) by sniffing for "Instagram" in the UA; targeted
-   here without affecting iPad or any other browser. */
+/* Meta in-app WebViews (Instagram, Threads, FB) report viewports/layout in
+   ways that defeat our normal mobile breakpoint. Detected in JS in the head
+   and tagged on <html>; rules below win specificity AND use !important so
+   the WebView can't fall back to the desktop layout. iPad and Safari are
+   unaffected — they don't pick up this UA tag. */
 html.is-instagram-webview .clients--logos {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px 24px;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 24px !important;
+  max-width: 100% !important;
 }
-html.is-instagram-webview .clients--logos li { --lb-base: 52px; }
+html.is-instagram-webview .clients--logos li { --lb-base: 52px !important; }
 html.is-instagram-webview .clients--logos li > a,
 html.is-instagram-webview .clients--logos li > img,
 html.is-instagram-webview .clients--logos li > a > img {
-  max-width: 140px;
+  max-width: 140px !important;
 }
 .centered-subheading {
   text-align: center;
@@ -2701,7 +2712,10 @@ html.lightbox-up-pseudo-fs { overflow: hidden; }
     object-fit: cover;
     display: block;
     pointer-events: none;
-    transition: opacity 120ms ease;
+    /* Longer, eased crossfade smooths the handoff from poster to playing
+       video — short enough to feel snappy, long enough to mask any single
+       frame of provider chrome on iOS. */
+    transition: opacity 320ms cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1;
 }
 .up.is-loaded .up__poster { opacity: 0; }

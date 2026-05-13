@@ -18,12 +18,39 @@
     <meta property="og:description" content="">
 
     <script>
-      // Tag the document for Instagram's in-app WebView BEFORE the
-      // stylesheet applies, so CSS scoped to .is-instagram-webview takes
-      // effect on first paint with no FOUC.
-      if (/Instagram/i.test(navigator.userAgent || '')) {
+      // Tag the document for Meta in-app WebViews (Instagram, Threads,
+      // Facebook) BEFORE the stylesheet applies, so CSS scoped to
+      // .is-instagram-webview takes effect on first paint with no FOUC.
+      // Belt-and-suspenders: also apply inline styles directly to the logo
+      // grid after DOMContentLoaded, since some in-app WebView builds appear
+      // to skip or cache CSS rule evaluation in ways that defeat purely
+      // declarative fixes. Inline styles can't be overridden by anything.
+      (function(){
+        var ua = navigator.userAgent || '';
+        var inAppMeta = /Instagram|FBAN|FBAV|FB_IAB|Threads/i.test(ua);
+        if (!inAppMeta) return;
         document.documentElement.classList.add('is-instagram-webview');
-      }
+        function applyInline() {
+          var grid = document.querySelector('.clients--logos');
+          if (!grid) return;
+          grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+          grid.style.gap = '24px';
+          grid.style.maxWidth = '100%';
+          var items = grid.querySelectorAll('li');
+          for (var i = 0; i < items.length; i++) {
+            items[i].style.setProperty('--lb-base', '52px');
+            var img = items[i].querySelector('img');
+            if (img) img.style.maxWidth = '140px';
+            var a = items[i].querySelector('a > img');
+            if (a) a.style.maxWidth = '140px';
+          }
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', applyInline);
+        } else {
+          applyInline();
+        }
+      })();
     </script>
     <link rel="shortcut icon" href="img/favicon.png" />
     <link rel="apple-touch-icon-precomposed" href="img/touch-icon.png" />

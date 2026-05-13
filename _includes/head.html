@@ -19,12 +19,10 @@
     <meta property="og:description" content="">
 
     <script>
-      // Tag the document for Instagram's in-app WebView BEFORE the
-      // stylesheet applies, so CSS that's scoped to .is-instagram-webview
-      // takes effect on first paint with no FOUC. UA-sniff in line with
-      // industry standard — there's no other API to identify in-app
-      // WebView contexts.
-      if (/Instagram/i.test(navigator.userAgent || '')) {
+      // Tag the document for Meta in-app WebViews (Instagram, Threads,
+      // Facebook in-app) BEFORE the stylesheet applies — CSS scoped to
+      // .is-instagram-webview takes effect on first paint with no FOUC.
+      if (/Instagram|FBAN|FBAV|FB_IAB|Threads/i.test(navigator.userAgent || '')) {
         document.documentElement.classList.add('is-instagram-webview');
       }
     </script>
