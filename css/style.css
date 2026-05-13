@@ -952,8 +952,8 @@ li.coming-soon a::before {
 .clients--logos .logo-ibm,
 .clients--logos .logo-dell        { --lb-scale: 0.88; }
 .clients--logos .logo-mtv         { --lb-scale: 1.08; }
-.clients--logos .logo-boeing      { --lb-scale: 1.18; }
-.clients--logos .logo-nissan      { --lb-scale: 1.42; }
+.clients--logos .logo-heb         { --lb-scale: 1.10; }
+.clients--logos .logo-toyota      { --lb-scale: 1.55; }
 .clients--logos .logo-discovery   { --lb-scale: 1.48; }
 .clients--logos .logo-vimeo       { --lb-scale: 1.18; }
 
