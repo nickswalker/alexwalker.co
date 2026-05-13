@@ -951,9 +951,9 @@ li.coming-soon a::before {
    around the mark, so they need bigger heights to compensate. */
 .clients--logos .logo-ibm,
 .clients--logos .logo-dell        { --lb-scale: 0.88; }
-.clients--logos .logo-viceland    { --lb-scale: 1.55; }
+.clients--logos .logo-viceland    { --lb-scale: 1.71; }
 .clients--logos .logo-mtv         { --lb-scale: 1.08; }
-.clients--logos .logo-heb         { --lb-scale: 1.80; }
+.clients--logos .logo-heb         { --lb-scale: 1.98; }
 .clients--logos .logo-weather     { --lb-scale: 1.10; }
 .clients--logos .logo-vimeo       { --lb-scale: 1.18; }
 .clients--logos .logo-discovery   { --lb-scale: 1.48; }
