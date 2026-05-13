@@ -951,9 +951,21 @@ li.coming-soon a::before {
    around the mark, so they need bigger heights to compensate. */
 .clients--logos .logo-ibm,
 .clients--logos .logo-dell        { --lb-scale: 0.88; }
-.clients--logos .logo-viceland    { --lb-scale: 1.71; }
+.clients--logos .logo-viceland    { --lb-scale: 1.55; }
 .clients--logos .logo-mtv         { --lb-scale: 1.08; }
-.clients--logos .logo-heb         { --lb-scale: 1.98; }
+.clients--logos .logo-heb         { --lb-scale: 1.80; }
+/* HEB and Viceland still read small after several --lb-scale bumps
+   because the grid cell width caps object-fit:contain rendering. Apply
+   an additional CSS transform that visually scales the rendered image
+   beyond the cell — overflow:visible on the cell lets it spill into the
+   gap. */
+.clients--logos .logo-viceland > img,
+.clients--logos .logo-heb > img {
+    transform: scale(1.25);
+    transform-origin: center;
+}
+.clients--logos .logo-viceland,
+.clients--logos .logo-heb { overflow: visible; }
 .clients--logos .logo-weather     { --lb-scale: 1.10; }
 .clients--logos .logo-vimeo       { --lb-scale: 1.18; }
 .clients--logos .logo-discovery   { --lb-scale: 1.48; }
