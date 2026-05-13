@@ -166,7 +166,7 @@ h2 {
 h3 {
     text-align: center;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 22px;
     padding: 0 var(--half-spacing-unit);
     padding-left: max(var(--half-spacing-unit), constant(safe-area-inset-left));
     padding-right: max(var(--half-spacing-unit), constant(safe-area-inset-right));
@@ -237,7 +237,7 @@ header {
     --header-bg: rgba(255, 255, 255, .85);
     background-color: var(--header-bg);
     background-image: linear-gradient(to right, var(--bar-blue), var(--bar-blue));
-    background-size: 100% 3px;
+    background-size: 100% 1px;
     background-position: 0 100%;
     background-repeat: no-repeat;
     z-index: 900;
@@ -307,10 +307,10 @@ header nav>ul {
     justify-content: space-between;
     align-items: center;
     min-height: 51px;
-    /* The 3px blue separator lives at the bottom of the header via
-       background-image. Reserve that 3px so flex children center vertically
-       within the DARK region (top 51px), not the full 54px box. */
-    padding-bottom: 3px;
+    /* The 1px blue separator lives at the bottom of the header via
+       background-image. Reserve that 1px so flex children center vertically
+       within the DARK region (top 53px), not the full 54px box. */
+    padding-bottom: 1px;
 }
 
 header nav>ul>li {
@@ -323,6 +323,7 @@ header nav>ul>li {
 }
 header nav>ul>li > a {
     line-height: 1;
+    font-size: 14px;
 }
 
 
@@ -512,7 +513,7 @@ section {
     height: auto;
     overflow: auto;
     position: relative;
-    padding: 0 0 36px 0;
+    padding: 0 0 72px 0;
     box-sizing: border-box;
 
 }
@@ -522,7 +523,7 @@ section .container {
     position: relative;
     max-width: 1170px;
     margin: 0 auto;
-    padding: 36px 0 0 0;
+    padding: 72px 0 0 0;
     box-sizing: border-box;
 border-top: none !important;
     grid-gap: var(--spacing-unit) var(--spacing-unit);
@@ -1010,7 +1011,9 @@ li.coming-soon a::before {
 #stills {
     margin-bottom: 0;
     margin-top: 0px;
-
+    /* Small amount of bottom breathing room between the stills strip and
+       the dark #contact band beneath it. */
+    padding-bottom: 36px;
 }
 
 #stills .container {
@@ -1018,6 +1021,15 @@ li.coming-soon a::before {
     width: 100%;
     max-width: 100%;
     border: none;
+}
+
+/* Tablet portrait / small-tablet: keep the stills strip from going full-
+   bleed. Side padding gives breathing room before the contact section. */
+@media screen and (min-width: 700px) and (max-width: 1219px) {
+    #stills .container {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
 }
 
 .stills {
@@ -2028,10 +2040,10 @@ html.is-instagram-webview .clients--logos img {
 }
 #glass-wrapper {
   position: fixed;
-  bottom: calc(40px + env(safe-area-inset-bottom, 0px));
-  right: calc(40px + env(safe-area-inset-right, 0px));
-  width: 70px;
-  height: 70px;
+  bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+  right: calc(28px + env(safe-area-inset-right, 0px));
+  width: 44px;
+  height: 44px;
   z-index: 9967;
   visibility: hidden;
   pointer-events: none;
@@ -2066,19 +2078,19 @@ html.is-instagram-webview .clients--logos img {
   #glass-wrapper {
     left: auto;
     top: auto;
-    right: max(24px, env(safe-area-inset-right, 0px) + 16px);
-    bottom: calc(28px + env(safe-area-inset-bottom, 0px));
-    width: 70px;
-    height: 70px;
+    right: max(18px, env(safe-area-inset-right, 0px) + 12px);
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    width: 44px;
+    height: 44px;
   }
 }
 
-/* iPhone-size: tighter still, with the smaller 65px button */
+/* iPhone-size: tighter still */
 @media (max-width: 480px) {
   #glass-wrapper {
-    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
-    width: 65px;
-    height: 65px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    width: 40px;
+    height: 40px;
   }
 }
 

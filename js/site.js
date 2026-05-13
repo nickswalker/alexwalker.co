@@ -36,7 +36,13 @@ ready(() => {
     safe('staggeredThumbs', () => initStaggeredThumbs());
     safe('scrollFade', () => initScrollFade());
     safe('stickyHeader', () => initStickyHeaderState());
-    safe('reelButtonShift', () => initReelButtonShift());
+    // Reel-button shift only matters when the homepage hero collapses the
+    // scroll-down indicator on scroll. Pages with no slider (project pages
+    // and the 2026-rethink homepage) keep the button in its natural
+    // flex-end position via past-cinematographer CSS — no JS needed.
+    if (document.getElementById('slider-container')) {
+        safe('reelButtonShift', () => initReelButtonShift());
+    }
     document.body.classList.add('loaded');
 
     const slider = document.getElementById('slider-container');
