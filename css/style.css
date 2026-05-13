@@ -923,6 +923,10 @@ li.coming-soon a::before {
 }
 @media (max-width: 1000px) {
   .clients--logos { grid-template-columns: repeat(3, 1fr); gap: 30px 32px; }
+  .clients--logos li { --lb-base: 70px; }
+  .clients--logos li > a,
+  .clients--logos li > img,
+  .clients--logos li > a > img { max-width: 200px; }
 }
 .clients--logos li {
   width: 100%;
@@ -949,8 +953,8 @@ li.coming-soon a::before {
 .clients--logos .logo-dell        { --lb-scale: 0.88; }
 .clients--logos .logo-mtv         { --lb-scale: 1.08; }
 .clients--logos .logo-boeing      { --lb-scale: 1.18; }
-.clients--logos .logo-nissan      { --lb-scale: 1.22; }
-.clients--logos .logo-discovery   { --lb-scale: 1.30; }
+.clients--logos .logo-nissan      { --lb-scale: 1.42; }
+.clients--logos .logo-discovery   { --lb-scale: 1.48; }
 .clients--logos .logo-vimeo       { --lb-scale: 1.18; }
 
 .clients--logos li > a,
@@ -1963,13 +1967,13 @@ body.loaded header {
 
   .clients--logos {
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px 24px;
+    gap: 28px 28px;
   }
-  .clients--logos li { --lb-base: 52px; }
+  .clients--logos li { --lb-base: 60px; }
   .clients--logos li > a,
   .clients--logos li > img,
   .clients--logos li > a > img {
-    max-width: 140px;
+    max-width: 160px;
   }
 }
 /* Meta in-app WebViews (Instagram, Threads, FB) report viewports/layout in
@@ -1987,13 +1991,13 @@ html.is-instagram-webview .clients--logos {
   max-width: 100% !important;
 }
 html.is-instagram-webview .clients--logos li {
-  --lb-base: 52px !important;
+  --lb-base: 60px !important;
   min-width: 0 !important;
 }
 html.is-instagram-webview .clients--logos li > a,
 html.is-instagram-webview .clients--logos li > img,
 html.is-instagram-webview .clients--logos li > a > img {
-  max-width: 140px !important;
+  max-width: 160px !important;
   min-width: 0 !important;
 }
 /* Crisper rendering of the small monochrome logos in WebView contexts where
