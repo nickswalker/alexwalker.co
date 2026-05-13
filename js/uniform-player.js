@@ -378,7 +378,13 @@ export function mountPlayer(root) {
 
     adapter.on('play', () => {
         setPlaying(true);
-        root.classList.add('is-loaded');
+        // Defer fading our poster a hair past the provider's 'play' event so
+        // the iframe has time to render its FIRST FRAME before being revealed.
+        // Without this, iOS users (where the iframe has its own controls=1)
+        // see a brief flash of YouTube/Vimeo's poster+chrome between our
+        // poster fading and the actual video painting. Desktop also benefits
+        // — no provider thumbnail flicker on first play.
+        setTimeout(() => root.classList.add('is-loaded'), 280);
     });
     adapter.on('pause', () => setPlaying(false));
     adapter.on('ended', () => { setPlaying(false); setState('ended'); });

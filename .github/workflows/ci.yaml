@@ -17,13 +17,10 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1.2
+          bundler-cache: true     # bundle install + caches /vendor/bundle
 
-      - run: yes | gem update --system --force
-
-      - name: 🔨 install dependencies & build site
-        uses: limjh16/jekyll-action-ts@v2
-        with:
-          enable_cache: true
+      - name: 🔨 build site
+        run: bundle exec jekyll build
 
       - name: cache HTMLProofer
         id: cache-htmlproofer
