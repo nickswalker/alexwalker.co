@@ -17,6 +17,14 @@
     <meta property="og:title" content="Alex Walker's Cinematography and Colorist Portfolio">
     <meta property="og:description" content="">
 
+    <script>
+      // Tag the document for Instagram's in-app WebView BEFORE the
+      // stylesheet applies, so CSS scoped to .is-instagram-webview takes
+      // effect on first paint with no FOUC.
+      if (/Instagram/i.test(navigator.userAgent || '')) {
+        document.documentElement.classList.add('is-instagram-webview');
+      }
+    </script>
     <link rel="shortcut icon" href="img/favicon.png" />
     <link rel="apple-touch-icon-precomposed" href="img/touch-icon.png" />
 

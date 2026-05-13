@@ -21,17 +21,8 @@ function ready(fn) {
     if (document.readyState !== 'loading') fn();
     else document.addEventListener('DOMContentLoaded', fn);
 }
-
-// Instagram's in-app WebView reports a viewport that doesn't trip our mobile
-// media query, so logos render oversized inside Instagram. Tag the html so
-// CSS can scope a fix to ONLY this context — Safari/iPad/everything else
-// keep their normal layout.
-(() => {
-    const ua = navigator.userAgent || '';
-    if (/Instagram/i.test(ua)) {
-        document.documentElement.classList.add('is-instagram-webview');
-    }
-})();
+// Instagram-WebView detection now lives as an inline script in _includes/head.html
+// so the html.is-instagram-webview class is in place before CSS first applies.
 
 // Wrap each subsystem so a failure in one doesn't take down the rest.
 function safe(label, fn) {
