@@ -102,9 +102,12 @@ export function initScrollFade(selector = '.scroll-fade') {
     }, {
         threshold: 0,
         // Shrink the effective viewport up from the bottom so elements only
-        // start fading in once they're solidly visible — otherwise the fade
-        // plays off-screen and the user sees nothing animate.
-        rootMargin: '0px 0px -12% 0px',
+        // start fading in once they're solidly visible. -25% means the
+        // element's top has to be 75% of viewport-height down before
+        // triggering — keeps the 450ms fade comfortably in-view even on
+        // mobile fast-flick scrolling where -12% had the fade completing
+        // before the user perceived the element.
+        rootMargin: '0px 0px -25% 0px',
     });
     document.querySelectorAll(selector).forEach(el => observer.observe(el));
 }
