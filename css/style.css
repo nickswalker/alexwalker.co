@@ -940,7 +940,7 @@ li.coming-soon a::before {
   align-items: center;
   justify-content: center;
   --lb-scale: 1;       /* per-logo optical-weight multiplier; default = medium */
-  --lb-base: 64px;     /* row height before scaling (overridden at small widths) */
+  --lb-base: 76px;     /* row height before scaling (overridden at small widths) */
 }
 .clients--logos li > a,
 .clients--logos li > img,
@@ -961,7 +961,7 @@ li.coming-soon a::before {
 .clients--logos li > img {
   display: block;
   width: 100%;
-  max-width: 180px;
+  max-width: 210px;
   height: calc(var(--lb-base) * var(--lb-scale));
   object-fit: contain;
   filter: brightness(0);
@@ -972,7 +972,7 @@ li.coming-soon a::before {
 .clients--logos li > a > img {
   display: block;
   width: 100%;
-  max-width: 180px;
+  max-width: 210px;
   height: calc(var(--lb-base) * var(--lb-scale));
   object-fit: contain;
   filter: brightness(0);
