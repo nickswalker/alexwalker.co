@@ -1986,11 +1986,11 @@ body.loaded header {
     grid-template-columns: repeat(2, 1fr);
     gap: 28px 28px;
   }
-  .clients--logos li { --lb-base: 60px; }
+  .clients--logos li { --lb-base: 64px; }
   .clients--logos li > a,
   .clients--logos li > img,
   .clients--logos li > a > img {
-    max-width: calc(160px * var(--lb-scale));
+    max-width: calc(171px * var(--lb-scale));
   }
 }
 /* Meta in-app WebViews (Instagram, Threads, FB) report viewports/layout in
@@ -2008,13 +2008,13 @@ html.is-instagram-webview .clients--logos {
   max-width: 100% !important;
 }
 html.is-instagram-webview .clients--logos li {
-  --lb-base: 60px !important;
+  --lb-base: 64px !important;
   min-width: 0 !important;
 }
 html.is-instagram-webview .clients--logos li > a,
 html.is-instagram-webview .clients--logos li > img,
 html.is-instagram-webview .clients--logos li > a > img {
-  max-width: calc(160px * var(--lb-scale)) !important;
+  max-width: calc(171px * var(--lb-scale)) !important;
   min-width: 0 !important;
 }
 /* Crisper rendering of the small monochrome logos in WebView contexts where
