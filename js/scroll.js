@@ -307,9 +307,18 @@ export function initSliderScrollBlur(selector = '#slider-container') {
     const el = document.querySelector(selector);
     if (!el) return;
     el.style.willChange = 'filter, opacity';
-    let wHeight = window.innerHeight;
+    // Reference height for the scroll ratio. Use the slider's OWN rendered
+    // height (which is `100svh - 54px`, a stable small-viewport value) instead
+    // of window.innerHeight. On iOS Safari portrait, innerHeight grows as the
+    // URL bar collapses during scroll, which would otherwise re-divide
+    // scrollY by a moving denominator and make the slider's blur/opacity
+    // jump visibly mid-scroll. Recompute only on orientation/load — not on
+    // every URL-bar collapse resize event.
+    let wHeight = el.getBoundingClientRect().height || window.innerHeight;
+    function refresh() { wHeight = el.getBoundingClientRect().height || window.innerHeight; }
+    window.addEventListener('orientationchange', refresh);
+    window.addEventListener('load', refresh);
     let scheduled = false;
-    window.addEventListener('resize', () => { wHeight = window.innerHeight; }, { passive: true });
     function apply() {
         scheduled = false;
         // While a lightbox has the body locked, window.scrollY reads as 0 and we'd
