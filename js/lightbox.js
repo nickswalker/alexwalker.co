@@ -648,7 +648,15 @@ export class Lightbox {
                     const poster = parsed.provider === 'youtube' ? item.thumb : null;
                     wrap.innerHTML = buildPlayerMarkup({ ...parsed, poster, autoplay: !!item.autoplay });
                     panel.appendChild(wrap);
+                    // mountPlayer (and therefore YT.Player / Vimeo.Player
+                    // construction) is deferred until AFTER the panel is in
+                    // the DOM — autoplay won't fire on iframes inserted
+                    // detached and then attached, the user-activation window
+                    // has already lapsed by the time the browser sees the
+                    // iframe in the document.
+                    this.stage.appendChild(panel);
                     mountPlayer(wrap.querySelector('.up'));
+                    return;
                 } else {
                     // Fallback: raw iframe (legacy/unknown video host).
                     const iframe = document.createElement('iframe');
