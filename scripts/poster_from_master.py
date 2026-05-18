@@ -207,10 +207,62 @@ def scan_film(video: Path, ref_features, sample_hz=2.0, max_seconds=None,
     return candidates
 
 
+def trim_letterbox(img, threshold=14, min_run=8):
+    """Detect and crop letterbox/pillarbox black bars from a frame.
+    Returns (cropped_img, (x0, y0, x1, y1)) bounds in the original.
+
+    threshold: rows/cols whose mean brightness is below this are
+               considered black bar (0..255).
+    min_run:   ignore bars shorter than this — guards against false
+               positives from very dark frames where the actual image
+               has near-black rows."""
+    h, w = img.shape[:2]
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    row_mean = gray.mean(axis=1)
+    col_mean = gray.mean(axis=0)
+
+    def first_bright(arr):
+        for i, v in enumerate(arr):
+            if v > threshold:
+                return i
+        return 0
+
+    top = first_bright(row_mean)
+    bot = len(row_mean) - first_bright(row_mean[::-1])
+    left = first_bright(col_mean)
+    right = len(col_mean) - first_bright(col_mean[::-1])
+
+    # Only accept the trim if the detected bar is meaningful AND symmetric-ish
+    # (real letterbox is symmetric; if we only see one bar it's probably a
+    # dark scene element, not a bar).
+    if top + (h - bot) < min_run:
+        top, bot = 0, h
+    if left + (w - right) < min_run:
+        left, right = 0, w
+
+    if (top, left, bot, right) == (0, 0, h, w):
+        return img, (0, 0, w, h)
+    return img[top:bot, left:right], (left, top, right, bot)
+
+
 def best_crop_2x3(img, faces, target_h=1800, target_w=1200):
     """Compute a 2:3 portrait crop centred on detected faces, with eyeline
     near the top third. Falls back to center crop if no faces detected.
-    `faces` is a list of (x, y, w, h, conf) tuples from YuNet."""
+    `faces` is a list of (x, y, w, h, conf) tuples from YuNet.
+
+    Detects + trims letterbox bars before cropping so the final poster
+    fills the frame without baked-in black bars from cinematic-aspect
+    masters (e.g. 2.39:1 letterboxed into a 16:9 container)."""
+    # 1) Trim letterbox
+    trimmed, (lx, ly, _rx, _ry) = trim_letterbox(img)
+    if trimmed.shape != img.shape:
+        # Faces were detected on the un-trimmed image — shift their
+        # coordinates into the trimmed image's frame.
+        faces = [(x - lx, y - ly, fw, fh, c) for (x, y, fw, fh, c) in faces
+                 if x - lx >= 0 and y - ly >= 0
+                 and x - lx + fw <= trimmed.shape[1]
+                 and y - ly + fh <= trimmed.shape[0]]
+    img = trimmed
     h, w = img.shape[:2]
 
     if len(faces) == 0:
