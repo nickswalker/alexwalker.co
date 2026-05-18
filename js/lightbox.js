@@ -381,15 +381,21 @@ export class Lightbox {
             <div class="lightbox__thumbs" hidden></div>
         `;
         document.body.appendChild(dlg);
-        // Backdrop blur layer — sibling of the dialog so it sits in normal
-        // page z-order (between page and dialog). Safari can't transition
-        // properties on the `::backdrop` pseudo-element reliably, but a
-        // regular DOM element with `backdrop-filter` transitions cleanly
-        // everywhere. We toggle .is-active on this layer in sync with the
-        // dialog's open/close to fade the blur in and out smoothly.
+        // Backdrop blur layer — Safari can't transition properties on the
+        // `::backdrop` pseudo-element reliably, but a regular DOM element
+        // with `backdrop-filter` transitions cleanly. The element is a
+        // popover so showPopover() promotes it into the top layer, which is
+        // the only way to sit a blur element above a previously-opened
+        // dialog (e.g. the still-frame zoom lightbox that opens FROM inside
+        // the rich-panel lightbox — its blur layer needs to be above the
+        // outer dialog, not just above the page). For the outer instance
+        // this is still correct: popover top-layer sits below the dialog
+        // that's opened immediately after, since top-layer ordering follows
+        // insertion order.
         const blurLayer = document.createElement('div');
         blurLayer.className = 'lightbox__blur-layer';
         blurLayer.setAttribute('aria-hidden', 'true');
+        blurLayer.setAttribute('popover', 'manual');
         document.body.appendChild(blurLayer);
         this.blurLayer = blurLayer;
         this.dialog = dlg;
@@ -427,11 +433,17 @@ export class Lightbox {
                 } catch (_) {}
                 this._videoOpen = null;
             }
-            // Belt-and-braces: ensure the blur layer fades out on every dismiss
-            // path, including Escape and any programmatic close that bypassed
-            // this.close(). this.close() already removes the class up-front
-            // for the smooth out-fade; this is just a safety net.
-            if (this.blurLayer) this.blurLayer.classList.remove('is-active');
+            // Belt-and-braces: ensure the blur layer fades out + leaves the
+            // top layer on every dismiss path, including Escape and any
+            // programmatic close that bypassed this.close(). this.close()
+            // already removes the class up-front for the smooth out-fade
+            // and schedules hidePopover() after the transition; this is
+            // just a safety net for paths that bypass close().
+            if (this.blurLayer) {
+                const blur = this.blurLayer;
+                blur.classList.remove('is-active');
+                setTimeout(() => { try { blur.hidePopover(); } catch (_) {} }, 320);
+            }
             this._cleanup();
         });
         dlg.addEventListener('keydown', (e) => {
@@ -824,10 +836,17 @@ export class Lightbox {
         this._renderPanels();
         this._renderMeta();
 
+        // Promote the blur layer to the top layer FIRST, then open the
+        // dialog. Top-layer ordering follows insertion: the blur layer
+        // settles below the about-to-open dialog, and (importantly) above
+        // any previously-open dialog — which is what makes the inner zoom
+        // lightbox's blur layer correctly blur the outer rich-panel
+        // lightbox.
+        if (this.blurLayer) {
+            try { this.blurLayer.showPopover(); } catch (_) {}
+            this.blurLayer.classList.add('is-active');
+        }
         this.dialog.showModal();
-        // Activate the blur layer just before the dialog so its
-        // backdrop-filter is mounted by the time the dialog paints over it.
-        if (this.blurLayer) this.blurLayer.classList.add('is-active');
         requestAnimationFrame(() => {
             this.dialog.classList.add('is-open');
             // Jump (no animation) to the starting panel
@@ -855,6 +874,17 @@ export class Lightbox {
         this.dialog.classList.remove('is-open');
         if (this.blurLayer) this.blurLayer.classList.remove('is-active');
         this._stopSlideshow();
+        // Tear the blur layer out of the top layer AFTER the fade-out
+        // transition completes (280ms backdrop-filter + a small safety
+        // margin). Doing this synchronously would snap the blur away
+        // mid-fade. We coalesce with the existing close timeout so the
+        // teardown happens together with dialog.close().
+        const blur = this.blurLayer;
+        if (blur) {
+            setTimeout(() => {
+                try { blur.hidePopover(); } catch (_) {}
+            }, 320);
+        }
         // Drive the backdrop blur back to zero via the existing --dismiss-progress transition
         this.dialog.style.setProperty('--dismiss-progress', '1');
 
@@ -869,6 +899,14 @@ export class Lightbox {
         // We deliberately do NOT add overflow:hidden to html during this
         // window — that would break position: sticky on the header and
         // prevent its slide-back animation from playing.
+        //
+        // Lockout duration is touch-aware: on desktop the OS keeps
+        // dispatching trackpad-momentum wheel events for ~600–1200ms after
+        // fingers lift, so we hold for 1s. On touch devices, touchmoves
+        // stop the instant the finger lifts — holding 1s there just makes
+        // the page feel unresponsive ("can't scroll right after the
+        // lightbox closes"), so we drop to a tight 280ms (just past the
+        // 240ms close animation).
         const block = (e) => { e.preventDefault(); e.stopPropagation(); };
         window.addEventListener('wheel', block, { passive: false, capture: true });
         window.addEventListener('touchmove', block, { passive: false, capture: true });
@@ -879,11 +917,12 @@ export class Lightbox {
             if (window.scrollX !== lockedX) document.documentElement.scrollLeft = lockedX;
         };
         window.addEventListener('scroll', snap, { passive: true, capture: true });
+        const isTouch = matchMedia('(hover: none) and (pointer: coarse)').matches;
         setTimeout(() => {
             window.removeEventListener('wheel', block, { capture: true });
             window.removeEventListener('touchmove', block, { capture: true });
             window.removeEventListener('scroll', snap, { capture: true });
-        }, 1000);
+        }, isTouch ? 280 : 1000);
 
         // Matches the longest close-direction transition (panel opacity 220ms
         // + a small safety margin). Shorter than the legacy 360ms because the

@@ -2353,12 +2353,21 @@ dialog.lightbox::backdrop {
     -webkit-backdrop-filter: none;
 }
 .lightbox__blur-layer {
+    /* As a popover this element gets `position: fixed; inset: 0; margin: auto`
+       and default UA chrome — override all of that. */
     position: fixed;
     inset: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
     pointer-events: none;
-    /* Below the dialog (which always paints above non-top-layer content)
-       but above page content. The numeric value just needs to be > anything
-       else on the page. */
+    /* Used only while NOT in the top layer (popover not shown). When
+       shown via showPopover() the element is promoted to the top layer
+       and z-index becomes irrelevant. */
     z-index: 2147483646;
     /* Start unblurred + invisible. JS toggles .is-active to fade in. The
        backdrop-filter transition covers blur build-up; opacity covers any
@@ -2370,6 +2379,13 @@ dialog.lightbox::backdrop {
         backdrop-filter 280ms cubic-bezier(0.4, 0, 0.2, 1),
         -webkit-backdrop-filter 280ms cubic-bezier(0.4, 0, 0.2, 1),
         opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    /* No popover default open animation */
+    overflow: visible;
+}
+/* The popover :popover-open state defaults the element to display: block;
+   we still want it visible only when .is-active drives the blur up. */
+.lightbox__blur-layer:popover-open {
+    display: block;
 }
 .lightbox__blur-layer.is-active {
     backdrop-filter: blur(10px) saturate(150%);
