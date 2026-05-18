@@ -1,5 +1,227 @@
-import { sendVideoPixel } from './pixel.js';
+import { sendVideoPixel, sendVideoDuration } from './visit-log.js';
 import { buildPlayerMarkup, mountPlayer, parseVideoUrl, loadYouTubeApi, loadVimeoApi } from './uniform-player.js';
+
+// Per-rich-item configuration. Keyed by the `data-rich` value on the trigger
+// anchor. Each entry supplies the assets that the custom rich-lightbox panel
+// pulls in (poster, watch-full destination, four still frames). Frame entries
+// may be `null` for "placeholder pending real asset" — those render as
+// non-interactive placeholder tiles. Real URLs become clickable and open the
+// nested image gallery.
+export const RICH_CONFIG = {
+    hoa: {
+        title: 'House of Abraham',
+        poster: '/img/posters/HOAposter.jpg',
+        frames: [
+            '/img/hoa/frame1.jpg',
+            '/img/hoa/frame2.jpg',
+            '/img/hoa/frame3.jpg',
+            '/img/hoa/frame4.jpg',
+        ],
+    },
+    tch: {
+        title: 'Texas Cult House',
+        poster: '/img/posters/TCH.jpg',
+        frames: [
+            '/img/tch/frame1.jpg',
+            '/img/tch/frame2.jpg',
+            '/img/tch/frame3.jpg',
+            '/img/tch/frame4.jpg',
+        ],
+    },
+    acinh: {
+        title: 'A Christmas In New Hope',
+        poster: '/img/posters/ACINHPoster2.jpg',
+        frameAspect: '16 / 9',
+        frames: [
+            '/img/acinh/frame1.jpg',
+            '/img/acinh/frame2.jpg',
+            '/img/acinh/frame3.jpg',
+            '/img/acinh/frame4.jpg',
+        ],
+    },
+    myth: {
+        title: 'Myth',
+        // No poster — player fills the top row.
+        frames: [
+            '/img/myth/frame1.jpg',
+            '/img/myth/frame2.jpg',
+            '/img/myth/frame3.jpg',
+            '/img/myth/frame4.jpg',
+        ],
+    },
+    mythbts: {
+        title: 'Myth — Behind the Scenes',
+        frames: [
+            '/img/mythbts/frame1.jpg',
+            '/img/mythbts/frame2.jpg',
+            '/img/mythbts/frame3.jpg',
+            '/img/mythbts/frame4.jpg',
+        ],
+    },
+    amorsui: {
+        title: 'Amor Sui',
+        frames: [
+            '/img/amorsui/frame1.jpg',
+            '/img/amorsui/frame2.jpg',
+            '/img/amorsui/frame3.jpg',
+            '/img/amorsui/frame4.jpg',
+        ],
+    },
+    attad: {
+        title: 'A Thousand Times A Day',
+        poster: '/img/posters/ATTADposter.jpg',
+        frameAspect: '2 / 1',
+        frames: [
+            '/img/attad/frame1.jpg',
+            '/img/attad/frame2.jpg',
+            '/img/attad/frame3.jpg',
+            '/img/attad/frame4.jpg',
+        ],
+    },
+    alit: {
+        title: 'A Life In Technicolor',
+        poster: '/img/posters/alitposter.jpg',
+        // Per-frame aspect — the film mixes formats inside a 1.9:1 master,
+        // so each still is trimmed of its bars individually and the cell
+        // adopts that frame's true content aspect.
+        frames: [
+            { src: '/img/alit/frame1.jpg', aspect: '1600 / 670'  },
+            { src: '/img/alit/frame2.jpg', aspect: '1600 / 1198' },
+            { src: '/img/alit/frame3.jpg', aspect: '1600 / 1195' },
+            { src: '/img/alit/frame4.jpg', aspect: '1600 / 1199' },
+        ],
+    },
+    jr: {
+        title: 'Javelina Run',
+        poster: '/img/posters/JR.jpg',
+        frames: [
+            '/img/jr/frame1.jpg',
+            '/img/jr/frame2.jpg',
+            '/img/jr/frame3.jpg',
+            '/img/jr/frame4.jpg',
+        ],
+    },
+    goh: {
+        title: 'Guest of Honor',
+        poster: '/img/posters/goh.jpg',
+        frameAspect: '1600 / 670',
+        frames: [
+            '/img/goh/frame1.jpg',
+            '/img/goh/frame2.jpg',
+            '/img/goh/frame3.jpg',
+            '/img/goh/frame4.jpg',
+        ],
+    },
+    hc: {
+        title: 'Hub City',
+        framesOnly: true,
+        frames: [
+            '/img/hc/frame1.jpg',
+            '/img/hc/frame2.jpg',
+            '/img/hc/frame3.jpg',
+            '/img/hc/frame4.jpg',
+            '/img/hc/frame5.jpg',
+            '/img/hc/frame6.jpg',
+            '/img/hc/frame7.jpg',
+            '/img/hc/frame8.jpg',
+        ],
+    },
+    tll: {
+        title: 'Texas Legacy in Lights',
+        framesOnly: true,
+        // 8 real stills — grid is full, no placeholders. (The 5th still
+        // doubles as the narrative thumbnail.)
+        frames: [
+            '/img/tll/frame1.jpg',
+            '/img/tll/frame2.jpg',
+            '/img/tll/frame3.jpg',
+            '/img/tll/frame4.jpg',
+            '/img/tll/frame5.jpg',
+            '/img/tll/frame6.jpg',
+            '/img/tll/frame7.jpg',
+            '/img/tll/frame8.jpg',
+        ],
+    },
+
+    // Commercial & Documentary — frames restored for the 8 spots where
+    // we have clean, non-text content. The other three (ford, bostin,
+    // viceguide) stay player-only.
+    comm_everydaydose: {
+        title: 'Everyday Dose',
+        frameAspect: '16 / 9',
+        frames: [
+            '/img/comm_everydaydose/frame1.jpg',
+            '/img/comm_everydaydose/frame2.jpg',
+            '/img/comm_everydaydose/frame3.jpg',
+            '/img/comm_everydaydose/frame4.jpg',
+        ],
+    },
+    comm_ford: { title: 'Ford Bronco TV Ad' },
+    comm_wls: {
+        title: 'Gold Best Cinematography Award',
+        frameAspect: '1600 / 669',
+        frames: [
+            '/img/comm_wls/frame1.jpg',
+            '/img/comm_wls/frame2.jpg',
+            '/img/comm_wls/frame3.jpg',
+            '/img/comm_wls/frame4.jpg',
+        ],
+    },
+    comm_cwb: {
+        title: 'Cowboys Without Borders',
+        frameAspect: '1600 / 669',
+        frames: [
+            '/img/comm_cwb/frame1.jpg',
+            '/img/comm_cwb/frame2.jpg',
+            '/img/comm_cwb/frame3.jpg',
+            '/img/comm_cwb/frame4.jpg',
+        ],
+    },
+    comm_bostin: { title: 'Bostin Westin LED Wall' },
+    comm_viceguide: { title: 'Vice Guide To Film' },
+    comm_applovin: {
+        title: 'AppLovin Halloween Ad',
+        frameAspect: '16 / 9',
+        frames: [
+            '/img/comm_applovin/frame1.jpg',
+            '/img/comm_applovin/frame2.jpg',
+            '/img/comm_applovin/frame3.jpg',
+            '/img/comm_applovin/frame4.jpg',
+        ],
+    },
+    comm_josey: {
+        title: 'Josey Records Ad #3',
+        frameAspect: '16 / 9',
+        frames: [
+            '/img/comm_josey/frame1.jpg',
+            '/img/comm_josey/frame2.jpg',
+            '/img/comm_josey/frame3.jpg',
+            '/img/comm_josey/frame4.jpg',
+        ],
+    },
+    comm_goody: {
+        title: 'Goody Goody TV Ad',
+        frameAspect: '16 / 9',
+        frames: [
+            '/img/comm_goody/frame1.jpg',
+            '/img/comm_goody/frame2.jpg',
+            '/img/comm_goody/frame3.jpg',
+            '/img/comm_goody/frame4.jpg',
+        ],
+    },
+    comm_earthspeed: { title: 'Earth Speed' },
+    comm_targetcool: {
+        title: 'TargetCool Customer Journey',
+        frameAspect: '16 / 9',
+        frames: [
+            '/img/comm_targetcool/frame1.jpg',
+            '/img/comm_targetcool/frame2.jpg',
+            '/img/comm_targetcool/frame3.jpg',
+            '/img/comm_targetcool/frame4.jpg',
+        ],
+    },
+    comm_samplereel: { title: 'Sample Work Playlist' },
+};
 
 // Native-dialog lightbox: images (gallery) + iframes (video).
 // Features: keyboard nav, swipe, captions, slideshow, fullscreen, thumbs,
@@ -65,8 +287,13 @@ let bodyLockCount = 0;
 // from inside the dialog is still blocked.
 function lockBody() {
     if (bodyLockCount++ > 0) return;
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
+    // Only lock vertical scrolling — horizontal is already permanently
+    // clipped via CSS (`html, body.cinematic { overflow-x: clip }`).
+    // Touching `overflow` shorthand here would override the clip and
+    // could leave horizontal scrolling enabled after unlock on browsers
+    // that don't fully revert shorthand-set longhands.
+    document.documentElement.style.overflowY = 'hidden';
+    document.body.style.overflowY = 'hidden';
     // Compensate for the disappearing vertical scrollbar on desktop so the
     // page doesn't shift horizontally when locked.
     const sbw = window.innerWidth - document.documentElement.clientWidth;
@@ -76,10 +303,21 @@ function lockBody() {
 function unlockBody() {
     if (--bodyLockCount > 0) return;
     bodyLockCount = 0;
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
+    document.documentElement.style.overflowY = '';
+    document.body.style.overflowY = '';
     document.body.style.paddingRight = '';
     document.documentElement.classList.remove('lightbox-open');
+    // Belt-and-braces: the close() block-handler suppresses our bubble-phase
+    // horizontal-snap during the 450ms close window, and any momentum/smooth
+    // scroll that crossed that boundary could leave scrollLeft non-zero. Snap
+    // immediately, and again after the close transition completes.
+    const snapX = () => {
+        document.documentElement.scrollLeft = 0;
+        if (document.body) document.body.scrollLeft = 0;
+    };
+    snapX();
+    requestAnimationFrame(snapX);
+    setTimeout(snapX, 500);
 }
 
 export class Lightbox {
@@ -97,6 +335,18 @@ export class Lightbox {
         this.index = 0;
         this.dialog = null;
         this.slideshowTimer = null;
+        this._videoOpen = null;
+        // Tab-close survival: if the dialog is still open when the page
+        // unloads, fire the duration beacon so we don't lose the data.
+        window.addEventListener('pagehide', () => {
+            if (this._videoOpen) {
+                try {
+                    const elapsed = performance.now() - this._videoOpen.t0;
+                    sendVideoDuration(this._videoOpen.href, elapsed);
+                } catch (_) {}
+                this._videoOpen = null;
+            }
+        });
         this._buildDialog();
     }
 
@@ -104,6 +354,7 @@ export class Lightbox {
         const dlg = document.createElement('dialog');
         dlg.className = 'lightbox';
         dlg.innerHTML = `
+            <div class="lightbox__dim" aria-hidden="true"></div>
             <div class="lightbox__toolbar" role="toolbar" aria-label="Lightbox controls">
                 <button class="lightbox__btn lightbox__btn--play" type="button" aria-label="Toggle slideshow" hidden>
                     <span class="lightbox__icon-play"></span>
@@ -130,6 +381,17 @@ export class Lightbox {
             <div class="lightbox__thumbs" hidden></div>
         `;
         document.body.appendChild(dlg);
+        // Backdrop blur layer — sibling of the dialog so it sits in normal
+        // page z-order (between page and dialog). Safari can't transition
+        // properties on the `::backdrop` pseudo-element reliably, but a
+        // regular DOM element with `backdrop-filter` transitions cleanly
+        // everywhere. We toggle .is-active on this layer in sync with the
+        // dialog's open/close to fade the blur in and out smoothly.
+        const blurLayer = document.createElement('div');
+        blurLayer.className = 'lightbox__blur-layer';
+        blurLayer.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(blurLayer);
+        this.blurLayer = blurLayer;
         this.dialog = dlg;
         this.stage = dlg.querySelector('.lightbox__stage');
         this.captionEl = dlg.querySelector('.lightbox__caption');
@@ -152,7 +414,26 @@ export class Lightbox {
         dlg.addEventListener('click', (e) => {
             if (e.target === dlg) this.close();
         });
-        dlg.addEventListener('close', () => this._cleanup());
+        dlg.addEventListener('close', () => {
+            // Fire the video-duration beacon HERE rather than only from
+            // this.close(), so it runs on every dismiss path — close button,
+            // backdrop click, Escape key, dismiss drag, programmatic close.
+            // Without this, anything but a close-button click silently
+            // dropped the duration (DB had 79 plays / 0 durations recorded).
+            if (this._videoOpen) {
+                try {
+                    const elapsed = performance.now() - this._videoOpen.t0;
+                    sendVideoDuration(this._videoOpen.href, elapsed);
+                } catch (_) {}
+                this._videoOpen = null;
+            }
+            // Belt-and-braces: ensure the blur layer fades out on every dismiss
+            // path, including Escape and any programmatic close that bypassed
+            // this.close(). this.close() already removes the class up-front
+            // for the smooth out-fade; this is just a safety net.
+            if (this.blurLayer) this.blurLayer.classList.remove('is-active');
+            this._cleanup();
+        });
         dlg.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') this.next();
             else if (e.key === 'ArrowLeft') this.prev();
@@ -190,6 +471,10 @@ export class Lightbox {
             // the subsequent click event to the stage instead of the player's
             // hit/play/mute/fullscreen targets, breaking every player button.
             if (e.target.closest('.up')) return;
+            // Same reason for rich-panel frame thumbnails: pointer-capture
+            // would consume the click and the nested image lightbox never
+            // opens on desktop (mobile uses touch, which we skip above).
+            if (e.target.closest('.rich-frame[data-frame-index]')) return;
             const zoomedPanel = e.target.closest('.lightbox__panel.is-zoomed');
             dragPointer = e.pointerId;
             dragStartX = e.clientX;
@@ -540,6 +825,9 @@ export class Lightbox {
         this._renderMeta();
 
         this.dialog.showModal();
+        // Activate the blur layer just before the dialog so its
+        // backdrop-filter is mounted by the time the dialog paints over it.
+        if (this.blurLayer) this.blurLayer.classList.add('is-active');
         requestAnimationFrame(() => {
             this.dialog.classList.add('is-open');
             // Jump (no animation) to the starting panel
@@ -552,30 +840,60 @@ export class Lightbox {
         const item = this.items[this.index];
         if (item && item.type === 'iframe') {
             try { sendVideoPixel(item.href); } catch (_) {}
+            this._videoOpen = { href: item.href, t0: performance.now() };
+        } else {
+            this._videoOpen = null;
         }
     }
 
     close() {
         if (!this.dialog.open) return;
+        // Note: the video-duration beacon is fired from the dialog 'close'
+        // event listener (in _buildDialog) rather than here, so it covers
+        // EVERY dismiss path — close button, Escape, backdrop click,
+        // programmatic dialog.close(), etc.
         this.dialog.classList.remove('is-open');
+        if (this.blurLayer) this.blurLayer.classList.remove('is-active');
         this._stopSlideshow();
         // Drive the backdrop blur back to zero via the existing --dismiss-progress transition
         this.dialog.style.setProperty('--dismiss-progress', '1');
 
-        // Eat wheel/touch events for a brief window so the tail of a flick gesture
-        // doesn't scroll the page after we close.
+        // Trackpad-momentum guard. Two layers:
+        // - preventDefault on wheel/touchmove blocks discrete events from
+        //   triggering scroll
+        // - direct synchronous scrollTop snap-back catches anything that
+        //   slips past preventDefault (Safari momentum-continuation events
+        //   sometimes do). scrollTop assignment is synchronous and snaps
+        //   before the next paint, so the user doesn't see a frame of bump
+        //
+        // We deliberately do NOT add overflow:hidden to html during this
+        // window — that would break position: sticky on the header and
+        // prevent its slide-back animation from playing.
         const block = (e) => { e.preventDefault(); e.stopPropagation(); };
         window.addEventListener('wheel', block, { passive: false, capture: true });
         window.addEventListener('touchmove', block, { passive: false, capture: true });
+        const lockedY = window.scrollY;
+        const lockedX = window.scrollX;
+        const snap = () => {
+            if (window.scrollY !== lockedY) document.documentElement.scrollTop = lockedY;
+            if (window.scrollX !== lockedX) document.documentElement.scrollLeft = lockedX;
+        };
+        window.addEventListener('scroll', snap, { passive: true, capture: true });
         setTimeout(() => {
             window.removeEventListener('wheel', block, { capture: true });
             window.removeEventListener('touchmove', block, { capture: true });
-        }, 450);
+            window.removeEventListener('scroll', snap, { capture: true });
+        }, 1000);
 
+        // Matches the longest close-direction transition (panel opacity 220ms
+        // + a small safety margin). Shorter than the legacy 360ms because the
+        // close transitions were sped up to fix a Safari "dip to black" where
+        // the dark dialog overlay lingered while the backdrop dim was still
+        // clearing.
         setTimeout(() => {
             this.dialog.close();
             this.dialog.style.setProperty('--dismiss-progress', '0');
-        }, 360);
+        }, 240);
     }
 
     _cleanup() {
@@ -628,7 +946,12 @@ export class Lightbox {
             panel.className = 'lightbox__panel';
             panel.dataset.index = idxAttr;
             if (isClone) panel.dataset.clone = '1';
-            if (item.type === 'image') {
+            // Explicit rich config wins over the type-based path so titles
+            // like Hub City (href="javascript:void(0)", which detectType
+            // misclassifies as 'image') still render the rich frames-only
+            // panel instead of a broken <img>.
+            const hasExplicitRich = item.rich && RICH_CONFIG[item.rich];
+            if (item.type === 'image' && !hasExplicitRich) {
                 const img = document.createElement('img');
                 img.className = 'lightbox__image';
                 img.src = item.href;
@@ -637,6 +960,157 @@ export class Lightbox {
                 img.loading = 'lazy';
                 img.draggable = false;
                 panel.appendChild(img);
+            } else if (item.type === 'iframe' || hasExplicitRich) {
+                // Rich panel: trailer + (optional) poster + frame strip.
+                // Every video lightbox in the site goes through this path so
+                // we get consistent layout + placeholder frames across the
+                // home page, narrative section, commercials, and every
+                // secondary project page — even when no RICH_CONFIG entry
+                // exists for the specific item.
+                const cfg = (item.rich && RICH_CONFIG[item.rich]) || {};
+                // Only render the still-frame strip when real frames are
+                // configured. Titles without a RICH_CONFIG entry (e.g. the
+                // Watch Reels playlist, every Colorist-section video) get
+                // a player-only lightbox — no "Still N" placeholder tiles.
+                const frames = Array.isArray(cfg.frames) ? cfg.frames : [];
+                const parsed = parseVideoUrl(item.href);
+                let playerHTML = '';
+                if (parsed) {
+                    playerHTML = buildPlayerMarkup({ ...parsed, poster: item.thumb, autoplay: !!item.autoplay });
+                } else if (item.href && item.href !== 'javascript:void(0)' && !cfg.framesOnly) {
+                    // Unparseable but real URL: fall back to a raw iframe
+                    // inside the player slot so the rich layout still wraps
+                    // it consistently.
+                    playerHTML = `<iframe class="lightbox__iframe" src="${enhanceVideoSrc(item.href)}" title="Video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+                }
+                // Omit the poster element entirely when none is configured —
+                // the player then occupies the full top-row width. (Use an
+                // explicit `poster: false`/missing key to indicate "no poster
+                // for this title at all", not "poster pending".)
+                const posterHTML = cfg.poster
+                    ? `<img class="rich-poster" src="${cfg.poster}" alt="${(cfg.title || '') + ' poster'}">`
+                    : '';
+                // Each frame entry can be either a string (URL) or an object
+                // `{ src, aspect }` for per-frame aspect overrides — used when
+                // a film mixes aspect ratios within a single trailer and we
+                // trim each still's letter/pillarbox individually.
+                const framesHTML = frames.map((entry, i) => {
+                    if (!entry) {
+                        return `<li class="rich-frame rich-placeholder"><span>Still ${i + 1}</span></li>`;
+                    }
+                    const url = typeof entry === 'string' ? entry : entry.src;
+                    const aspect = typeof entry === 'object' && entry.aspect ? entry.aspect : null;
+                    const styleAttr = aspect ? ` style="aspect-ratio: ${aspect};"` : '';
+                    return `<li class="rich-frame" data-frame-index="${i}"${styleAttr}><img src="${url}" alt="${(cfg.title || '') + ' still ' + (i + 1)}" loading="lazy"></li>`;
+                }).join('');
+                const richKey = item.rich || 'auto';
+                panel.classList.add('lightbox__panel--rich', `rich-${richKey}`);
+                // Per-movie frame aspect ratio. Default to the anamorphic
+                // 1600/670 used by HoA + TCH; override per-config (e.g. 16/9
+                // for ACINH) so each strip matches its source format and we
+                // don't have to crop the stills.
+                const frameAspect = cfg.frameAspect || '1600 / 670';
+                // framesOnly: gallery-only panel (no top row, no player). Used
+                // for titles without a trailer where the stills carry the
+                // entire experience.
+                const topHTML = cfg.framesOnly
+                    ? ''
+                    : `<div class="rich-top">
+                           <div class="rich-player">${playerHTML}</div>
+                           ${posterHTML}
+                       </div>`;
+                if (cfg.framesOnly) panel.classList.add('lightbox__panel--frames-only');
+                const framesListHTML = frames.length
+                    ? `<ul class="rich-frames" style="--frame-aspect: ${frameAspect};">${framesHTML}</ul>`
+                    : '';
+                if (!frames.length) panel.classList.add('lightbox__panel--no-frames');
+                panel.innerHTML = `
+                    <div class="rich-grid">
+                        ${topHTML}
+                        ${framesListHTML}
+                    </div>`;
+                this.stage.appendChild(panel);
+
+                // Mobile-portrait layout helper for titles with too-tall a
+                // right-column frame strip to share a row with the poster.
+                // The LAST <li> is cloned into .rich-top (which becomes the
+                // left column on mobile portrait via display: contents on
+                // the parent). Cloning rather than moving keeps desktop /
+                // tablet layout intact; CSS hides whichever copy isn't
+                // relevant for the active breakpoint.
+                if (['alit', 'acinh', 'attad'].includes(richKey) && frames.length > 0) {
+                    const lastFrame = panel.querySelector('.rich-frames > li:last-child');
+                    const framesUl = panel.querySelector('.rich-frames');
+                    const richTop = panel.querySelector('.rich-top');
+                    if (lastFrame && richTop) {
+                        const moved = lastFrame.cloneNode(true);
+                        moved.classList.add('rich-frame--moved');
+                        // The original <li> reads its aspect-ratio from the
+                        // parent UL's `--frame-aspect` CSS variable. Once
+                        // cloned into .rich-top, that var is no longer in
+                        // its inheritance chain, so set the aspect-ratio
+                        // explicitly. Per-frame inline overrides (used by
+                        // ALIT) are already on the cloned node — only set
+                        // the fallback if there's no inline aspect already.
+                        if (!moved.style.aspectRatio) {
+                            const frameAspect = framesUl
+                                ? framesUl.style.getPropertyValue('--frame-aspect').trim()
+                                : '';
+                            if (frameAspect) moved.style.aspectRatio = frameAspect;
+                        }
+                        richTop.appendChild(moved);
+                    }
+                }
+                const upRoot = panel.querySelector('.up');
+                if (upRoot) {
+                    const adapter = mountPlayer(upRoot);
+                    // Dim sibling elements (poster, button, frame strip) while
+                    // the trailer is playing so the focus is on the video.
+                    // Adapter emits play/pause/ended — toggle the panel class
+                    // and let CSS handle the opacity transition.
+                    if (adapter && adapter.on) {
+                        adapter.on('play',  () => panel.classList.add('rich-playing'));
+                        adapter.on('pause', () => panel.classList.remove('rich-playing'));
+                        adapter.on('ended', () => panel.classList.remove('rich-playing'));
+                    }
+                }
+
+                // Wire each real (non-placeholder) frame to open a nested
+                // image-only lightbox showing the 4 stills as a gallery. The
+                // outer rich lightbox stays mounted underneath; closing the
+                // inner one returns the user to the trailer view.
+                const realFrames = frames
+                    .map((entry) => {
+                        if (!entry) return null;
+                        const href = typeof entry === 'string' ? entry : entry.src;
+                        return { href, type: 'image', caption: '' };
+                    })
+                    .filter(Boolean);
+                if (realFrames.length > 0) {
+                    panel.querySelectorAll('.rich-frame[data-frame-index]').forEach((el) => {
+                        el.style.cursor = 'zoom-in';
+                    });
+                    // Delegate on the panel rather than just `.rich-frames` —
+                    // the mobile-portrait clone (`.rich-frame--moved` inside
+                    // `.rich-top`) carries the same data-frame-index, but
+                    // delegating on the UL would never catch its clicks. The
+                    // panel scope catches both the original strip and the
+                    // moved clone.
+                    panel.addEventListener('click', (e) => {
+                        const li = e.target.closest('.rich-frame[data-frame-index]');
+                        if (!li || !panel.contains(li)) return;
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const frameIdx = parseInt(li.dataset.frameIndex, 10);
+                        const entry = frames[frameIdx];
+                        const url = typeof entry === 'string' ? entry : entry?.src;
+                        const realIdx = realFrames.findIndex(f => f.href === url);
+                        const inner = new Lightbox({ thumbs: false, fullscreen: false });
+                        inner.setItems(realFrames);
+                        inner.open(Math.max(0, realIdx));
+                    });
+                }
+                return;
             } else {
                 const wrap = document.createElement('div');
                 wrap.className = 'lightbox__iframe-wrap';
@@ -887,7 +1361,7 @@ export class Lightbox {
 export function autoInitLightboxes(opts = {}) {
     // Includes legacy selectors: a.sixteen-by-nine, a[class*="-by-nine"] (typo'd class), .thumbnails.lightbox a
     const triggers = document.querySelectorAll(
-        'a[data-lightbox], a[data-fancybox], a.sixteen-by-nine, a[class*="-by-nine"], a.stills-image, #reel-button a, .thumbnails.lightbox a'
+        'a[data-lightbox], a[data-fancybox], a.sixteen-by-nine, a[class*="-by-nine"], a.stills-image, #reel-button a, #reel-glass-button, .thumbnails.lightbox a'
     );
     const groups = new Map();
 
@@ -908,6 +1382,7 @@ export function autoInitLightboxes(opts = {}) {
             height: parseInt(el.dataset.height) || null,
             thumb: el.querySelector('img')?.src || null,
             autoplay: el.dataset.autoplay === '1',
+            rich: el.dataset.rich || null,
         });
     });
 

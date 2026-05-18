@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 30" role="img" aria-label="Prime Video">
+  <text x="5" y="19" font-family="-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#ffffff" letter-spacing="-0.3">prime video</text>
+  <path d="M5 25 Q 35 30 65 27 Q 90 25 105 22" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+  <path d="M102 19.5 L107 22 L103.5 25 Z" fill="#ffffff"/>
+</svg>

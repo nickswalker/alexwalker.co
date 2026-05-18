@@ -13,7 +13,12 @@ class Container {
     const isLandscape = width > height
 
     let size
-    if (width <= 767) {
+    // Modern iPhones in landscape are 844-932px wide — wider than the 767
+    // phone threshold but with very short viewports. Treat any short-and-
+    // wide viewport as a landscape phone so the button samples the right JPG.
+    if (height <= 500 && isLandscape) {
+      size = 'mobile-landscape'
+    } else if (width <= 767) {
       size = isLandscape ? 'mobile-landscape' : 'mobile'
     } else if (width <= 1023) {
       size = isLandscape ? 'tablet-landscape' : 'tablet'

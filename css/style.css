@@ -511,7 +511,11 @@ body.past-cinematographer #scroll-down-indicator {
 
 section {
     height: auto;
-    overflow: auto;
+    /* overflow-y: visible so vertical content flows into the page; overflow-x:
+       clip prevents per-section horizontal scrollbars (which were appearing
+       on every section except narrative, where the content happens to fit). */
+    overflow-x: clip;
+    overflow-y: visible;
     position: relative;
     padding: 0 0 72px 0;
     box-sizing: border-box;
@@ -1006,6 +1010,16 @@ li.coming-soon a::before {
   }
   .clients--logos li > a:hover > img { opacity: 1; }
 }
+/* Cinematic redesign forces a dark background regardless of the user's
+   system color scheme. Without this rule the logos render black-on-black
+   (the prefers-color-scheme:dark inversion above doesn't fire when the
+   OS is in light mode), making the row invisible. */
+body.cinematic .clients--logos li > img,
+body.cinematic .clients--logos li > a > img {
+    filter: brightness(0) invert(1);
+    opacity: 0.78;
+}
+body.cinematic .clients--logos li > a:hover > img { opacity: 1; }
 
 /*--- = Stills	*/
 #stills {
@@ -1029,6 +1043,16 @@ li.coming-soon a::before {
     #stills .container {
         padding-left: 24px;
         padding-right: 24px;
+    }
+
+    /* Shrink poster grid on tablet — wider side margins, smaller thumbnails.
+       Apply to every direct child of the container so the heading and the
+       Back-to-Main-Page button stay inside the same gutters as the posters. */
+    #feature-films .container > *,
+    #short-films .container > * {
+        max-width: 78%;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
@@ -1774,8 +1798,20 @@ body.loaded header {
   .thumbnails-container h3,
   #cinematographer figure > h3,
   #cinematographer .columns-span-width figure > h3,
-  #cinematographer + div > figure > h3 {
+  #cinematographer + div > figure > h3,
+  /* Catch the remaining section headings — "Commercial & Documentary Work"
+     and "Colorist" — that live as a direct child of .container rather
+     than inside a <figure>. Without these, the cinematic h3 default
+     (text-align: left + padding-left: 24px) makes them look shifted
+     right of the centered grid content below. */
+  body.cinematic .container.columns-span-width > h3,
+  body.cinematic #colorist .container > h3 {
     text-align: center !important;
+    /* Cancel the asymmetric padding-left: 24px set by `body.cinematic h3` —
+       otherwise text-align:center would still optically sit ~12px right of
+       true center because the centering box is offset by that left pad. */
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }
 @media screen and (max-width: 700px) {
@@ -2040,22 +2076,28 @@ html.is-instagram-webview .clients--logos img {
 }
 #glass-wrapper {
   position: fixed;
-  bottom: calc(28px + env(safe-area-inset-bottom, 0px));
-  right: calc(28px + env(safe-area-inset-right, 0px));
+  bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+  right: calc(40px + env(safe-area-inset-right, 0px));
   width: 44px;
   height: 44px;
   z-index: 9967;
   visibility: hidden;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+  transition: opacity 0.3s ease,
+              transform 420ms cubic-bezier(0.4, 0, 0.2, 1),
+              filter 420ms ease-in-out,
+              visibility 0s linear 0.3s;
 }
 
 #glass-wrapper.visible {
   visibility: visible;
   pointer-events: auto;
   opacity: 1;
-  transition: opacity 0.3s ease, visibility 0s linear 0s;
+  transition: opacity 0.3s ease,
+              transform 420ms cubic-bezier(0.4, 0, 0.2, 1),
+              filter 420ms ease-in-out,
+              visibility 0s linear 0s;
 }
 
 #return-to-top {
@@ -2078,17 +2120,17 @@ html.is-instagram-webview .clients--logos img {
   #glass-wrapper {
     left: auto;
     top: auto;
-    right: max(18px, env(safe-area-inset-right, 0px) + 12px);
-    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    right: max(32px, env(safe-area-inset-right, 0px) + 24px);
+    bottom: calc(32px + env(safe-area-inset-bottom, 0px));
     width: 44px;
     height: 44px;
   }
 }
 
-/* iPhone-size: tighter still */
+/* iPhone-size: keep same generous inset, smaller button */
 @media (max-width: 480px) {
   #glass-wrapper {
-    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(28px + env(safe-area-inset-bottom, 0px));
     width: 40px;
     height: 40px;
   }
@@ -2269,60 +2311,107 @@ dialog.lightbox[open] {
     color: var(--lb-text);
     overflow: hidden;
     opacity: 0;
-    transition: opacity 320ms cubic-bezier(0.4, 0, 0.2, 1);
+    /* Close: ease-out + shorter duration. The dialog content (iframe,
+       panel bg) is mostly dark, so a slow ease-in-out fade leaves a
+       dark overlay sitting over the freshly-revealed page mid-close —
+       perceived as a "dip to black" in Safari. ease-out drops opacity
+       fast at the start so the dark overlay clears before the eye can
+       linger on it. */
+    transition: opacity 220ms cubic-bezier(0.2, 0, 0.1, 1);
     display: flex;
     flex-direction: column;
     box-shadow: none;
     --dismiss-progress: 0;
     --lb-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
-dialog.lightbox[open].is-open { opacity: 1; }
+/* Open: keep the gentler ease-in-out + 320ms. Only the close direction
+   needs the faster ease-out treatment. */
+dialog.lightbox[open].is-open {
+    opacity: 1;
+    transition: opacity 320ms cubic-bezier(0.4, 0, 0.2, 1);
+}
 
 /* Backdrop — eased fade for blur + dim on open/close, and during dismiss drag.
-   Class-based animation (works without @starting-style support): backdrop starts
-   transparent + unblurred, then .is-open ramps it up. Saturation moves with blur. */
+   Uses @starting-style so the open-animation works on first paint in modern
+   Chrome/Safari (the older class-based hack stopped triggering reliably
+   because the backdrop pseudo-element is freshly created at showModal time
+   and has no "before" state for the transition to interpolate from). */
+/* Three-layer backdrop:
+   - `::backdrop` is fully transparent (no blur, no dim). Safari can't
+     reliably transition ::backdrop properties on dynamic state changes —
+     we tried, it caused the dip-to-black on close.
+   - `.lightbox__blur-layer` (a regular div, sibling of the dialog) provides
+     the BLUR. backdrop-filter transitions cleanly on a normal DOM element,
+     so the blur can fade in on open and out on close. Sits in normal page
+     z-order between the page and the dialog (which is in the top layer
+     above everything).
+   - `.lightbox__dim` (a regular div inside the dialog) provides the DIM
+     darkening color, which transitions smoothly via opacity. */
 dialog.lightbox::backdrop {
-    background: rgba(10, 10, 10, 0);
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+.lightbox__blur-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    /* Below the dialog (which always paints above non-top-layer content)
+       but above page content. The numeric value just needs to be > anything
+       else on the page. */
+    z-index: 2147483646;
+    /* Start unblurred + invisible. JS toggles .is-active to fade in. The
+       backdrop-filter transition covers blur build-up; opacity covers any
+       residual flash on browsers that don't paint backdrop-filter at 0px. */
     backdrop-filter: blur(0) saturate(100%);
     -webkit-backdrop-filter: blur(0) saturate(100%);
-    transition: background-color 360ms cubic-bezier(0.4, 0, 0.2, 1),
-                backdrop-filter 360ms cubic-bezier(0.4, 0, 0.2, 1),
-                -webkit-backdrop-filter 360ms cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transition:
+        backdrop-filter 280ms cubic-bezier(0.4, 0, 0.2, 1),
+        -webkit-backdrop-filter 280ms cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
-dialog.lightbox.is-open::backdrop {
-    background: rgba(10, 10, 10, calc(0.55 * (1 - var(--dismiss-progress, 0))));
-    backdrop-filter:
-        blur(calc(10px * (1 - var(--dismiss-progress, 0))))
-        saturate(calc(100% + 50% * (1 - var(--dismiss-progress, 0))));
-    -webkit-backdrop-filter:
-        blur(calc(10px * (1 - var(--dismiss-progress, 0))))
-        saturate(calc(100% + 50% * (1 - var(--dismiss-progress, 0))));
+.lightbox__blur-layer.is-active {
+    backdrop-filter: blur(10px) saturate(150%);
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
+    opacity: 1;
 }
-/* iOS Safari (and other coarse-pointer browsers) flash the page underneath
-   each time backdrop-filter re-engages — the GPU snapshot gets invalidated
-   between opens. Use a solid scrim on touch instead, keep the blur on desktop. */
-@media (hover: none), (pointer: coarse) {
-    dialog.lightbox::backdrop {
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        transition: background-color 360ms cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    dialog.lightbox.is-open::backdrop {
-        background: rgba(10, 10, 10, calc(0.92 * (1 - var(--dismiss-progress, 0))));
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-    }
+.lightbox__dim {
+    position: absolute;
+    inset: 0;
+    background: rgb(10, 10, 10);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms cubic-bezier(0.2, 0, 0.1, 1);
+    /* z-index: -1 is critical — per CSS painting order (Appendix E),
+       position: absolute elements with z-index: auto paint AFTER
+       non-positioned block descendants (the stage, panel, player) in
+       the stacking context, regardless of DOM order. Without z-index,
+       this dim layer would paint on top of the video and produce a
+       visible darkening overlay across every lightbox embed. -1 puts
+       it back behind the stage but still above the dialog's transparent
+       background, so the dim is visible and the player is not darkened. */
+    z-index: -1;
+}
+dialog.lightbox[open].is-open .lightbox__dim {
+    opacity: 0.55;
+}
+/* Mobile dismiss-drag: JS sets --dismiss-progress 0..1 per touch frame.
+   Continuous per-frame updates so no CSS transition is needed here. */
+dialog.lightbox[open].is-open[style*="--dismiss-progress"] .lightbox__dim {
+    opacity: calc(0.55 * (1 - var(--dismiss-progress, 0)));
 }
 
 /* Chrome (toolbar, nav arrows, counter, caption, thumbs) — fades in on open,
-   and fades with the dismiss-progress when dragging down. */
+   and fades with the dismiss-progress when dragging down. Close uses
+   ease-out for the same dip-to-black reason as the dialog opacity. */
 dialog.lightbox .lightbox__toolbar,
 dialog.lightbox .lightbox__nav,
 dialog.lightbox .lightbox__counter,
 dialog.lightbox .lightbox__caption,
 dialog.lightbox .lightbox__thumbs {
     opacity: 0;
-    transition: opacity 320ms var(--lb-ease) 80ms, bottom 220ms var(--lb-ease);
+    transition: opacity 180ms cubic-bezier(0.2, 0, 0.1, 1), bottom 220ms var(--lb-ease);
 }
 dialog.lightbox[open].is-open .lightbox__toolbar,
 dialog.lightbox[open].is-open .lightbox__nav,
@@ -2330,17 +2419,20 @@ dialog.lightbox[open].is-open .lightbox__counter,
 dialog.lightbox[open].is-open .lightbox__caption,
 dialog.lightbox[open].is-open .lightbox__thumbs {
     opacity: calc(1 - var(--dismiss-progress, 0));
+    transition: opacity 320ms var(--lb-ease) 80ms, bottom 220ms var(--lb-ease);
 }
 
 /* Panels (the image / iframe) fade in on open. Note: no transform — iOS Safari
    has well-documented bugs rendering iframes (YouTube embeds) inside transformed
-   parents. Sticking to plain opacity keeps every device happy. */
+   parents. Sticking to plain opacity keeps every device happy. Close uses a
+   shorter ease-out so the mostly-dark panel chrome clears quickly. */
 dialog.lightbox .lightbox__panel {
     opacity: 0;
-    transition: opacity 360ms var(--lb-ease);
+    transition: opacity 220ms cubic-bezier(0.2, 0, 0.1, 1);
 }
 dialog.lightbox[open].is-open .lightbox__panel {
     opacity: 1;
+    transition: opacity 360ms var(--lb-ease);
 }
 
 /* Caption shifts up when the thumbnails strip is open */
@@ -2501,6 +2593,17 @@ dialog.lightbox [hidden] { display: none !important; }
     padding: 64px 72px 24px;
     box-sizing: border-box;
 }
+/* Mobile: shrink panel padding so image lightboxes fill the viewport — the
+   chrome (close/nav buttons) is fixed-positioned outside the panel, so we
+   only need minimal breathing room around the content itself. */
+@media (max-width: 700px), (max-height: 500px) {
+    .lightbox__panel { padding: 56px 12px 56px; }
+    /* For the image-only panel (no caption block), let images use ~all the
+       viewport. Rich panel keeps its own larger padding (defined elsewhere). */
+    .lightbox__panel:not(.lightbox__panel--rich) {
+        padding: 56px 8px 56px;
+    }
+}
 .lightbox__panel img,
 .lightbox__panel iframe { -webkit-user-drag: none; user-drag: none; }
 
@@ -2646,6 +2749,70 @@ dialog.lightbox [hidden] { display: none !important; }
     display: block;
 }
 
+/* Mobile: nudge the blue pill buttons (More Features, More Shorts, gear-list,
+   prop-collection, Back to Main Page, etc.) and the homepage Watch Reels CTA
+   up to a more comfortable tap target. The base sizes were tuned for desktop;
+   on phones the same numbers read as too compact relative to the surrounding
+   type. Scoped to ≤700px so tablets and desktop are unchanged. */
+@media (max-width: 700px) {
+    button,
+    input[type="submit"] {
+        font-size: 16px;
+        padding: 10px 22px;
+    }
+    /* The desktop Watch Reels header button gets the same lift so both the
+       mobile floating pill and any cases where the header version is still
+       visible (e.g. iPad portrait that doesn't trigger the floating pill
+       fallback) read as part of the same family. */
+    #reel-button {
+        font-size: 16px;
+        padding: 10px 22px;
+    }
+    /* Bio-buttons (Gear List, Prop Collection) and narrative More-Features /
+       More-Shorts buttons share the same cinematic micro-pill style by
+       default. On mobile we want all four to be the SAME size — full-width
+       stacked pills, identical type and dimensions — instead of the bio
+       pair being tall while the narrative pair is tiny. */
+    body.cinematic #bio-buttons button,
+    body.cinematic #short-films-gallery-link button,
+    body.cinematic #return button {
+        width: 90%;
+        max-width: 260px;
+        height: 44px;
+        padding: 0 20px;
+        font-size: 14px;
+        /* Center the anchor inside the fixed-height pill. Base `button` rule
+           is display:flex but doesn't specify align-items, so without these
+           the text drifts to the top of the pill. */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    body.cinematic #bio-buttons button a,
+    body.cinematic #short-films-gallery-link button a,
+    body.cinematic #return button a {
+        font-size: 14px;
+        /* Make the anchor fill the pill so its own centering covers the
+           whole tap area (it already centers via the bio-buttons rule at
+           the top of this file; this just keeps narrative consistent). */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+/* Stack the narrative More-Features / More-Shorts pair on mobile portrait,
+   matching the bio-buttons layout below it so the four blue pills read as a
+   single column down the page. */
+@media (max-width: 700px) and (orientation: portrait) {
+    body.cinematic .narrative-more-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
 @media (max-width: 700px) {
     .lightbox__stage { padding: 56px 12px 12px; }
     .lightbox__nav { width: 44px; height: 44px; }
@@ -2673,6 +2840,57 @@ dialog.lightbox [hidden] { display: none !important; }
         bottom: 16px;
     }
     :root { --lb-thumb-size: 48px; }
+}
+
+/* Mobile portrait: bottom-center close button across all lightbox types so
+   the thumb can always reach it without stretching to the top-right corner.
+   Content vertical-positioning is ONLY shifted for video lightboxes — the
+   16:9 iframe centered in the panel would otherwise sit right where the
+   close pill lives. Image and rich-panel lightboxes keep their natural
+   flex-centered layout because their content stays clear of the bottom
+   strip on its own. */
+@media (max-width: 700px) and (orientation: portrait) {
+    dialog.lightbox .lightbox__btn--close {
+        position: fixed;
+        bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+        left: 50%;
+        transform: translateX(-50%);
+        top: auto;
+        right: auto;
+        width: 56px;
+        height: 56px;
+        background: rgba(0, 0, 0, 0.55);
+        border-radius: 9999px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        z-index: 12;
+    }
+    dialog.lightbox .lightbox__btn--close .lightbox__icon-close {
+        width: 22px;
+        height: 22px;
+    }
+    /* Video-only panel shift: bias content upward so the centered iframe
+       doesn't sit on top of the floating close pill. */
+    dialog.lightbox:not(:has(.lightbox__image)) .lightbox__panel {
+        padding-top: 24px;
+        padding-bottom: 96px;
+        align-items: flex-start;
+    }
+    dialog.lightbox:not(:has(.lightbox__image)) .lightbox__iframe-wrap {
+        margin-top: 24px;
+    }
+
+    /* Commercial rich panels that have still frames sit a touch too high in
+       portrait — small downward nudge so the player + frame strip live in a
+       more balanced position. Scoped via [class*="rich-comm_"] to commercial
+       panels only (narrative entries use keys like `hoa`, `tch`, `alit`),
+       and excludes the no-frames variant (Watch Reels playlist style). */
+    .lightbox__panel--rich[class*="rich-comm_"]:not(.lightbox__panel--no-frames),
+    .rich-myth,
+    .rich-mythbts {
+        padding-top: 44px !important;
+    }
+
 }
 
 /* View Transitions: smooth crossfade between gallery items */
@@ -2898,3 +3116,1035 @@ html.lightbox-up-pseudo-fs { overflow: hidden; }
 .up__btn svg { width: 18px; height: 18px; fill: currentColor; }
 .up__time   { color: rgba(255,255,255,.92); font-size: 11px; letter-spacing: .3px; }
 .up__spacer { flex: 1 1 auto; }
+
+/* ============================================================
+   2026 CINEMATIC — overrides scoped to body.cinematic
+   Black-on-black mono palette, editorial labels, generous rhythm.
+   Goal: feel like a cinematographer's site, not a freelancer's site.
+   ============================================================ */
+
+body.cinematic,
+body.cinematic #contact {
+    background-color: #000 !important;
+    color: #d8d6d0;
+}
+body.cinematic {
+    --text-color: #d8d6d0;
+    --alt-text-color: rgba(216, 214, 208, 0.55);
+    --background-color: #000;
+}
+
+/* Prevent any incidental horizontal scroll at every viewport size.
+   Multiple layers because individual layers have failed in practice:
+   - `overflow-x: clip` clips painted overflow without establishing a
+     scroll container, so `position: sticky` on the header keeps
+     working against the document viewport.
+   - `max-width: 100vw` + `box-sizing: border-box` keeps the body's
+     own outer width pinned to the viewport even when padding-right is
+     temporarily applied (lightbox scrollbar-compensation).
+   - `overscroll-behavior-x: none` blocks edge-swipe gestures that some
+     browsers honour even past `overflow-x: clip`.
+   - `touch-action: pan-y pinch-zoom` disables horizontal touch panning
+     on phones/tablets so a horizontal swipe never initiates a scroll.
+   - `!important` so the values survive any inline-style fallout from
+     scroll handlers or third-party scripts. */
+html, body {
+    overflow-x: clip !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+    box-sizing: border-box;
+    overscroll-behavior-x: none;
+}
+html {
+    touch-action: pan-y pinch-zoom;
+    /* NOTE: do NOT set `scroll-snap-type: x mandatory` here. Even though the
+       snap axis is x-only, browsers (iOS Safari especially) treat the root
+       scroller's snap container as also affecting vertical inertia — the
+       result is sluggish, less-fluid vertical scrolling. The four-layer CSS
+       guard above (overflow-x: clip + max-width + overscroll-behavior-x +
+       touch-action) is sufficient on its own; the JS watchdog in scroll.js
+       handles the rare programmatic-scroll edge cases. */
+}
+
+/* Header — keep the thin blue brand bar at the bottom, but everything
+   else goes mono. Tiny uppercase nav labels. */
+body.cinematic header {
+    background-color: rgba(0, 0, 0, 0.85) !important;
+    color: #d8d6d0;
+}
+body.cinematic header.dark { background-color: rgba(0, 0, 0, 0.85) !important; }
+body.cinematic header nav>ul>li > a {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: rgba(216, 214, 208, 0.7);
+    font-weight: 400;
+}
+body.cinematic header nav>ul>li > a:hover {
+    color: #d8d6d0;
+}
+body.cinematic .logo h1 a {
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: #d8d6d0;
+}
+body.cinematic .logo h1 a .name-bold { font-weight: 400; }
+body.cinematic .logo h1 a .name-light { font-weight: 300; }
+/* Drop the social-icons cluster from the cinematic nav — visual noise. */
+body.cinematic header nav>ul>li .social { display: none; }
+/* Reel CTA — keep the rounded pill border but tone the colors to mono.
+   1px outline (thinner) — shared across every pill button on the page. */
+body.cinematic #reel-button {
+    background: transparent;
+    border: 1px solid rgba(216, 214, 208, 0.5);
+    color: rgba(216, 214, 208, 0.9);
+}
+body.cinematic #reel-button a {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: rgba(216, 214, 208, 0.9);
+    font-weight: 400;
+}
+body.cinematic #reel-button:hover {
+    border-color: rgba(216, 214, 208, 0.9);
+    color: #d8d6d0;
+}
+
+/* Sections — extra-generous vertical rhythm. */
+body.cinematic section {
+    padding: 0 0 140px 0;
+}
+body.cinematic section .container {
+    padding: 140px 0 0 0;
+}
+body.cinematic section:first-of-type .container { padding-top: 96px; }
+@media (max-width: 700px) {
+    body.cinematic section { padding-bottom: 72px; }
+    body.cinematic section .container { padding-top: 72px; }
+    body.cinematic section:first-of-type .container { padding-top: 56px; }
+}
+
+/* Sub-headings — small, uppercase, wide letter-spacing, left-aligned. */
+body.cinematic h3 {
+    text-align: left;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    color: rgba(216, 214, 208, 0.65);
+    padding-top: 16px;
+    padding-bottom: 24px;
+    padding-left: 24px;
+    line-height: 1;
+}
+/* Bio retains a real heading — quieter, lighter, sits closer to its
+   text. */
+body.cinematic #about h2 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    color: rgba(216, 214, 208, 0.7);
+    padding-bottom: 16px;
+}
+
+/* Bio body — keep the headshot, refine the type. */
+body.cinematic #about .bio-text {
+    color: #d8d6d0;
+    font-weight: 300;
+    line-height: 1.75;
+    font-size: 16px;
+}
+body.cinematic #about .bio-text p {
+    margin-bottom: 1.4em;
+}
+
+/* Stack heading above the bio block (the base rule puts them in the
+   same flex row, which left-aligned the photo+text block). Column
+   direction lets both the heading and the block sit geometrically
+   centered in the container. */
+body.cinematic #about .container.align-items-start {
+    flex-direction: column;
+    align-items: center;
+}
+body.cinematic #about .bio-flexbox {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+/* Pill CTAs across the site — brand-blue border + label, no fill. Applies
+   to bio-buttons (Gear List, Prop Collection) AND the More Short Films
+   button. Shared style with #reel-button above. */
+body.cinematic #bio-buttons {
+    background: transparent;
+    /* Pull the buttons up against the bio so they read as part of that
+       section rather than a standalone band. Zero top padding, kept
+       bottom padding for separation from stills. */
+    padding-top: 0;
+}
+body.cinematic #bio-buttons .container { padding-top: 0; }
+/* Pair: kill the bottom padding on #about so the bio and its buttons
+   visually belong together. */
+body.cinematic #about { padding-bottom: 24px; }
+body.cinematic #bio-buttons .buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    padding: 0;
+    max-width: 720px;
+    margin: 0 auto;
+}
+body.cinematic #bio-buttons button,
+body.cinematic #short-films-gallery-link button {
+    background: transparent;
+    border: 1px solid var(--brand-blue);
+    border-radius: 9999px;
+    /* All four cinematic blue pills (More Features, More Shorts, Gear List,
+       Prop Collection) share the same dimensions on tablet and desktop. The
+       earlier `#bio-buttons button` rule pre-set height:44px / min-width:120px
+       on the bottom pair only, which made them taller than the narrative
+       pair — explicit values here keep both pairs identical. */
+    padding: 0 18px;
+    height: 32px;
+    min-width: 160px;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--brand-blue);
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s var(--ease-standard), color 0.3s var(--ease-standard);
+}
+body.cinematic #bio-buttons button:hover,
+body.cinematic #short-films-gallery-link button:hover {
+    background-color: var(--brand-blue);
+    color: #000;
+}
+body.cinematic #bio-buttons button a,
+body.cinematic #short-films-gallery-link button a {
+    color: inherit;
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+}
+
+/* Secondary-page "Back to Main Page" buttons — match the main-page blue
+   pills (bio-buttons / narrative-more-buttons) exactly so all four+ blue
+   CTAs across the site share one size. */
+body.cinematic #return button {
+    background: transparent;
+    border: 1px solid var(--brand-blue);
+    border-radius: 9999px;
+    padding: 0 18px;
+    height: 32px;
+    min-width: 160px;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--brand-blue);
+    margin: 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s var(--ease-standard),
+                color 0.3s var(--ease-standard);
+}
+body.cinematic #return button:hover {
+    background-color: var(--brand-blue);
+}
+body.cinematic #return button a {
+    color: var(--brand-blue);
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    transition: color 0.3s var(--ease-standard);
+}
+body.cinematic #return button:hover a { color: #000; }
+body.cinematic #return .text h3 {
+    color: rgba(216, 214, 208, 0.6);
+    font-size: 13px;
+    font-weight: 300;
+    text-align: center;
+    letter-spacing: 0.02em;
+}
+body.cinematic #return .full-width-centered {
+    display: flex;
+    justify-content: center;
+    padding: 24px 0;
+}
+
+/* Section-headings on project pages (h2 / h3 inside .container) — pick up
+   the cinematic uppercase tracking instead of the legacy serif look. */
+body.cinematic section h2 {
+    color: #d8d6d0;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    text-align: center;
+}
+body.cinematic section .container > figure > center h3 {
+    color: rgba(216, 214, 208, 0.55);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+body.cinematic section .container > figure > center h3 a {
+    color: var(--brand-blue);
+    text-decoration: none;
+}
+/* Secondary-page sub-note (e.g. "remastered from original footage…") —
+   sits just below the centered linked title and reads as muted ancillary
+   copy rather than a heading. */
+body.cinematic .page-note {
+    color: rgba(216, 214, 208, 0.5);
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    margin: 6px auto 0;
+    max-width: 680px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* Force the cinematic narrative/commercial thumbnail grids to the tight
+   1px gutter they had pre-redesign. Some accumulated cinematic rules were
+   widening the visible gap between tiles. */
+body.cinematic .thumbnails {
+    grid-gap: 1px 1px;
+    gap: 1px;
+}
+
+/* Narrative "More Features" / "More Shorts" — pair them side by side. */
+body.cinematic .narrative-more-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    padding: 24px 0 0 0;
+}
+
+/* Stills — keep the existing layout/aspect, just subtle hover treatment.
+   Inherits the 8-up strip behavior from the base CSS so each image keeps
+   its natural aspect ratio. */
+body.cinematic #stills {
+    padding: 48px 0 48px 0;
+    background: #000;
+}
+/* Stills render at full fidelity — no hover dimming or filter. */
+
+/* Contact — Representation gets a calling-card treatment so it stops
+   getting lost at the bottom of the page. Centered, generous, with the
+   agency name set large and the rep agent + contact details below. */
+body.cinematic #contact { color: #d8d6d0; }
+body.cinematic #contact a { color: #d8d6d0; }
+body.cinematic #contact .representation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    padding: 24px 0;
+}
+body.cinematic .rep-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    color: rgba(216, 214, 208, 0.55);
+    margin: 0 0 4px 0;
+}
+body.cinematic .rep-company {
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: rgba(216, 214, 208, 0.85);
+    margin: 0;
+}
+body.cinematic .representation-logo {
+    width: 64px;
+    height: auto;
+    opacity: 0.85;
+    margin: 8px 0;
+    filter: brightness(0) invert(1);
+}
+body.cinematic .rep-agent {
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: rgba(216, 214, 208, 0.85);
+    margin: 0;
+}
+body.cinematic .rep-contact {
+    font-size: 13px;
+    line-height: 1.9;
+    color: rgba(216, 214, 208, 0.65);
+    margin: 0;
+}
+body.cinematic .rep-contact a {
+    color: rgba(216, 214, 208, 0.85);
+    text-decoration: none;
+    transition: color 200ms ease;
+}
+body.cinematic .rep-contact a:hover { color: #d8d6d0; }
+body.cinematic .copyright {
+    color: rgba(216, 214, 208, 0.35);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 64px;
+}
+
+/* Rich lightbox panel (House of Abraham): trailer + poster + streaming
+   row + IMDb button + 4 frame thumbnails, single viewport-fitting layout.
+   Three vertical bands:
+     1. Top row — player (left) + poster (right), same height
+     2. Actions row — Now Streaming card and IMDb button, centered
+     3. Frame strip — 4 thumbnails across
+   Reduced top padding so the content sits up high; bottom padding does
+   the breathing-room work. */
+.lightbox__panel--rich {
+    padding: 36px 56px 36px;
+    align-items: center;           /* vertically center, balanced top/bottom */
+}
+.lightbox__panel--rich .rich-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+}
+/* Top row holds player + poster, both at the same explicit height.
+   Clamped so it never grows tall enough to push children out of the
+   panel, and player + poster combined widths always fit the grid's
+   max-width even on very tall viewports. */
+.rich-top {
+    flex: 0 0 auto;
+    height: clamp(260px, 56vh, 480px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+}
+.rich-player {
+    flex: 0 1 auto;
+    min-width: 0;
+    min-height: 0;
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: 16 / 9;
+    height: 100%;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* While the trailer is playing, darken the supporting content so the eye
+   stays on the video. Filter: brightness keeps elements solid (not
+   transparent). JS toggles .rich-playing on the panel via the player
+   adapter's play/pause/ended events. */
+.lightbox__panel--rich .rich-poster,
+.lightbox__panel--rich .rich-frames {
+    filter: brightness(1);
+    transition: filter 560ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.lightbox__panel--rich.rich-playing .rich-poster,
+.lightbox__panel--rich.rich-playing .rich-frames {
+    filter: brightness(0.28);
+}
+/* Hover-restore so the dimmed elements stay interactive. */
+.lightbox__panel--rich.rich-playing .rich-poster:hover,
+.lightbox__panel--rich.rich-playing .rich-frames:hover {
+    filter: brightness(1);
+}
+.rich-player .up {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+    border-radius: 4px;
+}
+/* Poster sits in the top row beside the player and matches its height
+   via height: 100% + intrinsic 2:3 aspect ratio. */
+img.rich-poster,
+div.rich-poster {
+    height: 100%;
+    width: auto;
+    aspect-ratio: 2 / 3;
+    display: block;
+    flex: 0 0 auto;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+}
+/* Actions row: Now Streaming card + IMDb button side-by-side, centered
+   between the top row and the frame strip. */
+.rich-actions {
+    flex: 0 0 auto;
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    align-items: stretch;
+}
+
+/* "Now Streaming" card — small-caps label, then 3 service logos in equal
+   slots so spacing reads even regardless of each SVG's internal padding. */
+.rich-streaming {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 4px;
+    padding: 10px 18px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+.rich-streaming-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    text-align: center;
+    width: 100%;
+}
+.rich-streaming-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+}
+.streaming-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 22px;
+    /* All 3 SVGs share viewBox 130x30 → equal visual width at this height */
+    opacity: 0.85;
+    transition: opacity 180ms ease, transform 120ms ease;
+}
+.streaming-logo:hover  { opacity: 1; }
+.streaming-logo:active { transform: scale(0.95); }
+.streaming-logo img    { height: 100%; width: auto; display: block; }
+
+/* IMDb — logo-only chip, same card aesthetic and height as Now Streaming. */
+.rich-imdb {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 4px;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background 180ms ease, transform 120ms ease;
+}
+.rich-imdb img    { height: 26px; width: auto; display: block; }
+.rich-imdb:hover  { background: rgba(255, 255, 255, 0.08); }
+.rich-imdb:active { transform: scale(0.98); }
+.rich-frames {
+    flex: 0 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    max-width: 720px;
+    width: 100%;
+}
+.rich-frame {
+    /* Source aspect ratio is set per-movie via --frame-aspect (inline style
+       on the parent .rich-frames). Defaults to 2.39:1 anamorphic for HoA /
+       TCH; ACINH overrides to 16/9, etc. — so we never crop the still to
+       fit, the cell adapts to the still. */
+    aspect-ratio: var(--frame-aspect, 1600 / 670);
+    margin: 0;
+    border-radius: 3px;
+    overflow: hidden;
+    transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.rich-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.rich-frame[data-frame-index]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+}
+
+/* ALIT: frame1 is the only cinemascope (2.39:1) still in a strip of three
+   ≈4:3 frames. Default 4-equal-columns grid makes it visually tiny next
+   to the taller frames. On tablet/desktop and mobile landscape (>800px),
+   widen frame1's column by ~30% so it reads larger without spanning two
+   columns (which pushed frame4 onto a second row). Keep all 4 frames on
+   one row, just with the wide one weighted a touch heavier. */
+@media (min-width: 801px) {
+    .rich-alit .rich-frames {
+        grid-template-columns: 1.3fr 1fr 1fr 1fr;
+        max-width: 820px;
+    }
+}
+/* Placeholder treatment — same look for poster and frame fallbacks.
+   Muted gradient, faint caps label. Distinctly non-interactive. */
+.rich-placeholder {
+    background:
+        linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01)),
+        #1c1c22;
+    color: rgba(255, 255, 255, 0.32);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+}
+
+/* Narrow viewports: 3-row layout — player full-width on top, then poster
+   on the left with Now Streaming + IMDb stacked vertically to its right,
+   then frames below. Uses CSS grid + display:contents on .rich-top so the
+   poster (which lives inside .rich-top in the desktop markup) can
+   participate in the outer grid without an HTML restructure. */
+@media (max-width: 800px) {
+    .lightbox__panel--rich { padding: 26px 18px 18px; }
+    .lightbox__panel--rich .rich-grid {
+        display: grid;
+        grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+        grid-template-rows: auto auto;
+        grid-template-areas:
+            "player  player"
+            "poster  frames";
+        gap: 14px 14px;
+        max-width: 100%;
+        /* Pin every cell to the top of its row so poster and frames-strip
+           share an identical top edge — without this the items default to
+           `stretch` and the visual baseline drifts. */
+        align-items: start;
+    }
+    .rich-top { display: contents; }
+    .rich-player {
+        grid-area: player;
+        height: auto;
+        width: 100%;
+        max-width: 100%;
+        max-height: none;
+        aspect-ratio: 16 / 9;
+    }
+    img.rich-poster,
+    div.rich-poster {
+        grid-area: poster;
+        height: auto;
+        width: 38vw;
+        max-width: 180px;
+        aspect-ratio: 2 / 3;
+        max-height: none;
+        align-self: start;
+    }
+    .rich-frames {
+        grid-area: frames;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        min-width: 0;
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        /* Pin the strip to the top of its row so its top edge aligns with
+           the poster's top edge (poster also uses align-self: start). */
+        align-self: start;
+    }
+    /* No poster configured for this title — collapse to a single column so
+       the frame strip occupies the full panel width. */
+    .lightbox__panel--rich .rich-grid:not(:has(.rich-poster)) {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "player"
+            "frames";
+    }
+    .lightbox__panel--rich .rich-grid:not(:has(.rich-poster)) .rich-frames {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile portrait — A Life In Technicolor (5 frames) and A Christmas In New
+   Hope (4 frames). The .rich-frame--moved <li> is cloned into .rich-top by
+   js/lightbox.js so it lives in the left column. To make it sit DIRECTLY
+   below the poster (not at the very bottom of the panel below the tall
+   frames strip), the grid is reshaped: poster in row 2, moved frame in
+   row 3 of col 1, frames spanning rows 2-3 of col 2. Together the two
+   left-column items match the height of the right-column strip. */
+@media (max-width: 700px) and (orientation: portrait) {
+    .rich-alit,
+    .rich-acinh,
+    .rich-attad {
+        padding-top: 12px !important;
+    }
+    .rich-alit .rich-grid,
+    .rich-acinh .rich-grid,
+    .rich-attad .rich-grid {
+        grid-template-rows: auto auto auto;
+        grid-template-areas:
+            "player  player"
+            "poster  frames"
+            "moved   frames";
+        row-gap: 10px;
+    }
+    .rich-alit .rich-frame--moved,
+    .rich-acinh .rich-frame--moved,
+    .rich-attad .rich-frame--moved {
+        grid-area: moved;
+        width: 38vw;
+        max-width: 180px;
+        /* aspect-ratio is set inline on the cloned <li> by lightbox.js so
+           the moved frame matches the source aspect (16/9 for ACINH,
+           2/1 for ATTAD, per-frame for ALIT). Don't set a fallback here
+           that would override the inline style. */
+        justify-self: start;
+        align-self: start;
+        margin: 0;
+        border-radius: 3px;
+        overflow: hidden;
+        list-style: none;
+    }
+    .rich-alit .rich-frame--moved img,
+    .rich-acinh .rich-frame--moved img,
+    .rich-attad .rich-frame--moved img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    /* Hide the ORIGINAL last frame in the right-column strip — its clone is
+       now showing in the left column. Without this, the frame appears twice
+       on mobile portrait. */
+    .rich-alit .rich-frames > li:last-child,
+    .rich-acinh .rich-frames > li:last-child,
+    .rich-attad .rich-frames > li:last-child {
+        display: none;
+    }
+}
+/* Desktop / tablet: hide the moved <li> entirely; the original frame inside
+   .rich-frames is what's shown there. */
+@media (min-width: 701px), (orientation: landscape) {
+    .rich-frame--moved { display: none !important; }
+}
+
+/* No-frames rich panel (Watch Reels playlist, Colorist videos): no
+   still-frame strip configured. Centre the player vertically within the
+   panel and keep its size the same as a frames-present panel — no
+   special height bump. */
+.lightbox__panel--no-frames .rich-grid {
+    justify-content: center;
+    height: 100%;
+}
+/* Mobile portrait: with no frames + no poster, the grid only has a player
+   row pinned to the top. Centre it vertically so the video doesn't float
+   too high in the panel. */
+@media (max-width: 800px) {
+    .lightbox__panel--no-frames .rich-grid {
+        height: 100%;
+        align-content: center;
+        align-items: center;
+    }
+    .lightbox__panel--no-frames .rich-player {
+        align-self: center;
+    }
+}
+
+/* Frames-only rich panel (e.g. Hub City): no trailer, no poster — the
+   stills carry the entire view. Lay out as a balanced 4×2 grid on
+   desktop, 2×4 on mobile portrait, full width. */
+.lightbox__panel--frames-only .rich-grid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    height: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+}
+.lightbox__panel--frames-only .rich-frames {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    max-width: none;
+    width: 100%;
+}
+@media (max-width: 800px) {
+    .lightbox__panel--frames-only .rich-frames {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+}
+
+/* No filter or opacity treatment on video thumbnails — images render at
+   full fidelity at rest. The work is the point. */
+
+/* Body type — slightly looser */
+body.cinematic { line-height: 1.65; }
+
+/* Return-to-top — match default solidity so the WebGL glass fill reads
+   properly against the dark page background. Just tint the arrow to
+   match the cinematic palette; leave the button itself alone. */
+body.cinematic #return-to-top svg {
+    fill: rgba(216, 214, 208, 0.85);
+}
+
+/* Instagram stills row — 16 photos in a 2-row × 8-column tight grid,
+   no gaps, perfectly square thumbs. Overrides the default 3-column
+   .stills layout used elsewhere on the site. Thumbs are pre-cropped
+   to square by the sync script (smartcrop or center crop); CSS just
+   enforces the visual grid. */
+.stills.stills--instagram {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 0;
+    overflow: visible;
+    width: 100%;
+}
+.stills.stills--instagram li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* Override .stills li:nth-of-type(16) { display: none } from the
+       legacy 3-col layout, which would otherwise drop the last photo. */
+    display: block !important;
+    aspect-ratio: 1 / 1;
+}
+.stills.stills--instagram .stills-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.stills.stills--instagram .stills-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+@media (max-width: 900px) {
+    .stills.stills--instagram { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 480px) {
+    .stills.stills--instagram { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ============================================================
+   Mobile-only header + bottom action bar (cinematic redesign).
+   Width OR short-viewport (catches phones in landscape too).
+   ============================================================ */
+/* Default: hide the mobile floating pill on desktop / wide tablets.
+   The @media block below overrides this on phones. */
+#reel-glass-button { display: none; }
+
+/* When a lightbox is open, slide both floating mobile glass buttons out
+   of view with an ease-in-out animation that mirrors the header's
+   page-load fade — so the entry/exit reads as a coherent gesture across
+   the chrome. The two buttons have different base transforms (reel-pill
+   is translateX(-50%) for horizontal centering; glass-wrapper has none),
+   so each gets its own hide transform. */
+html.lightbox-open #reel-glass-button {
+    transform: translate(-50%, 160%);
+    opacity: 0;
+    filter: blur(8px);
+    pointer-events: none;
+}
+html.lightbox-open #glass-wrapper {
+    transform: translateY(160%);
+    opacity: 0;
+    filter: blur(8px);
+    pointer-events: none;
+}
+#reel-glass-button {
+    transition: transform 420ms cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 320ms ease-in-out,
+                filter 420ms ease-in-out;
+}
+
+@media screen and (max-width: 700px), screen and (max-height: 500px) {
+    #reel-glass-button { display: inline-block; }
+
+    /* Strip nav links + social icons from header on mobile so the
+       header just reads as a name plate. */
+    body.cinematic header nav > ul > li:not(.logo) {
+        display: none !important;
+    }
+
+    /* Pin the logo to the left of the menu bar — desktop "li" rules
+       inherit text-align:center / justify-content:center, which centers
+       the lone visible child once siblings are hidden. Override here. */
+    body.cinematic header nav > ul > li.logo {
+        justify-content: flex-start !important;
+        text-align: left !important;
+        margin-right: auto;
+    }
+
+    /* Keep the name laid out as it always was — bold "Alex" + light
+       "Walker" inline — and add a small role line to its RIGHT. */
+    body.cinematic header .logo h1 {
+        margin: 0;
+        line-height: 1.1;
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-start;
+        gap: 12px;
+        flex-wrap: nowrap;
+    }
+    body.cinematic header .logo h1 a {
+        white-space: nowrap;
+    }
+    body.cinematic header .logo h1::after {
+        content: 'Cinematographer + Colorist';
+        font-size: 9px;
+        font-weight: 400;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(216, 214, 208, 0.65);
+        white-space: nowrap;
+    }
+
+    /* On very narrow phones, drop the "+ Colorist" so it stays on one line. */
+    @media (max-width: 380px) {
+        body.cinematic header .logo h1::after {
+            content: 'Cinematographer';
+        }
+    }
+
+    /* Hide the original Watch Reels button on mobile — the glass
+       version (#reel-glass-wrapper) takes over. Original stays in
+       the DOM as the click target the glass button delegates to. */
+    body.cinematic .reel-button-menu {
+        position: absolute !important;
+        left: -9999px !important;
+        pointer-events: none !important;
+    }
+
+    /* Floating Watch Reels pill — a WebGL `Button` (type: 'pill') is rendered
+       INSIDE this anchor by js/glass-watch-reels.js, so the anchor itself is
+       just a transparent positioner / click-target wrapper. The CSS fallback
+       below paints a flat pill before JS runs (and on browsers without WebGL)
+       so there's no visible flash of unstyled content. */
+    #reel-glass-button {
+        position: fixed;
+        left: 50%;
+        /* Pin the watch-reels pill's BOTTOM to where the return-to-top's
+           BOTTOM is (32px + safe-area). The return-to-top is unchanged. */
+        bottom: calc(32px + env(safe-area-inset-bottom, 0px));
+        transform: translateX(-50%);
+        z-index: 9966;
+        display: inline-block;
+        padding: 8px 18px;
+        border-radius: 999px;
+        background: rgba(20, 20, 22, 0.55);
+        backdrop-filter: blur(14px) saturate(140%);
+        -webkit-backdrop-filter: blur(14px) saturate(140%);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        color: rgba(255, 255, 255, 0.94);
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.32);
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+    #reel-glass-button:active { transform: translateX(-50%) scale(0.97); }
+
+    /* Once the WebGL pill has been built, the canvas owns the visual — strip
+       the CSS fallback so we don't double-paint a flat pill behind the glass
+       surface. No drop shadow — matches the return-to-top circle which is
+       shadow-less by design. */
+    #reel-glass-button.glass-built {
+        padding: 0;
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+        line-height: 0;
+    }
+    #reel-glass-button.glass-built .glass-button {
+        display: block;
+    }
+    /* Match the return-to-top arrow's text color so both glass surfaces read
+       as siblings: dark ink on light scheme, soft white in dark mode.
+       Weight 600 matches the "Alex" half of the header logo. Font family
+       matches the rest of the site (Instrument Sans) — the Button class
+       defaults to system-ui, which doesn't blend with the header. */
+    #reel-glass-button .glass-button-text {
+        color: rgba(0, 0, 0, 0.75) !important;
+        font-weight: 600 !important;
+        font-family: 'Instrument Sans', 'Helvetica Neue', Helvetica, -apple-system, BlinkMacSystemFont, Arial, sans-serif !important;
+    }
+    @media (prefers-color-scheme: dark) {
+        #reel-glass-button .glass-button-text {
+            color: rgba(255, 255, 255, 0.9) !important;
+        }
+    }
+
+    /* Phone-size narrower offset — keeps bottom edge aligned with the
+       smaller-phone return-to-top (which switches to 28px at max-width 480). */
+    @media (max-width: 480px) {
+        #reel-glass-button {
+            bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+        }
+    }
+
+    /* Push page content above the floating pill so the last bit
+       isn't covered. */
+    body.cinematic {
+        padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+    }
+}
+/* Landscape phones (short viewport, wide enough that body is full width):
+   keep main content out of the notch/Dynamic Island while leaving the
+   sticky header bar and the fixed return-to-top button edge-to-edge.
+   The safe-area insets are zero on devices without cutouts, so this
+   adds nothing on iPad/desktop. */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    /* Minimum 24px gutter so content (Bio text, stills grid) doesn't run
+       to the screen edges on landscape phones, even on devices without
+       a notch where env(safe-area-inset-*) is 0. */
+    body.cinematic > section {
+        padding-left:  max(24px, env(safe-area-inset-left, 0px));
+        padding-right: max(24px, env(safe-area-inset-right, 0px));
+        box-sizing: border-box;
+    }
+
+    /* Shrink the bio block on landscape phones — at 16px the text feels
+       oversized for the short viewport and the 280px headshot eats half
+       the screen width. */
+    body.cinematic #about .bio-text {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+    body.cinematic #about .bio-text p { margin-bottom: 1em; }
+    body.cinematic #about .bio-image {
+        flex: 0 0 180px;
+        max-width: 180px;
+    }
+    body.cinematic #about .bio-flexbox { gap: 24px; }
+
+    /* The #stills section has padding: 48px 0 48px 0 from the cinematic
+       block above (id-level specificity), which beats body.cinematic >
+       section's landscape gutter. Re-assert the horizontal gutter at
+       higher specificity so the stills band aligns with the rest of the
+       content on landscape phones. */
+    body.cinematic #stills {
+        padding-left:  max(24px, env(safe-area-inset-left, 0px));
+        padding-right: max(24px, env(safe-area-inset-right, 0px));
+    }
+}

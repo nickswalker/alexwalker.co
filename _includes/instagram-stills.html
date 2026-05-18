@@ -1,0 +1,21 @@
+{%- comment -%}
+  Instagram-sourced stills row. Renders a hue-sorted 16-photo fallback
+  server-side; js/instagram-stills.js then fetches /data/instagram.json
+  + /data/instagram_captions.json and re-populates with a fresh
+  randomized arrangement on every page load.
+{%- endcomment -%}
+{%- if site.data.instagram and site.data.instagram.size > 0 -%}
+{%- assign saturated = site.data.instagram | where_exp: "i", "i.saturation >= 0.15" | sort: "hue" -%}
+{%- assign neutrals = site.data.instagram | where_exp: "i", "i.saturation < 0.15" | sort: "value" | reverse -%}
+{%- assign fallback = saturated | concat: neutrals | slice: 0, 16 -%}
+<ul class="stills stills--instagram" id="instagram-stills" style="align-items: center; justify-content: center;">
+{%- for item in fallback -%}
+  {%- assign cap = site.data.instagram_captions[item.id] -%}
+  <li>
+    <a href="{{ item.image }}" class="stills-image" data-lightbox="stills">
+      <img src="{{ item.thumb }}" loading="lazy" alt="{{ cap.title | default: '' | escape }}">
+    </a>
+  </li>
+{%- endfor -%}
+</ul>
+{%- endif -%}

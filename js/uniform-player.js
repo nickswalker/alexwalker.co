@@ -116,7 +116,12 @@ class YouTubeAdapter {
         if (this.player) return;
         const slot = document.createElement('div');
         this.container.appendChild(slot);
-        loadYouTubeApi().then(() => {
+        // If the YT API is already loaded, build the player synchronously so
+        // we stay within the user-gesture activation window. Otherwise the
+        // .then() callback runs after the gesture has expired and mobile
+        // autoplay/playVideo() calls are rejected, forcing the user to tap
+        // YouTube's own play button a second time.
+        const build = () => {
             const playerVars = {
                 // On iOS we surface YouTube's own controls — their fullscreen
                 // button is the only path to true native iOS FS for an iframe
@@ -150,6 +155,14 @@ class YouTubeAdapter {
                         else if (e.data === YT.PlayerState.PAUSED) this._emit('pause');
                         else if (e.data === YT.PlayerState.ENDED) this._emit('ended');
                     },
+                    // Temporary diagnostic — YT error codes:
+                    //   2 = invalid parameter (often a malformed/edge-case ID)
+                    //   5 = HTML5 player error
+                    //   100 = video not found / removed / private
+                    //   101 / 150 = embedding disabled by owner
+                    onError: (e) => {
+                        console.error('[YouTube error]', { code: e.data, videoId: this.videoId, list: this.playlistId });
+                    },
                 },
             };
             this._startMuted = true;
@@ -160,7 +173,12 @@ class YouTubeAdapter {
                 config.videoId = this.videoId;
             }
             this.player = new YT.Player(slot, config);
-        });
+        };
+        if (window.YT && window.YT.Player) {
+            build();
+        } else {
+            loadYouTubeApi().then(build);
+        }
     }
     _startTick() {
         const tick = () => {

@@ -1,0 +1,23 @@
+# Manually curated caption metadata for Instagram stills.
+# Keyed by IG media ID (matches `id` field in _data/instagram.yml).
+# Sync script never touches this file — it's yours.
+#
+# All fields are optional; the template uses whichever you provide and
+# falls back to the IG caption / timestamp for the rest.
+#
+# Schema:
+#   <ig_id>:
+#     title:    Short title for the still (overrides IG caption)
+#     location: e.g. "Selma, Alabama"
+#     date:     e.g. "3-3-2013"  (overrides IG timestamp)
+#     camera:   e.g. "iPhone 5"
+#     lens:     e.g. "Tamron AF 17-50mm ƒ2.8"
+#     hide:     true to exclude this post from the row entirely
+#
+# Example:
+#
+# "17965556310067084":
+#   title: "Bloody Sunday"
+#   location: "Selma, Alabama"
+#   date: "3-3-2013"
+#   camera: "iPhone 5"

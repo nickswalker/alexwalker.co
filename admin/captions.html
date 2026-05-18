@@ -1,0 +1,428 @@
+---
+permalink: /admin/captions/
+sitemap: false
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Caption Library — Admin</title>
+  <style>
+    :root {
+      --gold: #C89126;
+      --bg: #0a0a0a;
+      --panel: #141414;
+      --border: #2a2a2a;
+      --text: #e8e8e8;
+      --muted: #888;
+      --accent: #1E9CDC;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .admin-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(10, 10, 10, 0.96);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .admin-header h1 {
+      margin: 0 0 4px;
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .admin-header .lede {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 720px;
+    }
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .actions button {
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .actions button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .actions button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .actions button.primary:hover {
+      background: #2eb0f0;
+      color: #fff;
+    }
+    .actions .status {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .actions .status.saved { color: #4caf50; }
+    .actions .status.dirty { color: var(--gold); }
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .filter {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .filter input[type=search] {
+      flex: 1;
+      min-width: 200px;
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 4px;
+      font: inherit;
+    }
+    .filter label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .photo {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 20px;
+      padding: 16px;
+      margin-bottom: 12px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      transition: border-color 0.15s;
+    }
+    .photo.has-edits { border-color: var(--gold); }
+    .photo.is-hidden { opacity: 0.4; }
+    .photo .thumb {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 4px;
+      background: #000;
+      display: block;
+      cursor: pointer;
+    }
+    .photo .thumb-wrap {
+      position: relative;
+      width: 140px;
+    }
+    .photo .crop-edit-btn {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      background: rgba(0, 0, 0, 0.72);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .photo .crop-edit-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .photo.has-custom-crop .crop-edit-btn::before {
+      content: '● ';
+      color: var(--gold);
+    }
+
+    /* Crop editor (modal overlay covering the viewport). */
+    .crop-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .crop-modal.open { display: flex; }
+    .crop-panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 20px;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .crop-stage {
+      position: relative;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+      max-height: 70vh;
+      overflow: hidden;
+      background: #000;
+    }
+    .crop-image {
+      display: block;
+      max-width: min(70vw, 900px);
+      max-height: 70vh;
+      width: auto;
+      height: auto;
+    }
+    .crop-square {
+      position: absolute;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
+      cursor: move;
+      box-sizing: border-box;
+    }
+    .crop-handle {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: #fff;
+      border: 1px solid #000;
+      border-radius: 50%;
+    }
+    .crop-handle-tl { left: -9px; top: -9px;       cursor: nwse-resize; }
+    .crop-handle-tr { right: -9px; top: -9px;      cursor: nesw-resize; }
+    .crop-handle-bl { left: -9px; bottom: -9px;    cursor: nesw-resize; }
+    .crop-handle-br { right: -9px; bottom: -9px;   cursor: nwse-resize; }
+    .crop-controls {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .crop-controls .info {
+      font-size: 12px;
+      color: var(--muted);
+      margin-right: auto;
+    }
+    .crop-controls button {
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .crop-controls button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .crop-controls button.warn {
+      color: #d88080;
+      border-color: #4a2a2a;
+    }
+
+    /* GitHub Sync settings */
+    .gh-settings {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    .gh-settings summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .gh-settings .row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .gh-settings input[type="password"] {
+      flex: 1;
+      min-width: 200px;
+      background: #0c0c0c;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 3px;
+      font: inherit;
+    }
+    .gh-settings .hint {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 8px;
+      line-height: 1.45;
+    }
+    .gh-settings a { color: var(--accent); }
+    .photo .fields {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 16px;
+    }
+    .photo .fields .full { grid-column: 1 / -1; }
+    .photo .meta-row {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      font-size: 12px;
+      color: var(--muted);
+      padding-top: 4px;
+      border-top: 1px solid var(--border);
+      margin-top: 4px;
+    }
+    .photo .meta-row a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .photo .meta-row a:hover { text-decoration: underline; }
+    .photo .meta-row label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .field label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .field input {
+      background: #0c0c0c;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 3px;
+      font: inherit;
+    }
+    .field input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    .field .ig-fallback {
+      color: var(--muted);
+      font-size: 11px;
+      font-style: italic;
+    }
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+    @media (max-width: 700px) {
+      .photo { grid-template-columns: 100px 1fr; gap: 12px; padding: 12px; }
+      .photo .thumb { width: 100px; height: 100px; }
+      .photo .fields { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="admin-header">
+    <h1>Caption Library</h1>
+    <p class="lede">
+      Edit metadata for each Instagram still. Changes auto-save to this browser as you type.
+      Use <strong>Copy YAML</strong> or <strong>Download YAML</strong> when you're ready to paste
+      into <code>_data/instagram_captions.yml</code>.
+    </p>
+    <div class="actions">
+      <button id="sync-btn" class="primary">Save to GitHub &amp; re-sync</button>
+      <button id="copy-btn">Copy YAML</button>
+      <button id="download-btn">Download YAML</button>
+      <button id="discard-btn">Discard local edits</button>
+      <span id="status" class="status"></span>
+    </div>
+  </header>
+
+  <main>
+    <details class="gh-settings" id="gh-settings">
+      <summary>GitHub sync settings</summary>
+      <div class="row">
+        <input type="password" id="gh-pat" placeholder="Personal access token (ghp_… or github_pat_…)">
+        <button id="gh-pat-save">Save token</button>
+        <button id="gh-pat-clear">Clear</button>
+        <span id="gh-pat-status" class="status"></span>
+      </div>
+      <div class="hint">
+        Create a <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">fine-grained PAT</a>
+        for <code>nickswalker/alexwalker.co</code> with permissions:
+        <strong>Contents: Read &amp; write</strong> and
+        <strong>Actions: Read &amp; write</strong>.
+        Token is stored only in this browser's localStorage and sent directly to api.github.com.
+      </div>
+    </details>
+
+    <div class="filter">
+      <input type="search" id="search" placeholder="Search by title, location, camera, IG caption, or ID…">
+      <label><input type="checkbox" id="only-edited"> Only show edited</label>
+      <label><input type="checkbox" id="only-missing"> Only show missing title</label>
+      <label><input type="checkbox" id="show-hidden"> Show hidden</label>
+    </div>
+    <div id="grid"></div>
+  </main>
+
+  <!-- Crop editor modal — populated and shown by admin-captions.js -->
+  <div class="crop-modal" id="crop-modal" hidden>
+    <div class="crop-panel">
+      <div class="crop-stage" id="crop-stage">
+        <img class="crop-image" id="crop-image" alt="">
+        <div class="crop-square" id="crop-square">
+          <div class="crop-handle crop-handle-tl" data-corner="tl"></div>
+          <div class="crop-handle crop-handle-tr" data-corner="tr"></div>
+          <div class="crop-handle crop-handle-bl" data-corner="bl"></div>
+          <div class="crop-handle crop-handle-br" data-corner="br"></div>
+        </div>
+      </div>
+      <div class="crop-controls">
+        <span class="info" id="crop-info">—</span>
+        <button id="crop-reset" class="warn">Reset (use smartcrop)</button>
+        <button id="crop-cancel">Cancel</button>
+        <button id="crop-save" class="primary">Save crop</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/admin-captions.js"></script>
+</body>
+</html>

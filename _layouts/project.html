@@ -2,11 +2,18 @@
 <html lang="en">
 {% include head.html %}
 
-<body>
+<body class="cinematic">
 <div id="top"></div>
 
 {% include site-header.html %}
 <div id="glass-wrapper"></div>
+
+<!-- Mobile-only floating Watch Reels pill. Hidden on desktop via CSS;
+     shown fixed at bottom-center on phones (portrait + landscape). -->
+<a id="reel-glass-button"
+   href="https://www.youtube.com/embed/videoseries?si=IngTxKLA-MCqoOTJ&amp;list=PL3F20B91BBDDD03B3"
+   data-autoplay="1"
+   data-goatcounter-click="watch-reels-mobile">Watch Reels</a>
 
 {{ content }}
 

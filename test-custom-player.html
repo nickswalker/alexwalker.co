@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom video player UI test</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --text: #f0e8d8;
+    --muted: #898279;
+    --accent: #1E9CDC;
+    --bar-bg: rgba(255, 255, 255, 0.18);
+    --bar-fill: #ffffff;
+    --chrome-bg: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.5) 60%, rgba(0, 0, 0, 0) 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; }
+  body { padding: 32px 24px 64px; }
+  h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 6px; }
+  .lede { color: var(--muted); font-size: 13px; margin-bottom: 28px; max-width: 700px; line-height: 1.5; }
+  .grid { display: grid; gap: 28px; max-width: 1100px; margin: 0 auto; }
+  @media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
+  .card { background: #141414; border-radius: 12px; overflow: hidden; }
+  .card h2 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); padding: 12px 14px; }
+
+  /* ── Uniform player ───────────────────────────────────────────────── */
+  .up {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .up iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    pointer-events: none;   /* All input goes through our overlay */
+    background: #000;
+  }
+  /* Custom poster — shown until the user clicks play. The iframe doesn't
+     get created until then, so YouTube's own thumbnail never renders. */
+  .up__poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+    transition: opacity 260ms ease;
+    z-index: 1;
+  }
+  .up.is-loaded .up__poster { opacity: 0; pointer-events: none; }
+  /* Click-through layer: catches taps for play/pause and reveals controls */
+  .up__hit {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+  }
+  /* Click-catch sits above the poster so taps reach our handler */
+  .up__hit { z-index: 2; }
+  /* Big play-button shown when paused, ended, or before first play —
+     stacked above the poster image (which has z-index: 1). */
+  .up__big-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 72px; height: 72px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 220ms ease, transform 220ms ease;
+    z-index: 3;
+  }
+  .up[data-state="paused"] .up__big-play,
+  .up[data-state="ended"] .up__big-play {
+    opacity: 1;
+  }
+  /* Subtle loading spinner shown between first click and first video frame.
+     Fades out at the same 260ms as the poster, so the spinner dissolves
+     directly into the playing iframe. */
+  .up__spinner {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 44px; height: 44px;
+    margin: -22px 0 0 -22px;
+    border: 3px solid rgba(255, 255, 255, 0.18);
+    border-top-color: rgba(255, 255, 255, 0.85);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 260ms ease;
+    z-index: 3;
+    animation: up-spin 0.85s linear infinite;
+  }
+  .up[data-state="loading"] .up__spinner { opacity: 1; }
+  .up[data-state="loading"] .up__big-play { opacity: 0; }
+  @keyframes up-spin { to { transform: rotate(360deg); } }
+  .up__chrome { z-index: 4; }
+  .up__big-play svg {
+    width: 28px; height: 28px;
+    fill: #fff;
+    transform: translateX(2px); /* nudge optical center */
+  }
+  /* Bottom chrome — always-visible thin bar, with full toolbar revealed on hover/touch */
+  .up__chrome {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 36px 14px 12px;
+    background: var(--chrome-bg);
+    opacity: 0;
+    transition: opacity 220ms ease;
+    pointer-events: none;
+  }
+  .up:hover .up__chrome,
+  .up[data-state="paused"] .up__chrome,
+  .up[data-state="ended"] .up__chrome,
+  .up.is-touching .up__chrome,
+  .up.is-active .up__chrome {
+    opacity: 1;
+  }
+  .up__chrome > * { pointer-events: auto; }
+  .up__scrub {
+    position: relative;
+    height: 4px;
+    background: var(--bar-bg);
+    border-radius: 2px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: height 160ms ease;
+  }
+  .up__scrub:hover { height: 6px; }
+  .up__scrub-buffer,
+  .up__scrub-progress {
+    position: absolute;
+    inset: 0 auto 0 0;
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  .up__scrub-buffer { background: rgba(255, 255, 255, 0.35); width: 0%; }
+  .up__scrub-progress { background: var(--bar-fill); width: 0%; }
+  .up__scrub-knob {
+    position: absolute;
+    top: 50%;
+    width: 12px; height: 12px;
+    background: var(--bar-fill);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    left: 0%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 160ms ease;
+  }
+  .up__scrub:hover .up__scrub-knob { opacity: 1; }
+  .up__toolbar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #fff;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .up__btn {
+    width: 32px; height: 32px;
+    background: none;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0;
+    border-radius: 4px;
+    opacity: 0.92;
+    transition: opacity 160ms ease, background 160ms ease;
+  }
+  .up__btn:hover { opacity: 1; background: rgba(255, 255, 255, 0.12); }
+  .up__btn svg { width: 18px; height: 18px; fill: currentColor; }
+  .up__time { color: rgba(255, 255, 255, 0.92); font-size: 11px; letter-spacing: 0.3px; }
+  .up__spacer { flex: 1 1 auto; }
+</style>
+</head>
+<body>
+
+<h1>Custom player UI — preview</h1>
+<p class="lede">
+  Same custom controls layered over YouTube (left) and Vimeo (right). Native player chrome is stripped via URL params; playback is driven through the YouTube IFrame API and Vimeo's Player.js. Click anywhere on the video to play/pause; hover to reveal the scrub bar and toolbar.
+</p>
+
+<div class="grid">
+  <div class="card">
+    <h2>YouTube — Texas Cult House</h2>
+    <div class="up" data-provider="youtube" data-id="kv5663b3W0c" data-poster="/img/posters/TCH.jpg" data-state="paused">
+      <img class="up__poster" src="/img/posters/TCH.jpg" alt="" aria-hidden="true">
+      <div class="up__embed"></div>
+      <div class="up__hit" aria-hidden="true"></div>
+      <div class="up__big-play" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+      <div class="up__spinner" aria-hidden="true"></div>
+      <div class="up__chrome">
+        <div class="up__scrub" role="slider" aria-label="Seek">
+          <div class="up__scrub-buffer"></div>
+          <div class="up__scrub-progress"></div>
+          <div class="up__scrub-knob"></div>
+        </div>
+        <div class="up__toolbar">
+          <button class="up__btn up__btn--playpause" aria-label="Play/pause">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <button class="up__btn up__btn--mute" aria-label="Mute">
+            <svg class="icon-vol" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
+            <svg class="icon-muted" viewBox="0 0 24 24" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3zm14 .7L15.3 8 13 10.3 10.7 8 9 9.7 11.3 12 9 14.3 10.7 16 13 13.7 15.3 16 17 14.3 14.7 12z"/></svg>
+          </button>
+          <span class="up__time"><span class="up__cur">0:00</span> / <span class="up__dur">0:00</span></span>
+          <span class="up__spacer"></span>
+          <button class="up__btn up__btn--fs" aria-label="Fullscreen">
+            <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Vimeo — A Christmas In New Hope (trailer)</h2>
+    <div class="up" data-provider="vimeo" data-id="984991085" data-hash="721137dae6" data-poster="/img/narrative/acinh2.jpg" data-state="paused">
+      <img class="up__poster" src="/img/narrative/acinh2.jpg" alt="" aria-hidden="true">
+      <div class="up__embed"></div>
+      <div class="up__hit" aria-hidden="true"></div>
+      <div class="up__big-play" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+      <div class="up__spinner" aria-hidden="true"></div>
+      <div class="up__chrome">
+        <div class="up__scrub" role="slider" aria-label="Seek">
+          <div class="up__scrub-buffer"></div>
+          <div class="up__scrub-progress"></div>
+          <div class="up__scrub-knob"></div>
+        </div>
+        <div class="up__toolbar">
+          <button class="up__btn up__btn--playpause" aria-label="Play/pause">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <button class="up__btn up__btn--mute" aria-label="Mute">
+            <svg class="icon-vol" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
+            <svg class="icon-muted" viewBox="0 0 24 24" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3zm14 .7L15.3 8 13 10.3 10.7 8 9 9.7 11.3 12 9 14.3 10.7 16 13 13.7 15.3 16 17 14.3 14.7 12z"/></svg>
+          </button>
+          <span class="up__time"><span class="up__cur">0:00</span> / <span class="up__dur">0:00</span></span>
+          <span class="up__spacer"></span>
+          <button class="up__btn up__btn--fs" aria-label="Fullscreen">
+            <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- YouTube IFrame API (loads asynchronously, calls onYouTubeIframeAPIReady) -->
+<script src="https://www.youtube.com/iframe_api"></script>
+<!-- Vimeo Player.js -->
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+<script>
+(function () {
+    'use strict';
+
+    function fmt(sec) {
+        if (!Number.isFinite(sec) || sec < 0) sec = 0;
+        const m = Math.floor(sec / 60);
+        const s = Math.floor(sec % 60);
+        return `${m}:${String(s).padStart(2, '0')}`;
+    }
+
+    // Each adapter wraps a provider's player and exposes a uniform interface:
+    //   play() pause() toggle() seek(sec) setMuted(bool) getMuted()
+    //   getCurrentTime() getDuration() on('play'|'pause'|'ended'|'timeupdate')
+    class YouTubeAdapter {
+        constructor(container, videoId) {
+            this.container = container;
+            this.videoId = videoId;
+            this.listeners = {};
+            this.player = null;
+            this._ready = new Promise((resolve) => { this._resolveReady = resolve; });
+            // Lazy: don't create the iframe until play() is called for the
+            // first time. This means YouTube's default thumbnail never gets
+            // a chance to render — our custom poster shows instead.
+        }
+        _ensureIframe() {
+            if (this.player) return;
+            const slot = document.createElement('div');
+            this.container.appendChild(slot);
+            const init = () => {
+                this.player = new YT.Player(slot, {
+                    videoId: this.videoId,
+                    playerVars: {
+                        controls: 0,
+                        modestbranding: 1,
+                        rel: 0,
+                        iv_load_policy: 3,
+                        disablekb: 1,
+                        playsinline: 1,
+                        fs: 0,
+                        autoplay: 1,
+                        origin: window.location.origin,
+                    },
+                    events: {
+                        onReady: () => {
+                            this._resolveReady();
+                            this._startTick();
+                        },
+                        onStateChange: (e) => {
+                            if (e.data === YT.PlayerState.PLAYING) this._emit('play');
+                            else if (e.data === YT.PlayerState.PAUSED) this._emit('pause');
+                            else if (e.data === YT.PlayerState.ENDED) this._emit('ended');
+                        },
+                    },
+                });
+            };
+            if (window.YT && window.YT.Player) init();
+            else window.addEventListener('youtubeApiReady', init, { once: true });
+        }
+        _startTick() {
+            const tick = () => {
+                if (!this.player) return;
+                this._emit('timeupdate', {
+                    currentTime: this.player.getCurrentTime ? this.player.getCurrentTime() : 0,
+                    duration: this.player.getDuration ? this.player.getDuration() : 0,
+                    buffered: this.player.getVideoLoadedFraction ? this.player.getVideoLoadedFraction() : 0,
+                });
+                requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        }
+        on(event, fn) { (this.listeners[event] ||= []).push(fn); }
+        _emit(event, data) { (this.listeners[event] || []).forEach(fn => fn(data)); }
+        async play()        { this._ensureIframe(); await this._ready; this.player.playVideo(); }
+        async pause()       { await this._ready; this.player.pauseVideo(); }
+        async seek(sec)     { await this._ready; this.player.seekTo(sec, true); }
+        async setMuted(b)   { await this._ready; b ? this.player.mute() : this.player.unMute(); }
+        async getMuted()    { await this._ready; return this.player.isMuted(); }
+        getCurrentTime()    { return this.player ? this.player.getCurrentTime() : 0; }
+        getDuration()       { return this.player ? this.player.getDuration() : 0; }
+        get iframe()        { return this.player ? this.player.getIframe() : null; }
+    }
+
+    class VimeoAdapter {
+        constructor(container, videoId, hash) {
+            this.container = container;
+            this.videoId = videoId;
+            this.hash = hash;
+            this.listeners = {};
+            this._duration = 0;
+            this.player = null;
+            this._ready = new Promise((resolve) => { this._resolveReady = resolve; });
+        }
+        _ensureIframe() {
+            if (this.player) return;
+            const slot = document.createElement('div');
+            this.container.appendChild(slot);
+            this.player = new Vimeo.Player(slot, {
+                id: this.videoId,
+                h: this.hash || undefined,
+                controls: false,
+                title: false,
+                byline: false,
+                portrait: false,
+                playsinline: true,
+                dnt: true,
+                responsive: true,
+                autoplay: true,
+            });
+            this.player.ready().then(() => this._resolveReady());
+            this.player.on('play',  () => this._emit('play'));
+            this.player.on('pause', () => this._emit('pause'));
+            this.player.on('ended', () => this._emit('ended'));
+            this.player.on('timeupdate', (e) => {
+                this._duration = e.duration;
+                this._emit('timeupdate', {
+                    currentTime: e.seconds,
+                    duration: e.duration,
+                    buffered: e.percent,
+                });
+            });
+            this.player.on('bufferstart', () => this._emit('buffer'));
+            this.player.getDuration().then(d => { this._duration = d; });
+        }
+        on(event, fn)        { (this.listeners[event] ||= []).push(fn); }
+        _emit(event, data)   { (this.listeners[event] || []).forEach(fn => fn(data)); }
+        async play()         { this._ensureIframe(); await this._ready; this.player.play(); }
+        async pause()        { await this._ready; this.player.pause(); }
+        async seek(sec)      { await this._ready; this.player.setCurrentTime(sec); }
+        async setMuted(b)    { await this._ready; this.player.setMuted(b); }
+        async getMuted()     { await this._ready; return this.player.getMuted(); }
+        getCurrentTime()     { return this.player && this.player.getCurrentTime ? Promise.resolve(this.player.getCurrentTime()) : 0; }
+        getDuration()        { return this._duration; }
+        get iframe()         { return this.container.querySelector('iframe'); }
+    }
+
+    // Wire YouTube API readiness so the YouTubeAdapter constructor can wait
+    // for it even if the iframe_api script hasn't fired yet.
+    window.onYouTubeIframeAPIReady = function () {
+        window.dispatchEvent(new Event('youtubeApiReady'));
+    };
+
+    // Mount every .up element on the page.
+    function mount(root) {
+        const provider = root.dataset.provider;
+        const id = root.dataset.id;
+        const hash = root.dataset.hash;
+        const embedHost = root.querySelector('.up__embed');
+        const bigPlay = root.querySelector('.up__big-play');
+        const hit = root.querySelector('.up__hit');
+        const chrome = root.querySelector('.up__chrome');
+        const scrub = root.querySelector('.up__scrub');
+        const scrubProgress = root.querySelector('.up__scrub-progress');
+        const scrubBuffer = root.querySelector('.up__scrub-buffer');
+        const scrubKnob = root.querySelector('.up__scrub-knob');
+        const playBtn = root.querySelector('.up__btn--playpause');
+        const muteBtn = root.querySelector('.up__btn--mute');
+        const fsBtn = root.querySelector('.up__btn--fs');
+        const curEl = root.querySelector('.up__cur');
+        const durEl = root.querySelector('.up__dur');
+        const iconPlay = playBtn.querySelector('.icon-play');
+        const iconPause = playBtn.querySelector('.icon-pause');
+        const iconVol = muteBtn.querySelector('.icon-vol');
+        const iconMuted = muteBtn.querySelector('.icon-muted');
+
+        const adapter = provider === 'youtube'
+            ? new YouTubeAdapter(embedHost, id)
+            : new VimeoAdapter(embedHost, id, hash);
+
+        let lastDuration = 0;
+
+        function setState(s) { root.dataset.state = s; }
+        function setPlaying(p) {
+            iconPlay.style.display = p ? 'none' : '';
+            iconPause.style.display = p ? '' : 'none';
+            setState(p ? 'playing' : 'paused');
+        }
+        function setMutedUI(m) {
+            iconVol.style.display = m ? 'none' : '';
+            iconMuted.style.display = m ? '' : 'none';
+        }
+
+        adapter.on('play',  () => {
+            setPlaying(true);                  // state → 'playing', hides spinner
+            root.classList.add('is-loaded');   // fade out custom poster
+        });
+        adapter.on('pause', () => setPlaying(false));
+        adapter.on('ended', () => { setPlaying(false); setState('ended'); });
+        adapter.on('timeupdate', ({ currentTime, duration, buffered }) => {
+            if (duration && duration !== lastDuration) {
+                lastDuration = duration;
+                durEl.textContent = fmt(duration);
+            }
+            const pct = duration ? (currentTime / duration) * 100 : 0;
+            scrubProgress.style.width = pct + '%';
+            scrubKnob.style.left = pct + '%';
+            scrubBuffer.style.width = ((buffered || 0) * 100) + '%';
+            curEl.textContent = fmt(currentTime);
+        });
+
+        // Show the spinner whenever the user requests play before playback is
+        // actually rolling — covers both the first-click iframe-spin-up
+        // and any later "wake from paused" lag.
+        function requestPlay() {
+            if (root.dataset.state !== 'playing') setState('loading');
+            adapter.play();
+        }
+
+        // Click on video → toggle play/pause
+        hit.addEventListener('click', () => {
+            if (root.dataset.state === 'playing') adapter.pause();
+            else requestPlay();
+        });
+
+        // Play button → same as click
+        playBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (root.dataset.state === 'playing') adapter.pause();
+            else requestPlay();
+        });
+
+        // Mute toggle
+        muteBtn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const m = await adapter.getMuted();
+            adapter.setMuted(!m);
+            setMutedUI(!m);
+        });
+
+        // Fullscreen toggle (uses the .up container so our chrome stays visible)
+        fsBtn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                root.requestFullscreen
+                    ? root.requestFullscreen()
+                    : (root.webkitRequestFullscreen && root.webkitRequestFullscreen());
+            }
+        });
+
+        // Scrub bar — click anywhere to seek
+        scrub.addEventListener('click', (e) => {
+            const r = scrub.getBoundingClientRect();
+            const pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+            const d = adapter.getDuration() || lastDuration;
+            if (d) adapter.seek(pct * d);
+        });
+
+        // Touch: show chrome briefly on tap
+        root.addEventListener('touchstart', () => {
+            root.classList.add('is-touching');
+            clearTimeout(root._touchTimer);
+            root._touchTimer = setTimeout(() => root.classList.remove('is-touching'), 2500);
+        }, { passive: true });
+    }
+
+    // Defer mount until both APIs have a chance to load
+    function tryMountAll() {
+        document.querySelectorAll('.up').forEach(mount);
+    }
+    if (document.readyState !== 'loading') tryMountAll();
+    else document.addEventListener('DOMContentLoaded', tryMountAll);
+})();
+</script>
+
+</body>
+</html>

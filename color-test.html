@@ -1,0 +1,296 @@
+---
+permalink: /color-test/
+sitemap: false
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
+  <title>Color Arrangement Test — Alex Walker</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body.color-test-page { background: #0a0a0a; color: #eee; font-family: system-ui, -apple-system, sans-serif; }
+    .color-test {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 64px 24px 96px;
+    }
+    .color-test h1 {
+      font-size: 28px;
+      margin: 0 0 8px;
+    }
+    .color-test .lede {
+      color: #999;
+      margin: 0 0 56px;
+      font-size: 15px;
+      line-height: 1.5;
+      max-width: 720px;
+    }
+    .method {
+      margin-bottom: 72px;
+      border-top: 1px solid #222;
+      padding-top: 32px;
+    }
+    .method > h2 {
+      font-size: 17px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #1E9CDC;
+      margin: 0 0 6px;
+      font-weight: 600;
+    }
+    .method > .desc {
+      color: #999;
+      font-size: 13px;
+      margin: 0 0 24px;
+      line-height: 1.5;
+      max-width: 720px;
+    }
+    .example {
+      margin-bottom: 28px;
+    }
+    .example h3 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #888;
+      margin: 0 0 8px;
+      font-weight: 600;
+    }
+    .grid-16 {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 4px;
+    }
+    .grid-16 img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      background: #111;
+    }
+    @media (max-width: 900px) {
+      .grid-16 { grid-template-columns: repeat(4, 1fr); }
+    }
+  </style>
+</head>
+<body class="color-test-page">
+<main class="color-test">
+  <h1>Color Arrangement Test — 16-Still Grid (2×8)</h1>
+  <p class="lede">
+    Each section shows one arrangement method applied to three different 16-photo selections
+    drawn from the pool of {{ site.data.instagram.size }} Instagram stills.
+    Compare how each method reads with different content profiles, then pick the
+    arrangement (and the selection strategy) you want on the homepage.
+  </p>
+
+  {%- comment -%}
+    Build the three 16-photo selections we'll feed into each arrangement.
+    These are sets — each arrangement method will re-sort them according to
+    its own logic.
+  {%- endcomment -%}
+  {% assign by_time = site.data.instagram | sort: "timestamp" | reverse %}
+  {% assign newest16 = by_time | slice: 0, 16 %}
+  {% assign by_sat = site.data.instagram | sort: "saturation" | reverse %}
+  {% assign mostsat16 = by_sat | slice: 0, 16 %}
+  {% assign by_val = site.data.instagram | sort: "value" | reverse %}
+  {% assign brightest16 = by_val | slice: 0, 16 %}
+
+  {%- comment -%} ====================== METHOD 1: HUE SPECTRUM ====================== {%- endcomment -%}
+  <section class="method">
+    <h2>1. Hue Spectrum</h2>
+    <p class="desc">Sorted along the color wheel: red → orange → yellow → green → blue → violet. Desaturated/neutral items trail at the end, brightest first.</p>
+
+    <div class="example">
+      <h3>A · 16 most recent posts</h3>
+      {% assign saturated = newest16 | where_exp: "i", "i.saturation >= 0.15" | sort: "hue" %}
+      {% assign neutrals = newest16 | where_exp: "i", "i.saturation < 0.15" | sort: "value" | reverse %}
+      <ul class="grid-16">
+        {% for item in saturated %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+        {% for item in neutrals %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+      </ul>
+    </div>
+
+    <div class="example">
+      <h3>B · 16 most colorful (top saturation)</h3>
+      {% assign sorted = mostsat16 | sort: "hue" %}
+      <ul class="grid-16">
+        {% for item in sorted %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+      </ul>
+    </div>
+
+    <div class="example">
+      <h3>C · 16 brightest</h3>
+      {% assign saturated = brightest16 | where_exp: "i", "i.saturation >= 0.15" | sort: "hue" %}
+      {% assign neutrals = brightest16 | where_exp: "i", "i.saturation < 0.15" | sort: "value" | reverse %}
+      <ul class="grid-16">
+        {% for item in saturated %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+        {% for item in neutrals %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  {%- comment -%} ====================== METHOD 2: TONAL CLUSTER ====================== {%- endcomment -%}
+  <section class="method">
+    <h2>2. Tonal Cluster</h2>
+    <p class="desc">Grouped by mood: warm tones, greens, cool tones, purples, then neutrals. Within each cluster, sorted by hue.</p>
+
+    {%- assign selections = "newest16,mostsat16,brightest16" | split: "," -%}
+    {%- assign labels = "A · 16 most recent posts|B · 16 most colorful|C · 16 brightest" | split: "|" -%}
+
+    <div class="example">
+      <h3>A · 16 most recent posts</h3>
+      {% assign sat = newest16 | where_exp: "i", "i.saturation >= 0.15" %}
+      {% assign warm = sat | where_exp: "i", "i.hue < 0.17 or i.hue >= 0.83" | sort: "hue" %}
+      {% assign greens = sat | where_exp: "i", "i.hue >= 0.17 and i.hue < 0.4" | sort: "hue" %}
+      {% assign cool = sat | where_exp: "i", "i.hue >= 0.4 and i.hue < 0.7" | sort: "hue" %}
+      {% assign purples = sat | where_exp: "i", "i.hue >= 0.7 and i.hue < 0.83" | sort: "hue" %}
+      {% assign neutrals = newest16 | where_exp: "i", "i.saturation < 0.15" | sort: "value" | reverse %}
+      <ul class="grid-16">
+        {% for item in warm %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+        {% for item in greens %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+        {% for item in cool %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+        {% for item in purples %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+        {% for item in neutrals %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+      </ul>
+    </div>
+
+    <div class="example">
+      <h3>B · 16 most colorful</h3>
+      {% assign sat = mostsat16 | where_exp: "i", "i.saturation >= 0.15" %}
+      {% assign warm = sat | where_exp: "i", "i.hue < 0.17 or i.hue >= 0.83" | sort: "hue" %}
+      {% assign greens = sat | where_exp: "i", "i.hue >= 0.17 and i.hue < 0.4" | sort: "hue" %}
+      {% assign cool = sat | where_exp: "i", "i.hue >= 0.4 and i.hue < 0.7" | sort: "hue" %}
+      {% assign purples = sat | where_exp: "i", "i.hue >= 0.7 and i.hue < 0.83" | sort: "hue" %}
+      {% assign neutrals = mostsat16 | where_exp: "i", "i.saturation < 0.15" | sort: "value" | reverse %}
+      <ul class="grid-16">
+        {% for item in warm %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+        {% for item in greens %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+        {% for item in cool %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+        {% for item in purples %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+        {% for item in neutrals %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+      </ul>
+    </div>
+
+    <div class="example">
+      <h3>C · 16 brightest</h3>
+      {% assign sat = brightest16 | where_exp: "i", "i.saturation >= 0.15" %}
+      {% assign warm = sat | where_exp: "i", "i.hue < 0.17 or i.hue >= 0.83" | sort: "hue" %}
+      {% assign greens = sat | where_exp: "i", "i.hue >= 0.17 and i.hue < 0.4" | sort: "hue" %}
+      {% assign cool = sat | where_exp: "i", "i.hue >= 0.4 and i.hue < 0.7" | sort: "hue" %}
+      {% assign purples = sat | where_exp: "i", "i.hue >= 0.7 and i.hue < 0.83" | sort: "hue" %}
+      {% assign neutrals = brightest16 | where_exp: "i", "i.saturation < 0.15" | sort: "value" | reverse %}
+      <ul class="grid-16">
+        {% for item in warm %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+        {% for item in greens %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+        {% for item in cool %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+        {% for item in purples %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+        {% for item in neutrals %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  {%- comment -%} ====================== METHOD 3: SATURATION CASCADE ====================== {%- endcomment -%}
+  <section class="method">
+    <h2>3. Saturation Cascade</h2>
+    <p class="desc">Most vivid first, fading toward muted/neutral.</p>
+
+    <div class="example">
+      <h3>A · 16 most recent posts</h3>
+      {% assign sorted = newest16 | sort: "saturation" | reverse %}
+      <ul class="grid-16">{% for item in sorted %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}</ul>
+    </div>
+    <div class="example">
+      <h3>B · 16 most colorful</h3>
+      {% assign sorted = mostsat16 | sort: "saturation" | reverse %}
+      <ul class="grid-16">{% for item in sorted %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}</ul>
+    </div>
+    <div class="example">
+      <h3>C · 16 brightest</h3>
+      {% assign sorted = brightest16 | sort: "saturation" | reverse %}
+      <ul class="grid-16">{% for item in sorted %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}</ul>
+    </div>
+  </section>
+
+  {%- comment -%} ====================== METHOD 4: BRIGHTNESS LADDER ====================== {%- endcomment -%}
+  <section class="method">
+    <h2>4. Brightness Ladder</h2>
+    <p class="desc">Light → dark across the row.</p>
+
+    <div class="example">
+      <h3>A · 16 most recent posts</h3>
+      {% assign sorted = newest16 | sort: "value" | reverse %}
+      <ul class="grid-16">{% for item in sorted %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}</ul>
+    </div>
+    <div class="example">
+      <h3>B · 16 most colorful</h3>
+      {% assign sorted = mostsat16 | sort: "value" | reverse %}
+      <ul class="grid-16">{% for item in sorted %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}</ul>
+    </div>
+    <div class="example">
+      <h3>C · 16 brightest</h3>
+      {% assign sorted = brightest16 | sort: "value" | reverse %}
+      <ul class="grid-16">{% for item in sorted %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}</ul>
+    </div>
+  </section>
+
+  {%- comment -%} ====================== METHOD 5: CHRONOLOGICAL ====================== {%- endcomment -%}
+  <section class="method">
+    <h2>5. Chronological</h2>
+    <p class="desc">Newest first — no color logic. Control case.</p>
+
+    <div class="example">
+      <h3>A · 16 most recent posts</h3>
+      {% assign sorted = newest16 | sort: "timestamp" | reverse %}
+      <ul class="grid-16">{% for item in sorted %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}</ul>
+    </div>
+    <div class="example">
+      <h3>B · 16 most colorful</h3>
+      {% assign sorted = mostsat16 | sort: "timestamp" | reverse %}
+      <ul class="grid-16">{% for item in sorted %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}</ul>
+    </div>
+    <div class="example">
+      <h3>C · 16 brightest</h3>
+      {% assign sorted = brightest16 | sort: "timestamp" | reverse %}
+      <ul class="grid-16">{% for item in sorted %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}</ul>
+    </div>
+  </section>
+
+  {%- comment -%} ====================== METHOD 6: SHUFFLED ====================== {%- endcomment -%}
+  <section class="method">
+    <h2>6. Shuffled</h2>
+    <p class="desc">Random order. Refresh to re-shuffle. Use as a sanity check — does any ordering above feel intentional vs the chaos of random?</p>
+
+    <div class="example">
+      <h3>A · 16 most recent posts</h3>
+      <ul class="grid-16 shuffle">{% for item in newest16 %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}</ul>
+    </div>
+    <div class="example">
+      <h3>B · 16 most colorful</h3>
+      <ul class="grid-16 shuffle">{% for item in mostsat16 %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}</ul>
+    </div>
+    <div class="example">
+      <h3>C · 16 brightest</h3>
+      <ul class="grid-16 shuffle">{% for item in brightest16 %}<li><img src="{{ item.thumb }}" loading="lazy" alt=""></li>{% endfor %}</ul>
+    </div>
+  </section>
+</main>
+
+<script>
+  // Fisher-Yates on every .shuffle row independently.
+  document.querySelectorAll('.shuffle').forEach((row) => {
+    const items = Array.from(row.children);
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      row.appendChild(items[j]);
+      items[j] = items[i];
+    }
+  });
+</script>
+</body>
+</html>

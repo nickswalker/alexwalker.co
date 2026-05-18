@@ -1,6 +1,73 @@
 // Site-wide scroll behaviors: smooth-scroll anchors, return-to-top fade,
 // mobile nav collapse, scroll-fade IntersectionObserver, copyright year.
 
+// Force-pin the floating Watch Reels pill to the SAME bottom-y the
+// return-to-top button is actually rendered at.
+//
+// PRIOR APPROACH (broken): compute `window.innerHeight - rect.bottom` and
+// write it as the pill's `bottom`. Sounds correct, fails in practice —
+// iOS Safari fires `resize` whenever its URL bar collapses or rubber-band
+// scrolls past the page edge, and each fire re-measured both values
+// against a momentarily-shifted innerHeight. Result: the pill jittered
+// while RTT stayed rock solid (RTT is pure CSS — nothing recomputes it).
+//
+// FIX: compute the OVERHANG ONCE (a purely geometric value: how far the
+// RTT's WebGL circle extends below its wrapper) and shift the pill's
+// CSS bottom down by that amount. Overhang is fixed by markup and shader
+// size — never depends on innerHeight. Once applied, the pill rides along
+// with the URL bar on its own (same `bottom:` math as RTT now), no JS
+// re-sync needed.
+export function initAlignWatchReelsBottom() {
+    const apply = () => {
+        const wr = document.getElementById('reel-glass-button');
+        const wrapper = document.getElementById('glass-wrapper');
+        if (!wr || !wrapper) return false;
+        if (getComputedStyle(wr).display === 'none') return false;
+        // The RTT button is built lazily — until it exists in the DOM, there's
+        // nothing to align against. Returning false keeps `applied` false so
+        // the 'rtt:ready' event + retry timers re-try once RTT lands.
+        // Without this guard we'd fall back to `wrapper` (same rect →
+        // overhang 0), mark applied = true, and never re-sync once the real
+        // button arrived — leaving the pill aligned to the wrapper TOP
+        // instead of the rendered button BOTTOM.
+        const visible = wrapper.querySelector('#return-to-top');
+        if (!visible) return false;
+        const wrapperRect = wrapper.getBoundingClientRect();
+        const visibleRect = visible.getBoundingClientRect();
+        if (!visibleRect.height || !wrapperRect.height) return false;
+        // Positive = WebGL circle extends below the wrapper box.
+        const overhang = visibleRect.bottom - wrapperRect.bottom;
+        // Read the pill's currently-resolved CSS bottom (numeric px), then
+        // subtract overhang. We do this once; subsequent URL-bar moves are
+        // handled by the existing `bottom: calc(... + env(safe-area))`
+        // rule which already tracks the viewport correctly.
+        const cssBottom = parseFloat(getComputedStyle(wr).bottom) || 0;
+        const newBottom = Math.max(0, Math.round(cssBottom - overhang));
+        wr.style.bottom = `${newBottom}px`;
+        return true;
+    };
+    // The return-to-top WebGL button is built lazily — only when the user
+    // scrolls past 40% of the viewport. Until then, the wrapper is empty
+    // and the overhang reads as 0 (no adjustment). Listen for the
+    // 'rtt:ready' custom event that glass-return-to-top.js dispatches
+    // when the button has been built + rendered, then sync once.
+    let applied = false;
+    const tryApply = () => {
+        if (applied) return;
+        if (apply()) applied = true;
+    };
+    window.addEventListener('rtt:ready', () => setTimeout(tryApply, 50), { passive: true });
+    // Belt-and-braces: also try a few times in case the event fires before
+    // the listener attaches (race on slow first paint).
+    [400, 1200, 2500].forEach(delay => setTimeout(tryApply, delay));
+    // Orientation change is the one case where geometry actually changes
+    // (the wrapper switches CSS breakpoints) and we need to re-derive.
+    window.addEventListener('orientationchange', () => {
+        applied = false;
+        setTimeout(tryApply, 250);
+    }, { passive: true });
+}
+
 export function initSmoothScroll(selector = '.smooth-scroll') {
     document.addEventListener('click', (e) => {
         const a = e.target.closest(selector);
@@ -113,11 +180,13 @@ export function initScrollFade(selector = '.scroll-fade') {
 }
 
 // Staggered fade-in for thumbnail grids — small step so total cascade stays under ~0.5s
-// for typical 4-12-item grids.
-export function initStaggeredThumbs(selector = '.thumbnails.four-up li', step = 35) {
+// for typical 4-12-item grids. Cap the per-index delay so long grids (e.g.
+// shortfilms with ~40 posters) don't pile up a 1s+ wait on items that have
+// already scrolled into view — the IntersectionObserver already paces those.
+export function initStaggeredThumbs(selector = '.thumbnails.four-up li', step = 35, maxIndex = 4) {
     document.querySelectorAll(selector).forEach((item, i) => {
         item.classList.add('scroll-fade', 'staggered');
-        item.style.setProperty('--delay', `${i * step}ms`);
+        item.style.setProperty('--delay', `${Math.min(i, maxIndex) * step}ms`);
     });
 }
 
@@ -158,6 +227,70 @@ export function initSectionPassed(sectionSelector, bodyClass) {
 // far the Watch Reels button needs to translate so its right edge mirrors the
 // Alex Walker logo's left inset (the header container's right padding).
 // Other nav items keep their natural space-between distribution.
+// Belt-and-braces horizontal-scroll lock. CSS `overflow-x: clip` SHOULD be
+// sufficient, but in practice multiple things sneak past it:
+//   - Lightbox close() installs a 450ms wheel/touchmove CAPTURE-phase
+//     blocker that calls stopPropagation — a bubble-phase listener
+//     registered here would never fire during that window.
+//   - macOS trackpad two-finger horizontal swipe after a smooth scrollTo,
+//     iOS Safari momentum past a clip'd container.
+//   - Programmatic scrollLeft writes from third-party libraries.
+//
+// Defence in depth:
+//   1. CAPTURE-phase listeners on the events (cannot be stopped by other
+//      capture handlers registered later — and we register early).
+//   2. rAF snap so the reset runs at next paint regardless of event flow.
+//   3. setInterval watchdog so even a programmatic scrollLeft write that
+//      doesn't trigger a scroll event still gets caught within ~120ms.
+export function initHorizontalScrollLock() {
+    const snap = () => {
+        if (window.scrollX === 0 && document.documentElement.scrollLeft === 0) return;
+        // Use every API a browser might honour. document.scrollingElement
+        // covers Safari/iOS where the scrolling element may be body.
+        const se = document.scrollingElement || document.documentElement;
+        try { window.scrollTo({ left: 0, top: window.scrollY, behavior: 'instant' }); } catch (_) {}
+        if (se) se.scrollLeft = 0;
+        document.documentElement.scrollLeft = 0;
+        if (document.body) document.body.scrollLeft = 0;
+    };
+    // Burst-only watchdog: events arm a short rAF loop that watches for
+    // horizontal drift over a handful of frames, then parks itself. Earlier
+    // versions ran rAF forever — even gated, that scheduled a callback every
+    // paint and nudged vertical scroll smoothness on some browsers. The
+    // event handlers themselves are passive + capture, so they don't block
+    // gestures; they just rearm the brief watcher.
+    let armedFrames = 0;
+    let watching = false;
+    function tick() {
+        snap();
+        armedFrames--;
+        if (armedFrames > 0) {
+            requestAnimationFrame(tick);
+        } else {
+            watching = false;
+        }
+    }
+    function arm() {
+        // Watch for ~10 frames (~160ms) after each event — long enough to
+        // catch tail-end programmatic scrolls without keeping rAF alive
+        // continuously.
+        armedFrames = 10;
+        if (!watching) {
+            watching = true;
+            requestAnimationFrame(tick);
+        }
+    }
+    const eventSnap = () => {
+        snap();
+        arm();
+    };
+    window.addEventListener('scroll', eventSnap, { passive: true, capture: true });
+    window.addEventListener('wheel', eventSnap, { passive: true, capture: true });
+    window.addEventListener('touchmove', eventSnap, { passive: true, capture: true });
+    // One-shot initial snap in case the page loaded with scrollX != 0.
+    snap();
+}
+
 export function initReelButtonShift() {
     const reel = document.querySelector('.reel-button-menu');
     if (!reel) return;

@@ -19,7 +19,7 @@
         cornerBoost: 0.078,
         rippleEffect: 0.100,
         blurRadius: 15.000,
-        tintOpacity: 0.630
+        tintOpacity: 0.780
     };
 
     let returnToTopButton = null;
@@ -69,13 +69,17 @@
 
         const isMobile = window.matchMedia('(max-width: 480px)').matches;
         const scrollToTop = () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Explicit left: 0 so the smooth scroll can never carry
+            // horizontal drift along for the ride. Some browsers honour
+            // only the axis you specify and leave the other untouched —
+            // which let scrollX bleed through after RTT.
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         };
         const button = new Button({
             text: '↑',
             size: isMobile ? 26 : 28,
             type: 'circle',
-            tintOpacity: 0.630,
+            tintOpacity: 0.780,
             warp: false,
             onClick: scrollToTop,
         });
@@ -112,6 +116,9 @@
             applyGlassSettingsToInstance(button);
             if (typeof button.updateSizeFromDOM === 'function') button.updateSizeFromDOM();
             if (typeof button.render === 'function') button.render();
+            // Notify anything that needs to align to the RTT's rendered
+            // geometry (e.g. the Watch Reels pill).
+            window.dispatchEvent(new CustomEvent('rtt:ready'));
         }, 300);
     }
 
@@ -120,17 +127,21 @@
         if (!wrapper) return;
         let shown = false;
 
+        // Build the RTT button eagerly so its rendered geometry is available
+        // before the user scrolls. The wrapper is still hidden (no `visible`
+        // class) so the button is offscreen / opacity-0 via CSS — but it's in
+        // the DOM with real dimensions. This lets the Watch Reels pill
+        // (initAlignWatchReelsBottom in scroll.js) align to its bottom on
+        // page load instead of jumping to alignment only once the user
+        // scrolls past the 40% threshold.
+        buildReturnToTopButton();
+
         window.addEventListener('scroll', function () {
-            const shouldShow = window.scrollY >= window.innerHeight * 0.85;
+            const shouldShow = window.scrollY >= window.innerHeight * 0.4;
             if (shouldShow && !shown) {
                 wrapper.classList.add('visible');
                 shown = true;
-                if (!glassBuilt) {
-                    buildReturnToTopButton();
-                    setTimeout(refreshReturnToTopGlass, 350);
-                } else {
-                    refreshReturnToTopGlass();
-                }
+                refreshReturnToTopGlass();
             } else if (!shouldShow && shown) {
                 wrapper.classList.remove('visible');
                 shown = false;

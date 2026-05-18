@@ -1,3 +1,7 @@
+---
+# Front matter required so Jekyll processes Liquid tags (the
+# {% include instagram-stills.html %} below the bio).
+---
 <!doctype html>
 <html lang="en">
 
@@ -84,6 +88,7 @@
     <script defer src="js/container.js"></script>
     <script defer src="js/button.js"></script>
     <script defer src="js/glass-return-to-top.js"></script>
+    <script defer src="js/glass-watch-reels.js"></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -129,7 +134,7 @@
   </script>
 </head>
 
-<body class="home past-cinematographer">
+<body class="home cinematic">
     <header class="dark">
         <nav class="container">
             <ul>
@@ -190,80 +195,96 @@
                         </button>
                     </div>
                 </li>
+
+                <!-- Empty layout slot — provides the 44px space that the
+                     Watch Reels button slides into on scroll. No visible
+                     chevron, just an invisible spacer that collapses. -->
+                <li id="scroll-down-indicator"></li>
             </ul>
         </nav>
     </header>
 <div id="glass-wrapper"></div>
+
+<!-- Mobile-only floating Watch Reels pill. Hidden on desktop via CSS;
+     shown fixed at bottom-center on phones (portrait + landscape).
+     Lightbox auto-init picks this up the same way it does #reel-button. -->
+<a id="reel-glass-button"
+   href="https://www.youtube.com/embed/videoseries?si=IngTxKLA-MCqoOTJ&amp;list=PL3F20B91BBDDD03B3"
+   data-autoplay="1"
+   data-goatcounter-click="watch-reels-mobile">Watch Reels</a>
+
     <section id="cinematographer" class="scroll-fade">
             <div class="container columns-span-width scroll-fade">
                 <figure>
-                    <h3>Scripted TV/Streaming</h3>
+                    <h3>Narrative</h3>
                     <ul class="thumbnails lightbox playbuttons">
-
                         <li>
-                            <a href="https://www.youtube.com/embed/_XKFrOgiims" class="-by-nine" data-year="Myth- TV Pilot Trailer One">
+                            <a href="https://www.youtube.com/embed/k5Nw4BMAL-I" class="-by-nine" data-year="House of Abraham- Feature Film" data-rich="hoa">
+                                <img src="img/narrative/HoA.jpg" />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/embed/kv5663b3W0c" class="-by-nine" data-year="Texas Cult House- Feature Film" data-rich="tch">
+                                <img src="img/narrative/TCHnarr.jpg" />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" class="-by-nine" data-year="Hub City- Short Film" data-rich="hc">
+                                <img src="img/narrative/HC.jpg" />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://player.vimeo.com/video/984991085?h=721137dae6" class="-by-nine" data-year="A Christmas In New Hope- Feature Film" data-rich="acinh">
+                                <img src="img/narrative/ACINHnarr.jpg" />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/embed/_XKFrOgiims" class="-by-nine" data-year="Myth- TV Pilot" data-rich="myth">
                                 <img src="img/narrative/temp4.jpg" />
                             </a>
                         </li>
                         <li>
-                            <a href="https://youtube.com/embed/utUa3E8JTd4" class="-by-nine" data-year="Myth- TV Pilot Trailer Two">
-                                <img src="img/narrative/temp5.jpg" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://youtube.com/embed/_5H9xEL8Bk0" class="-by-nine" data-year="Myth Behind the Scenes- Shot by Tyler Mann">
+                            <a href="https://youtube.com/embed/_5H9xEL8Bk0" class="-by-nine" data-year="Myth Behind the Scenes- Shot by Tyler Mann" data-rich="mythbts">
                                 <img src="img/narrative/temp3.jpg" />
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.youtube.com/embed/j3LnsGa4kkM" class="sixtfaneen-by-nine" data-year="Amor Sui- Web Series Trailer">
-                                <img src="img/narrative/temp11.jpg" />
-                            </a>
-                        </li>
-
-
-
-
-                    </ul>
-                </figure>
-            </div>
-            <div class="container columns-span-width scroll-fade">
-                <figure>
-                    <h3>Short Films</h3>
-                    <ul class="thumbnails lightbox playbuttons">
-
-                        <li>
-                            <a href="https://youtube.com/embed/BSG8qTgcM-A" class="-by-nine" data-year="A Thousand Times A Day, Short Film Trailer">
+                            <a href="https://youtube.com/embed/BSG8qTgcM-A" class="-by-nine" data-year="A Thousand Times A Day- Short Film" data-rich="attad">
                                 <img src="img/narrative/ATTAD2.jpg" />
                             </a>
                         </li>
                         <li>
-                            <a href="https://youtube.com/embed/21exc6yWNDA" class="-by-nine" data-year="A Life In Technicolor- Short Film Trailer">
-                                <img src="img/narrative/alit.jpg" />
+                            <a href="javascript:void(0)" class="-by-nine" data-year="Texas Legacy in Lights" data-rich="tll">
+                                <img src="img/narrative/TLLnarr.jpg" />
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.youtube.com/embed/xxByzOj_yQY" class="-by-nine" data-year="Javelina Run- Short Film Trailer"><img
+                            <a href="https://www.youtube.com/embed/xxByzOj_yQY" class="-by-nine" data-year="Javelina Run- Short Film" data-rich="jr"><img
                                     src="img/narrative/JRtrailer.jpg">
                             </a>
                         </li>
                         <li>
-                            <a href="https://youtube.com/embed/lTXui3zq3oU" class="-by-nine" data-year="Guest of Honor- Short Film Trailer"><img
+                            <a href="https://youtube.com/embed/lTXui3zq3oU" class="-by-nine" data-year="Guest of Honor- Short Film" data-rich="goh"><img
                                     src="img/narrative/GoHthumb.jpg">
                             </a>
                         </li>
-
-
-
-
+                        <li>
+                            <a href="https://youtube.com/embed/21exc6yWNDA" class="-by-nine" data-year="A Life In Technicolor- Short Film" data-rich="alit">
+                                <img src="img/narrative/alit.jpg" />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/embed/j3LnsGa4kkM" class="sixtfaneen-by-nine" data-year="Amor Sui- Web Series" data-rich="amorsui">
+                                <img src="img/narrative/temp11.jpg" />
+                            </a>
+                        </li>
                     </ul>
                 </figure>
             </div>
 
-            <div class="full-width-centered scroll-fade" id="short-films-gallery-link">
-
-                <button class="scroll-fade"><a href="shortfilms.html">More Short Films</a>
-                </button>
+            <div class="full-width-centered scroll-fade narrative-more-buttons" id="short-films-gallery-link">
+                <button class="scroll-fade"><a href="featurefilms.html">More Features</a></button>
+                <button class="scroll-fade"><a href="shortfilms.html">More Shorts</a></button>
             </div>
 
         </div>
@@ -278,26 +299,26 @@
             <figure>
                 <ul class="thumbnails playbuttons">
                          <li>
-                        <a href="https://youtube.com/embed/WyuawAo2lGk" class="-by-nine"  data-year="Everyday Dose Commercial"><img src="img/commercial/EDD.jpg"/> </a>
-                    </li>    
+                        <a href="https://youtube.com/embed/WyuawAo2lGk" class="-by-nine" data-year="Everyday Dose Commercial" data-rich="comm_everydaydose"><img src="img/commercial/EDD.jpg"/> </a>
+                    </li>
                      <li>
 
-                            <a href="https://youtube.com/embed/tSCy4Xx6kZM" class="-by-nine" data-year="Ford Bronco TV Ad"><img
+                            <a href="https://youtube.com/embed/tSCy4Xx6kZM" class="-by-nine" data-year="Ford Bronco TV Ad" data-rich="comm_ford"><img
                                     src="img/commercial/ford.jpg" />
                             </a>
 
                         </li>
                         <li>
 
-                            <a href="https://youtube.com/embed/J22Ny4cShC0" class="-by-nine" data-year="Gold Best Cinematography Award 2022"><img
+                            <a href="https://youtube.com/embed/J22Ny4cShC0" class="-by-nine" data-year="Gold Best Cinematography Award 2022" data-rich="comm_wls"><img
                                     src="img/commercial/wlsthumb.jpg" />
                             </a>
 
                         </li>
                         <li>
 
-                            <a href="https://youtube.com/embed/ejjn4pXuaw0" class="-by-nine" data-year="Strittmatter TV Ad"><img
-                                    src="img/commercial/stritt.jpg" />
+                            <a href="https://youtube.com/embed/2-gmX0QuFTo" class="-by-nine" data-year="Cowboys Without Borders- Doc Feature Trailer" data-rich="comm_cwb"><img
+                                    src="img/documentary/cwob.jpg" />
                             </a>
 
                         </li>
@@ -305,36 +326,36 @@
                         <li>
 
 
-                            <a href="https://youtube.com/embed/ukfdG8Y8ats" class="-by-nine" data-year="Bostin Westin LED Wall Screensaver"><img
+                            <a href="https://youtube.com/embed/ukfdG8Y8ats" class="-by-nine" data-year="Bostin Westin LED Wall Screensaver" data-rich="comm_bostin"><img
                                     src="img/commercial/Bostonl.jpg" />
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.youtube.com/embed/JoHFyLAUnzY" class="-by-nine" data-year="Vice Guide To Film"><img
+                            <a href="https://www.youtube.com/embed/JoHFyLAUnzY" class="-by-nine" data-year="Vice Guide To Film" data-rich="comm_viceguide"><img
                                     src="img/commercial/playlistcomm.jpg">
                             </a>
 
                         </li>
                         <li>
-                            <a href="https://youtube.com/embed/WpWfQuswgJQ" class="-by-nine" data-year="AppLovin Halloween Ad"><img
+                            <a href="https://youtube.com/embed/WpWfQuswgJQ" class="-by-nine" data-year="AppLovin Halloween Ad" data-rich="comm_applovin"><img
                                     src="img/commercial/dkr.jpg" />
                             </a>
                         </li> <li>
 
-                        <a href="https://youtube.com/embed/l73X6ejf4Cc" class="-by-nine"  data-year="Josey Records Ad #3"><img src="img/commercial/joesy23.jpg"/>
+                        <a href="https://youtube.com/embed/l73X6ejf4Cc" class="-by-nine" data-year="Josey Records Ad #3" data-rich="comm_josey"><img src="img/commercial/joesy23.jpg"/>
                         </a>
 
-                    </li> 
+                    </li>
                         <li>
 
-                            <a href="https://youtube.com/embed/fG-ui_xiqG8" class="-by-nine" data-year="Goody Goody TV Ad"><img
+                            <a href="https://youtube.com/embed/fG-ui_xiqG8" class="-by-nine" data-year="Goody Goody TV Ad" data-rich="comm_goody"><img
                                     src="img/commercial/temp2.jpg" />
                             </a>
 
                         </li>
                         <li>
                             <div>
-                                <a href="https://www.youtube.com/embed/2mbCPu54pn8" class="-by-nine" data-year="Earth Speed Trailer"><img
+                                <a href="https://www.youtube.com/embed/2mbCPu54pn8" class="-by-nine" data-year="Earth Speed" data-rich="comm_earthspeed"><img
                                         src="img/commercial/est3.jpg">
                                 </a>
                             </div>
@@ -343,7 +364,7 @@
 
                         <li>
 
-                            <a href="https://youtube.com/embed/ZrGsJ7PphDA" class="-by-nine" data-year="TargetCool Customer Journey"><img
+                            <a href="https://youtube.com/embed/ZrGsJ7PphDA" class="-by-nine" data-year="TargetCool Customer Journey" data-rich="comm_targetcool"><img
                                     src="img/commercial/targetcoolcustj.jpg" />
                             </a>
 
@@ -354,7 +375,7 @@
                         <li>
                             <a class="sixteen-by-nine"
                                 href="https://www.youtube.com/embed?listType=playlist&amp;list=PLsYARrhGsN4sS2RzobwmpUhiFrc1HTBcB&amp;origin=https://alexwalker.co/"
-                                data-year="Sample Work Playlist">
+                                data-year="Sample Work Playlist" data-rich="comm_samplereel">
                                 <img src="img/commercial/FC.jpg" />
                             </a>
                         </li>
@@ -362,23 +383,21 @@
 
                 </ul>
             </figure>
-        </div> 
-            <div class="text scroll-fade">
-                <ul class="clients clients--logos">
-                    <li class="logo-kernel"><a href="kernel.html" aria-label="Kernel - Creative Agency"><img src="img/clients/Kernel.png" alt="Kernel" loading="lazy"></a></li>
-                    <li class="logo-thinkraven"><a href="thinkraven.html" aria-label="Think Raven - Creative Agency"><img src="img/clients/ThinkRaven.png" alt="Think Raven" loading="lazy"></a></li>
-                    <li class="logo-viceland"><img src="img/clients/Viceland.png" alt="Viceland" loading="lazy"></li>
-                    <li class="logo-heb"><img src="img/clients/HEB.png" alt="HEB" loading="lazy"></li>
-                    <li class="logo-toyota"><img src="img/clients/Toyota.png" alt="Toyota" loading="lazy"></li>
-                    <li class="logo-weather"><img src="img/clients/WeatherChannel.png" alt="The Weather Channel" loading="lazy"></li>
-                    <li class="logo-ibm"><img src="img/clients/IBM.png" alt="IBM" loading="lazy"></li>
-                    <li class="logo-dell"><img src="img/clients/Dell.png" alt="Dell" loading="lazy"></li>
-                    <li class="logo-mtv"><img src="img/clients/MTV.png" alt="MTV" loading="lazy"></li>
-                    <li class="logo-discovery"><img src="img/clients/Discovery.png" alt="Discovery" loading="lazy"></li>
-                    <li class="logo-hgtv"><img src="img/clients/HGTV.png" alt="HGTV" loading="lazy"></li>
-                    <li class="logo-vimeo"><img src="img/clients/Vimeo.png" alt="Vimeo" loading="lazy"></li>
-                </ul>
-            </div>
+            <ul class="clients clients--logos scroll-fade">
+                <li class="logo-kernel"><a href="kernel.html" aria-label="Kernel - Creative Agency"><img src="img/clients/Kernel.png" alt="Kernel" loading="lazy"></a></li>
+                <li class="logo-thinkraven"><a href="thinkraven.html" aria-label="Think Raven - Creative Agency"><img src="img/clients/ThinkRaven.png" alt="Think Raven" loading="lazy"></a></li>
+                <li class="logo-viceland"><img src="img/clients/Viceland.png" alt="Viceland" loading="lazy"></li>
+                <li class="logo-heb"><img src="img/clients/HEB.png" alt="HEB" loading="lazy"></li>
+                <li class="logo-toyota"><img src="img/clients/Toyota.png" alt="Toyota" loading="lazy"></li>
+                <li class="logo-weather"><img src="img/clients/WeatherChannel.png" alt="The Weather Channel" loading="lazy"></li>
+                <li class="logo-ibm"><img src="img/clients/IBM.png" alt="IBM" loading="lazy"></li>
+                <li class="logo-dell"><img src="img/clients/Dell.png" alt="Dell" loading="lazy"></li>
+                <li class="logo-mtv"><img src="img/clients/MTV.png" alt="MTV" loading="lazy"></li>
+                <li class="logo-discovery"><img src="img/clients/Discovery.png" alt="Discovery" loading="lazy"></li>
+                <li class="logo-hgtv"><img src="img/clients/HGTV.png" alt="HGTV" loading="lazy"></li>
+                <li class="logo-vimeo"><img src="img/clients/Vimeo.png" alt="Vimeo" loading="lazy"></li>
+            </ul>
+        </div>
         <br><br>
     </section>
 
@@ -469,18 +488,6 @@
 <section id="bio-buttons" class="scroll-fade">
   <div class="container buttons-container">
     <button class="scroll-fade">
-      <a href="https://www.imdb.com/name/nm4205213/" target="_blank" data-goatcounter-click="ext-imdb.com">IMDb</a>
-    </button>
-    <button class="scroll-fade">
-      <a href="https://www.youtube.com/@AlexWalker" target="_blank" data-goatcounter-click="ext-youtube.com">YouTube</a>
-    </button>
-    <button class="scroll-fade">
-      <a href="https://www.instagram.com/alex_walker47/" target="_blank" data-goatcounter-click="ext-instagram.com">Instagram</a>
-    </button>
-    <button class="scroll-fade">
-      <a href="https://letterboxd.com/awalker47/" target="_blank" data-goatcounter-click="ext-letterboxd.com">Letterboxd</a>
-    </button>
-    <button class="scroll-fade">
       <a href="img/AlexWalker_fullgearlist.pdf" target="_blank" data-goatcounter-click="gear-list">Gear List - Updated April 2026</a>
     </button>
     <button class="scroll-fade">
@@ -491,90 +498,8 @@
 
     <section id="stills" class="scroll-fade">
     <div class="container columns-span-width">
-  <ul class="stills" style="align-items: center; justify-content: center;">
-  <li>
-  <a href="img/stills/1.jpg" class="stills-image" data-fancybox="stills" data-caption="<strong>Bloody Sunday</strong><br>Selma, Alabama<br>3-3-2013<br>iPhone 5">
-    <img src="img/stills/1-thumb.jpg" />
-  </a>
-</li>
-<li>
-  <a href="img/stills/2.jpg" class="stills-image" data-fancybox="stills" data-caption="<strong>LEDs</strong><br>Charleston, South Carolina<br>5-10-2024<br>iPhone 15 Pro">
-    <img src="img/stills/2-thumb.jpg" />
-  </a>
-</li>
-<li>
-  <a href="img/stills/3.jpg" class="stills-image" data-fancybox="stills" data-caption="<strong>Snoop Dog - DOMO Performance</strong><br>Austin, Texas<br>11-9-2016<br>Sony A7s<br>24-70mm ƒ2.8 G">
-    <img src="img/stills/3-thumb.jpg" />
-  </a>
-</li>
-<li>
-  <a href="img/stills/4.jpg" class="stills-image" data-fancybox="stills" data-caption="<strong>Michael Frost Painting</strong><br>Austin, Texas<br>4-21-2023<br>iPhone 11 Pro">
-    <img src="img/stills/4-thumb.jpg" />
-  </a>
-</li>
-<li>
-  <a href="img/stills/5.jpg" class="stills-image" data-fancybox="stills" data-caption="<strong>Gauchos</strong><br>Neuquén, Argentina<br>8-29-2017<br>Panasonic GH5<br>LUMIX G VARIO 35-100mm ƒ2.8">
-    <img src="img/stills/5-thumb.jpg" />
-  </a>
-</li>
-<li>
-  <a href="img/stills/6.jpg" class="stills-image" data-fancybox="stills" data-caption="<strong>Jorge Riveros' Studio</strong><br>Bogotá, ⁨Colombia<br>12-29-2016<br>iPhone 7 Plus">
-    <img src="img/stills/6-thumb.jpg" />
-  </a>
-</li>
-<li>
-  <a href="img/stills/7.jpg" class="stills-image" data-fancybox="stills" data-caption="<strong>Gov. Cabeza de Vaca Visits the Texas Capitol</strong><br>Austin, Texas<br>9-14-2016<br>Canon 7D<br>Canon EF-S 17-55mm ƒ2.8">
-    <img src="img/stills/7-thumb.jpg" />
-  </a>
-</li>
-<li>
-  <a href="img/stills/8.jpg" class="stills-image" data-fancybox="stills" data-caption="<strong>Shadows on Set</strong><br>Dallas, Texas<br>6-22-2023<br>iPhone 11 Pro">
-    <img src="img/stills/8-thumb.jpg" />
-  </a>
-</li>
-<li>
-  <a href="img/stills/9.jpg" class="stills-image" data-fancybox="stills" data-caption="<strong>Eagle Takes Flight</strong><br>Anacortes, Washington<br>6-11-2011<br>Canon EOS 7D<br>Tamron AF 17-50mm ƒ2.8">
-    <img src="img/stills/9-thumb.jpg" />
-  </a>
-</li>
-<li>
-  <a href="img/stills/11.jpg" class="stills-image" data-fancybox="stills" data-caption="<strong>Jorge Riveros</strong><br>Bogotá, ⁨Colombia<br>12-29-2016<br>iPhone 7 Plus">
-    <img src="img/stills/11-thumb.jpg" />
-  </a>
-</li>
-<li>
-  <a href="img/stills/10.jpg" class="stills-image" data-fancybox="stills" data-caption="<strong>TX State Rep Sid Miller Campaigns for TX AG Comm.</strong><br>Austin, Texas<br>1-2-2014<br>Canon EOS 5D Mark III<br>Canon EF50mm ƒ1.4">
-    <img src="img/stills/10-thumb.jpg" />
-  </a>
-</li>
-<li>
-  <a href="img/stills/12.jpg" class="stills-image" data-fancybox="stills" data-caption="<strong>Civic Center Arrest</strong><br>San Francisco, CA<br>8-22-2011<br>Canon EOS 7D<br>Tamron AF 17-50mm ƒ2.8">
-    <img src="img/stills/12-thumb.jpg" />
-  </a>
-</li>
-<li>
-  <a href="img/stills/13.jpg" class="stills-image" data-fancybox="stills" data-caption="<strong>20 More to Go - Image Updated as I visit more</strong><br>Elgin, Texas<br>4-27-2014<br>iPhone 5s">
-    <img src="img/stills/13-thumb.jpg" />
-  </a>
-</li>
-<li>
-  <a href="img/stills/14.jpg" class="stills-image" data-fancybox="stills" data-caption="<strong>Mardi Gras</strong><br>New Orleans, Louisiana<br>2-12-2013<br>iPhone 5">
-    <img src="img/stills/14-thumb.jpg" />
-  </a>
-</li>
-<li>
-  <a href="img/stills/15.jpg" class="stills-image" data-fancybox="stills" data-caption="<strong>Handprints</strong><br>Zaragosa, Mexico<br>8-11-2017<br>Panasonic GH5<br>LUMIX G VARIO 35-100mm ƒ2.8">
-    <img src="img/stills/15-thumb.jpg" />
-  </a>
-</li>
-<li>
-  <a href="img/stills/16.jpg" class="stills-image" data-fancybox="stills" data-caption="<strong>Gov. Cabeza de Vaca meets with George P Bush</strong><br>Austin, Texas<br>9-14-2016<br>iPhone 6s">
-    <img src="img/stills/16-thumb.jpg" />
-  </a>
-</li>
-  </ul>
-</div>
-
+      {% include instagram-stills.html %}
+    </div>
     </section>
 
     <section id="contact" class="scroll-fade">
@@ -583,15 +508,16 @@
             <!-- Removed contact form due to spam causing the server to get banned from sending mail to iCloud servers 8/25/19 -->
 
             <div class="representation text scroll-fade">
-                <h3>Representation</h3>
-                <p>The Right Eye Inc.
-                  <br/><a href="http://therighteye.com/" data-goatcounter-click="ext-righteye">www.therighteye.com</a>
-                    <br/>Thomas Turley | <a href="mailto:thomas@therighteye.com" data-goatcounter-click="mailto-righteye">thomas@therighteye.com</a>
-                    <br/>917.209.5445
-                    <br/>New York, NY
+                <p class="rep-label">Represented by</p>
+                <img class="representation-logo scroll-fade" src="img/right-eye.svg" />
+                <p class="rep-company">The Right Eye Inc.</p>
+                <p class="rep-agent">Thomas Turley</p>
+                <p class="rep-contact">
+                  <a href="mailto:thomas@therighteye.com" data-goatcounter-click="mailto-righteye">thomas@therighteye.com</a><br>
+                  917.209.5445<br>
+                  <a href="http://therighteye.com/" data-goatcounter-click="ext-righteye">therighteye.com</a><br>
+                  New York, NY
                 </p>
-                
-                    <img class="representation-logo scroll-fade" src="img/right-eye.svg" />
             </div>
       
       <div class="copyright scroll-fade">&copy; Alex Walker 2003-<span id="copyright-current-year">2026</span>

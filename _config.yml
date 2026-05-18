@@ -12,5 +12,12 @@ exclude:
   - Gemfile.lock
   - vendor
   - .idea
+  - .github
+  - node_modules
+  - package.json
+  - package-lock.json
+  - scripts
+  - test-custom-player.html
+  - color-test.html
 include:
   - .well-known
