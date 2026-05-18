@@ -889,17 +889,35 @@ li.coming-soon a::before {
     border-radius: 4em;
 }
 
-.feature-films .thumbnails li img {
-    object-position: 0;
+/* Feature Films poster grid — every cell locked to the 2:3 movie-poster
+   aspect, every image filling that cell via cover. Without this, source
+   JPEGs come in at two slightly different aspect ratios (600x872 vs
+   600x889) plus some have built-in artwork margins, and the default
+   `object-fit: contain` lets those differences leak into noticeably
+   different displayed sizes/alignments. Fixing the cell aspect + cover
+   normalises everything. Targets both the legacy `.feature-films`
+   class and the id-only `#feature-films` markup used by
+   featurefilms.html. */
+.feature-films .thumbnails li,
+#feature-films .thumbnails li {
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+}
+.feature-films .thumbnails li img,
+#feature-films .thumbnails li img {
+    object-position: center;
     max-width: unset;
     object-fit: cover;
     width: 100%;
     height: 100%;
+    display: block;
 }
 
-.feature-films .thumbnails li a {
+.feature-films .thumbnails li a,
+#feature-films .thumbnails li a {
     width: 100%;
     height: 100%;
+    display: block;
 }
 
 .clients {
