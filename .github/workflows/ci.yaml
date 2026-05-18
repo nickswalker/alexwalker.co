@@ -16,7 +16,10 @@ jobs:
       - name: 💎 set up ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.1.2
+          # Match the .ruby-version pinned by local development. Bundler is
+          # resolved from Gemfile.lock by setup-ruby when bundler-cache is on,
+          # so no explicit bundler pin is needed here.
+          ruby-version: 3.3.6
           bundler-cache: true     # bundle install + caches /vendor/bundle
 
       - name: 🔨 build site
