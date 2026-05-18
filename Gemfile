@@ -10,5 +10,12 @@ group :jekyll_plugins do
    # Plugin is purely cosmetic (HTML pretty-printing); removing has no
    # functional effect.
    # gem "jekyll-tidy"
-   # gem "html-proofer"  # disabled locally - not needed for preview
+end
+
+# HTMLProofer is used by the CI workflow's `run tests` step to lint the
+# built _site for broken links / bad anchors. Not needed for local preview
+# but required by CI — keeping it outside the :jekyll_plugins group so it
+# doesn't load during `jekyll build`.
+group :test do
+   gem "html-proofer"
 end
