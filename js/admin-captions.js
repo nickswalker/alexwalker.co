@@ -175,12 +175,22 @@
             const id = row.dataset.id;
             const item = items.find(i => i.id === id);
             const merged = getMerged(id);
+            // Date fields included three ways so casual queries hit:
+            //   "2026"        → ISO-prefix match on the timestamp
+            //   "2026-05"     → year-month
+            //   "5-16-2026"   → M-D-YYYY (the formatted display string)
+            //   "selma 2013"  → mixes location with date freely
+            const isoDate = item && item.timestamp ? String(item.timestamp).slice(0, 10) : '';
+            const formattedDate = item && item.timestamp ? formatTimestamp(item.timestamp) : '';
             const haystack = [
                 id,
                 merged.title || '',
                 merged.location || '',
                 merged.camera || '',
                 merged.lens || '',
+                merged.date || '',
+                isoDate,
+                formattedDate,
                 item ? (item.caption || '') : '',
             ].join(' ').toLowerCase();
 
