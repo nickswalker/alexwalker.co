@@ -356,6 +356,42 @@ sitemap: false
       .photo .thumb { width: 100px; height: 100px; }
       .photo .fields { grid-template-columns: 1fr; }
     }
+
+    /* Return-to-top — appears after one viewport of scroll. Plain CSS;
+       the cinematic site's WebGL glass button would be overkill for an
+       admin tool. */
+    #return-top {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--border);
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease, transform 120ms ease, border-color 150ms;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
+    }
+    #return-top.visible {
+      opacity: 0.92;
+      pointer-events: auto;
+    }
+    #return-top:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      opacity: 1;
+    }
+    #return-top:active { transform: scale(0.94); }
   </style>
 </head>
 <body>
@@ -399,6 +435,24 @@ sitemap: false
     </div>
   </div>
 
+  <button id="return-top" type="button" aria-label="Return to top" title="Return to top">↑</button>
+
   <script src="/js/admin-captions.js"></script>
+  <script>
+    (function () {
+      const btn = document.getElementById('return-top');
+      if (!btn) return;
+      const threshold = () => Math.max(400, window.innerHeight * 0.6);
+      const onScroll = () => {
+        btn.classList.toggle('visible', window.scrollY >= threshold());
+      };
+      btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
 </body>
 </html>
