@@ -231,6 +231,11 @@
         saveEdits();
         updateEditedState(id);
         updateStatus();
+        // If the hide flag flipped, re-run the row filter so a freshly-
+        // hidden row disappears immediately (when "Show hidden" is off)
+        // instead of just dimming in place — and a freshly-unhidden row
+        // reappears without the user having to refresh.
+        if (field === 'hide') applyFilters();
     }
 
     function updateEditedState(id) {
@@ -810,6 +815,13 @@
 
         renderAll();
         updateStatus();
+        // Apply the initial filter pass so hidden rows are actually hidden
+        // by default. Without this, all rows render with display:'' and the
+        // .is-hidden CSS class only dims them — making the "Show hidden"
+        // toggle look like a no-op on its first click (the rows are already
+        // visible). After this call, the default state is "hidden rows are
+        // hidden" and toggling "Show hidden" reveals them.
+        applyFilters();
 
         grid.addEventListener('input', handleInput);
         grid.addEventListener('change', handleInput);
