@@ -13,11 +13,8 @@
 #     camera:   e.g. "iPhone 5"
 #     lens:     e.g. "Tamron AF 17-50mm ƒ2.8"
 #     hide:     true to exclude this post from the row entirely
-#
-# Example:
-#
-# "17965556310067084":
-#   title: "Bloody Sunday"
-#   location: "Selma, Alabama"
-#   date: "3-3-2013"
-#   camera: "iPhone 5"
+"18409954486119087":
+  crop:
+    cx: 0.5000
+    cy: 0.6250
+    size: 1.0000
