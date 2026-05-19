@@ -5,10 +5,24 @@ on:
     branches:
       - master
       - develop
+  # When the IG sync workflow commits new posts via GITHUB_TOKEN, the
+  # resulting push doesn't trigger this workflow — GitHub blocks
+  # bot-pushed events from chaining workflows to prevent infinite loops.
+  # Listen for the sync workflow's completion so the new
+  # _data/instagram.yml ships to live without a manual nudge.
+  workflow_run:
+    workflows: ["Sync Instagram Stills"]
+    types: [completed]
+    branches: [master]
+  workflow_dispatch:
 
 jobs:
   jekyll-build:
     runs-on: ubuntu-latest
+    # workflow_run fires on both success and failure. Skip the deploy chain
+    # entirely if the sync didn't actually succeed — no point shipping a
+    # broken sync (or worse, a partial commit) to the live site.
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: 📂 set up
         uses: actions/checkout@v4
@@ -53,7 +67,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [jekyll-build]
-    if: github.ref == 'refs/heads/master'
+    # Deploy to live on:
+    #  - direct pushes to master
+    #  - manual workflow_dispatch runs (defaults to master in the UI)
+    #  - successful runs of the Sync Instagram Stills workflow (which
+    #    targets master). workflow_run events report github.ref as the
+    #    default branch, so the original push branch check would always
+    #    pass — make it explicit.
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/master') ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'workflow_run'
     steps:
       - name: Download build result
         uses: actions/download-artifact@v4
@@ -85,7 +109,7 @@ jobs:
   deploy-staging:
     runs-on: ubuntu-latest
     needs: [jekyll-build]
-    if: github.ref == 'refs/heads/develop'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
     steps:
       - name: Download build result
         uses: actions/download-artifact@v4
