@@ -695,8 +695,21 @@
                 return;
             }
         }
-        // Wipe local edits — they're now committed upstream and will come
-        // back as base data on the next page load.
+        // Promote every just-saved edit into baseCaptions in-memory so the
+        // next render reflects the committed state without waiting for the
+        // YAML → JSON → CDN deploy chain to finish (~5-7 min). Without this,
+        // toggling 'hide' on a row, saving, then searching for it shows the
+        // checkbox unchecked — because baseCaptions is still the page-load
+        // snapshot and the local edit has just been wiped, leaving nothing
+        // to read from.
+        const editedIds = Object.keys(edits);
+        editedIds.forEach(id => {
+            const merged = getMerged(id);
+            // getMerged returns only non-empty / non-default fields, so
+            // assigning it wholesale is equivalent to what the server's
+            // YAML now holds for this id.
+            baseCaptions[id] = merged;
+        });
         edits = {};
         saveEdits();
         renderAll();
