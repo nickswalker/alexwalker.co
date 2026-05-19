@@ -5,6 +5,15 @@
 // that the existing lightbox auto-init will grab.
 
 const TARGET_COUNT = 16;
+// Each strategy ranks the full library, takes the top CANDIDATE_POOL, then
+// picks TARGET_COUNT at random from that bucket. Without this widening,
+// `selectSubset` would return the same top-16 every time — across the 3
+// strategies that's only ~46 distinct photos out of a 135-post library,
+// and a viewer who refreshes a few times sees the same shots cycle.
+// 60 keeps each bucket meaningfully skewed (colorful still picks from
+// the more-saturated half, newest still skews to the recent years) while
+// letting the rotation reach across the whole library over a session.
+const CANDIDATE_POOL = 60;
 const METHODS = ['hue', 'tonal'];
 const SELECTIONS = ['newest', 'colorful', 'brightest'];
 const PREV_KEY = 'instagram-stills-prev-ids';
@@ -20,6 +29,15 @@ async function fetchJSON(url) {
     }
 }
 
+function shuffle(arr) {
+    // Fisher-Yates in place.
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
 function selectSubset(items, strategy, count) {
     const sorted = items.slice();
     if (strategy === 'newest') {
@@ -29,7 +47,11 @@ function selectSubset(items, strategy, count) {
     } else if (strategy === 'brightest') {
         sorted.sort((a, b) => b.value - a.value);
     }
-    return sorted.slice(0, count);
+    // Take the top CANDIDATE_POOL by this strategy, then randomly pick
+    // `count` from that bucket so the rotation actually traverses the
+    // library instead of locking on the same 16 every refresh.
+    const candidates = sorted.slice(0, CANDIDATE_POOL);
+    return shuffle(candidates).slice(0, count);
 }
 
 function arrangeHueSpectrum(items) {
