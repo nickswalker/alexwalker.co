@@ -610,13 +610,20 @@ section h2 {
     }
 }
 
-/* Tablet portrait (701-899px): give content sections the same side gutter
-   as tablet landscape so thumbnails/posters aren't pinned to the screen
-   edges. The 900px+ media query below overrides this with its own padding. */
+/* Tablet portrait (701-899px): open up a real side gutter so thumbnails
+   and posters aren't pinned to the screen edges. The 900px+ media query
+   below overrides this with its own padding; the wider-portrait-tablet
+   rule after it pushes the gutter open again for iPad Pro portrait.
+   Specificity note: the cinematic theme defines
+   `body.cinematic section .container { padding: 140px 0 0 0; }` later
+   in the file, which has specificity (0,2,2). We use
+   `body.cinematic section .container.container` (specificity 0,3,2)
+   to outrank it without resorting to !important. */
 @media screen and (min-width: 701px) and (max-width: 899px) {
+    body.cinematic section .container.container,
     section .container {
-        padding-left: 24px;
-        padding-right: 24px;
+        padding-left: 36px;
+        padding-right: 36px;
     }
 }
 
@@ -1462,6 +1469,19 @@ section#about {
     /*Remove any overrides from smaller widths*/
     .stills li:nth-of-type(n) {
         display: unset;
+    }
+}
+
+/* Wider portrait tablets (iPad Pro ~1024px portrait): the 900px+ rule
+   above sets 24px sides, which is too tight for a 1024-wide portrait
+   viewport. Open the side gutter so content breathes. Landscape tablets
+   and desktops are untouched. Selector includes body.cinematic so it
+   beats the cinematic theme's container shorthand by specificity. */
+@media screen and (min-width: 900px) and (max-width: 1180px) and (orientation: portrait) {
+    body.cinematic section .container.container,
+    section .container {
+        padding-left: 44px;
+        padding-right: 44px;
     }
 }
 
@@ -3927,10 +3947,14 @@ div.rich-poster {
     max-width: none;
     width: 100%;
 }
-@media (max-width: 800px) {
+/* Phones AND portrait tablets (incl. iPad Pro 1024×1366): stack frames as
+   2 columns so an 8-still set reads as 4 rows × 2 cols. With fewer cells
+   per row each still gets ~2x the width and becomes much easier to see. */
+@media (max-width: 800px),
+       (orientation: portrait) and (max-width: 1180px) {
     .lightbox__panel--frames-only .rich-frames {
         grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
+        gap: 10px;
     }
 }
 
