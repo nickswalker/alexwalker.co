@@ -12,9 +12,21 @@
     const PAT_KEY = 'instagram-captions-gh-pat-v1';
     const REPO_OWNER = 'nickswalker';
     const REPO_NAME = 'alexwalker.co';
-    const REPO_BRANCH = '2026-cinematic';
+    const REPO_BRANCH = 'master';
     const CAPTIONS_PATH = '_data/instagram_captions.yml';
     const WORKFLOW_FILE = 'sync-instagram.yaml';
+    // Server-side proxy: the stats server holds a long-lived GitHub PAT
+    // and performs the commit + workflow dispatch on our behalf, so the
+    // admin page never has to ship a token through localStorage. When
+    // this URL is configured, syncToGitHub() prefers it over the direct
+    // GitHub API path; if the proxy fails for any reason, the legacy
+    // browser-side PAT flow is still available as a manual fallback.
+    // The URL is the public Tailscale Funnel route for the stats service
+    // (see /Volumes/docker/alexwalker-stats/README.md). Prefix is the
+    // same ADMIN_PREFIX that gates the Visitors/Videos admin pages.
+    const PROXY_BASE = 'https://nexus.tail1c6f41.ts.net/aw';
+    const PROXY_PREFIX = 'OBkyCyBIlCtQNQWS00zg9JWDyWNCNNzv';
+    const PROXY_SAVE_URL = `${PROXY_BASE}/admin/${PROXY_PREFIX}/captions/save`;
 
     const FIELDS = [
         { key: 'title', label: 'Title', placeholder: 'e.g. Bloody Sunday' },
@@ -591,58 +603,99 @@
         return btoa(unescape(encodeURIComponent(s)));
     }
 
+    async function syncViaProxy(yaml) {
+        setStatus('Committing via stats-server proxy…', 'dirty');
+        const r = await fetch(PROXY_SAVE_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ yaml }),
+        });
+        const data = await r.json().catch(() => ({}));
+        if (!r.ok || !data.ok) {
+            throw new Error(data.error || `proxy ${r.status}`);
+        }
+        return data;
+    }
+
+    async function syncViaDirectPAT(yaml) {
+        setStatus('Reading file SHA from GitHub…', 'dirty');
+        let sha = null;
+        try {
+            const meta = await gh(
+                `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CAPTIONS_PATH}?ref=${REPO_BRANCH}`
+            );
+            sha = meta.sha;
+        } catch (e) {
+            // 404 = file doesn't exist on the branch yet. First save
+            // creates it; subsequent saves update with the returned SHA.
+            if (!String(e.message).includes('404')) throw e;
+            setStatus('File doesn\'t exist yet on branch — creating it…', 'dirty');
+        }
+        setStatus(sha ? 'Committing updated YAML…' : 'Creating file…', 'dirty');
+        const body = {
+            message: sha
+                ? 'Update Instagram captions/crops via admin UI'
+                : 'Create _data/instagram_captions.yml via admin UI',
+            content: utf8ToBase64(yaml),
+            branch: REPO_BRANCH,
+        };
+        if (sha) body.sha = sha;
+        await gh(
+            `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CAPTIONS_PATH}`,
+            { method: 'PUT', body: JSON.stringify(body) }
+        );
+        setStatus('Triggering sync workflow…', 'dirty');
+        await gh(
+            `/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows/${WORKFLOW_FILE}/dispatches`,
+            {
+                method: 'POST',
+                body: JSON.stringify({ ref: REPO_BRANCH }),
+            }
+        );
+    }
+
     async function syncToGitHub() {
         const yaml = generateYAML();
+        // Prefer the server-side proxy: no PAT in the browser, no localStorage
+        // expiry, no per-device setup. Fall back to direct-PAT only if the
+        // proxy is unreachable (offline, server down) and the user has a PAT
+        // saved from the old flow.
         try {
-            setStatus('Reading file SHA from GitHub…', 'dirty');
-            let sha = null;
-            try {
-                const meta = await gh(
-                    `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CAPTIONS_PATH}?ref=${REPO_BRANCH}`
+            await syncViaProxy(yaml);
+        } catch (proxyErr) {
+            console.warn('Proxy sync failed, attempting direct PAT path:', proxyErr);
+            const hasPat = !!getPat();
+            if (!hasPat) {
+                setStatus(
+                    `Sync failed via proxy: ${proxyErr.message}. ` +
+                    'No GitHub PAT saved either — open "GitHub sync settings" ' +
+                    'to paste one as a fallback.',
+                    'dirty'
                 );
-                sha = meta.sha;
-            } catch (e) {
-                // 404 = file doesn't exist on the branch yet. First save
-                // creates it; subsequent saves update with the returned SHA.
-                if (!String(e.message).includes('404')) throw e;
-                setStatus('File doesn\'t exist yet on branch — creating it…', 'dirty');
+                return;
             }
-            setStatus(sha ? 'Committing updated YAML…' : 'Creating file…', 'dirty');
-            const body = {
-                message: sha
-                    ? 'Update Instagram captions/crops via admin UI'
-                    : 'Create _data/instagram_captions.yml via admin UI',
-                content: utf8ToBase64(yaml),
-                branch: REPO_BRANCH,
-            };
-            if (sha) body.sha = sha;
-            await gh(
-                `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CAPTIONS_PATH}`,
-                { method: 'PUT', body: JSON.stringify(body) }
-            );
-            setStatus('Triggering sync workflow…', 'dirty');
-            await gh(
-                `/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows/${WORKFLOW_FILE}/dispatches`,
-                {
-                    method: 'POST',
-                    body: JSON.stringify({ ref: REPO_BRANCH }),
-                }
-            );
-            // Wipe local edits — they're now committed upstream and will
-            // come back as base data on next page load.
-            edits = {};
-            saveEdits();
-            renderAll();
-            updateStatus();
-            setStatus(
-                'Committed + sync workflow dispatched. ' +
-                'Check Actions tab for progress (1–2 min).',
-                'saved'
-            );
-        } catch (e) {
-            console.error(e);
-            setStatus(`Sync failed: ${e.message}`, 'dirty');
+            try {
+                await syncViaDirectPAT(yaml);
+            } catch (e) {
+                console.error(e);
+                setStatus(
+                    `Sync failed via proxy (${proxyErr.message}) and via PAT (${e.message})`,
+                    'dirty'
+                );
+                return;
+            }
         }
+        // Wipe local edits — they're now committed upstream and will come
+        // back as base data on the next page load.
+        edits = {};
+        saveEdits();
+        renderAll();
+        updateStatus();
+        setStatus(
+            'Committed + sync workflow dispatched. ' +
+            'Check Actions tab for progress (1–2 min).',
+            'saved'
+        );
     }
 
     function wireCropEditorButtons() {
