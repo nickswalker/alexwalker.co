@@ -2109,6 +2109,27 @@ html.is-instagram-webview .clients--logos img {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: auto;
 }
+/* iPad-class IG/FB/Threads WebView: the parent rule above forces 2 cols
+   because IG's iPhone-mode viewport otherwise cascades to the desktop
+   4-col rule and the logos blow out. On real iPad screens (detected via
+   `screen.width|height` in head.html) we still want the tablet 4-col
+   look — restore it here, with the same !important arsenal the base
+   IG-WebView rule uses since we need to outrank both it and the
+   `(max-width: 1000px)` rule (3 cols) that triggers at IG's narrow
+   layout viewport. */
+html.is-instagram-webview-tablet .clients--logos {
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 36px 48px !important;
+  max-width: 1100px !important;
+}
+html.is-instagram-webview-tablet .clients--logos li {
+  --lb-base: 76px !important;
+}
+html.is-instagram-webview-tablet .clients--logos li > a,
+html.is-instagram-webview-tablet .clients--logos li > img,
+html.is-instagram-webview-tablet .clients--logos li > a > img {
+  max-width: calc(210px * var(--lb-scale)) !important;
+}
 .centered-subheading {
   text-align: center;
 }

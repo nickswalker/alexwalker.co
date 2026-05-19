@@ -22,9 +22,25 @@
       // Tag the document for Meta in-app WebViews (Instagram, Threads,
       // Facebook in-app) BEFORE the stylesheet applies — CSS scoped to
       // .is-instagram-webview takes effect on first paint with no FOUC.
-      if (/Instagram|FBAN|FBAV|FB_IAB|Threads/i.test(navigator.userAgent || '')) {
-        document.documentElement.classList.add('is-instagram-webview');
-      }
+      // Also tag a secondary `-tablet` class when the device's PHYSICAL
+      // screen is tablet-sized (iPad, etc.) even though IG's WebView
+      // often forces a phone-sized layout viewport on top — that's the
+      // signal CSS uses to upgrade the layout (e.g. 4-col logo grid).
+      (function () {
+        var ua = navigator.userAgent || '';
+        if (!/Instagram|FBAN|FBAV|FB_IAB|Threads/i.test(ua)) return;
+        var html = document.documentElement;
+        html.classList.add('is-instagram-webview');
+        // Tablet detection: short edge of the physical screen ≥ 700px
+        // catches iPad (768/834/1024 short edges) and excludes every
+        // current iPhone (max ~430). Use screen.* not window.* — IG's
+        // forced phone viewport drives window.innerWidth small even on
+        // iPad, but screen reports the real device dimensions.
+        var sw = (typeof screen !== 'undefined' && screen.width)  || 0;
+        var sh = (typeof screen !== 'undefined' && screen.height) || 0;
+        var shortEdge = Math.min(sw, sh);
+        if (shortEdge >= 700) html.classList.add('is-instagram-webview-tablet');
+      })();
     </script>
     <link rel="shortcut icon" href="/img/favicon.png"/>
     <link rel="apple-touch-icon-precomposed" href="/img/touch-icon.png"/>

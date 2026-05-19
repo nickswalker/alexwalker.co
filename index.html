@@ -34,13 +34,30 @@
         var inAppMeta = /Instagram|FBAN|FBAV|FB_IAB|Threads/i.test(ua);
         if (!inAppMeta) return;
         document.documentElement.classList.add('is-instagram-webview');
+        // Tablet vs phone: IG's iPad app forces a phone-sized layout viewport
+        // (window.innerWidth ~414), so we can't use that. screen.width/height
+        // are the device's physical dimensions — short edge >= 700 catches
+        // every iPad (768/834/1024 short edge) and excludes every iPhone
+        // (max ~430 short edge). The tablet class unlocks the 4-col logo
+        // grid below; phone IG stays on the 2-col forced layout.
+        var sw = (typeof screen !== 'undefined' && screen.width)  || 0;
+        var sh = (typeof screen !== 'undefined' && screen.height) || 0;
+        var isTablet = Math.min(sw, sh) >= 700;
+        if (isTablet) document.documentElement.classList.add('is-instagram-webview-tablet');
         function applyInline() {
           var grid = document.querySelector('.clients--logos');
           if (!grid) return;
-          // Use setProperty with 'important' so inline-style !important wins
-          // against any !important rule in the cascade (the legacy
-          // .clients:not(.clients--logos) 1fr rule has been observed to leak
-          // through in some WebView builds with buggy :not() handling).
+          // On iPad-class IG, let CSS handle the 4-col tablet layout; don't
+          // force phone styles inline. On phone-class IG, write inline
+          // styles so the cascade can't override (some WebView builds have
+          // buggy :not() handling that leaks the legacy 1fr rule through).
+          if (isTablet) {
+            grid.style.setProperty('grid-template-columns', 'repeat(4, 1fr)', 'important');
+            grid.style.setProperty('gap', '36px 48px', 'important');
+            grid.style.setProperty('max-width', '1100px', 'important');
+            grid.style.setProperty('display', 'grid', 'important');
+            return;
+          }
           grid.style.setProperty('grid-template-columns', 'repeat(2, 1fr)', 'important');
           grid.style.setProperty('gap', '24px', 'important');
           grid.style.setProperty('max-width', '100%', 'important');

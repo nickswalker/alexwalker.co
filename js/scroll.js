@@ -1,70 +1,75 @@
 // Site-wide scroll behaviors: smooth-scroll anchors, return-to-top fade,
 // mobile nav collapse, scroll-fade IntersectionObserver, copyright year.
 
-// Force-pin the floating Watch Reels pill to the SAME bottom-y the
-// return-to-top button is actually rendered at.
+// Force-pin the floating Watch Reels pill so its rendered bottom edge sits
+// on the same screen-Y as the return-to-top button's rendered bottom edge.
 //
-// PRIOR APPROACH (broken): compute `window.innerHeight - rect.bottom` and
-// write it as the pill's `bottom`. Sounds correct, fails in practice —
-// iOS Safari fires `resize` whenever its URL bar collapses or rubber-band
-// scrolls past the page edge, and each fire re-measured both values
-// against a momentarily-shifted innerHeight. Result: the pill jittered
-// while RTT stayed rock solid (RTT is pure CSS — nothing recomputes it).
+// HISTORY: an earlier version computed `innerHeight - rect.bottom` and wrote
+// it to the pill's `bottom`, then re-ran on resize. That jittered because
+// iOS Safari fires `resize` whenever its URL bar collapses or the page
+// rubber-bands past its edge — both values were sampled mid-shift.
 //
-// FIX: compute the OVERHANG ONCE (a purely geometric value: how far the
-// RTT's WebGL circle extends below its wrapper) and shift the pill's
-// CSS bottom down by that amount. Overhang is fixed by markup and shader
-// size — never depends on innerHeight. Once applied, the pill rides along
-// with the URL bar on its own (same `bottom:` math as RTT now), no JS
-// re-sync needed.
+// Next iteration computed an OVERHANG (how far the RTT's WebGL canvas
+// extends past its wrapper box) and subtracted it from the pill's CSS
+// bottom. That works in mobile Safari but fails inside Meta in-app
+// WebViews (Instagram, Threads, FB) where the WebGL canvas dimensions
+// and the wrapper's box don't relate the way they do natively — the
+// pill ends up visibly below the RTT.
+//
+// CURRENT: measure both rendered bottoms directly via getBoundingClientRect,
+// then set the pill's `bottom` to whatever value lines its rect bottom up
+// with the RTT's rect bottom. Run once on init (no resize re-measure, so
+// URL-bar jitter doesn't apply). Re-run only on orientation change, when
+// the breakpoint can swap and the buttons change size.
 export function initAlignWatchReelsBottom() {
     const apply = () => {
-        const wr = document.getElementById('reel-glass-button');
+        const pill = document.getElementById('reel-glass-button');
         const wrapper = document.getElementById('glass-wrapper');
-        if (!wr || !wrapper) return false;
-        if (getComputedStyle(wr).display === 'none') return false;
-        // The RTT button is built lazily — until it exists in the DOM, there's
-        // nothing to align against. Returning false keeps `applied` false so
-        // the 'rtt:ready' event + retry timers re-try once RTT lands.
-        // Without this guard we'd fall back to `wrapper` (same rect →
-        // overhang 0), mark applied = true, and never re-sync once the real
-        // button arrived — leaving the pill aligned to the wrapper TOP
-        // instead of the rendered button BOTTOM.
-        const visible = wrapper.querySelector('#return-to-top');
-        if (!visible) return false;
-        const wrapperRect = wrapper.getBoundingClientRect();
-        const visibleRect = visible.getBoundingClientRect();
-        if (!visibleRect.height || !wrapperRect.height) return false;
-        // Positive = WebGL circle extends below the wrapper box.
-        const overhang = visibleRect.bottom - wrapperRect.bottom;
-        // Read the pill's currently-resolved CSS bottom (numeric px), then
-        // subtract overhang. We do this once; subsequent URL-bar moves are
-        // handled by the existing `bottom: calc(... + env(safe-area))`
-        // rule which already tracks the viewport correctly.
-        const cssBottom = parseFloat(getComputedStyle(wr).bottom) || 0;
-        const newBottom = Math.max(0, Math.round(cssBottom - overhang));
-        wr.style.bottom = `${newBottom}px`;
+        if (!pill || !wrapper) return false;
+        if (getComputedStyle(pill).display === 'none') return false;
+        // The RTT WebGL button is rendered inside the wrapper. Until it lands
+        // in the DOM there's nothing to align against — keep retrying.
+        // Prefer the inner WebGL canvas if present (so we align to what the
+        // user actually sees, not the CSS box that may not enclose it).
+        const rttVisible = wrapper.querySelector('#return-to-top canvas')
+                       || wrapper.querySelector('#return-to-top')
+                       || wrapper;
+        const pillVisible = pill.querySelector('canvas') || pill;
+        const rttRect = rttVisible.getBoundingClientRect();
+        const pillRect = pillVisible.getBoundingClientRect();
+        if (!pillRect.height || !rttRect.height) return false;
+        // Delta-shift approach: compute how far down the pill currently
+        // overhangs the RTT (positive = pill is lower) and bake that into
+        // the pill's `bottom` so they end up flush. Reading the resolved
+        // CSS bottom and adjusting from there means we don't have to know
+        // anything about safe-area-inset, overhang, or whether either
+        // button's WebGL canvas extends past its CSS box — the rendered
+        // rects already tell us the truth.
+        const delta = pillRect.bottom - rttRect.bottom;
+        if (Math.abs(delta) < 0.5) return true; // already aligned
+        const cssBottom = parseFloat(getComputedStyle(pill).bottom) || 0;
+        const newBottom = Math.max(0, Math.round(cssBottom + delta));
+        pill.style.bottom = `${newBottom}px`;
         return true;
     };
-    // The return-to-top WebGL button is built lazily — only when the user
-    // scrolls past 40% of the viewport. Until then, the wrapper is empty
-    // and the overhang reads as 0 (no adjustment). Listen for the
-    // 'rtt:ready' custom event that glass-return-to-top.js dispatches
-    // when the button has been built + rendered, then sync once.
+    // glass-return-to-top.js dispatches 'rtt:ready' once the WebGL button is
+    // built and rendered. That's the earliest the button's actual rendered
+    // geometry is reliable. Try then, plus a series of belt-and-braces
+    // retries — Meta in-app WebViews (Instagram, FB) can layout-jank a few
+    // hundred ms after first paint when their bottom chrome animates in,
+    // and a single measurement before that lands the pill in the wrong spot.
     let applied = false;
     const tryApply = () => {
         if (applied) return;
         if (apply()) applied = true;
     };
     window.addEventListener('rtt:ready', () => setTimeout(tryApply, 50), { passive: true });
-    // Belt-and-braces: also try a few times in case the event fires before
-    // the listener attaches (race on slow first paint).
-    [400, 1200, 2500].forEach(delay => setTimeout(tryApply, delay));
-    // Orientation change is the one case where geometry actually changes
-    // (the wrapper switches CSS breakpoints) and we need to re-derive.
+    [200, 600, 1200, 2500, 4500].forEach(delay => setTimeout(tryApply, delay));
+    // Orientation change can swap breakpoints (button sizes change). Re-run.
     window.addEventListener('orientationchange', () => {
         applied = false;
         setTimeout(tryApply, 250);
+        setTimeout(tryApply, 800);
     }, { passive: true });
 }
 
