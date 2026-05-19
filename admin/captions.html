@@ -361,38 +361,14 @@ sitemap: false
 <body>
   <header class="admin-header">
     <h1>Caption Library</h1>
-    <p class="lede">
-      Edit metadata for each Instagram still. Changes auto-save to this browser as you type.
-      Use <strong>Copy YAML</strong> or <strong>Download YAML</strong> when you're ready to paste
-      into <code>_data/instagram_captions.yml</code>.
-    </p>
     <div class="actions">
-      <button id="sync-btn" class="primary">Save to GitHub &amp; re-sync</button>
-      <button id="copy-btn">Copy YAML</button>
-      <button id="download-btn">Download YAML</button>
+      <button id="sync-btn" class="primary">Save</button>
       <button id="discard-btn">Discard local edits</button>
       <span id="status" class="status"></span>
     </div>
   </header>
 
   <main>
-    <details class="gh-settings" id="gh-settings">
-      <summary>GitHub sync settings</summary>
-      <div class="row">
-        <input type="password" id="gh-pat" placeholder="Personal access token (ghp_… or github_pat_…)">
-        <button id="gh-pat-save">Save token</button>
-        <button id="gh-pat-clear">Clear</button>
-        <span id="gh-pat-status" class="status"></span>
-      </div>
-      <div class="hint">
-        Create a <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">fine-grained PAT</a>
-        for <code>nickswalker/alexwalker.co</code> with permissions:
-        <strong>Contents: Read &amp; write</strong> and
-        <strong>Actions: Read &amp; write</strong>.
-        Token is stored only in this browser's localStorage and sent directly to api.github.com.
-      </div>
-    </details>
-
     <div class="filter">
       <input type="search" id="search" placeholder="Search by title, location, camera, IG caption, or ID…">
       <label><input type="checkbox" id="only-edited"> Only show edited</label>

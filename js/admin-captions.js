@@ -712,22 +712,29 @@
     }
 
     function wireGhSettings() {
+        // The PAT settings UI is no longer rendered (the stats-server proxy
+        // handles auth). If a future redesign restores it, this function
+        // re-wires it. Guard against the elements being absent so init()
+        // can still call it unconditionally.
         const input = document.getElementById('gh-pat');
         const status = document.getElementById('gh-pat-status');
+        const saveBtn = document.getElementById('gh-pat-save');
+        const clearBtn = document.getElementById('gh-pat-clear');
+        if (!input || !status || !saveBtn || !clearBtn) return;
         const refresh = () => {
             const has = !!getPat();
             input.placeholder = has ? '(saved — paste a new one to replace)' : 'Personal access token (ghp_… or github_pat_…)';
             status.textContent = has ? 'Token saved in this browser.' : 'No token set.';
             status.className = 'status ' + (has ? 'saved' : 'dirty');
         };
-        document.getElementById('gh-pat-save').addEventListener('click', () => {
+        saveBtn.addEventListener('click', () => {
             const v = input.value.trim();
             if (!v) { refresh(); return; }
             setPat(v);
             input.value = '';
             refresh();
         });
-        document.getElementById('gh-pat-clear').addEventListener('click', () => {
+        clearBtn.addEventListener('click', () => {
             setPat('');
             input.value = '';
             refresh();
@@ -759,8 +766,11 @@
         grid.addEventListener('input', handleInput);
         grid.addEventListener('change', handleInput);
 
-        document.getElementById('copy-btn').addEventListener('click', copyYAML);
-        document.getElementById('download-btn').addEventListener('click', downloadYAML);
+        // Copy/Download YAML buttons were the manual fallback before the
+        // proxy existed. Bind if present, skip silently if the simpler
+        // header has removed them.
+        document.getElementById('copy-btn')?.addEventListener('click', copyYAML);
+        document.getElementById('download-btn')?.addEventListener('click', downloadYAML);
         document.getElementById('discard-btn').addEventListener('click', discardEdits);
         document.getElementById('sync-btn').addEventListener('click', syncToGitHub);
 
