@@ -664,7 +664,32 @@
         );
     }
 
+    async function refreshBaseCaptions() {
+        // generateYAML() only emits IDs present in baseCaptions ∪ edits.
+        // If the live YAML was updated since this page loaded (a save from
+        // another tab, or this same tab pre-dating an earlier successful
+        // save), baseCaptions is stale and any IDs only in the live YAML
+        // get silently dropped on the next save. Refetching before each
+        // save closes that hole — every save is now a merge of "current
+        // disk state" + "this session's edits" rather than a blind
+        // overwrite from a snapshot of unknown age.
+        try {
+            const fresh = await fetchJSON(
+                '/data/instagram_captions.json?n=' + Date.now()
+            );
+            if (fresh && typeof fresh === 'object') {
+                baseCaptions = fresh;
+            }
+        } catch (e) {
+            // Couldn't refresh — proceed with the in-memory copy. Worst
+            // case is we replicate the old buggy behavior for this save,
+            // which is no worse than before.
+            console.warn('[captions] refreshBaseCaptions failed:', e);
+        }
+    }
+
     async function syncToGitHub() {
+        await refreshBaseCaptions();
         const yaml = generateYAML();
         // Prefer the server-side proxy: no PAT in the browser, no localStorage
         // expiry, no per-device setup. Fall back to direct-PAT only if the
