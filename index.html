@@ -234,7 +234,7 @@
             <div class="container columns-span-width scroll-fade">
                 <figure>
                     <h3>Narrative</h3>
-                    <ul class="thumbnails lightbox playbuttons">
+                    <ul class="thumbnails lightbox playbuttons narrative-cinema">
                         <li>
                             <a href="https://www.youtube.com/embed/k5Nw4BMAL-I" class="-by-nine" data-year="House of Abraham- Feature Film" data-rich="hoa">
                                 <img src="img/narrative/HoA.jpg" />
@@ -542,5 +542,20 @@
         </div>
     </section>
     <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" data-cf-beacon='{"version":"2024.11.0","token":"755850673b1f4c3fb0816dd7dc641448","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'></script>
-    </body>
+    
+<script>
+// Split data-year into data-title + data-subtitle so CSS can style each part separately
+document.querySelectorAll('.playbuttons.thumbnails a[data-year]').forEach(function(a){
+  var y = a.dataset.year || '';
+  var i = y.indexOf('-');
+  if (i === -1) {
+    a.dataset.title = y.trim();
+    a.dataset.subtitle = '';
+  } else {
+    a.dataset.title = y.slice(0, i).trim();
+    a.dataset.subtitle = y.slice(i + 1).trim();
+  }
+});
+</script>
+</body>
 </html>

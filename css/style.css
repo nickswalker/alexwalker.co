@@ -4236,3 +4236,99 @@ html.lightbox-open #glass-wrapper {
         padding-right: max(24px, env(safe-area-inset-right, 0px));
     }
 }
+
+
+/* Preview: narrative cinema 2.35:1 thumbnails */
+.narrative-cinema li > a {
+    aspect-ratio: 2.35 / 1;
+    display: block;
+    overflow: hidden;
+}
+.narrative-cinema li > a > img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+.narrative-cinema { grid-template-columns: repeat(2, 1fr) !important; }
+
+
+/* Kill the hover-zoom on thumbnails and stills */
+.thumbnails a img:hover,
+.thumbnails a:hover img,
+.stills img:hover,
+.stills a:hover img { transform: none !important; }
+
+/* Pointer devices: hide thumbnail title text by default, fade in on hover */
+
+
+/* Narrative: single column on portrait phones */
+@media (max-width: 600px) and (orientation: portrait) {
+    .narrative-cinema { grid-template-columns: 1fr !important; }
+}
+
+
+/* Hide the subtitle when empty (no dash in data-year) */
+.playbuttons.thumbnails a[data-subtitle=""]::after { content: none; }
+
+/* Apply the same fade-in to the subtitle on pointer devices */
+
+
+/* Per-thumb crop tuning — show more of the image bottom on these two */
+.playbuttons.thumbnails a[data-rich="tch"] img,
+.playbuttons.thumbnails a[data-rich="tll"] img {
+    object-position: center 20% !important;
+}
+
+
+/* Hover text: site font, uppercase title + italic subtitle */
+.playbuttons.thumbnails a::before {
+    content: '\25B6\fe0e\00a0\00a0' attr(data-title) !important;
+    font-family: 'Instrument Sans', 'Helvetica Neue', Helvetica, sans-serif !important;
+    text-transform: none !important;
+    letter-spacing: 0.03em !important;
+    font-weight: 600 !important;
+    font-size: 11px !important;
+    line-height: 1.15em !important;
+    height: auto !important;
+    margin: 0 0 4px 10px !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.85), 0 0 5px rgba(0,0,0,0.55) !important;
+    bottom: 17px !important;
+}
+.playbuttons.thumbnails a::after {
+    content: attr(data-subtitle);
+    font-family: 'Instrument Sans', 'Helvetica Neue', Helvetica, sans-serif;
+    font-style: italic;
+    font-size: 10px;
+    line-height: 1.2em;
+    color: rgba(255,255,255,0.9);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.85);
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    margin: 0 0 0 10px;
+    z-index: 1;
+    pointer-events: none;
+}
+.playbuttons.thumbnails a[data-subtitle=""]::after { content: none; }
+
+/* Larger title/subtitle for the narrative-cinema 2-col grid */
+.narrative-cinema.playbuttons a::before {
+    text-transform: uppercase !important;
+    font-size: 15px !important;
+    letter-spacing: 0.06em !important;
+    margin: 0 0 6px 14px !important;
+    bottom: 24px !important;
+}
+.narrative-cinema.playbuttons a::after {
+    font-size: 12px;
+    margin: 0 0 0 14px;
+    bottom: 6px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .playbuttons.thumbnails a::before,
+    .playbuttons.thumbnails a::after { opacity: 0; transition: opacity 0.25s ease; }
+    .playbuttons.thumbnails a:hover::before,
+    .playbuttons.thumbnails a:hover::after { opacity: 1; }
+}
