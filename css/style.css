@@ -4197,6 +4197,21 @@ html.lightbox-open #glass-wrapper {
         padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
     }
 }
+
+/* Instagram in-app browser, portrait phone only: lift the Watch Reels pill
+   so its bottom edge sits at the return-to-top button's vertical midpoint
+   (RTT bottom 28px + height 40px / 2 = 48px from screen bottom). IG's
+   WebView doesn't honor env(safe-area-inset-bottom) reliably and adds its
+   own bottom chrome, which crowds the pill if it stays pinned at the same
+   bottom as the RTT. The class `is-instagram-webview` is set on <html> by
+   the inline UA detector in _includes/head.html. Other contexts (regular
+   Safari, Chrome, desktop, landscape, tablets) keep the default pin. */
+@media (max-width: 480px) and (orientation: portrait) {
+    html.is-instagram-webview #reel-glass-button {
+        bottom: calc(48px + env(safe-area-inset-bottom, 0px));
+    }
+}
+
 /* Landscape phones (short viewport, wide enough that body is full width):
    keep main content out of the notch/Dynamic Island while leaving the
    sticky header bar and the fixed return-to-top button edge-to-edge.
