@@ -4236,3 +4236,16 @@ html.lightbox-open #glass-wrapper {
         padding-right: max(24px, env(safe-area-inset-right, 0px));
     }
 }
+
+
+/* Preview: narrative cinema 2.35:1 thumbnails */
+.narrative-cinema li > a {
+    aspect-ratio: 2.35 / 1;
+    display: block;
+    overflow: hidden;
+}
+.narrative-cinema li > a > img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
