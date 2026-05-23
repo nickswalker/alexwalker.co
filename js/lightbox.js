@@ -169,6 +169,7 @@ export const RICH_CONFIG = {
     },
     comm_cwb: {
         title: 'Cowboys Without Borders',
+        poster: '/img/posters/CWOB2.jpg',
         frameAspect: '1600 / 669',
         frames: [
             '/img/comm_cwb/frame1.jpg',
