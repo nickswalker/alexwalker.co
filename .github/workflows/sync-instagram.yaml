@@ -2,7 +2,11 @@ name: Sync Instagram Stills
 
 on:
   schedule:
-    - cron: '0 9 * * 1'  # Mondays 09:00 UTC
+    # Daily at midnight Central. GitHub cron is UTC-only, so this is
+    # 05:00 UTC = 00:00 CDT during daylight saving (Mar–Nov, most of the
+    # year) and shifts to 23:00 CST during standard time. Picking the
+    # DST anchor since that's the majority window.
+    - cron: '0 5 * * *'
   workflow_dispatch:
 
 jobs:
