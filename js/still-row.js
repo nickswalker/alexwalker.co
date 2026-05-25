@@ -178,3 +178,33 @@ export async function initInstagramStills() {
     row.dataset.arrangement = method;
     row.dataset.selection = selection;
 }
+
+// Subtle "Refresh the page to see a different set of stills" hint that
+// fades in only after the visitor has lingered on the stills section.
+// "Lingered" = the section has been continuously in the viewport for
+// LINGER_MS. Scrolling away resets the timer so a quick pass-through
+// won't trigger it. Once revealed, it stays for the rest of the session.
+(function armStillsHint() {
+    const LINGER_MS = 4500;
+    const hint = document.querySelector('.stills-hint');
+    const section = document.getElementById('stills');
+    if (!hint || !section || !('IntersectionObserver' in window)) return;
+
+    let timer = null;
+    const reveal = () => hint.classList.add('is-visible');
+
+    const io = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+                if (timer == null && !hint.classList.contains('is-visible')) {
+                    timer = window.setTimeout(reveal, LINGER_MS);
+                }
+            } else if (timer != null) {
+                window.clearTimeout(timer);
+                timer = null;
+            }
+        }
+    }, { threshold: [0, 0.4, 1] });
+
+    io.observe(section);
+})();

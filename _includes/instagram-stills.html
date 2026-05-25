@@ -8,6 +8,7 @@
 {%- assign saturated = site.data.instagram | where_exp: "i", "i.saturation >= 0.15" | sort: "hue" -%}
 {%- assign neutrals = site.data.instagram | where_exp: "i", "i.saturation < 0.15" | sort: "value" | reverse -%}
 {%- assign fallback = saturated | concat: neutrals | slice: 0, 16 -%}
+<p class="stills-hint" aria-hidden="true">Refresh the page to see a different set of stills</p>
 <ul class="stills stills--instagram" id="instagram-stills" style="align-items: center; justify-content: center;">
 {%- for item in fallback -%}
   {%- assign cap = site.data.instagram_captions[item.id] -%}
