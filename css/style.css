@@ -3296,12 +3296,15 @@ body.cinematic header nav>ul>li > a:hover {
 }
 body.cinematic .logo h1 a {
     font-size: 20px;
-    font-weight: 300;
-    letter-spacing: 0.04em;
+    font-weight: 400;
+    /* Tight, near-zero tracking so the two halves read as one wordmark
+       with weight as the only visual differentiator, matching the spec
+       screenshot the user provided. */
+    letter-spacing: 0;
     color: #d8d6d0;
 }
-body.cinematic .logo h1 a .name-bold { font-weight: 400; }
-body.cinematic .logo h1 a .name-light { font-weight: 300; }
+body.cinematic .logo h1 a .name-bold  { font-weight: 600; }
+body.cinematic .logo h1 a .name-light { font-weight: 400; }
 /* Drop the social-icons cluster from the cinematic nav — visual noise. */
 body.cinematic header nav>ul>li .social { display: none; }
 /* Reel CTA — keep the rounded pill border but tone the colors to mono.
