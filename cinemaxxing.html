@@ -6,7 +6,12 @@
 <title>Cinemaxxing — Austin's Weekly Premium Cinema Schedule</title>
 
 <!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230e0e0f'/><text x='16' y='23' font-family='system-ui,sans-serif' font-size='20' font-weight='900' text-anchor='middle' fill='%23e8a000'>C</text></svg>">
+<link rel="icon" type="image/png" href="img/cinemaxxing-icon.png">
+<link rel="apple-touch-icon" href="img/cinemaxxing-icon.png">
+<meta name="apple-mobile-web-app-title" content="Cinemaxxing">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f5f0e8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e0f" media="(prefers-color-scheme: dark)">
 
 <!-- Open Graph -->
 <meta property="og:title" content="Cinemaxxing — Austin's Weekly Cinema Digest">
@@ -60,8 +65,8 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);-web
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-bottom:1px solid var(--border);}
-.nav-logo{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:700;color:var(--text);text-decoration:none;letter-spacing:-0.01em;opacity:.5;font-style:italic;}
-.nav-logo-note{font-size:.6rem;font-weight:400;font-style:normal;color:var(--text3);margin-left:.4rem;vertical-align:middle;letter-spacing:0;}
+.nav-logo{display:inline-flex;align-items:center;text-decoration:none;}
+.nav-logo img{display:block;height:32px;width:32px;border-radius:7px;}
 .nav-btn{background:var(--accent);color:#fff;border:none;padding:0.5rem 1.4rem;border-radius:999px;font-family:'Outfit',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;text-decoration:none;transition:opacity .2s;}
 .nav-btn:hover{opacity:.85;}
 
@@ -69,9 +74,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:fl
 .hero{padding:8rem 2rem 5rem;max-width:820px;margin:0 auto;text-align:center;}
 .eyebrow{font-family:'Outfit',sans-serif;font-size:0.7rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;}
 
-/* LOGO PLACEHOLDER */
-.logo-placeholder{display:inline-block;font-family:'Syne',sans-serif;font-size:clamp(1.8rem,8vw,4.5rem);font-weight:800;letter-spacing:-0.03em;color:var(--text);opacity:.35;font-style:italic;margin-bottom:.25rem;line-height:1;max-width:100%;}
-.logo-placeholder-note{font-size:.7rem;color:var(--text3);font-weight:400;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.75rem;display:block;}
+/* HERO LOGO */
+.hero-logo{display:block;width:100%;max-width:420px;height:auto;margin:0 auto 2rem;}
+@media (max-width:600px){.hero-logo{max-width:300px;margin-bottom:1.5rem;}}
 
 h1{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,4vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1.5rem;color:var(--text);}
 h1 .accent{color:var(--accent);}
@@ -239,15 +244,14 @@ footer a:hover{color:var(--accent);}
 <body>
 
 <nav>
-  <a href="#" class="nav-logo">Cinemaxxing <span class="nav-logo-note">[logo TBD]</span></a>
+  <a href="#" class="nav-logo" aria-label="Cinemaxxing"><img src="img/cinemaxxing-icon.png" alt="Cinemaxxing"></a>
   <a href="#subscribe" class="nav-btn">Subscribe free</a>
 </nav>
 
 <section class="hero">
   <p class="eyebrow">Austin's Weekly Cinema Digest</p>
 
-  <div class="logo-placeholder">Cinemaxxing</div>
-  <span class="logo-placeholder-note">Logo in progress</span>
+  <img class="hero-logo" src="img/cinemaxxing-logo.svg" alt="Cinemaxxing">
 
   <h1>The best of Austin cinema —<br>formats, programming, and events — <span class="accent">every Monday.</span></h1>
   <p class="hero-sub">
