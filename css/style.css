@@ -1090,6 +1090,19 @@ body.cinematic .clients--logos li > a:hover > img { opacity: 1; }
     .cinemaxxing-link, .cinemaxxing-link img { transition-duration: 0.1s; }
     .cinemaxxing-link:hover { transform: none; }
 }
+/* Instagram / Threads / Facebook in-app WebView often reports a wider
+   layout viewport than the device's actual screen, so the (max-width:
+   700px) mobile rule above can fail to fire even on a phone screen —
+   leaving the logo at its 350px desktop cap, which looks oversized.
+   Pin the mobile width explicitly via the html.is-instagram-webview
+   class set in _includes/head.html. Tablet (real iPad inside IG) gets
+   a slightly larger cap to match the larger surrounding cells. */
+html.is-instagram-webview .cinemaxxing-link img {
+    max-width: 250px !important;
+}
+html.is-instagram-webview-tablet .cinemaxxing-link img {
+    max-width: 350px !important;
+}
 
 /*--- = Stills	*/
 #stills {
