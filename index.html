@@ -525,14 +525,20 @@
        at least half-visible. Inline + standalone — doesn't depend on
        site.js or any module load chain, so it fires the same on the
        cinematic homepage, in IG/Threads WebView, and on landscape
-       phones where module-graph quirks have bitten us before. */
+       phones where module-graph quirks have bitten us before.
+       Holds for SETTLE_MS after the observer fires so the parent
+       .scroll-fade transition (0.45s opacity+translateY) finishes and
+       the logo has a beat to "land" before the pulse runs — otherwise
+       the pulse plays while the section is still fading in and is
+       effectively invisible. */
     (function () {
+      var SETTLE_MS = 1000 + 450;  // 1s pause + .scroll-fade transition time
       var link = document.querySelector('.cinemaxxing-link');
       if (!link || !('IntersectionObserver' in window)) return;
       var io = new IntersectionObserver(function (entries) {
         for (var i = 0; i < entries.length; i++) {
           if (entries[i].isIntersecting) {
-            link.classList.add('is-pulsing');
+            setTimeout(function () { link.classList.add('is-pulsing'); }, SETTLE_MS);
             io.disconnect();
             break;
           }
