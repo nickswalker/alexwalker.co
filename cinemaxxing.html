@@ -207,7 +207,10 @@ h1 .accent{color:var(--accent);}
 .why{padding:4rem 2rem;}
 .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;margin-top:2.5rem;}
 .feat{border-top:1px solid var(--border);padding-top:1.25rem;}
-.feat-num{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--accent);margin-bottom:.5rem;line-height:1;letter-spacing:-.02em;}
+.feat-num{font-family:'Syne',sans-serif;font-size:3.2rem;font-weight:800;margin-bottom:.6rem;line-height:1;letter-spacing:-.04em;display:inline-block;transform-origin:left center;}
+.feat:nth-child(1) .feat-num{color:#0FBCEC;transform:rotate(-2deg);}
+.feat:nth-child(2) .feat-num{color:#FBB315;transform:rotate(1.5deg);}
+.feat:nth-child(3) .feat-num{color:#BC1F49;transform:rotate(-1deg);}
 .feat h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.4rem;letter-spacing:-.01em;}
 .feat p{font-size:.85rem;color:var(--text2);line-height:1.65;}
 
