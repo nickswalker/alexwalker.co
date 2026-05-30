@@ -1059,7 +1059,7 @@ body.cinematic .clients--logos li > a:hover > img { opacity: 1; }
        hint paragraph that sometimes appears above the stills is
        intentionally treated as non-structural — these margins centre the
        logo against the stills strip itself, not against the hint. */
-    margin: 180px 0 60px;
+    margin: 90px 0 30px;
     padding: 0 24px;
 }
 .cinemaxxing-link {
@@ -1083,7 +1083,7 @@ body.cinematic .clients--logos li > a:hover > img { opacity: 1; }
 }
 .cinemaxxing-link:hover img { opacity: 1; }
 @media (max-width: 700px) {
-    #cinemaxxing-promo { margin: 80px 0 40px; padding: 0 18px; }
+    #cinemaxxing-promo { margin: 50px 0 25px; padding: 0 18px; }
     .cinemaxxing-link img { max-width: 250px; }
 }
 @media (prefers-reduced-motion: reduce) {
