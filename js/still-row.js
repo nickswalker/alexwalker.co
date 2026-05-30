@@ -193,9 +193,18 @@ export async function initInstagramStills() {
     let timer = null;
     const reveal = () => hint.classList.add('is-visible');
 
+    // Trigger on simple isIntersecting — any part of the section visible
+    // is enough. An earlier version gated on intersectionRatio >= 0.4,
+    // which silently failed on short viewports (landscape phones) and
+    // on tall section heights: the ratio is capped at viewportH/sectionH,
+    // so a 390px landscape viewport against a 1000px stills section can
+    // never reach 0.4 and the timer never started. Now: when any part
+    // of the section enters the viewport the linger timer starts; if
+    // the section scrolls fully out before LINGER_MS elapses, the timer
+    // resets. Once revealed the hint stays for the session.
     const io = new IntersectionObserver((entries) => {
         for (const entry of entries) {
-            if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+            if (entry.isIntersecting) {
                 if (timer == null && !hint.classList.contains('is-visible')) {
                     timer = window.setTimeout(reveal, LINGER_MS);
                 }
@@ -204,7 +213,7 @@ export async function initInstagramStills() {
                 timer = null;
             }
         }
-    }, { threshold: [0, 0.4, 1] });
+    }, { threshold: 0 });
 
     io.observe(section);
 })();
