@@ -1046,6 +1046,46 @@ body.cinematic .clients--logos li > a > img {
 }
 body.cinematic .clients--logos li > a:hover > img { opacity: 1; }
 
+/*--- = Cinemaxxing promo logo
+   Sits between the Bio buttons and the Instagram stills strip. Restrained
+   width so it reads as a quiet cross-promotion, not a banner. The hover
+   glow is a 14px drop-shadow tinted to the logo's blue rail color — feels
+   like the light's coming from inside the snowboard rather than a stuck-on
+   shadow. Transition is gentle so casual cursors don't trigger a strobe. */
+#cinemaxxing-promo {
+    text-align: center;
+    margin: 32px 0 4px;
+    padding: 0 24px;
+}
+.cinemaxxing-link {
+    display: inline-block;
+    line-height: 0;  /* kill the baseline gap under the img */
+    border-radius: 6px;
+    transition: filter 0.45s ease, transform 0.45s ease;
+    will-change: filter, transform;
+}
+.cinemaxxing-link img {
+    display: block;
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+    opacity: 0.92;
+    transition: opacity 0.45s ease;
+}
+.cinemaxxing-link:hover {
+    filter: drop-shadow(0 0 14px rgba(144, 200, 240, 0.55));
+    transform: translateY(-1px);
+}
+.cinemaxxing-link:hover img { opacity: 1; }
+@media (max-width: 700px) {
+    #cinemaxxing-promo { margin: 24px 0 0; padding: 0 18px; }
+    .cinemaxxing-link img { max-width: 380px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .cinemaxxing-link, .cinemaxxing-link img { transition-duration: 0.1s; }
+    .cinemaxxing-link:hover { transform: none; }
+}
+
 /*--- = Stills	*/
 #stills {
     margin-bottom: 0;
