@@ -520,6 +520,27 @@
         <img src="img/cinemaxxing-logo.png" alt="Cinemaxxing">
       </a>
     </section>
+    <script>
+    /* One-shot blue glow pulse the first time the Cinemaxxing logo is
+       at least half-visible. Inline + standalone — doesn't depend on
+       site.js or any module load chain, so it fires the same on the
+       cinematic homepage, in IG/Threads WebView, and on landscape
+       phones where module-graph quirks have bitten us before. */
+    (function () {
+      var link = document.querySelector('.cinemaxxing-link');
+      if (!link || !('IntersectionObserver' in window)) return;
+      var io = new IntersectionObserver(function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting) {
+            link.classList.add('is-pulsing');
+            io.disconnect();
+            break;
+          }
+        }
+      }, { threshold: 0.5 });
+      io.observe(link);
+    })();
+    </script>
 
     <section id="stills" class="scroll-fade">
     <div class="container columns-span-width">

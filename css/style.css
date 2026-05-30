@@ -1090,6 +1090,21 @@ body.cinematic .clients--logos li > a:hover > img { opacity: 1; }
     .cinemaxxing-link, .cinemaxxing-link img { transition-duration: 0.1s; }
     .cinemaxxing-link:hover { transform: none; }
 }
+/* One-shot glow pulse when the logo first scrolls into view. JS in
+   index.html arms an IntersectionObserver that adds .is-pulsing once
+   the link is at least half visible, then disconnects so it never
+   repeats during the session. The animation is intentionally gentle —
+   short rise, slower fade, peak drop-shadow capped low enough that
+   it reads as a wink rather than a flash. */
+@keyframes cinemaxxing-pulse {
+    0%   { filter: drop-shadow(0 0 0   rgba(144, 200, 240, 0));     }
+    35%  { filter: drop-shadow(0 0 18px rgba(144, 200, 240, 0.45));  }
+    100% { filter: drop-shadow(0 0 0   rgba(144, 200, 240, 0));     }
+}
+.cinemaxxing-link.is-pulsing { animation: cinemaxxing-pulse 2.4s ease-out 1; }
+@media (prefers-reduced-motion: reduce) {
+    .cinemaxxing-link.is-pulsing { animation: none; }
+}
 /* Instagram / Threads / Facebook in-app WebView often reports a wider
    layout viewport than the device's actual screen, so the (max-width:
    700px) mobile rule above can fail to fire even on a phone screen —
