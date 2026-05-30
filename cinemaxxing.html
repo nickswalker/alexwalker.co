@@ -81,7 +81,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:fl
 @media (max-width:600px){.hero-logo{max-width:300px;margin-bottom:1.5rem;}}
 
 h1{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,4vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1.5rem;color:var(--text);}
-h1 .accent{color:var(--accent);}
+h1 .accent{color:var(--accent);font-style:italic;font-weight:600;}
 
 .hero-sub{font-size:1.05rem;color:var(--text2);max-width:560px;margin:0 auto 2.5rem;font-weight:300;line-height:1.75;}
 .hero-sub strong{color:var(--text);font-weight:500;}
@@ -251,7 +251,7 @@ footer a:hover{color:var(--accent);}
 </nav>
 
 <section class="hero">
-  <p class="eyebrow">Austin's Weekly Cinema Digest</p>
+  <p class="eyebrow" id="eyebrow-edition">Austin's Weekly Cinema Digest</p>
 
   <img class="hero-logo" src="https://alexwalker.co/img/cinemaxxing-logo.png" alt="Cinemaxxing">
 
@@ -277,7 +277,10 @@ footer a:hover{color:var(--accent);}
   </div>
 
   <p style="margin-top:1.25rem;font-size:.78rem;color:var(--text3);">
-    <a href="https://www.instagram.com/cinemaxxing_/" target="_blank" style="color:var(--text2);text-decoration:none;border-bottom:1px solid var(--border);">@cinemaxxing_</a>
+    <a href="https://www.instagram.com/cinemaxxing_/" target="_blank" style="color:var(--text2);text-decoration:none;border-bottom:1px solid var(--border);display:inline-flex;align-items:center;gap:.35em;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
+      @cinemaxxing_
+    </a>
   </p>
   <p style="margin-top:.5rem;font-size:.78rem;color:var(--text3);">By <a href="https://alexwalker.co" target="_blank" style="color:var(--text2);text-decoration:none;border-bottom:1px solid var(--border);">alexwalker.co</a> &amp; Alex Anderson</p>
 </section>
@@ -604,6 +607,22 @@ document.querySelectorAll('.form-wrap input').forEach(inp => {
     img.decoding = 'async';
     img.setAttribute('data-proofer-ignore', '');
     document.body.appendChild(img);
+  })();
+
+  // Live edition number in the hero eyebrow.
+  // Matches send_email.py: edition = (currentWeekMonday - EPOCH)/7 + 1,
+  // where currentWeekMonday uses today on Mon-Sat and tomorrow on Sunday.
+  (function(){
+    var EPOCH = new Date(2026, 3, 20); // Apr 20, 2026 = Edition #1 Monday
+    var now = new Date();
+    var day = now.getDay(); // 0=Sun, 1=Mon … 6=Sat
+    var anchor = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    if (day === 0) anchor.setDate(anchor.getDate() + 1);          // Sun → tomorrow
+    else if (day !== 1) anchor.setDate(anchor.getDate() - (day-1)); // Tue-Sat → this Mon
+    var diffDays = Math.round((anchor - EPOCH) / 86400000);
+    var edition = Math.max(1, Math.floor(diffDays / 7) + 1);
+    var el = document.getElementById('eyebrow-edition');
+    if (el) el.textContent = 'Edition #' + edition + ' · This week in Austin cinema';
   })();
 </script>
 </body>
