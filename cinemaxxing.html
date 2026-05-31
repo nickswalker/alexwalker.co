@@ -83,7 +83,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:fl
 /* Logo animations: fade in on load, pause, smooth one-shot glow, smooth hover glow. */
 .cmx-logo{display:inline-block;line-height:0;border-radius:6px;max-width:420px;width:100%;opacity:0;transform:translateY(10px);transition:filter 0.7s cubic-bezier(0.4,0,0.2,1),transform 0.7s cubic-bezier(0.4,0,0.2,1);will-change:filter,transform,opacity;}
 .cmx-logo.is-loaded{opacity:1;transform:translateY(0);transition:opacity 0.6s cubic-bezier(0.4,0,0.2,1),transform 0.6s cubic-bezier(0.4,0,0.2,1),filter 0.7s cubic-bezier(0.4,0,0.2,1);}
-.cmx-logo img{display:block;width:100%;height:auto;opacity:0.94;transition:opacity 0.6s ease;margin:0;}
+.cmx-logo img{display:block;width:100%;height:auto;opacity:0.94;transition:opacity 0.6s ease;margin:0 auto;}
 .cmx-logo:hover{filter:drop-shadow(0 0 16px rgba(144,200,240,0.6));transform:translateY(-1px);}
 .cmx-logo:hover img{opacity:1;}
 /* Single smooth in-and-out glow — symmetric ease curve, peaks at 50%. */
