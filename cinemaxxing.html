@@ -80,23 +80,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:fl
 .hero-logo{display:block;width:100%;max-width:420px;height:auto;margin:0 auto 2rem;}
 @media (max-width:600px){.hero-logo{max-width:300px;margin-bottom:1.5rem;}}
 
-/* Logo animations: scroll-fade reveal, one-shot blue glow pulse, hover lift. */
-.scroll-fade{opacity:0;transform:translateY(10px);transition:opacity 0.45s cubic-bezier(0.4,0,0.2,1),transform 0.45s cubic-bezier(0.4,0,0.2,1);will-change:opacity,transform;}
-.scroll-fade.visible{opacity:1;transform:translateY(0);}
-.cmx-logo{display:inline-block;line-height:0;border-radius:6px;transition:filter 0.45s ease,transform 0.45s ease;will-change:filter,transform;max-width:420px;width:100%;}
-.cmx-logo img{display:block;width:100%;height:auto;opacity:0.92;transition:opacity 0.45s ease;margin:0;}
-.cmx-logo:hover{filter:drop-shadow(0 0 14px rgba(144,200,240,0.55));transform:translateY(-1px);}
+/* Logo animations: fade in on load, pause, smooth one-shot glow, smooth hover glow. */
+.cmx-logo{display:inline-block;line-height:0;border-radius:6px;max-width:420px;width:100%;opacity:0;transform:translateY(10px);transition:filter 0.7s cubic-bezier(0.4,0,0.2,1),transform 0.7s cubic-bezier(0.4,0,0.2,1);will-change:filter,transform,opacity;}
+.cmx-logo.is-loaded{opacity:1;transform:translateY(0);transition:opacity 0.6s cubic-bezier(0.4,0,0.2,1),transform 0.6s cubic-bezier(0.4,0,0.2,1),filter 0.7s cubic-bezier(0.4,0,0.2,1);}
+.cmx-logo img{display:block;width:100%;height:auto;opacity:0.94;transition:opacity 0.6s ease;margin:0;}
+.cmx-logo:hover{filter:drop-shadow(0 0 16px rgba(144,200,240,0.6));transform:translateY(-1px);}
 .cmx-logo:hover img{opacity:1;}
+/* Single smooth in-and-out glow — symmetric ease curve, peaks at 50%. */
 @keyframes cmx-pulse{
-  0%{animation-timing-function:cubic-bezier(0.4,0,0.6,1);filter:drop-shadow(0 0 0 rgba(120,200,255,0)) drop-shadow(0 0 0 rgba(120,200,255,0));}
-  22%,50%{animation-timing-function:cubic-bezier(0.4,0,0.6,1);filter:drop-shadow(0 0 8px rgba(120,200,255,0.40)) drop-shadow(0 0 24px rgba(120,200,255,0.22));}
-  100%{filter:drop-shadow(0 0 0 rgba(120,200,255,0)) drop-shadow(0 0 0 rgba(120,200,255,0));}
+  0%,100%{filter:drop-shadow(0 0 0 rgba(120,200,255,0)) drop-shadow(0 0 0 rgba(120,200,255,0));}
+  50%{filter:drop-shadow(0 0 12px rgba(120,200,255,0.45)) drop-shadow(0 0 30px rgba(120,200,255,0.25));}
 }
-.cmx-logo.is-pulsing{animation:cmx-pulse 3.2s linear 1;}
+.cmx-logo.is-pulsing{animation:cmx-pulse 2.6s cubic-bezier(0.4,0,0.2,1) 1;}
 @media (prefers-reduced-motion:reduce){
   .cmx-logo,.cmx-logo img{transition-duration:0.1s;}
   .cmx-logo:hover{transform:none;}
-  .scroll-fade{transition-duration:0.2s;transform:none;}
+  .cmx-logo.is-pulsing{animation:none;}
 }
 
 h1{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,4vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1.5rem;color:var(--text);}
@@ -277,27 +276,18 @@ footer a:hover{color:var(--accent);}
 <section class="hero">
   <p class="eyebrow" id="eyebrow-edition">Austin's Weekly Cinema Digest</p>
 
-  <span class="cmx-logo scroll-fade" style="margin:0 auto 2rem;">
+  <span class="cmx-logo" style="margin:0 auto 2rem;">
     <img class="hero-logo" src="https://alexwalker.co/img/cinemaxxing-logo.png" alt="Cinemaxxing">
   </span>
   <script>
   (function(){
-    var SETTLE_MS=1450;
     var logo=document.querySelector('.cmx-logo');
-    if(!logo||!('IntersectionObserver' in window))return;
-    var fadeNode=logo.closest('.scroll-fade')||logo;
-    var fadeIO=new IntersectionObserver(function(entries){
-      for(var i=0;i<entries.length;i++){
-        if(entries[i].isIntersecting){fadeNode.classList.add('visible');fadeIO.disconnect();break;}
-      }
-    },{threshold:0});
-    fadeIO.observe(fadeNode);
-    var pulseIO=new IntersectionObserver(function(entries){
-      for(var i=0;i<entries.length;i++){
-        if(entries[i].isIntersecting){setTimeout(function(){logo.classList.add('is-pulsing');},SETTLE_MS);pulseIO.disconnect();break;}
-      }
-    },{threshold:0.5});
-    pulseIO.observe(logo);
+    if(!logo)return;
+    // Fade in on load (small delay so the browser commits the initial 0-opacity frame).
+    setTimeout(function(){logo.classList.add('is-loaded');},80);
+    // Pause after fade settles, then one smooth glow in/out.
+    // Timing: 80ms initial + 600ms fade + 900ms pause = 1580ms before pulse.
+    setTimeout(function(){logo.classList.add('is-pulsing');},1580);
   })();
   </script>
 
