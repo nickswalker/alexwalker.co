@@ -248,7 +248,20 @@ export function initSectionPassed(sectionSelector, bodyClass) {
 //   3. setInterval watchdog so even a programmatic scrollLeft write that
 //      doesn't trigger a scroll event still gets caught within ~120ms.
 export function initHorizontalScrollLock() {
+    // Pinch-to-zoom escape hatch. When the user has zoomed in via the
+    // Visual Viewport (visualViewport.scale > 1), they need to be able
+    // to pan freely in any direction — snapping scrollLeft back to 0
+    // while zoomed fights every gesture. The lock resumes automatically
+    // the next time the scale drops back to 1 (a scroll event will fire
+    // snap, snap will see scale === 1, and it'll proceed normally).
+    const isZoomed = () => {
+        const vv = window.visualViewport;
+        // Tolerance of 0.02 so subpixel float noise doesn't accidentally
+        // keep the lock disengaged when the user thinks they're at 100%.
+        return !!(vv && vv.scale > 1.02);
+    };
     const snap = () => {
+        if (isZoomed()) return;
         if (window.scrollX === 0 && document.documentElement.scrollLeft === 0) return;
         // Use every API a browser might honour. document.scrollingElement
         // covers Safari/iOS where the scrolling element may be body.
@@ -292,6 +305,17 @@ export function initHorizontalScrollLock() {
     window.addEventListener('scroll', eventSnap, { passive: true, capture: true });
     window.addEventListener('wheel', eventSnap, { passive: true, capture: true });
     window.addEventListener('touchmove', eventSnap, { passive: true, capture: true });
+    // Visual Viewport changes (pinch zoom in/out, on-screen-keyboard,
+    // orientation tweaks) fire scroll + resize on visualViewport itself
+    // — neither of which bubbles up to the window scroll listener above.
+    // Without these the lock would stay disengaged after zoom-in until
+    // the user touched the page again; or worse, the page could be
+    // sitting at scrollX != 0 after they zoomed back out, with no
+    // pending event to retrigger the snap.
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener('scroll', eventSnap, { passive: true });
+        window.visualViewport.addEventListener('resize', eventSnap, { passive: true });
+    }
     // One-shot initial snap in case the page loaded with scrollX != 0.
     snap();
 }
