@@ -1099,10 +1099,16 @@ body.cinematic .clients--logos li > a:hover > img { opacity: 1; }
    the fade. Total runtime ~3.2s. */
 @keyframes cinemaxxing-pulse {
     0%   {
+        /* ease-in-out on the ramp-up: gentle start, gentle approach
+           to peak. Reads like the logo is taking a breath in. */
+        animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
         filter: drop-shadow(0 0 0   rgba(120, 200, 255, 0))
                 drop-shadow(0 0 0   rgba(120, 200, 255, 0));
     }
     22%, 50% {
+        /* ease-in-out on the fade-out from the hold: same curve in
+           reverse — eased start, eased finish into zero. */
+        animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
         filter: drop-shadow(0 0 8px  rgba(120, 200, 255, 0.40))
                 drop-shadow(0 0 24px rgba(120, 200, 255, 0.22));
     }
@@ -1111,7 +1117,10 @@ body.cinematic .clients--logos li > a:hover > img { opacity: 1; }
                 drop-shadow(0 0 0   rgba(120, 200, 255, 0));
     }
 }
-.cinemaxxing-link.is-pulsing { animation: cinemaxxing-pulse 3.2s ease-out 1; }
+/* `linear` on the parent so each keyframe's own timing function is the
+   thing actually shaping the curve — otherwise the parent's ease-out
+   compounds with the per-keyframe ease and the motion gets weird. */
+.cinemaxxing-link.is-pulsing { animation: cinemaxxing-pulse 3.2s linear 1; }
 @media (prefers-reduced-motion: reduce) {
     .cinemaxxing-link.is-pulsing { animation: none; }
 }
