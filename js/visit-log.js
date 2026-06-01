@@ -14,6 +14,7 @@
 const BACKEND_BASE = 'https://nexus.tail1c6f41.ts.net/aw';
 const PIXEL_URL = `${BACKEND_BASE}/p.gif`;
 const DURATION_URL = `${BACKEND_BASE}/vd`;
+const OUTBOUND_URL = `${BACKEND_BASE}/out`;
 
 const DEV_KEY = 'aw-dev';
 const ME_KEY = 'aw-me';
@@ -77,6 +78,67 @@ export function sendVideoPixel(href) {
     if (dev) data.dev = '1';
     if (me) data.me = me;
     ping(data);
+}
+
+// Outbound-click tracker. Site-wide delegated listener: any click on an
+// anchor whose hostname differs from the current one ships a beacon to
+// /out so the admin Visitors page can show which exit link a visitor
+// took before leaving the site. sendBeacon (form data, simple request)
+// survives the navigation that the click is about to cause. Self-links
+// to alexwalker.co subdomains, in-page anchors, javascript:, mailto:,
+// tel:, and Tailscale-routed analytics URLs are all skipped.
+function isOutbound(href, currentHost) {
+    if (!href) return false;
+    const trimmed = href.trim();
+    if (!trimmed) return false;
+    if (/^(?:javascript|mailto|tel|sms|data|blob):/i.test(trimmed)) return false;
+    if (trimmed[0] === '#' || trimmed[0] === '?') return false;
+    if (!/^https?:/i.test(trimmed)) return false;
+    try {
+        const u = new URL(trimmed, window.location.href);
+        if (!u.hostname || u.hostname === currentHost) return false;
+        // Treat alexwalker.co subdomains as same-site (analytics, etc.).
+        if (u.hostname === currentHost ||
+            u.hostname.endsWith('.' + currentHost) ||
+            currentHost.endsWith('.' + u.hostname)) return false;
+        // Skip our own backend endpoints if they ever appear inline.
+        if (u.hostname === 'nexus.tail1c6f41.ts.net') return false;
+        return u.toString();
+    } catch (_) { return false; }
+}
+export function initOutboundLinkTracking() {
+    if (typeof document === 'undefined') return;
+    const currentHost = window.location.hostname;
+    document.addEventListener('click', function (e) {
+        // Walk up to find the nearest anchor; clicks can land on inner spans.
+        const a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+        if (!a) return;
+        const dest = isOutbound(a.getAttribute('href'), currentHost);
+        if (!dest) return;
+        const { dev, me } = getOwnerFlags();
+        const params = new URLSearchParams();
+        params.set('u', dest);
+        params.set('p', window.location.pathname || '/');
+        if (dev) params.set('dev', '1');
+        if (me) params.set('me', me);
+        // sendBeacon prefers Blob/FormData over URL params for some
+        // browsers, but form data works everywhere and counts as a CORS
+        // simple request — same shape as /vd.
+        try {
+            const fd = new FormData();
+            fd.append('u', dest);
+            fd.append('p', window.location.pathname || '/');
+            const url = (dev || me)
+                ? `${OUTBOUND_URL}?${params.toString()}`
+                : OUTBOUND_URL;
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon(url, fd);
+            } else {
+                fetch(url, { method: 'POST', body: fd, keepalive: true })
+                    .catch(() => { /* ignore */ });
+            }
+        } catch (_) { /* ignore */ }
+    }, { capture: true });
 }
 
 // Fire on lightbox close. Uses sendBeacon so the request survives navigation

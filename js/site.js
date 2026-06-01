@@ -100,10 +100,15 @@ ready(() => {
         safe('lightboxes', () => autoInitLightboxes());
     });
     // Best-effort: if a content blocker eats visit-log.js, swallow
-    // silently so the rest of the page is unaffected.
+    // silently so the rest of the page is unaffected. Fires the page-
+    // load pixel AND arms a delegated click listener on outbound links
+    // so the admin Visitors page can show exit destinations.
     safe('visitPixel', () => {
         import('./visit-log.js')
-            .then(m => m.sendPagePixel())
+            .then(m => {
+                m.sendPagePixel();
+                if (m.initOutboundLinkTracking) m.initOutboundLinkTracking();
+            })
             .catch(() => { /* blocked — ignore */ });
     });
 
