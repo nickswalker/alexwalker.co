@@ -161,8 +161,8 @@ h1 .accent{color:var(--accent);font-style:italic;font-weight:600;}
 .ep-credit a{color:#54D0ED;text-decoration:none;}
 .ep-credit-plus{color:#a0a0a0;margin:0 6px;}
 
-.ep-stats{display:flex;gap:8px;padding:16px;}
-.ep-stat{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:14px 6px;border-radius:8px;border:1.5px solid #303030;background:#1c1c1c;}
+.ep-stats{display:flex;gap:8px;padding:6px 0;}
+.ep-stat{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:22px 6px;border-radius:8px;border:1.5px solid #303030;background:#1c1c1c;}
 .ep-stat.is-zero{opacity:.4;}
 .ep-stat-num{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:22px;font-weight:800;line-height:1.1;letter-spacing:-.5px;}
 .ep-stat-label{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:6px;opacity:.85;}
@@ -362,9 +362,8 @@ footer a:hover{color:var(--accent);}
             </div>
           </div>
 
-          <!-- ── Format summary stats ── -->
-          <div class="ep-card">
-            <div class="ep-stats">
+          <!-- ── Format summary stats — no card wrapper, flush to outer edges ── -->
+          <div class="ep-stats">
               <div class="ep-stat ep-s-70mm is-zero">
                 <div class="ep-stat-num">
                   0
@@ -405,7 +404,6 @@ footer a:hover{color:var(--accent);}
                 <div class="ep-stat-num">5</div>
                 <div class="ep-stat-label">4K HDR</div>
               </div>
-            </div>
           </div>
 
           <!-- ── True IMAX section card ── -->
