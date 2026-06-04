@@ -1,22 +1,25 @@
 # Liquid filter: returns the last-modified date of a file in the repo,
 # formatted however the caller asks. Used by the homepage's "Gear List
-# – Updated <month>" button so the date label refreshes automatically
-# whenever a new gear-list PDF lands in img/, without anyone editing
-# the HTML by hand.
+# – Updated <month>" button.
 #
 # Resolution order:
-#   1. `git log -1 --format=%ct` for the file — this is the COMMIT
-#      time, which is preserved across the GitHub Actions checkout
-#      (filesystem mtime gets reset to the checkout instant in CI,
-#      so File.mtime would always return "today" there).
-#   2. PDF /CreationDate metadata, if the file ends in .pdf and the
-#      pdf-reader gem is loaded. (Optional fallback, not required.)
-#   3. Filesystem mtime as a last resort.
+#   0. Sidecar override file — if a file with the same base path but a
+#      `.txt` extension exists, its first non-empty line is returned
+#      VERBATIM (no strftime formatting). This is the override knob for
+#      cases where the auto-detection can't be trusted; on GitHub Pages
+#      shallow clones, both git log AND File.mtime can be wrong for
+#      files that weren't changed in the most recent commit.
+#   1. `git log -1 --format=%ct` for the file — the COMMIT time.
+#   2. Filesystem mtime as a last resort (unreliable on shallow clones
+#      because every file's mtime is set to the checkout instant).
 #
 # Usage in a Liquid template:
 #
 #   {{ "img/AlexWalker_fullgearlist.pdf" | file_mtime: "%B %Y" }}
-#   → "April 2026"
+#   → "May 2026"
+#
+# To pin the displayed date: drop a sidecar text file next to it:
+#   img/AlexWalker_fullgearlist.txt   →  contents: "May 2026"
 #
 require 'shellwords'
 
@@ -27,6 +30,16 @@ module Jekyll
       rel = path.to_s.sub(%r{^/}, '')
       full = File.join(site_source, rel)
       return "" unless File.exist?(full)
+
+      # 0) Sidecar override — same base name with .txt extension.
+      sidecar = File.join(File.dirname(full),
+                          File.basename(full, File.extname(full)) + ".txt")
+      if File.exist?(sidecar)
+        File.foreach(sidecar) do |line|
+          stripped = line.strip
+          return stripped unless stripped.empty?
+        end
+      end
 
       time = nil
 
