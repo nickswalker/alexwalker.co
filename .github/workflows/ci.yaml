@@ -26,6 +26,17 @@ jobs:
     steps:
       - name: 📂 set up
         uses: actions/checkout@v4
+        with:
+          # Full history (not the default shallow depth=1). Required so
+          # the file_mtime Liquid filter in _plugins/file_mtime.rb can
+          # find the last commit that touched each file (e.g. the
+          # "Gear List - Updated <month>" button on the homepage reads
+          # git log -1 for img/AlexWalker_fullgearlist.pdf). With a
+          # shallow clone, git log returns empty for any file that
+          # wasn't changed in the very latest commit, and the filter
+          # would fall through to File.mtime — which in CI is the
+          # checkout instant, advancing the displayed month every push.
+          fetch-depth: 0
 
       - name: 💎 set up ruby
         uses: ruby/setup-ruby@v1
