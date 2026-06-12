@@ -193,12 +193,16 @@ h1 .accent{color:var(--accent);font-style:italic;font-weight:600;}
 .ep-badge-imax{background:linear-gradient(135deg,#13548E,#3574B9);color:#F4F2E1;}
 .ep-theater-attr{font-size:10px;color:#f0f0f0;margin:2px 0 6px;line-height:1.3;}
 .ep-theater-attr a{color:#f0f0f0;text-decoration:none;}
-.ep-showtime-rows{display:flex;flex-direction:column;gap:8px;margin-top:6px;}
-.ep-showtime-row{display:flex;align-items:flex-start;gap:14px;}
-.ep-showtime-date{font-size:11px;font-weight:600;color:#f0f0f0;min-width:72px;padding-top:3px;}
-.ep-showtime-times{display:flex;flex-wrap:wrap;gap:4px 8px;flex:1;min-width:0;padding-top:2px;}
-.ep-time-chip{font-size:11px;font-weight:600;color:#f0f0f0;}
-.ep-tickets-link{font-size:10px;font-weight:700;letter-spacing:.5px;color:#f0f0f0;border:1px solid #4a4a4a;border-radius:3px;padding:2px 8px;flex-shrink:0;text-decoration:none;}
+.ep-days{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.ep-day{background:#232323;border:1px solid #303030;border-radius:10px;padding:10px 12px;}
+.ep-day-date{font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#f0f0f0;opacity:.7;margin-bottom:7px;}
+.ep-day-times{display:flex;flex-wrap:wrap;gap:5px;}
+.ep-day-tix{text-align:right;margin-top:8px;}
+.ep-day-inline{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.ep-time-chip{font-size:11px;font-weight:600;color:#f0f0f0;background:#161616;border-radius:5px;padding:4px 9px;}
+.ep-tickets-link{font-size:10px;font-weight:700;letter-spacing:.5px;color:#f0f0f0;border:1px solid #4a4a4a;border-radius:3px;padding:3px 9px;flex-shrink:0;text-decoration:none;}
+.ep-badge-imax70{background:#0c1822;color:#54D0ED;border:1px dashed #0FBCEC;}
+.ep-citypill{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;background:#2e2e2e;color:#f0f0f0;border-radius:3px;padding:2px 6px;margin-right:7px;vertical-align:1px;}
 
 @media (prefers-color-scheme: light) {
   .email-mock{background:#e8e8e8;border-color:#b4b4b4;}
@@ -206,7 +210,11 @@ h1 .accent{color:var(--accent);font-style:italic;font-weight:600;}
   .mock-addr{background:rgba(0,0,0,.06);color:#666;}
   .ep-fade::after{background:linear-gradient(to bottom, rgba(232,232,232,0) 0%, rgba(232,232,232,.85) 60%, rgba(232,232,232,1) 100%);}
   .ep-card{background:#ffffff;border-color:#b4b4b4;}
-  .ep-edition,.ep-eyebrow,.ep-dates,.ep-subtag,.ep-credit,.ep-pill,.ep-section-desc,.ep-theater-attr,.ep-theater-attr a,.ep-showtime-date,.ep-time-chip,.ep-film-title,.ep-tickets-link{color:#050505;}
+  .ep-edition,.ep-eyebrow,.ep-dates,.ep-subtag,.ep-credit,.ep-pill,.ep-section-desc,.ep-theater-attr,.ep-theater-attr a,.ep-day-date,.ep-time-chip,.ep-film-title,.ep-tickets-link{color:#050505;}
+  .ep-day{background:#ededed;border-color:#c4c4c4;}
+  .ep-time-chip{background:#ffffff;}
+  .ep-citypill{background:#ddd;color:#050505;}
+  .ep-badge-imax70{background:#f0faff;color:#13548E;border-color:#0FBCEC;}
   .ep-credit a{color:#13548E;}
   .ep-credit-plus{color:#4a4a4a;}
   .ep-title{color:#0C0C0B;}
@@ -276,7 +284,7 @@ footer a:hover{color:var(--accent);}
 </nav>
 
 <section class="hero">
-  <p class="eyebrow" id="eyebrow-edition">Austin's Weekly Cinema Digest</p>
+  <p class="eyebrow">Austin's Weekly Cinema Digest</p>
 
   <span class="cmx-logo" style="margin:0 auto 2rem;">
     <img class="hero-logo" src="https://alexwalker.co/img/cinemaxxing-logo.png" alt="Cinemaxxing">
@@ -334,7 +342,7 @@ footer a:hover{color:var(--accent);}
           <div class="dot" style="background:#febc2e"></div>
           <div class="dot" style="background:#28c840"></div>
         </div>
-        <div class="mock-addr">Cinemaxxing — May 4 – May 10, 2026</div>
+        <div class="mock-addr">Cinemaxxing — Jun 8 – Jun 14, 2026</div>
       </div>
 
       <div class="ep-fade">
@@ -342,7 +350,7 @@ footer a:hover{color:var(--accent);}
 
           <!-- ── Header card ── -->
           <div class="ep-card ep-header">
-            <span class="ep-edition">Edition #3</span>
+            <span class="ep-edition">Edition #8</span>
             <div class="ep-pills">
               <span class="ep-pill">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -353,10 +361,11 @@ footer a:hover{color:var(--accent);}
                 @cinemaxxing_
               </span>
               <span class="ep-pill">Share with a friend</span>
+              <span class="ep-pill">Open in browser</span>
             </div>
             <div class="ep-eyebrow">Weekly Austin Premium Cinema Schedule</div>
             <img class="ep-logo" src="https://alexwalker.co/img/cinemaxxing-logo.png" alt="Cinemaxxing">
-            <div class="ep-dates">May 4 – May 10, 2026</div>
+            <div class="ep-dates">Jun 8 – Jun 14, 2026</div>
             <div class="ep-accent"></div>
             <div class="ep-subtag">Sometimes you have to drive a few hours for 70mm…</div>
             <div class="ep-credit">
@@ -367,22 +376,22 @@ footer a:hover{color:var(--accent);}
 
           <!-- ── Format summary stats — no card wrapper, flush to outer edges ── -->
           <div class="ep-stats">
-              <div class="ep-stat ep-s-70mm is-zero">
+              <div class="ep-stat ep-s-70mm">
                 <div class="ep-stat-num">
-                  0
+                  1
                   <span class="ep-frown">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                       <circle cx="12" cy="12" r="10"/>
                       <circle cx="9" cy="10" r="0.9" fill="currentColor" stroke="none"/>
                       <circle cx="15" cy="10" r="0.9" fill="currentColor" stroke="none"/>
-                      <path d="M9 16c1-1.5 5-1.5 6 0"/>
+                      <path d="M9 15c1 1.5 5 1.5 6 0"/>
                     </svg>
                   </span>
                 </div>
                 <div class="ep-stat-label">70mm</div>
               </div>
               <div class="ep-stat ep-s-imax">
-                <div class="ep-stat-num">5</div>
+                <div class="ep-stat-num">4</div>
                 <div class="ep-stat-label">IMAX</div>
               </div>
               <div class="ep-stat ep-s-35mm">
@@ -400,7 +409,7 @@ footer a:hover{color:var(--accent);}
                 <div class="ep-stat-label">35mm</div>
               </div>
               <div class="ep-stat ep-s-dolby">
-                <div class="ep-stat-num">8</div>
+                <div class="ep-stat-num">5</div>
                 <div class="ep-stat-label">Dolby</div>
               </div>
               <div class="ep-stat ep-s-hdr">
@@ -421,25 +430,25 @@ footer a:hover{color:var(--accent);}
               <div class="ep-film is-imax">
                 <div class="ep-film-row">
                   <svg class="ep-poster" viewBox="0 0 44 65" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="44" height="65" rx="4" fill="#2a1a08"/>
-                    <rect x="4" y="4" width="36" height="40" rx="2" fill="rgba(180,100,20,0.55)"/>
+                    <rect width="44" height="65" rx="4" fill="#0a1226"/>
+                    <rect x="4" y="4" width="36" height="44" rx="2" fill="rgba(15,188,236,0.4)"/>
                   </svg>
                   <div class="ep-film-info">
                     <div class="ep-film-title-row">
-                      <span class="ep-film-title">Mortal Kombat II</span>
-                      <span class="ep-badge ep-badge-imax">IMAX</span>
+                      <span class="ep-film-title">Disclosure Day</span>
+                      <span class="ep-badge ep-badge-imax70">IMAX 70mm</span>
                     </div>
-                    <p class="ep-theater-attr"><a href="#">Bob Bullock IMAX ↗</a></p>
-                    <div class="ep-showtime-rows">
-                      <div class="ep-showtime-row">
-                        <span class="ep-showtime-date">Fri May 8</span>
-                        <div class="ep-showtime-times"><span class="ep-time-chip">4:30 PM</span><span class="ep-time-chip">7:30 PM</span></div>
-                        <span class="ep-tickets-link">Tickets →</span>
+                    <p class="ep-theater-attr"><span class="ep-citypill">San Antonio</span><a href="#">Santikos Palladium IMAX</a></p>
+                    <div class="ep-days">
+                      <div class="ep-day">
+                        <div class="ep-day-date">Thu Jun 11</div>
+                        <div class="ep-day-times"><span class="ep-time-chip">2:40 PM</span><span class="ep-time-chip">6:00 PM</span><span class="ep-time-chip">9:20 PM</span></div>
+                        <div class="ep-day-tix"><span class="ep-tickets-link">Tickets</span></div>
                       </div>
-                      <div class="ep-showtime-row">
-                        <span class="ep-showtime-date">Sat May 9</span>
-                        <div class="ep-showtime-times"><span class="ep-time-chip">4:30 PM</span><span class="ep-time-chip">7:30 PM</span></div>
-                        <span class="ep-tickets-link">Tickets →</span>
+                      <div class="ep-day">
+                        <div class="ep-day-date">Fri Jun 12</div>
+                        <div class="ep-day-times"><span class="ep-time-chip">11:20 AM</span><span class="ep-time-chip">2:40 PM</span><span class="ep-time-chip">6:00 PM</span><span class="ep-time-chip">9:20 PM</span></div>
+                        <div class="ep-day-tix"><span class="ep-tickets-link">Tickets</span></div>
                       </div>
                     </div>
                   </div>
@@ -449,25 +458,24 @@ footer a:hover{color:var(--accent);}
               <div class="ep-film is-imax">
                 <div class="ep-film-row">
                   <svg class="ep-poster" viewBox="0 0 44 65" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="44" height="65" rx="4" fill="#0a1428"/>
-                    <rect x="4" y="4" width="36" height="44" rx="2" fill="rgba(40,80,180,0.45)"/>
+                    <rect width="44" height="65" rx="4" fill="#1c1208"/>
+                    <rect x="4" y="4" width="36" height="44" rx="2" fill="rgba(232,160,0,0.4)"/>
                   </svg>
                   <div class="ep-film-info">
                     <div class="ep-film-title-row">
-                      <span class="ep-film-title">Project Hail Mary</span>
+                      <span class="ep-film-title">Disclosure Day</span>
                       <span class="ep-badge ep-badge-imax">IMAX</span>
                     </div>
-                    <p class="ep-theater-attr"><a href="#">Bob Bullock IMAX ↗</a></p>
-                    <div class="ep-showtime-rows">
-                      <div class="ep-showtime-row">
-                        <span class="ep-showtime-date">Tue May 5</span>
-                        <div class="ep-showtime-times"><span class="ep-time-chip">2:30 PM</span><span class="ep-time-chip">5:40 PM</span><span class="ep-time-chip">7:00 PM</span></div>
-                        <span class="ep-tickets-link">Tickets →</span>
+                    <p class="ep-theater-attr"><a href="#">Bob Bullock IMAX</a></p>
+                    <div class="ep-days">
+                      <div class="ep-day">
+                        <div class="ep-day-date">Fri Jun 12</div>
+                        <div class="ep-day-inline"><span class="ep-time-chip">3:30 PM</span><span class="ep-tickets-link">Tickets</span></div>
                       </div>
-                      <div class="ep-showtime-row">
-                        <span class="ep-showtime-date">Wed May 6</span>
-                        <div class="ep-showtime-times"><span class="ep-time-chip">3:25 PM</span><span class="ep-time-chip">5:00 PM</span><span class="ep-time-chip">8:10 PM</span></div>
-                        <span class="ep-tickets-link">Tickets →</span>
+                      <div class="ep-day">
+                        <div class="ep-day-date">Sat Jun 13 – Sun Jun 14</div>
+                        <div class="ep-day-times"><span class="ep-time-chip">3:30 PM</span><span class="ep-time-chip">7:00 PM</span></div>
+                        <div class="ep-day-tix"><span class="ep-tickets-link">Tickets</span></div>
                       </div>
                     </div>
                   </div>
@@ -656,21 +664,6 @@ document.querySelectorAll('.form-wrap input').forEach(inp => {
     document.body.appendChild(img);
   })();
 
-  // Live edition number in the hero eyebrow.
-  // Matches send_email.py: edition = (currentWeekMonday - EPOCH)/7 + 1,
-  // where currentWeekMonday uses today on Mon-Sat and tomorrow on Sunday.
-  (function(){
-    var EPOCH = new Date(2026, 3, 20); // Apr 20, 2026 = Edition #1 Monday
-    var now = new Date();
-    var day = now.getDay(); // 0=Sun, 1=Mon … 6=Sat
-    var anchor = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    if (day === 0) anchor.setDate(anchor.getDate() + 1);          // Sun → tomorrow
-    else if (day !== 1) anchor.setDate(anchor.getDate() - (day-1)); // Tue-Sat → this Mon
-    var diffDays = Math.round((anchor - EPOCH) / 86400000);
-    var edition = Math.max(1, Math.floor(diffDays / 7) + 1);
-    var el = document.getElementById('eyebrow-edition');
-    if (el) el.textContent = 'Edition #' + edition + ' · This week in Austin cinema';
-  })();
 </script>
 </body>
 </html>
