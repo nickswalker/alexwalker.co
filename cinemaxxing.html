@@ -202,7 +202,7 @@ h1 .accent{color:var(--accent);font-style:italic;font-weight:600;}
 .ep-time-chip{font-size:11px;font-weight:600;color:#f0f0f0;background:#161616;border-radius:5px;padding:4px 9px;}
 .ep-tickets-link{font-size:10px;font-weight:700;letter-spacing:.5px;color:#f0f0f0;border:1px solid #4a4a4a;border-radius:3px;padding:3px 9px;flex-shrink:0;text-decoration:none;}
 .ep-badge-imax70{background-color:#0C0C0B;background-image:repeating-linear-gradient(90deg,transparent 0 2px,#0FBCEC 2px 5px),repeating-linear-gradient(90deg,transparent 0 2px,#0FBCEC 2px 5px);background-size:5px 2px,5px 2px;background-position:0 0,0 100%;background-repeat:repeat-x,repeat-x;color:#54D0ED;border:1px solid #0FBCEC;padding:3px 9px;}
-.ep-citypill{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;background:#2e2e2e;color:#f0f0f0;border-radius:3px;padding:2px 6px;margin-right:7px;vertical-align:1px;}
+.ep-theater-label{display:block;font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:#f0f0f0;opacity:.6;text-align:right;margin-bottom:4px;}
 
 @media (prefers-color-scheme: light) {
   .email-mock{background:#e8e8e8;border-color:#b4b4b4;}
@@ -210,10 +210,9 @@ h1 .accent{color:var(--accent);font-style:italic;font-weight:600;}
   .mock-addr{background:rgba(0,0,0,.06);color:#666;}
   .ep-fade::after{background:linear-gradient(to bottom, rgba(232,232,232,0) 0%, rgba(232,232,232,.85) 60%, rgba(232,232,232,1) 100%);}
   .ep-card{background:#ffffff;border-color:#b4b4b4;}
-  .ep-edition,.ep-eyebrow,.ep-dates,.ep-subtag,.ep-credit,.ep-pill,.ep-section-desc,.ep-theater-attr,.ep-theater-attr a,.ep-day-date,.ep-time-chip,.ep-film-title,.ep-tickets-link{color:#050505;}
+  .ep-edition,.ep-eyebrow,.ep-dates,.ep-subtag,.ep-credit,.ep-pill,.ep-section-desc,.ep-theater-attr,.ep-theater-attr a,.ep-day-date,.ep-time-chip,.ep-film-title,.ep-tickets-link,.ep-theater-label{color:#050505;}
   .ep-day{background:#ededed;border-color:#c4c4c4;}
   .ep-time-chip{background:#ffffff;}
-  .ep-citypill{background:#ddd;color:#050505;}
   .ep-badge-imax70{background-color:#F4F2E1;color:#13548E;border-color:#0FBCEC;}
   .ep-credit a{color:#13548E;}
   .ep-credit-plus{color:#4a4a4a;}
@@ -432,11 +431,12 @@ footer a:hover{color:var(--accent);}
                 <div class="ep-film-row">
                   <img class="ep-poster" src="https://image.tmdb.org/t/p/w154/3o5YPjDGDTcTDL5ftDA9NwN9dLd.jpg" alt="Disclosure Day poster" loading="lazy">
                   <div class="ep-film-info">
+                    <div class="ep-theater-label">San Antonio</div>
                     <div class="ep-film-title-row">
                       <span class="ep-film-title">Disclosure Day</span>
                       <span class="ep-badge ep-badge-imax70">IMAX 70mm</span>
                     </div>
-                    <p class="ep-theater-attr"><span class="ep-citypill">San Antonio</span><a href="#">Santikos Palladium IMAX</a></p>
+                    <p class="ep-theater-attr"><a href="#">Santikos Palladium IMAX</a></p>
                     <div class="ep-days">
                       <div class="ep-day">
                         <div class="ep-day-date">Thu Jun 11</div>
