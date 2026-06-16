@@ -5,88 +5,159 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Cinemaxxing — Austin's Weekly Premium Cinema Schedule</title>
 
-<!-- Favicon -->
 <link rel="icon" type="image/png" href="https://alexwalker.co/img/cinemaxxing-icon-rounded.png">
 <link rel="apple-touch-icon" href="https://alexwalker.co/img/cinemaxxing-icon.png">
 <meta name="apple-mobile-web-app-title" content="Cinemaxxing">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#f5f0e8" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0e0e0f" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#0B0D11">
 
-<!-- Open Graph -->
-<meta property="og:title" content="Cinemaxxing — Austin's Weekly Cinema Digest">
-<meta property="og:description" content="A weekly cheat sheet for seeing films at their best. 70mm, IMAX, 35mm, Dolby, and 4K HDR screenings across Austin and beyond — every Monday morning.">
+<meta property="og:title" content="Cinemaxxing — Austin's Weekly Premium Cinema Schedule">
+<meta property="og:description" content="Your weekly guide to premium & special format screenings in Austin so you never miss another 70mm, IMAX, or repertory screening.">
 <meta property="og:image" content="https://alexwalker.co/img/cinemaxxing-preview.jpg">
 <meta property="og:url" content="https://cinemaxxing.co">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Cinemaxxing">
 
-<!-- Twitter/X Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Cinemaxxing — Austin's Weekly Cinema Digest">
-<meta name="twitter:description" content="A weekly cheat sheet for seeing films at their best. 70mm, IMAX, 35mm, Dolby, and 4K HDR screenings across Austin and beyond — every Monday morning.">
+<meta name="twitter:title" content="Cinemaxxing — Austin's Weekly Premium Cinema Schedule">
+<meta name="twitter:description" content="Your weekly guide to premium & special format screenings in Austin so you never miss another 70mm, IMAX, or repertory screening.">
 <meta name="twitter:image" content="https://alexwalker.co/img/cinemaxxing-preview.jpg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #F4F2E1;
-  --bg2: rgba(12,12,11,0.05);
-  --bg3: #F4F2E1;
-  --text: #0C0C0B;
-  --text2: rgba(12,12,11,0.62);
-  --text3: rgba(12,12,11,0.42);
-  --accent: #E29700;
-  --border: rgba(12,12,11,0.12);
-  --fmt-70mm: #0FBCEC;
-  --fmt-imax: #13548E;
-  --fmt-35mm: #FBB315;
-  --fmt-dolby: #BC1F49;
-  --fmt-hdr: #F26B6B;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0C0C0B;
-    --bg2: rgba(244,242,225,0.05);
-    --bg3: #0C0C0B;
-    --text: #F4F2E1;
-    --text2: rgba(244,242,225,0.62);
-    --text3: rgba(244,242,225,0.40);
-    --accent: #FBB315;
-    --border: rgba(244,242,225,0.10);
-    --fmt-70mm: #0FBCEC;
-    --fmt-imax: #54D0ED;
-    --fmt-35mm: #FBB315;
-    --fmt-dolby: #EE475E;
-    --fmt-hdr: #F26B6B;
-  }
+:root{
+  --cream:#F4F2E1;
+  --ink:#0C0C0B;
+  --amber:#FBB315;
+  --orange:#E29700;
+  --cyan:#0FBCEC;
+  --imax-blue:#13548E;
+  --rose:#BC1F49;
+  --coral:#F26B6B;
+
+  /* Per-section brand-derived backgrounds */
+  --bg-hero:#0B0D11;       /* ink with a hint of navy */
+  --bg-covered:#0D1F33;    /* deep IMAX navy-cyan */
+  --bg-about:#1F140E;      /* warm sepia / cinema lobby */
+  --bg-cta:#4E0712;        /* deep Kodachrome red */
+
+  /* Light leak palette */
+  --leak-hot:#FF7858;
+  --leak-bright:#E04848;
+  --leak-mid:#9A2A3F;
+  --leak-deep:#3C1B3F;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;overflow-x:hidden;}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--ink);color:var(--cream);
+  font-family:'Plus Jakarta Sans',-apple-system,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.6;
+}
+img{max-width:100%;display:block;}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-bottom:1px solid var(--border);}
-.nav-logo{display:inline-flex;align-items:center;text-decoration:none;}
-.nav-logo img{display:block;height:32px;width:32px;border-radius:7px;}
-.nav-btn{background:var(--accent);color:#fff;border:none;padding:0.5rem 1.4rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;text-decoration:none;transition:opacity .2s;}
-.nav-btn:hover{opacity:.85;}
+/* ─────── Perforation strip: seamlessly-tileable cropped asset ─────── */
+.reel{
+  width:100%;height:22px;
+  background-image:url("https://alexwalker.co/img/cinemaxxing-perf-strip.png");
+  background-size:auto 22px;background-repeat:repeat-x;background-position:left center;
+  position:relative;z-index:5;
+  /* Dim the strip: brings down both the navy AND the cream perforation
+     squares so they read as a subdued accent rather than a bright strip. */
+  filter:brightness(0.55) saturate(0.85);
+  opacity:.85;
+}
 
-/* HERO */
-.hero{padding:8rem 2rem 5rem;max-width:820px;margin:0 auto;text-align:center;}
-.eyebrow{font-family:'Courier Prime',monospace;font-size:0.7rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;}
+/* ─────── Film grain (visible analog texture for every section bg) ─────── */
+/* Bi-directional grain rendered as a real PNG with both INK and CREAM
+   specks on transparent. No blend mode — just normal opacity. Visible on
+   any background regardless of color, because the specks themselves carry
+   their own opaque colors. */
+.grain{
+  position:absolute;inset:0;pointer-events:none;z-index:1;
+  background-image:url("https://alexwalker.co/img/cinemaxxing-grain.png");
+  background-size:240px 240px;
+  background-repeat:repeat;
+  opacity:.22;
+}
+.grain.heavy{opacity:.32;}
+.grain.heaviest{opacity:.45;}
 
-/* HERO LOGO */
-.hero-logo{display:block;width:100%;max-width:420px;height:auto;margin:0 auto 2rem;}
-@media (max-width:600px){.hero-logo{max-width:300px;margin-bottom:1.5rem;}}
+/* ─────── Section transitions: gradient-baked, no separate leak elements ──
+   Each section's bg includes a vertical linear gradient plus optional
+   radial-gradient coral hot-spot overlays at the top and bottom.
+   At each section boundary, TWO sections share the EXACT same anchor color
+   (purple-maroon, coral, or warm), so transitions are seamless by
+   construction — no hard edges possible. */
+:root{
+  --anchor-hero-cov:#2B0D2E;       /* purple-maroon between hero and covered */
+  --anchor-cov-about:#3F1126;      /* deeper purple between covered and about */
+  --anchor-about-cta:#7A1428;      /* warm red between about and cta */
+}
+section.has-leak-above{padding-top:9rem;}
+section.has-leak-below{padding-bottom:9rem;}
 
-/* Logo animations: fade in on load, pause, smooth one-shot glow, smooth hover glow. */
-.cmx-logo{display:inline-block;line-height:0;border-radius:6px;max-width:420px;width:100%;opacity:0;transform:translateY(10px);transition:filter 0.7s cubic-bezier(0.4,0,0.2,1),transform 0.7s cubic-bezier(0.4,0,0.2,1);will-change:filter,transform,opacity;}
-.cmx-logo.is-loaded{opacity:1;transform:translateY(0);transition:opacity 0.6s cubic-bezier(0.4,0,0.2,1),transform 0.6s cubic-bezier(0.4,0,0.2,1),filter 0.7s cubic-bezier(0.4,0,0.2,1);}
-.cmx-logo img{display:block;width:100%;height:auto;opacity:0.94;transition:opacity 0.6s ease;margin:0 auto;}
+/* ────────── NAV ────────── */
+nav{
+  position:sticky;top:0;z-index:50;
+  padding:1.1rem 2rem;display:flex;align-items:center;justify-content:space-between;
+  background:rgba(11,13,17,0.78);backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(244,242,225,0.08);
+}
+nav .nav-logo{display:inline-flex;align-items:center;text-decoration:none;}
+nav .nav-logo img{height:30px;width:30px;border-radius:6px;}
+nav .nav-btn{
+  text-decoration:none;font-family:'Courier Prime',monospace;font-size:.72rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--amber);
+  padding:.5rem 1.15rem;border:1px solid var(--amber);border-radius:999px;font-weight:700;
+}
+
+/* ────────── HERO ────────── */
+.hero{
+  position:relative;overflow:hidden;color:var(--cream);
+  padding:6rem 2rem 8rem;text-align:center;
+  background:
+    /* Coral hot spot — peak 10% BELOW section bottom so brightest point is
+       hidden; we only see the smooth falloff inside the section. */
+    radial-gradient(ellipse 120% 60% at 50% 110%,
+      rgba(228,72,72,0.50) 0%,
+      rgba(228,72,72,0.35) 15%,
+      rgba(228,72,72,0.20) 30%,
+      rgba(228,72,72,0.10) 45%,
+      rgba(228,72,72,0.04) 60%,
+      transparent 75%),
+    /* Multi-stop linear: ink stays solid through middle, anchors at edge */
+    linear-gradient(to bottom,
+      var(--bg-hero) 0%,
+      var(--bg-hero) 45%,
+      #14101A 70%,
+      #1F0E25 88%,
+      var(--anchor-hero-cov) 100%);
+}
+.hero > *{position:relative;z-index:2;}
+.hero > .grain{position:absolute;inset:0;z-index:1;}
+.hero .inner{max-width:880px;margin:0 auto;}
+.hero .eyebrow{
+  font-family:'Courier Prime',monospace;font-size:.72rem;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:1.8rem;
+}
+/* Hero logo wrapped in .cmx-logo for fade-in + one-shot pulse + hover glow */
+.cmx-logo{
+  display:inline-block;line-height:0;border-radius:6px;max-width:380px;width:100%;
+  margin:0 auto 2rem;
+  opacity:0;transform:translateY(10px);
+  transition:filter 0.7s cubic-bezier(0.4,0,0.2,1),transform 0.7s cubic-bezier(0.4,0,0.2,1);
+  will-change:filter,transform,opacity;
+}
+.cmx-logo.is-loaded{
+  opacity:1;transform:translateY(0);
+  transition:opacity 0.6s cubic-bezier(0.4,0,0.2,1),transform 0.6s cubic-bezier(0.4,0,0.2,1),filter 0.7s cubic-bezier(0.4,0,0.2,1);
+}
+.cmx-logo img{display:block;width:100%;height:auto;opacity:.94;transition:opacity 0.6s ease;margin:0 auto;}
 .cmx-logo:hover{filter:drop-shadow(0 0 16px rgba(144,200,240,0.6));transform:translateY(-1px);}
 .cmx-logo:hover img{opacity:1;}
-/* Single smooth in-and-out glow — symmetric ease curve, peaks at 50%. */
 @keyframes cmx-pulse{
   0%,100%{filter:drop-shadow(0 0 0 rgba(120,200,255,0)) drop-shadow(0 0 0 rgba(120,200,255,0));}
   50%{filter:drop-shadow(0 0 12px rgba(120,200,255,0.45)) drop-shadow(0 0 30px rgba(120,200,255,0.25));}
@@ -98,64 +169,276 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:fl
   .cmx-logo.is-pulsing{animation:none;}
 }
 
-h1{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,4vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1.5rem;color:var(--text);}
-h1 .accent{color:var(--accent);font-style:italic;font-weight:600;}
-
-.hero-sub{font-size:1.05rem;color:var(--text2);max-width:560px;margin:0 auto 2rem;font-weight:300;line-height:1.75;}
-.hero-sub strong{color:var(--text);font-weight:500;}
-.hero-tagline{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:600;font-style:italic;color:var(--accent);letter-spacing:-0.01em;margin:0 auto 2.5rem;}
-
-/* FORM */
-.form-wrap{display:flex;gap:.5rem;max-width:400px;margin:0 auto;scroll-margin-top:140px;}
-.form-wrap input{flex:1;padding:.75rem 1.25rem;border:1px solid var(--border);border-radius:999px;background:var(--bg3);color:var(--text);font-family:'Inter',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s;}
-.form-wrap input:focus{border-color:var(--accent);}
-.form-wrap input::placeholder{color:var(--text3);}
-.form-wrap button{padding:.75rem 1.6rem;background:var(--accent);color:#fff;border:none;border-radius:999px;font-family:'Inter',sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;white-space:nowrap;transition:opacity .2s;}
-.form-wrap button:hover{opacity:.85;}
-.form-note{font-size:.72rem;color:var(--text3);margin-top:.65rem;}
-.success-msg{display:none;color:var(--accent);font-size:.9rem;margin-top:.75rem;}
-
-/* FORMAT PILLS */
-.pills{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:2.25rem;}
-.pill{font-family:'Inter',sans-serif;font-size:.82rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.45rem 1rem;border-radius:4px;border:1.5px solid;cursor:default;display:inline-block;transform-origin:center;transition:transform .42s cubic-bezier(.34,1.56,.64,1),box-shadow .42s cubic-bezier(.34,1.56,.64,1),filter .35s ease;will-change:transform,box-shadow,filter;}
+/* Format pills — bouncy hover scale + tilt + colored glow, matching the
+   current landing-page behavior */
+.pills{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin:2.25rem auto 0;}
+.pill{
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;padding:.45rem 1rem;
+  border-radius:4px;border:1.5px solid;cursor:default;display:inline-block;
+  transform-origin:center;
+  transition:transform .42s cubic-bezier(.34,1.56,.64,1),box-shadow .42s cubic-bezier(.34,1.56,.64,1),filter .35s ease;
+  will-change:transform,box-shadow,filter;
+}
 .pill:hover{transform:scale(1.18) translateY(-2px) rotate(-1.5deg);box-shadow:0 6px 18px -6px currentColor;filter:brightness(1.15);}
 @media (prefers-reduced-motion:reduce){.pill,.pill:hover{transition:none;transform:none;box-shadow:none;filter:none;}}
-.p-70mm{border-color:var(--fmt-70mm);color:var(--fmt-70mm);}
-.p-imax{border-color:var(--fmt-imax);color:var(--fmt-imax);}
-.p-35mm{border-color:var(--fmt-35mm);color:var(--fmt-35mm);}
-.p-dolby{border-color:var(--fmt-dolby);color:var(--fmt-dolby);}
-.p-hdr{border-color:var(--fmt-hdr);color:var(--fmt-hdr);}
-.p-event{border-color:#680F22;color:#680F22;}
-@media (prefers-color-scheme: dark){.p-event{border-color:#9DEBF4;color:#9DEBF4;}}
+.p-70mm{border-color:var(--cyan);color:var(--cyan);}
+.p-imax{border-color:#3574B9;color:#54D0ED;}
+.p-35mm{border-color:var(--amber);color:var(--amber);}
+.p-dolby{border-color:#EE475E;color:#EE475E;}
+.p-hdr{border-color:var(--coral);color:var(--coral);}
+.p-event{border-color:#9DEBF4;color:#9DEBF4;}
+.hero h1{
+  font-family:'Sansita',Georgia,serif;font-weight:800;
+  font-size:clamp(2.1rem,4.8vw,3.4rem);line-height:1.05;letter-spacing:-.012em;
+  max-width:20ch;margin:0 auto 1.5rem;color:var(--cream);
+}
+.hero h1 i{font-style:italic;color:var(--amber);font-weight:800;}
+.hero-sub{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;color:rgba(244,242,225,0.75);max-width:54ch;margin:0 auto 1.5rem;line-height:1.7;}
+.hero-tagline{font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:800;font-size:1.4rem;color:var(--coral);margin:0 0 2.5rem;}
+.form-wrap{display:flex;gap:.5rem;max-width:420px;margin:0 auto;}
+.form-wrap input{
+  flex:1;padding:.85rem 1.25rem;border:1px solid rgba(244,242,225,0.22);
+  border-radius:999px;background:rgba(244,242,225,0.05);color:var(--cream);
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;outline:none;
+}
+.form-wrap input::placeholder{color:rgba(244,242,225,0.35);}
+.form-wrap button{
+  padding:.85rem 1.6rem;background:var(--amber);color:#0B0D11;border:none;border-radius:999px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;letter-spacing:.05em;
+}
 
-/* PREVIEW SECTION */
-.preview{background:var(--bg2);padding:4rem 2rem;}
-.section-inner{max-width:820px;margin:0 auto;}
-.section-label{font-family:'Inter',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-align:center;margin-bottom:2rem;}
+/* ────────── COVERED (IMAX-blue tinted) ────────── */
+.covered{
+  position:relative;overflow:hidden;color:var(--cream);
+  padding:8rem 2rem 8rem;
+  background:
+    /* Top hot spot — peak 10% ABOVE section top, hidden offscreen */
+    radial-gradient(ellipse 120% 55% at 50% -10%,
+      rgba(228,72,72,0.50) 0%,
+      rgba(228,72,72,0.35) 15%,
+      rgba(228,72,72,0.20) 30%,
+      rgba(228,72,72,0.10) 45%,
+      rgba(228,72,72,0.04) 60%,
+      transparent 75%),
+    /* Bottom hot spot — peak 10% BELOW section bottom */
+    radial-gradient(ellipse 120% 55% at 50% 110%,
+      rgba(228,72,72,0.55) 0%,
+      rgba(228,72,72,0.38) 15%,
+      rgba(228,72,72,0.22) 30%,
+      rgba(228,72,72,0.10) 45%,
+      rgba(228,72,72,0.04) 60%,
+      transparent 75%),
+    /* Multi-stop linear */
+    linear-gradient(to bottom,
+      var(--anchor-hero-cov) 0%,
+      #1F0E25 8%,
+      #15172E 20%,
+      var(--bg-covered) 35%,
+      var(--bg-covered) 65%,
+      #14172A 80%,
+      #2A0F1F 92%,
+      var(--anchor-cov-about) 100%);
+}
+.covered > *{position:relative;z-index:2;}
+.covered > .grain{position:absolute;inset:0;z-index:1;}
+.covered .inner{max-width:1100px;margin:0 auto;}
+.covered h2{
+  font-family:'Sansita',Georgia,serif;font-weight:800;
+  font-size:clamp(2.2rem,5vw,3.4rem);letter-spacing:-.012em;
+  margin-bottom:.4rem;color:var(--cream);line-height:1;
+}
+.covered .sec-sub{
+  font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:400;
+  color:rgba(244,242,225,0.6);font-size:1.05rem;margin-bottom:2.75rem;max-width:46ch;
+}
+.cov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2.5rem;}
+.cov-group{border-top:1px solid rgba(244,242,225,0.18);padding-top:1.25rem;}
+.cov-num{font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:800;font-size:2rem;margin-bottom:.35rem;display:block;line-height:1;}
+.cov-group:nth-child(1) .cov-num{color:var(--cyan);}
+.cov-group:nth-child(2) .cov-num{color:var(--amber);}
+.cov-group:nth-child(3) .cov-num{color:var(--coral);}
+.cov-group h3{font-family:'Sansita',Georgia,serif;font-weight:800;font-size:1.55rem;margin-bottom:.4rem;color:var(--cream);letter-spacing:-.005em;}
+.cov-desc{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;color:rgba(244,242,225,0.65);line-height:1.55;margin-bottom:1.1rem;}
+.cov-list{list-style:none;display:flex;flex-direction:column;gap:.6rem;font-family:'Plus Jakarta Sans',sans-serif;}
+.cov-list li{font-size:.9rem;line-height:1.4;padding-left:.85rem;position:relative;color:rgba(244,242,225,0.95);}
+.cov-list li::before{content:'';position:absolute;left:0;top:.55rem;width:4px;height:4px;border-radius:50%;background:rgba(244,242,225,0.4);}
+.cov-list li span{display:block;font-size:.76rem;color:rgba(244,242,225,0.5);margin-top:.15rem;}
+.cov-footer{font-family:'Plus Jakarta Sans',sans-serif;font-size:.85rem;color:rgba(244,242,225,0.55);margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid rgba(244,242,225,0.12);line-height:1.65;max-width:760px;}
+.cov-footer strong{color:var(--cream);font-weight:600;}
 
-/* ──────────────────────────────────────────────────────────────────────────
-   Embedded email preview — visually mirrors the live email by reusing the
-   email's exact CSS tokens. Truncated and fades out after the first few films
-   (a teaser, not the whole email). Stand-alone — no iframe, no Flask required.
-   ────────────────────────────────────────────────────────────────────────── */
-.email-mock{background:#0e0e0e;border-radius:12px;overflow:hidden;border:1px solid #303030;max-width:640px;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;}
+/* ────────── ABOUT (warm sepia) ────────── */
+.about{
+  position:relative;overflow:hidden;color:var(--cream);
+  padding:8rem 2rem 8rem;
+  background:
+    /* Top hot spot — peak hidden above section */
+    radial-gradient(ellipse 120% 55% at 50% -10%,
+      rgba(228,72,72,0.55) 0%,
+      rgba(228,72,72,0.38) 15%,
+      rgba(228,72,72,0.22) 30%,
+      rgba(228,72,72,0.10) 45%,
+      rgba(228,72,72,0.04) 60%,
+      transparent 75%),
+    /* Bottom hot spot — matched falloff to CTA's top (identical ellipse
+       height + identical stops + symmetric peak offset) so the opacity at
+       the boundary is identical from both sides → no step / no line. */
+    radial-gradient(ellipse 130% 70% at 50% 115%,
+      rgba(255,120,88,0.75) 0%,
+      rgba(255,120,88,0.55) 15%,
+      rgba(255,120,88,0.35) 30%,
+      rgba(255,120,88,0.18) 45%,
+      rgba(255,120,88,0.06) 60%,
+      transparent 78%),
+    linear-gradient(to bottom,
+      var(--anchor-cov-about) 0%,
+      #2D1010 8%,
+      #25140E 20%,
+      var(--bg-about) 35%,
+      var(--bg-about) 65%,
+      #2A140F 80%,
+      #4C1418 92%,
+      var(--anchor-about-cta) 100%);
+}
+.about > *{position:relative;z-index:2;}
+.about > .grain{position:absolute;inset:0;z-index:1;}
+.about .inner{max-width:920px;margin:0 auto;}
+.about h2{
+  font-family:'Sansita',Georgia,serif;font-weight:800;
+  font-size:clamp(2.2rem,5vw,3.2rem);letter-spacing:-.012em;
+  margin-bottom:.4rem;color:var(--cream);line-height:1;
+}
+.about .sec-sub{font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:400;color:rgba(244,242,225,0.62);font-size:1.05rem;margin-bottom:2.5rem;max-width:42ch;}
+.about-lead{
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;line-height:1.55;
+  max-width:62ch;color:var(--cream);font-weight:300;margin-bottom:3rem;
+}
+.about-lead::first-letter{
+  font-family:'Sansita',Georgia,serif;font-size:4.4rem;font-weight:800;font-style:italic;
+  line-height:.85;float:left;padding:.2rem .55rem 0 0;color:var(--amber);
+}
+.bios{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:3rem 4rem;margin-bottom:3rem;}
+.bio{padding-top:1.5rem;border-top:1px solid rgba(244,242,225,0.18);}
+.bio h3{font-family:'Sansita',Georgia,serif;font-size:1.6rem;font-weight:800;margin-bottom:.85rem;color:var(--cream);letter-spacing:-.005em;}
+.bio p{font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;color:rgba(244,242,225,0.72);line-height:1.7;margin-bottom:.75rem;}
+.bio-favs-label{display:block;font-family:'Sansita',Georgia,serif;font-style:italic;font-size:.85rem;color:rgba(244,242,225,0.5);margin-bottom:.15rem;font-weight:400;}
+.bio-favs{font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;color:rgba(244,242,225,0.72);}
+/* Bio social icon links — colored SVG icons that desaturate to grayscale by
+   default and pop into full brand color on hover. */
+.bio-handles{margin-top:1.1rem;display:flex;gap:.85rem;align-items:center;}
+.bio-handles a{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(244,242,225,0.06);border:1px solid rgba(244,242,225,0.12);
+  transition:filter .25s ease,background .25s ease,border-color .25s ease,transform .25s ease;
+  filter:grayscale(1) brightness(.92);
+}
+.bio-handles a:hover{
+  filter:grayscale(0) brightness(1.05);
+  background:rgba(244,242,225,0.10);
+  border-color:rgba(244,242,225,0.30);
+  transform:translateY(-1px);
+}
+.bio-handles a svg{display:block;width:18px;height:18px;}
+.bio-handles a.lb{width:auto;height:34px;padding:0 .6rem;border-radius:18px;}
+.bio-handles a.lb svg{width:30px;height:14px;}
+.about-closing{
+  font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:400;
+  font-size:1.1rem;color:rgba(244,242,225,0.78);max-width:60ch;line-height:1.55;
+}
+
+/* ────────── CTA — DEEP KODAK RED ────────── */
+.cta{
+  position:relative;overflow:hidden;color:var(--cream);
+  padding:10rem 2rem 6rem;text-align:center;
+  background:
+    /* Top hot coral — matched falloff to about's bottom (identical ellipse
+       height + identical stops + symmetric peak offset) so boundary opacity
+       matches exactly from both sides. No more step at the seam. */
+    radial-gradient(ellipse 130% 70% at 50% -15%,
+      rgba(255,120,88,0.75) 0%,
+      rgba(255,120,88,0.55) 15%,
+      rgba(255,120,88,0.35) 30%,
+      rgba(255,120,88,0.18) 45%,
+      rgba(255,120,88,0.06) 60%,
+      transparent 78%),
+    linear-gradient(to bottom,
+      var(--anchor-about-cta) 0%,
+      #5C1018 10%,
+      var(--bg-cta) 30%,
+      var(--bg-cta) 100%);
+}
+.cta > *{position:relative;z-index:2;}
+.cta > .grain{position:absolute;inset:0;z-index:1;}
+.cta .inner{max-width:680px;margin:0 auto;}
+.cta h2{
+  font-family:'Sansita',Georgia,serif;font-weight:800;
+  font-size:clamp(2.4rem,5.4vw,3.8rem);letter-spacing:-.012em;
+  margin-bottom:1rem;color:var(--cream);line-height:1.02;
+}
+.cta p{
+  font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:400;
+  color:rgba(244,242,225,0.78);margin-bottom:2.25rem;font-size:1.1rem;
+}
+.cta .form-wrap{justify-content:center;margin:0 auto;}
+.cta .form-wrap input{
+  background:rgba(0,0,0,0.6);border:1px solid rgba(244,242,225,0.55);color:var(--cream);
+}
+.cta .form-wrap input::placeholder{color:rgba(244,242,225,0.62);}
+.cta .form-wrap input:focus{border-color:var(--amber);background:rgba(0,0,0,0.75);}
+.cta .form-wrap button{background:var(--amber);color:#3A0810;font-weight:700;}
+
+/* ────────── EMAIL PREVIEW SECTION ────────── */
+.preview{
+  position:relative;overflow:hidden;color:var(--cream);
+  padding:7rem 2rem 7rem;
+  background:
+    /* Top coral hot spot — matches hero bottom */
+    radial-gradient(ellipse 100% 30% at 50% 0%,
+      rgba(228,72,72,0.50) 0%,
+      rgba(228,72,72,0.30) 20%,
+      rgba(228,72,72,0.12) 45%,
+      transparent 70%),
+    /* Bottom coral hot spot — matches covered top */
+    radial-gradient(ellipse 100% 30% at 50% 100%,
+      rgba(228,72,72,0.50) 0%,
+      rgba(228,72,72,0.30) 20%,
+      rgba(228,72,72,0.12) 45%,
+      transparent 70%),
+    /* Smooth ink color in middle, anchors at edges */
+    linear-gradient(to bottom,
+      var(--anchor-hero-cov) 0%,
+      #15101A 12%,
+      var(--bg-hero) 30%,
+      var(--bg-hero) 70%,
+      #15101A 88%,
+      var(--anchor-hero-cov) 100%);
+}
+.preview > *{position:relative;z-index:2;}
+.preview > .grain{position:absolute;inset:0;z-index:1;}
+.preview .section-label{
+  font-family:'Courier Prime',monospace;font-size:.72rem;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--amber);
+  text-align:center;margin-bottom:2rem;
+}
+.preview .section-inner{max-width:820px;margin:0 auto;}
+
+/* Email mock — copied verbatim from existing landing for fidelity */
+.email-mock{background:#0e0e0e;border-radius:12px;overflow:hidden;border:1px solid #303030;max-width:640px;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;box-shadow:0 30px 80px -30px rgba(0,0,0,0.7);}
 .mock-chrome{background:#161616;padding:.5rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid #2a2a2a;}
 .dots{display:flex;gap:5px;}
 .dot{width:10px;height:10px;border-radius:50%;}
 .mock-addr{flex:1;background:rgba(255,255,255,.06);border-radius:3px;padding:.2rem .75rem;font-size:.68rem;color:#888;text-align:center;}
-
 .ep-fade{position:relative;max-height:980px;overflow:hidden;}
 .ep-fade::after{content:'';position:absolute;left:0;right:0;bottom:0;height:280px;background:linear-gradient(to bottom, rgba(14,14,14,0) 0%, rgba(14,14,14,.85) 60%, rgba(14,14,14,1) 100%);pointer-events:none;}
 .ep-content{padding:24px 16px;display:flex;flex-direction:column;gap:16px;}
 .ep-card{background:#161616;border:1px solid #303030;border-radius:12px;overflow:hidden;}
-
 .ep-header{padding:32px 28px 28px;text-align:center;position:relative;}
 .ep-edition{position:absolute;top:14px;left:18px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#f0f0f0;}
 .ep-pills{display:flex;justify-content:center;gap:8px;margin-bottom:22px;}
 .ep-pill{display:inline-flex;align-items:center;gap:6px;border:1px solid #303030;border-radius:999px;padding:5px 12px;font-size:11px;font-weight:500;letter-spacing:.2px;color:#f0f0f0;text-decoration:none;opacity:.85;}
 .ep-pill svg{flex-shrink:0;display:block;}
 .ep-eyebrow{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#f0f0f0;margin-bottom:12px;}
-.ep-title{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:30px;font-weight:800;color:#fff;margin:0 0 8px;letter-spacing:-.5px;line-height:1.2;}
 .ep-logo{display:block;width:280px;max-width:80%;height:auto;margin:0 auto 8px;}
 .ep-dates{font-size:14px;color:#f0f0f0;margin:0;}
 .ep-accent{display:inline-block;width:40px;height:2px;background:linear-gradient(90deg,#E29700,#FBB315);border-radius:1px;margin:16px auto 0;}
@@ -163,7 +446,6 @@ h1 .accent{color:var(--accent);font-style:italic;font-weight:600;}
 .ep-credit{text-align:center;margin:6px 0 0;font-size:11px;line-height:1.6;color:#f0f0f0;}
 .ep-credit a{color:#54D0ED;text-decoration:none;}
 .ep-credit-plus{color:#a0a0a0;margin:0 6px;}
-
 .ep-stats{display:flex;gap:8px;padding:6px 0;}
 .ep-stat{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:22px 6px;border-radius:8px;border:1.5px solid #303030;background:#1c1c1c;}
 .ep-stat.is-zero{opacity:.4;}
@@ -175,13 +457,11 @@ h1 .accent{color:var(--accent);font-style:italic;font-weight:600;}
 .ep-s-dolby{border-color:#9B1B32;color:#EE475E;}
 .ep-s-hdr{background:#1c1c1c;border:1.5px solid #F26B6B;color:#F26B6B;}
 .ep-frown{display:inline-flex;align-items:center;opacity:.7;}
-
 .ep-section-head{padding:20px 28px;background:#131313;border-bottom:1px solid #2a2a2a;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:96px;box-sizing:border-box;}
 .ep-section-name{font-size:22px;font-weight:800;color:#f4f4f4;letter-spacing:-.5px;flex:1;margin:0;}
 .ep-section-desc{font-size:11px;font-weight:300;color:#f0f0f0;margin-left:6px;}
 .ep-section-logo{flex-shrink:0;opacity:.55;}
 .ep-films{padding:12px 16px;}
-
 .ep-film{padding:14px 12px;border-radius:8px;margin-bottom:10px;background:#1c1c1c;border:1px solid #303030;}
 .ep-film:last-child{margin-bottom:0;}
 .ep-film.is-imax{border:2px solid #13548E;}
@@ -205,138 +485,74 @@ h1 .accent{color:var(--accent);font-style:italic;font-weight:600;}
 .ep-badge-imax70{background-color:#0C0C0B;background-image:repeating-linear-gradient(90deg,transparent 0 2px,#0FBCEC 2px 5px),repeating-linear-gradient(90deg,transparent 0 2px,#0FBCEC 2px 5px);background-size:5px 2px,5px 2px;background-position:0 0,0 100%;background-repeat:repeat-x,repeat-x;color:#54D0ED;border:1px solid #0FBCEC;padding:3px 9px;}
 .ep-theater-label{display:block;font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:#f0f0f0;opacity:.6;text-align:right;margin-bottom:4px;}
 
-@media (prefers-color-scheme: light) {
-  .email-mock{background:#e8e8e8;border-color:#b4b4b4;}
-  .mock-chrome{background:#ffffff;border-bottom-color:#c8c8c8;}
-  .mock-addr{background:rgba(0,0,0,.06);color:#666;}
-  .ep-fade::after{background:linear-gradient(to bottom, rgba(232,232,232,0) 0%, rgba(232,232,232,.85) 60%, rgba(232,232,232,1) 100%);}
-  .ep-card{background:#ffffff;border-color:#b4b4b4;}
-  .ep-edition,.ep-eyebrow,.ep-dates,.ep-subtag,.ep-credit,.ep-pill,.ep-section-desc,.ep-theater-attr,.ep-theater-attr a,.ep-day-date,.ep-time-chip,.ep-film-title,.ep-tickets-link,.ep-theater-label{color:#050505;}
-  .ep-day{background:#ededed;border-color:#c4c4c4;}
-  .ep-time-chip{background:#ffffff;}
-  .ep-badge-imax70{background-color:#F4F2E1;color:#13548E;border-color:#0FBCEC;}
-  .ep-credit a{color:#13548E;}
-  .ep-credit-plus{color:#4a4a4a;}
-  .ep-title{color:#0C0C0B;}
-  .ep-pill{border-color:#b4b4b4;}
-  .ep-stat{background:#f7f7f7;border-color:#b4b4b4;}
-  .ep-section-head{background:#f0f0f0;border-bottom-color:#c8c8c8;}
-  .ep-section-name{color:#050505;}
-  .ep-film{background:#f7f7f7;border-color:#c4c4c4;}
-  .ep-film.is-imax{border-color:#13548E;}
-  .ep-tickets-link{border-color:#888;}
-  .ep-s-70mm{border-color:#0FBCEC;color:#0FBCEC;}
-  .ep-s-imax{border-color:#13548E;color:#13548E;}
-  .ep-s-35mm{border-color:#E29700;color:#E29700;}
-  .ep-s-dolby{border-color:#BC1F49;color:#BC1F49;}
-  .ep-s-hdr{background:#f7f7f7;border-color:#F26B6B;color:#BC1F49;}
+/* ────────── FOOTER ────────── */
+footer{
+  background:#08080A;padding:2.5rem 2rem;text-align:center;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.85rem;color:rgba(244,242,225,0.45);
 }
+footer a{color:rgba(244,242,225,0.65);text-decoration:none;}
+footer a:hover{color:var(--amber);}
 
-/* FEATURES */
-.why{padding:4rem 2rem;}
-.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;margin-top:2.5rem;}
-.feat{border-top:1px solid var(--border);padding-top:1.25rem;}
-.feat-num{font-family:'Syne',sans-serif;font-size:3.2rem;font-weight:800;margin-bottom:.6rem;line-height:1;letter-spacing:-.04em;display:inline-block;transform-origin:left center;}
-.feat:nth-child(1) .feat-num{color:#0FBCEC;transform:rotate(-2deg);}
-.feat:nth-child(2) .feat-num{color:#FBB315;transform:rotate(1.5deg);}
-.feat:nth-child(3) .feat-num{color:#BC1F49;transform:rotate(-1deg);}
-.feat h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.4rem;letter-spacing:-.01em;}
-.feat p{font-size:.85rem;color:var(--text2);line-height:1.65;}
-
-/* THEATERS */
-.theaters{padding:4rem 2rem;background:var(--bg2);}
-h2{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;text-align:center;margin-bottom:.5rem;letter-spacing:-.02em;}
-.sec-sub{text-align:center;color:var(--text2);font-size:.9rem;margin-bottom:2.5rem;}
-.t-group{margin-bottom:1.75rem;}
-.t-group-label{font-family:'Inter',sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.65rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
-.t-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.4rem;}
-.t-list li{font-size:.88rem;color:var(--text2);padding:.3rem 0;display:flex;align-items:flex-start;gap:.5rem;line-height:1.4;}
-.t-list li::before{content:'';display:block;width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:.45rem;}
-.t-note{font-size:.75rem;color:var(--text3);display:block;}
-
-/* CTA */
-.cta{padding:5rem 2rem;text-align:center;background:#680F22;color:#F4F2E1;}
-.cta h2{margin-bottom:1rem;color:#F4F2E1;}
-.cta p{color:rgba(244,242,225,0.78);margin-bottom:2rem;font-size:.95rem;}
-.cta .form-wrap input{background:rgba(244,242,225,0.95);border-color:rgba(244,242,225,0.3);color:#0C0C0B;}
-.cta .form-wrap input::placeholder{color:rgba(12,12,11,0.45);}
-.cta .form-wrap button{background:#FBB315;color:#0C0C0B;}
-.cta .success-msg{color:#FBB315;}
-
-/* FOOTER */
-footer{padding:1.75rem 2rem;text-align:center;border-top:1px solid var(--border);}
-footer p{font-size:.78rem;color:var(--text3);}
-footer a{color:var(--text2);text-decoration:none;}
-footer a:hover{color:var(--accent);}
-
-@media(max-width:600px){
+/* ────────── MOBILE ────────── */
+@media (max-width:600px){
+  .hero{padding:5rem 1.25rem 2rem;}
+  .covered,.about,.cta{padding:4rem 1.25rem;}
+  .hero-logo{max-width:280px;}
+  .hero h1{font-size:2.1rem;}
   .form-wrap{flex-direction:column;}
-  h1{font-size:1.75rem;}
-  nav{padding:.85rem 1.25rem;}
+  .cov-grid{gap:2rem;}
 }
+
+.success-msg{display:none;text-align:center;margin-top:.85rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;color:var(--amber);}
 </style>
 </head>
 <body>
 
+<div class="reel"></div>
+
 <nav>
-  <a href="#" class="nav-logo" aria-label="Cinemaxxing"><img src="https://alexwalker.co/img/cinemaxxing-icon.png" alt="Cinemaxxing"></a>
-  <a href="#subscribe" class="nav-btn">Subscribe</a>
+  <a class="nav-logo" href="#" aria-label="Cinemaxxing"><img src="https://alexwalker.co/img/cinemaxxing-icon.png" alt=""></a>
+  <a class="nav-btn" href="#subscribe">Subscribe</a>
 </nav>
 
-<section class="hero">
-  <p class="eyebrow">Austin's Weekly Premium Cinema Schedule</p>
-
-  <span class="cmx-logo" style="margin:0 auto 2rem;">
-    <img class="hero-logo" src="https://alexwalker.co/img/cinemaxxing-logo.png" alt="Cinemaxxing">
-  </span>
-  <script>
-  (function(){
-    var logo=document.querySelector('.cmx-logo');
-    if(!logo)return;
-    // Fade in on load (small delay so the browser commits the initial 0-opacity frame).
-    setTimeout(function(){logo.classList.add('is-loaded');},80);
-    // Pause after fade settles, then one smooth glow in/out.
-    // Timing: 80ms initial + 600ms fade + 900ms pause = 1580ms before pulse.
-    setTimeout(function(){logo.classList.add('is-pulsing');},1580);
-  })();
-  </script>
-
-  <h1>Your weekly guide to premium &amp; special format screenings in Austin and closeby (hi, San Antonio Palladium) so you never miss another <span class="accent">70mm, IMAX, or repertory screening.</span></h1>
-  <p class="hero-sub">
-    We're cinema lovers who can't keep track of all of the amazing premium and large format screenings in Austin. Cinemaxxing curates all of these listings and sends them to you every Monday, with accessible ticket links and info all in one email newsletter.
-  </p>
-  <p class="hero-tagline">Maximize your cinema, maximize your life.</p>
-
-  <div class="form-wrap" id="subscribe">
-    <input type="email" id="email-a" placeholder="your@email.com" />
-    <button onclick="submitA()">Subscribe</button>
+<!-- ── HERO ── -->
+<section class="hero has-leak-below">
+  <div class="grain"></div>
+  <div class="inner">
+    <p class="eyebrow">Austin's Weekly Premium Cinema Schedule</p>
+    <span class="cmx-logo"><img src="https://alexwalker.co/img/cinemaxxing-logo.png" alt="Cinemaxxing"></span>
+    <h1>Your weekly guide to premium &amp; special format screenings in Austin so you never miss another <i>70mm, IMAX, or repertory screening.</i></h1>
+    <p class="hero-sub">We're cinema lovers who can't keep track of all of the amazing premium and large format screenings in Austin. Cinemaxxing curates all of these listings and sends them to you every Monday.</p>
+    <p class="hero-tagline">Maximize your cinema, maximize your life.</p>
+    <div class="form-wrap"><input type="email" id="email-a" placeholder="your@email.com"><button onclick="submitA()">Subscribe</button></div>
+    <p class="success-msg" id="success-a"></p>
+    <div class="pills">
+      <span class="pill p-70mm">70mm</span>
+      <span class="pill p-imax">IMAX</span>
+      <span class="pill p-35mm">35mm</span>
+      <span class="pill p-dolby">Dolby Vision</span>
+      <span class="pill p-hdr">4K HDR</span>
+      <span class="pill p-event">Special Events</span>
+    </div>
   </div>
-  <p class="form-note">Free · This week's edition on signup · Every Monday after</p>
-  <p class="success-msg" id="success-a">You're in. This week's edition is on its way to your inbox.</p>
-
-  <div class="pills">
-    <span class="pill p-70mm">70mm</span>
-    <span class="pill p-imax">IMAX</span>
-    <span class="pill p-35mm">35mm</span>
-    <span class="pill p-dolby">Dolby Vision</span>
-    <span class="pill p-hdr">4K HDR</span>
-    <span class="pill p-event">Special Events</span>
-  </div>
-
-  <p style="margin-top:1.25rem;font-size:.78rem;color:var(--text3);">
-    <a href="https://www.instagram.com/cinemaxxing_/" target="_blank" style="color:var(--text2);text-decoration:none;border-bottom:1px solid var(--border);display:inline-flex;align-items:center;gap:.35em;">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
-      @cinemaxxing_
-    </a>
-  </p>
-  <p style="margin-top:.5rem;font-size:.78rem;color:var(--text3);">By <a href="https://alexwalker.co" target="_blank" style="color:var(--text2);text-decoration:none;border-bottom:1px solid var(--border);">Alex Walker</a> &amp; Alex Anderson</p>
-  <p style="margin-top:.35rem;font-size:.72rem;color:var(--text3);">Logo design by <a href="https://www.instagram.com/laura.tsao" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:none;border-bottom:1px solid var(--border);">Laura Ts'ao</a></p>
 </section>
+<script>
+(function(){
+  var logo = document.querySelector('.cmx-logo');
+  if (!logo) return;
+  // Fade in shortly after first paint
+  setTimeout(function(){ logo.classList.add('is-loaded'); }, 80);
+  // Wait for fade to settle, then play one smooth pulse
+  setTimeout(function(){ logo.classList.add('is-pulsing'); }, 1580);
+})();
+</script>
 
-<section class="preview">
+
+<!-- ── EMAIL PREVIEW ── -->
+<section class="preview has-leak-above has-leak-below">
+  <div class="grain"></div>
   <div class="section-inner">
     <p class="section-label">What lands in your inbox</p>
-
     <div class="email-mock">
       <div class="mock-chrome">
         <div class="dots">
@@ -346,11 +562,8 @@ footer a:hover{color:var(--accent);}
         </div>
         <div class="mock-addr">Cinemaxxing — Jun 8 – Jun 14, 2026</div>
       </div>
-
       <div class="ep-fade">
         <div class="ep-content">
-
-          <!-- ── Header card ── -->
           <div class="ep-card ep-header">
             <span class="ep-edition">Edition #8</span>
             <div class="ep-pills">
@@ -373,65 +586,22 @@ footer a:hover{color:var(--accent);}
             <div class="ep-credit">
               <a href="https://alexwalker.co">Alex Walker</a><span class="ep-credit-plus">+</span><span>Alex Anderson</span>
             </div>
-            <div class="ep-credit" style="font-size:10px;opacity:.7;margin-top:2px;">Logo design by <a href="https://www.instagram.com/laura.tsao" target="_blank" rel="noopener">Laura Ts'ao</a></div>
           </div>
-
-          <!-- ── Format summary stats — no card wrapper, flush to outer edges ── -->
           <div class="ep-stats">
-              <div class="ep-stat ep-s-70mm">
-                <div class="ep-stat-num">
-                  1
-                  <span class="ep-frown">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="12" cy="12" r="10"/>
-                      <circle cx="9" cy="10" r="0.9" fill="currentColor" stroke="none"/>
-                      <circle cx="15" cy="10" r="0.9" fill="currentColor" stroke="none"/>
-                      <path d="M9 15c1 1.5 5 1.5 6 0"/>
-                    </svg>
-                  </span>
-                </div>
-                <div class="ep-stat-label">70mm</div>
-              </div>
-              <div class="ep-stat ep-s-imax">
-                <div class="ep-stat-num">4</div>
-                <div class="ep-stat-label">IMAX</div>
-              </div>
-              <div class="ep-stat ep-s-35mm">
-                <div class="ep-stat-num">
-                  2
-                  <span class="ep-frown" style="opacity:.85;">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="12" cy="12" r="10"/>
-                      <circle cx="9" cy="10" r="0.9" fill="currentColor" stroke="none"/>
-                      <circle cx="15" cy="10" r="0.9" fill="currentColor" stroke="none"/>
-                      <path d="M9 15c1 1.5 5 1.5 6 0"/>
-                    </svg>
-                  </span>
-                </div>
-                <div class="ep-stat-label">35mm</div>
-              </div>
-              <div class="ep-stat ep-s-dolby">
-                <div class="ep-stat-num">5</div>
-                <div class="ep-stat-label">Dolby</div>
-              </div>
-              <div class="ep-stat ep-s-hdr">
-                <div class="ep-stat-num">5</div>
-                <div class="ep-stat-label">4K HDR</div>
-              </div>
+            <div class="ep-stat ep-s-70mm"><div class="ep-stat-num">1</div><div class="ep-stat-label">70mm</div></div>
+            <div class="ep-stat ep-s-imax"><div class="ep-stat-num">4</div><div class="ep-stat-label">IMAX</div></div>
+            <div class="ep-stat ep-s-35mm"><div class="ep-stat-num">2</div><div class="ep-stat-label">35mm</div></div>
+            <div class="ep-stat ep-s-dolby"><div class="ep-stat-num">5</div><div class="ep-stat-label">Dolby</div></div>
+            <div class="ep-stat ep-s-hdr"><div class="ep-stat-num">5</div><div class="ep-stat-label">4K HDR</div></div>
           </div>
-
-          <!-- ── True IMAX section card ── -->
           <div class="ep-card">
             <div class="ep-section-head">
               <p class="ep-section-name">True IMAX <span class="ep-section-desc">full-size screens only · 70mm film and digital laser</span></p>
-              <div class="ep-section-logo">
-                <img src="https://www.google.com/s2/favicons?domain=imax.com&sz=64" width="40" height="40" alt="IMAX" style="border-radius:8px;display:block;">
-              </div>
             </div>
             <div class="ep-films">
               <div class="ep-film is-imax">
                 <div class="ep-film-row">
-                  <img class="ep-poster" src="https://image.tmdb.org/t/p/w154/3o5YPjDGDTcTDL5ftDA9NwN9dLd.jpg" alt="Disclosure Day poster" loading="lazy">
+                  <img class="ep-poster" src="https://image.tmdb.org/t/p/w154/3o5YPjDGDTcTDL5ftDA9NwN9dLd.jpg" alt="" loading="lazy">
                   <div class="ep-film-info">
                     <div class="ep-theater-label">San Antonio</div>
                     <div class="ep-film-title-row">
@@ -454,10 +624,9 @@ footer a:hover{color:var(--accent);}
                   </div>
                 </div>
               </div>
-
               <div class="ep-film is-imax">
                 <div class="ep-film-row">
-                  <img class="ep-poster" src="https://image.tmdb.org/t/p/w154/3o5YPjDGDTcTDL5ftDA9NwN9dLd.jpg" alt="Disclosure Day poster" loading="lazy">
+                  <img class="ep-poster" src="https://image.tmdb.org/t/p/w154/3o5YPjDGDTcTDL5ftDA9NwN9dLd.jpg" alt="" loading="lazy">
                   <div class="ep-film-info">
                     <div class="ep-film-title-row">
                       <span class="ep-film-title">Disclosure Day</span>
@@ -480,101 +649,152 @@ footer a:hover{color:var(--accent);}
               </div>
             </div>
           </div>
-
-        </div><!-- /ep-content -->
-      </div><!-- /ep-fade -->
-    </div>
-  </div>
-</section>
-
-<section class="why">
-  <div class="section-inner">
-    <div class="features">
-      <div class="feat">
-        <div class="feat-num">01</div>
-        <h3>Premium formats, flagged</h3>
-        <p>True IMAX, 70mm, 35mm, Dolby Vision, and 4K HDR screenings are tagged so you always know what format a film is running in before you buy a ticket.</p>
-      </div>
-      <div class="feat">
-        <div class="feat-num">02</div>
-        <h3>Curated programming, included</h3>
-        <p>Beyond the multiplexes: the Paramount's Summer Classic Film Series, Austin Film Society member screenings, and Hyperreal Film Club events — all in the same digest.</p>
-      </div>
-      <div class="feat">
-        <div class="feat-num">03</div>
-        <h3>Every Monday morning</h3>
-        <p>The full week's schedule — Monday through Sunday — lands in your inbox before the week starts. Plan ahead, grab tickets early, make it a regular thing.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="theaters">
-  <div class="section-inner">
+<!-- ── WHAT'S COVERED ── -->
+<section class="covered has-leak-above has-leak-below">
+  <div class="grain"></div>
+  <div class="inner">
     <h2>What's covered</h2>
-    <p class="sec-sub">Premium formats and great programming, all in one place.</p>
-
-    <div class="t-group">
-      <div class="t-group-label">True IMAX</div>
-      <p style="font-size:.82rem;color:var(--text2);margin-bottom:1.1rem;line-height:1.65;">The Bob Bullock in Austin is the only full-size IMAX screen in the city — but it's digital-only. True IMAX means a full-size screen with a <strong style="color:var(--text);">70mm film projector</strong>, the highest quality format a film can be shown in. There are only two of those in Texas, and neither is in Austin.</p>
-      <ul class="t-list">
-        <li><div>Bob Bullock IMAX — Austin, TX<span class="t-note">Full-size screen, digital laser only — no 70mm film</span></div></li>
-        <li><div>Cinemark Dallas — Dallas, TX</div></li>
-        <li><div>AMC Rivercenter 9 — San Antonio, TX</div></li>
-      </ul>
+    <p class="sec-sub">Premium formats and curated programming across Austin and beyond.</p>
+    <div class="cov-grid">
+      <div class="cov-group">
+        <div class="cov-num">i.</div>
+        <h3>True IMAX</h3>
+        <p class="cov-desc">Full-size IMAX 70mm film projection — we cover every 70mm IMAX screening at all three of Texas's true IMAX theaters. (Their digital-laser shows are filtered out — only the 70mm film screenings make the cut.)</p>
+        <ul class="cov-list">
+          <li><strong>Santikos Palladium IMAX</strong><span>San Antonio, TX — IMAX 70mm film</span></li>
+          <li><strong>Cinemark Dallas XD and IMAX</strong><span>Dallas, TX — IMAX 70mm film</span></li>
+          <li><strong>AMC Rivercenter 11 with Alamo IMAX</strong><span>San Antonio, TX — IMAX 70mm film</span></li>
+          <li><strong>Bob Bullock IMAX</strong><span>Austin, TX — digital laser only (no 70mm film)</span></li>
+        </ul>
+      </div>
+      <div class="cov-group">
+        <div class="cov-num">ii.</div>
+        <h3>Premium Screens</h3>
+        <p class="cov-desc">Dolby Cinema (Dolby Vision + Atmos) and 4K HDR — the high-end commercial venues.</p>
+        <ul class="cov-list">
+          <li><strong>AMC Barton Creek Square 14</strong><span>Austin, TX — Dolby Cinema</span></li>
+          <li><strong>AMC DINE-IN Tech Ridge 10</strong><span>Austin, TX — Dolby Cinema</span></li>
+          <li><strong>AMC NorthPark 15</strong><span>Dallas, TX — Dolby Cinema</span></li>
+          <li><strong>Alamo Drafthouse</strong><span>All Austin locations — 4K Barco HDR / Atmos</span></li>
+          <li><strong>Violet Crown Cinema</strong><span>Austin, TX — 4K laser</span></li>
+        </ul>
+      </div>
+      <div class="cov-group">
+        <div class="cov-num">iii.</div>
+        <h3>Repertory &amp; Events</h3>
+        <p class="cov-desc">Classic film series, curated repertory, and independent programming.</p>
+        <ul class="cov-list">
+          <li><strong>Paramount Theatre</strong><span>Austin, TX — Summer Classic Film Series</span></li>
+          <li><strong>Austin Film Society Cinema</strong><span>Austin, TX — curated repertory</span></li>
+          <li><strong>Hyperreal Film Club</strong><span>Austin, TX — cult, rare, experimental</span></li>
+        </ul>
+      </div>
     </div>
-
-    <div class="t-group">
-      <div class="t-group-label">Austin — Premium & Arthouse</div>
-      <ul class="t-list">
-        <li>
-          <div>Alamo Drafthouse — All Austin Locations
-          <span class="t-note">4K HDR / Dolby Atmos screens only — everything else is filtered out</span></div>
-        </li>
-        <li>
-          <div>Violet Crown Cinema
-          <span class="t-note">Premium independent, 4K laser</span></div>
-        </li>
-      </ul>
-    </div>
-
-    <div class="t-group">
-      <div class="t-group-label">Austin — Cinephile Programming</div>
-      <ul class="t-list">
-        <li>
-          <div>Paramount Theatre
-          <span class="t-note">Summer Classic Film Series, special engagements</span></div>
-        </li>
-        <li>
-          <div>Austin Film Society Cinema
-          <span class="t-note">Curated repertory, filmmaker events, member screenings</span></div>
-        </li>
-        <li>
-          <div>Hyperreal Film Club
-          <span class="t-note">Rotating events, cult and rare programming</span></div>
-        </li>
-      </ul>
-    </div>
-    <p style="font-size:.82rem;color:var(--text2);margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);line-height:1.65;">We filter aggressively to keep the digest focused on the best available formats. If you want to see everything that didn't make the cut — standard screenings, museum docs, filtered-out Alamo shows — every edition links to a <strong style="color:var(--text);">full filtered screenings page</strong> so nothing is ever truly hidden.</p>
-
+    <p class="cov-footer">We filter aggressively to keep the digest focused on the best available formats. Standard screenings, museum docs, and filtered-out Alamo shows are all linked from every edition's <strong>full filtered screenings page</strong> — nothing is hidden.</p>
   </div>
 </section>
 
-<section class="cta">
-  <div class="section-inner">
+
+<!-- ── ABOUT ── -->
+<section class="about has-leak-above has-leak-below">
+  <div class="grain"></div>
+  <div class="inner">
+    <h2>About</h2>
+    <p class="sec-sub">Created by two Austin-based Alex's.</p>
+    <p class="about-lead">Cinemaxxing is for film fans in Austin and beyond who need organizational assistance to fulfill their insatiable desire for cinema.</p>
+    <div class="bios">
+      <div class="bio">
+        <h3>Alex Walker</h3>
+        <p>A cinematographer, colorist and filmmaker who is still waiting to run into Terrence Malick at HEB and who might show you his movie prop collection if asked politely.</p>
+        <p class="bio-favs"><span class="bio-favs-label">Favorite filmmakers</span>Alejandro Jodorowsky, Godfrey Reggio, Stanley Kubrick</p>
+        <div class="bio-handles">
+          <a href="https://www.instagram.com/Alex_Walker47/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <radialGradient id="igGradAW" cx="30%" cy="105%" r="120%">
+                  <stop offset="0" stop-color="#FFDC80"/>
+                  <stop offset=".25" stop-color="#FCAF45"/>
+                  <stop offset=".5" stop-color="#F77737"/>
+                  <stop offset=".75" stop-color="#E1306C"/>
+                  <stop offset="1" stop-color="#833AB4"/>
+                </radialGradient>
+              </defs>
+              <rect x="2" y="2" width="20" height="20" rx="5.5" ry="5.5" fill="none" stroke="url(#igGradAW)" stroke-width="2"/>
+              <circle cx="12" cy="12" r="4.2" fill="none" stroke="url(#igGradAW)" stroke-width="2"/>
+              <circle cx="17.4" cy="6.6" r="1.2" fill="url(#igGradAW)"/>
+            </svg>
+          </a>
+          <a class="lb" href="https://letterboxd.com/awalker47/" target="_blank" rel="noopener" aria-label="Letterboxd">
+            <svg viewBox="0 0 26 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="6" cy="6" r="5.5" fill="#00E054"/>
+              <circle cx="13" cy="6" r="5.5" fill="#40BCF4"/>
+              <circle cx="20" cy="6" r="5.5" fill="#FF8000"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="bio">
+        <h3>Alex Anderson</h3>
+        <p>A publicist and comms person who would like to live inside a Pedro Almodóvar film (the less murder-y ones, preferably) and is obsessed with all things media.</p>
+        <p class="bio-favs"><span class="bio-favs-label">Favorite filmmakers</span>Pedro Almodóvar, Park Chan-wook, Alfred Hitchcock, Karyn Kusama</p>
+        <div class="bio-handles">
+          <a href="#" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <radialGradient id="igGradAA" cx="30%" cy="105%" r="120%">
+                  <stop offset="0" stop-color="#FFDC80"/>
+                  <stop offset=".25" stop-color="#FCAF45"/>
+                  <stop offset=".5" stop-color="#F77737"/>
+                  <stop offset=".75" stop-color="#E1306C"/>
+                  <stop offset="1" stop-color="#833AB4"/>
+                </radialGradient>
+              </defs>
+              <rect x="2" y="2" width="20" height="20" rx="5.5" ry="5.5" fill="none" stroke="url(#igGradAA)" stroke-width="2"/>
+              <circle cx="12" cy="12" r="4.2" fill="none" stroke="url(#igGradAA)" stroke-width="2"/>
+              <circle cx="17.4" cy="6.6" r="1.2" fill="url(#igGradAA)"/>
+            </svg>
+          </a>
+          <a class="lb" href="https://letterboxd.com/alexnoelle89/" target="_blank" rel="noopener" aria-label="Letterboxd">
+            <svg viewBox="0 0 26 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="6" cy="6" r="5.5" fill="#00E054"/>
+              <circle cx="13" cy="6" r="5.5" fill="#40BCF4"/>
+              <circle cx="20" cy="6" r="5.5" fill="#FF8000"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <p class="about-closing">Cinemaxxing reflects our deep love and fandom for film, and we hope it's helpful and brings joy to your life.</p>
+  </div>
+</section>
+
+<!-- ── CTA — DEEP KODAK RED ── -->
+<!-- The leak now lives INSIDE the CTA section so the CTA's content
+     (positioned z-index:3 in .inner) always sits above the leak's coral
+     glow. The leak uses absolute positioning to bleed up into the about
+     section above, and its bottom extends deep into the CTA. -->
+<section class="cta has-leak-above" id="subscribe">
+  <div class="grain heaviest"></div>
+  <div class="inner">
     <h2>One email. Every Monday.</h2>
     <p>Free to subscribe. Unsubscribe any time.</p>
-    <div class="form-wrap" style="margin:0 auto;">
-      <input type="email" id="email-a2" placeholder="your@email.com" />
-      <button onclick="submitA2()">Subscribe</button>
-    </div>
-    <p class="success-msg" id="success-a2">You're in. See you Monday.</p>
+    <div class="form-wrap"><input type="email" id="email-a2" placeholder="your@email.com"><button onclick="submitA2()">Subscribe</button></div>
+    <p class="success-msg" id="success-a2"></p>
   </div>
 </section>
 
+<div class="reel"></div>
+
 <footer>
-  <p>Cinemaxxing · Austin, TX · <a href="mailto:hello@cinemaxxing.co">hello@cinemaxxing.co</a></p>
+  © Cinemaxxing 2026 · Austin, TX · <a href="mailto:hello@cinemaxxing.co">hello@cinemaxxing.co</a>
 </footer>
+
 
 <script>
 async function submitForm(inputId, successId) {
@@ -621,8 +841,6 @@ async function submitForm(inputId, successId) {
 }
 function submitA()  { submitForm('email-a',  'success-a');  }
 function submitA2() { submitForm('email-a2', 'success-a2'); }
-
-// Enter key in input also submits
 document.querySelectorAll('.form-wrap input').forEach(inp => {
   inp.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
@@ -634,12 +852,6 @@ document.querySelectorAll('.form-wrap input').forEach(inp => {
 });
 </script>
 
-<!-- Anonymous visitor counter — pings the Tailscale-funneled Flask backend
-     on every page load. Hashed (IP + UA + day), no cookies, no third party.
-     data-proofer-ignore tells htmlproofer to skip this URL during CI.
-     The ?me= param (if present on the page URL) is forwarded so personal
-     bookmarks like cinemaxxing.co?me=alex2026 get labelled in the visitors
-     admin page. JS-disabled clients fall back to anonymous via <noscript>. -->
 <noscript>
   <img src="https://nexus.tail1c6f41.ts.net/p.gif" alt="" width="1" height="1"
        style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;"
@@ -660,7 +872,6 @@ document.querySelectorAll('.form-wrap input').forEach(inp => {
     img.setAttribute('data-proofer-ignore', '');
     document.body.appendChild(img);
   })();
-
 </script>
 </body>
 </html>
