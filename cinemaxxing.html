@@ -486,6 +486,8 @@ nav .nav-btn{
 .ep-time-chip{display:inline-block;font-size:11px;font-weight:600;color:#f0f0f0;background:#161616;border-radius:5px;line-height:14px;padding:3px 9px;vertical-align:middle;}
 .ep-tickets-link{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;color:#f0f0f0;border:1px solid #4a4a4a;border-radius:3px;line-height:14px;padding:2px 9px;flex-shrink:0;text-decoration:none;vertical-align:middle;}
 .ep-badge-imax70{background-color:#0C0C0B;background-image:repeating-linear-gradient(90deg,transparent 0 2px,#0FBCEC 2px 5px),repeating-linear-gradient(90deg,transparent 0 2px,#0FBCEC 2px 5px);background-size:5px 2px,5px 2px;background-position:0 0,0 100%;background-repeat:repeat-x,repeat-x;color:#54D0ED;border:1px solid #0FBCEC;padding:3px 9px;line-height:10px;}
+/* Standard 70mm badge — teal, matching the new landing "70mm" pill. */
+.ep-badge-70mm{background-color:#0C0C0B;color:#1FCDA4;border:1px solid #1FCDA4;}
 .ep-theater-label{display:block;font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:#f0f0f0;opacity:.6;text-align:right;margin-bottom:4px;}
 
 /* ────────── FOOTER ────────── */
@@ -592,15 +594,41 @@ footer a:hover{color:var(--amber);}
             </div>
           </div>
           <div class="ep-stats">
-            <div class="ep-stat ep-s-70mm"><div class="ep-stat-num">1</div><div class="ep-stat-label">70mm</div></div>
+            <div class="ep-stat ep-s-70mm">
+              <div class="ep-stat-num">
+                1
+                <span class="ep-frown" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <circle cx="9" cy="10" r="0.9" fill="currentColor" stroke="none"/>
+                    <circle cx="15" cy="10" r="0.9" fill="currentColor" stroke="none"/>
+                    <path d="M9 15c1 1.5 5 1.5 6 0"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="ep-stat-label">70mm</div>
+            </div>
             <div class="ep-stat ep-s-imax"><div class="ep-stat-num">4</div><div class="ep-stat-label">IMAX</div></div>
-            <div class="ep-stat ep-s-35mm"><div class="ep-stat-num">2</div><div class="ep-stat-label">35mm</div></div>
+            <div class="ep-stat ep-s-35mm">
+              <div class="ep-stat-num">
+                2
+                <span class="ep-frown" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <circle cx="9" cy="10" r="0.9" fill="currentColor" stroke="none"/>
+                    <circle cx="15" cy="10" r="0.9" fill="currentColor" stroke="none"/>
+                    <path d="M9 15c1 1.5 5 1.5 6 0"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="ep-stat-label">35mm</div>
+            </div>
             <div class="ep-stat ep-s-dolby"><div class="ep-stat-num">5</div><div class="ep-stat-label">Dolby</div></div>
             <div class="ep-stat ep-s-hdr"><div class="ep-stat-num">5</div><div class="ep-stat-label">4K HDR</div></div>
           </div>
           <div class="ep-card">
             <div class="ep-section-head">
-              <p class="ep-section-name">True IMAX <span class="ep-section-desc">full-size screens only · 70mm film and digital laser</span></p>
+              <p class="ep-section-name">Premium Large-Format <span class="ep-section-desc">IMAX 70mm · standard 70mm · digital-laser IMAX</span></p>
             </div>
             <div class="ep-films">
               <div class="ep-film is-imax">
@@ -610,9 +638,9 @@ footer a:hover{color:var(--amber);}
                     <div class="ep-theater-label">San Antonio</div>
                     <div class="ep-film-title-row">
                       <span class="ep-film-title">Disclosure Day</span>
-                      <span class="ep-badge ep-badge-imax70">IMAX 70mm</span>
+                      <span class="ep-badge ep-badge-70mm">70mm</span>
                     </div>
-                    <p class="ep-theater-attr"><a href="#">Santikos Palladium IMAX</a></p>
+                    <p class="ep-theater-attr"><a href="#">Santikos Palladium</a></p>
                     <div class="ep-days">
                       <div class="ep-day">
                         <div class="ep-day-date">Thu Jun 11</div>
