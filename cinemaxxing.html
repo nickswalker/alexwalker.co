@@ -174,6 +174,9 @@ nav .nav-btn{
   .cmx-logo:hover{transform:none;}
   .cmx-logo.is-pulsing{animation:none;}
 }
+/* CTA back-to-top logo — same glow/pulse/hover treatment as hero, just smaller */
+.cmx-logo.cta-logo{max-width:300px;margin:0 auto;cursor:pointer;text-decoration:none;}
+.cmx-logo.cta-logo img{opacity:.92;}
 
 /* Format pills — bouncy hover scale + tilt + colored glow, matching the
    current landing-page behavior */
@@ -364,6 +367,7 @@ nav .nav-btn{
 .about-closing{
   font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:400;
   font-size:1.1rem;color:rgba(244,242,225,0.78);max-width:60ch;line-height:1.55;
+  text-align:center;margin-left:auto;margin-right:auto;
 }
 
 /* ────────── CTA — DEEP KODAK RED ────────── */
@@ -530,6 +534,7 @@ footer a:hover{color:var(--amber);}
 </head>
 <body>
 
+<span id="top" aria-hidden="true" style="position:absolute;top:0;left:0;"></span>
 <div class="reel"></div>
 
 <nav>
@@ -561,12 +566,39 @@ footer a:hover{color:var(--amber);}
 </section>
 <script>
 (function(){
-  var logo = document.querySelector('.cmx-logo');
-  if (!logo) return;
-  // Fade in shortly after first paint
-  setTimeout(function(){ logo.classList.add('is-loaded'); }, 80);
-  // Wait for fade to settle, then play one smooth pulse
-  setTimeout(function(){ logo.classList.add('is-pulsing'); }, 1580);
+  // Hero logo — fire on first paint
+  var hero = document.querySelector('.hero .cmx-logo');
+  if (hero) {
+    setTimeout(function(){ hero.classList.add('is-loaded'); }, 80);
+    setTimeout(function(){ hero.classList.add('is-pulsing'); }, 1580);
+  }
+
+  // CTA back-to-top logo — same fade-in + one-shot pulse, but triggered the
+  // first time it scrolls into view. Falls back to immediate trigger if
+  // IntersectionObserver isn't available.
+  var cta = document.querySelector('.cta-logo');
+  if (cta) {
+    var fire = function(){
+      cta.classList.add('is-loaded');
+      setTimeout(function(){ cta.classList.add('is-pulsing'); }, 1500);
+    };
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function(entries, obs){
+        entries.forEach(function(e){
+          if (e.isIntersecting) { fire(); obs.unobserve(e.target); }
+        });
+      }, {threshold:0.35});
+      io.observe(cta);
+    } else {
+      fire();
+    }
+    // Smooth scroll to top (avoids leaving "#top" in the URL bar)
+    cta.addEventListener('click', function(ev){
+      ev.preventDefault();
+      window.scrollTo({top:0, behavior:'smooth'});
+      if (history.replaceState) history.replaceState(null, '', window.location.pathname);
+    });
+  }
 })();
 </script>
 
@@ -726,7 +758,7 @@ footer a:hover{color:var(--amber);}
       <div class="cov-group">
         <div class="cov-num">ii.</div>
         <h3>Premium Screens</h3>
-        <p class="cov-desc">Dolby Cinema (Dolby Vision + Atmos), 4K Barco HDR, and 35mm film — the high-end commercial and arthouse formats.</p>
+        <p class="cov-desc">Dolby Cinema (Dolby Vision + Atmos), 4K Barco HDR, and 35mm film.</p>
         <ul class="cov-list">
           <li><strong>AMC Barton Creek Square 14</strong><span>Dolby Cinema</span></li>
           <li><strong>AMC DINE-IN Tech Ridge 10</strong><span>Dolby Cinema</span></li>
@@ -829,10 +861,9 @@ footer a:hover{color:var(--amber);}
 <section class="cta has-leak-above" id="subscribe">
   <div class="grain heaviest"></div>
   <div class="inner">
-    <h2>One email. Every Monday.</h2>
-    <p>Free to subscribe. Unsubscribe any time.</p>
-    <div class="form-wrap"><input type="email" id="email-a2" placeholder="your@email.com"><button onclick="submitA2()">Subscribe</button></div>
-    <p class="success-msg" id="success-a2"></p>
+    <a class="cmx-logo cta-logo" href="#top" aria-label="Back to top">
+      <img src="https://alexwalker.co/img/cinemaxxing-logo.png" alt="Cinemaxxing">
+    </a>
   </div>
 </section>
 
