@@ -81,22 +81,33 @@ nav .nav-logo{display:inline-flex;align-items:center;text-decoration:none;}
 nav .nav-logo img{height:30px;width:30px;border-radius:6px;}
 nav .nav-right{display:flex;align-items:center;gap:1.1rem;}
 nav .nav-link{
-  font-family:'Courier Prime',monospace;font-size:.72rem;font-weight:700;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;
   letter-spacing:.18em;text-transform:uppercase;
-  color:rgba(244,242,225,0.72);text-decoration:none;transition:color .2s ease;
+  color:rgba(244,242,225,0.72);text-decoration:none;transition:color .25s cubic-bezier(0.4,0,0.2,1);
 }
 nav .nav-link:hover{color:var(--amber);}
 nav .nav-link.is-current{color:var(--amber);}
 nav .nav-btn{
-  /* inline-flex + align-items:center is the only way to vertically center
-     uppercase Courier Prime reliably — the font's descender slot makes
-     padding-based centering bias the text upward. Fixed height + zero
-     vertical padding lets the flex centering do the work. */
+  /* Solid amber pill — inline-flex + align-items:center keeps the uppercase
+     text reliably centered regardless of font metrics. */
   display:inline-flex;align-items:center;justify-content:center;
   height:32px;padding:0 1.15rem;line-height:1;
-  text-decoration:none;font-family:'Courier Prime',monospace;font-size:.72rem;
-  letter-spacing:.18em;text-transform:uppercase;color:var(--amber);
+  text-decoration:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:#0B0D11;background:var(--amber);
   border:1px solid var(--amber);border-radius:999px;font-weight:700;
+  transition:background .35s cubic-bezier(0.4,0,0.2,1),
+             box-shadow .45s cubic-bezier(0.4,0,0.2,1),
+             transform .35s cubic-bezier(0.4,0,0.2,1);
+}
+nav .nav-btn:hover{
+  background:#FFC845;
+  box-shadow:0 0 22px rgba(251,179,21,0.45),
+             0 6px 16px -8px rgba(251,179,21,0.55);
+  transform:translateY(-1px);
+}
+@media (prefers-reduced-motion:reduce){
+  nav .nav-btn,nav .nav-btn:hover{transition:none;transform:none;box-shadow:none;}
 }
 
 /* ────────── HERO ────────── */
@@ -125,7 +136,7 @@ nav .nav-btn{
 .hero > .grain{position:absolute;inset:0;z-index:1;}
 .hero .inner{max-width:880px;margin:0 auto;}
 .hero .eyebrow{
-  font-family:'Courier Prime',monospace;font-size:.72rem;font-weight:700;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;
   letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:1.8rem;
 }
 /* Hero logo wrapped in .cmx-logo for fade-in + one-shot pulse + hover glow */
@@ -163,43 +174,56 @@ nav .nav-btn{
 .who-pill-wrap{text-align:center;margin-bottom:2.75rem;}
 .who-pill{
   display:inline-flex;align-items:center;justify-content:center;
-  font-family:'Courier Prime',monospace;font-size:.85rem;font-weight:700;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.85rem;font-weight:700;
   letter-spacing:.2em;text-transform:uppercase;
-  color:var(--amber);background:transparent;
+  color:#3A0810;background:var(--amber);
   border:1.5px solid var(--amber);border-radius:999px;
   padding:.95rem 1.95rem;line-height:1;text-decoration:none;
-  transition:background .25s ease,color .25s ease,transform .25s ease,box-shadow .25s ease;
+  transition:background .35s cubic-bezier(0.4,0,0.2,1),
+             box-shadow .5s cubic-bezier(0.4,0,0.2,1),
+             transform .35s cubic-bezier(0.4,0,0.2,1);
 }
 .who-pill:hover{
-  background:var(--amber);color:#3A0810;transform:translateY(-1px);
-  box-shadow:0 10px 28px -10px rgba(251,179,21,0.55);
+  background:#FFC845;transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(251,179,21,0.5),
+             0 12px 28px -10px rgba(251,179,21,0.6);
 }
 @media (prefers-reduced-motion:reduce){
   .who-pill,.who-pill:hover{transition:none;transform:none;box-shadow:none;}
 }
 
-/* Format pills — bouncy hover scale + tilt + colored glow, matching the
-   current landing-page behavior */
+/* Format pills — solid colored fills with dark text. Bouncy hover scale +
+   tilt + colored glow shadow. The bouncy cubic-bezier(.34,1.56,.64,1) is
+   intentional design — overshoot adds character — but the box-shadow and
+   filter transitions ride the smoother .4,0,.2,1 curve so the glow itself
+   feels natural rather than springy. */
 .pills{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin:2.25rem auto 0;}
 .pill{
-  font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:600;
-  letter-spacing:.08em;text-transform:uppercase;padding:.45rem 1rem;
-  border-radius:4px;border:1.5px solid;cursor:default;display:inline-block;
-  transform-origin:center;
-  transition:transform .42s cubic-bezier(.34,1.56,.64,1),box-shadow .42s cubic-bezier(.34,1.56,.64,1),filter .35s ease;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;padding:.5rem 1rem;line-height:1;
+  border-radius:4px;border:1.5px solid transparent;cursor:default;
+  transform-origin:center;color:#0B0D11;
+  transition:transform .42s cubic-bezier(.34,1.56,.64,1),
+             box-shadow .45s cubic-bezier(0.4,0,0.2,1),
+             filter .35s cubic-bezier(0.4,0,0.2,1);
   will-change:transform,box-shadow,filter;
 }
-.pill:hover{transform:scale(1.18) translateY(-2px) rotate(-1.5deg);box-shadow:0 6px 18px -6px currentColor;filter:brightness(1.15);}
+.pill:hover{
+  transform:scale(1.16) translateY(-2px) rotate(-1.5deg);
+  box-shadow:0 0 22px -2px currentColor,0 8px 18px -8px currentColor;
+  filter:brightness(1.08);
+}
 @media (prefers-reduced-motion:reduce){.pill,.pill:hover{transition:none;transform:none;box-shadow:none;filter:none;}}
-.p-70mm-imax{border-color:var(--cyan);color:var(--cyan);}
+.p-70mm-imax{background:var(--cyan);border-color:var(--cyan);}
 /* Standard 70mm — fresh teal, sits in the cool-color family alongside the
    IMAX 70mm cyan and IMAX blue but visually distinct from both. */
-.p-70mm{border-color:#1FCDA4;color:#1FCDA4;}
-.p-imax{border-color:#3574B9;color:#54D0ED;}
-.p-35mm{border-color:var(--amber);color:var(--amber);}
-.p-dolby{border-color:#EE475E;color:#EE475E;}
-.p-hdr{border-color:var(--coral);color:var(--coral);}
-.p-event{border-color:#9DEBF4;color:#9DEBF4;}
+.p-70mm{background:#1FCDA4;border-color:#1FCDA4;}
+.p-imax{background:#3574B9;border-color:#3574B9;color:#F4F2E1;}
+.p-35mm{background:var(--amber);border-color:var(--amber);}
+.p-dolby{background:#EE475E;border-color:#EE475E;color:#F4F2E1;}
+.p-hdr{background:var(--coral);border-color:var(--coral);}
+.p-event{background:#9DEBF4;border-color:#9DEBF4;}
 .hero h1{
   font-family:'Sansita',Georgia,serif;font-weight:800;
   font-size:clamp(2.1rem,4.8vw,3.4rem);line-height:1.05;letter-spacing:-.012em;
@@ -221,8 +245,20 @@ nav .nav-btn{
 .form-wrap input::placeholder{color:rgba(244,242,225,0.6);}
 .form-wrap input:focus{border-color:var(--amber);background:rgba(0,0,0,0.6);}
 .form-wrap button{
+  display:inline-flex;align-items:center;justify-content:center;
   padding:.85rem 1.6rem;background:var(--amber);color:#0B0D11;border:none;border-radius:999px;
   font-family:'Plus Jakarta Sans',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;letter-spacing:.05em;
+  transition:background .35s cubic-bezier(0.4,0,0.2,1),
+             box-shadow .45s cubic-bezier(0.4,0,0.2,1),
+             transform .35s cubic-bezier(0.4,0,0.2,1);
+}
+.form-wrap button:hover{
+  background:#FFC845;transform:translateY(-1px);
+  box-shadow:0 0 28px rgba(251,179,21,0.45),
+             0 8px 22px -10px rgba(251,179,21,0.55);
+}
+@media (prefers-reduced-motion:reduce){
+  .form-wrap button,.form-wrap button:hover{transition:none;transform:none;box-shadow:none;}
 }
 
 /* ────────── COVERED (IMAX-blue tinted) ────────── */
@@ -382,7 +418,7 @@ nav .nav-btn{
   display:inline-flex;align-items:center;justify-content:center;
   width:34px;height:34px;border-radius:50%;
   background:rgba(244,242,225,0.06);border:1px solid rgba(244,242,225,0.12);
-  transition:filter .25s ease,background .25s ease,border-color .25s ease,transform .25s ease;
+  transition:filter .3s cubic-bezier(0.4,0,0.2,1),background .3s cubic-bezier(0.4,0,0.2,1),border-color .3s cubic-bezier(0.4,0,0.2,1),transform .3s cubic-bezier(0.4,0,0.2,1);
   filter:grayscale(1) brightness(.92);
 }
 .bio-handles a:hover{
@@ -470,7 +506,7 @@ nav .nav-btn{
 .preview > *{position:relative;z-index:2;}
 .preview > .grain{position:absolute;inset:0;z-index:1;}
 .preview .section-label{
-  font-family:'Courier Prime',monospace;font-size:.95rem;font-weight:700;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:700;
   letter-spacing:.22em;text-transform:uppercase;color:var(--amber);
   text-align:center;margin-bottom:2.25rem;
 }
@@ -487,11 +523,11 @@ nav .nav-btn{
 .ep-content{padding:24px 16px;display:flex;flex-direction:column;gap:16px;}
 .ep-card{background:#161616;border:1px solid #303030;border-radius:12px;overflow:hidden;}
 .ep-header{padding:32px 28px 28px;text-align:center;position:relative;}
-.ep-edition{font-family:'Courier Prime','Courier New',monospace;position:absolute;top:14px;left:18px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#f0f0f0;}
+.ep-edition{font-family:'Plus Jakarta Sans',sans-serif;position:absolute;top:14px;left:18px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#f0f0f0;}
 .ep-pills{display:flex;justify-content:center;gap:8px;margin-bottom:22px;}
 .ep-pill{display:inline-flex;align-items:center;gap:6px;border:1px solid #303030;border-radius:999px;padding:5px 12px;font-size:11px;font-weight:500;letter-spacing:.2px;color:#f0f0f0;text-decoration:none;opacity:.85;}
 .ep-pill svg{flex-shrink:0;display:block;}
-.ep-eyebrow{font-family:'Courier Prime','Courier New',monospace;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#f0f0f0;margin-bottom:12px;}
+.ep-eyebrow{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#f0f0f0;margin-bottom:12px;}
 .ep-logo{display:block;width:280px;max-width:80%;height:auto;margin:0 auto 8px;}
 .ep-dates{font-size:14px;color:#f0f0f0;margin:0;}
 .ep-accent{display:inline-block;width:40px;height:2px;background:linear-gradient(90deg,#E29700,#FBB315);border-radius:1px;margin:16px auto 0;}
@@ -503,7 +539,7 @@ nav .nav-btn{
 .ep-stat{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:22px 6px;border-radius:8px;border:1.5px solid #303030;background:#1c1c1c;}
 .ep-stat.is-zero{opacity:.4;}
 .ep-stat-num{font-family:'Sansita',Georgia,'Times New Roman',serif;display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:22px;font-weight:800;line-height:1.1;letter-spacing:-.5px;}
-.ep-stat-label{font-family:'Courier Prime','Courier New',monospace;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:6px;opacity:.85;}
+.ep-stat-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:6px;opacity:.85;}
 .ep-s-70mm{border-color:#0FBCEC;color:#54D0ED;background-color:rgba(15,188,236,0.10);}
 .ep-s-imax{border-color:#3574B9;color:#54D0ED;}
 .ep-s-35mm{border-color:#E29700;color:#FBB315;}
