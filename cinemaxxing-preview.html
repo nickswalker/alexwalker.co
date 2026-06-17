@@ -728,7 +728,7 @@
         .film-title {
       font-family: 'Sansita', Georgia, 'Times New Roman', serif;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text-film);
       text-decoration: none;
       /* Explicit line-height (in px, not unitless) so the title's box height
@@ -807,12 +807,40 @@
   /* Inline HDR badge — coral on cream */
     .badge-hdr     { background-color: #F4F2E1; color: #BC1F49; border-color: #F26B6B; }
     .badge-atmos    { background-color: #F4F2E1; color: #0C0C0B; border-color: rgba(12,12,11,0.3); }
-    .badge-70mm     { background-color: #F4F2E1; color: #0FBCEC; border-color: #0FBCEC; }
+    /* Standard 70mm — teal film-strip sprockets (matching the new
+       Standard 70mm format card on the landing). */
+    .badge-70mm {
+      background-color: #F4F2E1;
+      background-image:
+        repeating-linear-gradient(90deg, transparent 0 2px, #1FCDA4 2px 5px),
+        repeating-linear-gradient(90deg, transparent 0 2px, #1FCDA4 2px 5px);
+      background-size: 5px 2px, 5px 2px;
+      background-position: 0 0, 0 100%;
+      background-repeat: repeat-x, repeat-x;
+      color: #14A883;
+      border-color: #1FCDA4;
+      padding: 4px 9px;
+    }
     .badge-4k       { background-color: #F4F2E1; color: #3574B9; border-color: #3574B9; }
     .badge-remaster { background-color: #F4F2E1; color: #BC1F49; border-color: #BC1F49; }
     .badge-dolby    { background-color: #F4F2E1; color: #BC1F49; border-color: #BC1F49; }
     .badge-event    { background-color: #F4F2E1; color: #0C0C0B; border-color: rgba(12,12,11,0.3); }
     .badge-default  { background-color: #F4F2E1; color: #0C0C0B; border-color: rgba(12,12,11,0.3); }
+
+    /* Dark-mode override for .time-chip — needed because .time-chip lives
+       inside the HIGH-VOLUME @media all block, and _resolve_css_vars
+       doesn't recurse into @media all to generate per-selector dark
+       overrides. Without this, chips render as light-mode (white bg + dark
+       text) on a dark-mode page. */
+    @media (prefers-color-scheme: dark) {
+      .time-chip {
+        background-color: #161616 !important;
+        color: #f0f0f0 !important;
+      }
+      .time-chip.sold-out {
+        color: #6a6a6a !important;
+      }
+    }
 
     /* Dark-mode badge palette — !important wins over the inlined light defaults. */
     @media (prefers-color-scheme: dark) {
@@ -838,7 +866,7 @@
         border-color: #F26B6B !important;
       }
       .badge-atmos    { background-color: #181818 !important; color: #F4F2E1 !important; border-color: rgba(244,242,225,0.3) !important; }
-      .badge-70mm     { background-color: #0C0C0B !important; color: #54D0ED !important; border-color: #0FBCEC !important; }
+      .badge-70mm     { background-color: #0C0C0B !important; color: #4FE0BD !important; border-color: #1FCDA4 !important; }
       .badge-4k       { background-color: #0C0C0B !important; color: #54D0ED !important; border-color: #3574B9 !important; }
       .badge-remaster { background-color: #0C0C0B !important; color: #EE475E !important; border-color: #BC1F49 !important; }
       .badge-dolby    { background-color: #0C0C0B !important; color: #EE475E !important; border-color: #BC1F49 !important; }
@@ -880,8 +908,12 @@
     }
     .showtime-row-wrap { padding: 0 0 10px 0; }
     .sc-date-td { padding: 12px 14px 4px 14px; vertical-align: top; }
+    /* Both cells: identical line-height so their line-boxes are the same
+       height; vertical-align: middle then aligns the chips and tickets at
+       the same vertical position. line-height: 2 on both also preserves
+       the breathing room between wrapped chip lines. */
     .sc-chips-td { padding: 0 6px 12px 14px; vertical-align: middle; line-height: 2; }
-    .sc-tix-td { padding: 0 14px 12px 0; text-align: right; vertical-align: middle; width: 1%; white-space: nowrap; }
+    .sc-tix-td   { padding: 0 14px 12px 0; text-align: right; vertical-align: middle; width: 1%; white-space: nowrap; line-height: 2; }
     /* ── HIGH-VOLUME RULES IN @media all ──
        ORIGINAL block — pre-session. These selectors hit dozens of
        elements per email (40+ films, ~50 chips, ~50 ticket buttons).
@@ -926,14 +958,16 @@
         white-space: nowrap;
         /* Explicit line-height + padding sums to exactly 22px tall so the
            chip's box height matches the .tickets-link button next to it.
-           vertical-align: middle aligns both visually centered. */
+           vertical-align: middle aligns both visually centered.
+           Wrap spacing comes from the parent cell's line-height: 2 — no
+           need for margin-bottom here, which would shift the visual
+           center down and break alignment with the tickets button. */
         line-height: 16px;
         padding: 3px 12px;
         vertical-align: middle;
         background-color: var(--bg-card);
         border-radius: 6px;
         margin-right: 8px;
-        margin-bottom: 4px;
       }
       .time-chip:last-child { margin-right: 0; }
       .time-chip.sold-out {
@@ -1193,7 +1227,7 @@
               <a class="top-bar-pill" href="https://www.instagram.com/cinemaxxing_/" target="_blank" rel="noopener">@cinemaxxing_</a>
               <a class="top-bar-pill" href="https://cinemaxxing.co" target="_blank" rel="noopener">Share with a friend</a>
               
-              <a class="top-bar-pill" href="https://nexus.tail1c6f41.ts.net/embed/email-preview" target="_blank" rel="noopener">Open in browser</a>
+              <a class="top-bar-pill" href="https://cinemaxxing.co/cinemaxxing-preview.html" target="_blank" rel="noopener">Open in browser</a>
             </div>
             <p class="header-eyebrow">Weekly Austin Premium Cinema Schedule</p>
             <a href="https://cinemaxxing.co" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none;border:0;"><img class="header-logo" src="https://alexwalker.co/img/cinemaxxing-logo.png" alt="Cinemaxxing" width="280" style="border:0;display:block;margin:0 auto;"></a>
@@ -1243,7 +1277,7 @@
               <td class="stat-cell" width="20%">
                 <a class="stat stat-35mm" href="#anchor-35mm">
                   <div class="stat-num">
-                    <span>2</span>
+                    <span>1</span>
                     <span class="stat-face" aria-hidden="true">
                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"/>
@@ -1287,7 +1321,7 @@
             <table class="theater-header-row" role="presentation" cellpadding="0" cellspacing="0" border="0">
               <tr>
                 <td valign="middle">
-                  <p class="theater-name">True IMAX <span class="section-desc">full-size screens only · 70mm film and digital laser</span></p>
+                  <p class="theater-name">Premium Large-Format <span class="section-desc">IMAX 70mm film · standard 70mm film · digital-laser IMAX</span></p>
                 </td>
                 <td class="theater-header-right">
     
@@ -1370,26 +1404,6 @@
           
           
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jun 16</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">6:10 PM</a></span><span class="time-chip"><a class="no-detect">9:30 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://tickets.fandango.com/transaction/ticketing/mobile/jump.aspx?sdate=2026-06-16%2B18%3A10&amp;from=mov_det_showtimes&amp;source=MobileWeb&amp;mid=245959&amp;tid=AAUHA&amp;dfam=webbrowser&amp;showtimehashcode=v2-842a95098c5bf84157043271a4fa2d85b430a8ac0427d3876d876f51186b3ea8" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
             
             
             <tr class="showtime-row">
@@ -1853,8 +1867,6 @@
                 
                   
                 
-                  
-                
               
             
               
@@ -1873,8 +1885,6 @@
                 
                   
                 
-                  
-                
               
             
               
@@ -1887,17 +1897,11 @@
                 
                   
                 
-                  
-                
-                  
-                
               
             
               
               
               
-                
-                  
                 
                   
                 
@@ -1927,6 +1931,112 @@
               
               
                 
+              
+            
+            
+            
+              
+                
+              
+            
+              
+                
+              
+                
+              
+            
+              
+                
+              
+            
+              
+                
+              
+                
+              
+            
+              
+                
+              
+                
+              
+            
+              
+                
+              
+                
+              
+            
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+            
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+            
+              
+                
+              
+                
+              
+                
+              
+            
+              
+                
+              
+                
+              
+                
+              
+            
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+            
               
             
           </div>
@@ -1998,26 +2108,6 @@
           
           
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jun 16</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">6:15 PM</a></span><span class="time-chip"><a class="no-detect">9:45 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/austin/amc-barton-creek-square-14/showtimes" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
             
             
             <tr class="showtime-row">
@@ -2212,26 +2302,6 @@
           
           
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jun 16</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">6:15 PM</a></span><span class="time-chip"><a class="no-detect">9:45 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/austin/amc-dine-in-tech-ridge-10/showtimes" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
             
             
             <tr class="showtime-row">
@@ -2510,26 +2580,6 @@
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                   <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jun 16</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">7:30 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000U3oey2AB" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
                     <td class="sc-date-td" colspan="2"><a class="no-detect">Sat Jun 20</a></td>
                   </tr>
                   <tr>
@@ -2574,26 +2624,6 @@
           
           
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jun 16</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">7:45 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000W9qwD2AR" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
             
             
             <tr class="showtime-row">
@@ -2721,57 +2751,6 @@
                       
                     </td>
                     <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000W9o1a2AB" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-          </table>
-          </td>
-        </tr>
-      </table>
-    </div>
-    
-    
-    
-    
-    
-    
-    <div class="film-card is-event">
-      
-      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          
-          <td class="film-poster-cell" valign="top">
-            <a href="https://letterboxd.com/tmdb/27064/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/4kIXsE4SwUjO0eUqpolsHNO5GLH.jpg" alt="" width="44" height="65" loading="lazy"></a>
-          </td>
-          
-          <td class="film-info" valign="top">
-            <div class="film-info-header">
-              
-              <div class="film-title-row">
-                <a class="film-title" href="https://letterboxd.com/tmdb/27064/" target="_blank">Mishima: A Life In Four Chapters</a>
-              </div>
-            </div>
-          
-          
-          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jun 16</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">5:20 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000W9pSH2AZ" target="_blank">Tickets</a></td>
                   </tr>
                 </table>
               </td>
@@ -3467,58 +3446,6 @@
     
     
     
-    <div class="film-card format-35mm is-event">
-      
-      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          
-          <td class="film-poster-cell" valign="top">
-            <a href="https://letterboxd.com/tmdb/7191/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/qIegUGJqyMMCRjkKV1s7A9MqdJ8.jpg" alt="" width="44" height="65" loading="lazy"></a>
-          </td>
-          
-          <td class="film-info" valign="top">
-            <div class="film-info-header">
-              
-              <div class="film-title-row">
-                <a class="film-title" href="https://letterboxd.com/tmdb/7191/" target="_blank">Cloverfield (South Lamar)</a><span class="format-badge badge-35mm">35mm</span>
-              </div>
-            </div>
-          
-          
-          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jun 16</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">9:30 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/terror-tuesday-cloverfield" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-          </table>
-          </td>
-        </tr>
-      </table>
-    </div>
-    
-    
-    
-    
-    
-    
-    
     <div class="film-card format-hdr is-event" id="anchor-hdr">
       
       <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
@@ -3534,26 +3461,6 @@
           
           
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jun 16</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">6:00 PM</a></span><span class="time-chip"><a class="no-detect">9:30 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/hdr-by-barco-disclosure-day" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
             
             
             <tr class="showtime-row">
@@ -3622,26 +3529,6 @@
           
           
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jun 16</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">10:00 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/hdr-by-barco-disclosure-day" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
             
             
             <tr class="showtime-row">
@@ -4092,108 +3979,6 @@
         <tr>
           
           <td class="film-poster-cell" valign="top">
-            <a href="https://letterboxd.com/tmdb/547009/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/eN56wiM2M84GBOQnp4TAQXcZucg.jpg" alt="" width="44" height="65" loading="lazy"></a>
-          </td>
-          
-          <td class="film-info" valign="top">
-            <div class="film-info-header">
-              
-              <div class="film-title-row">
-                <a class="film-title" href="https://letterboxd.com/tmdb/547009/" target="_blank">Greener Grass</a>
-              </div>
-            </div>
-          
-          
-          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jun 15</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">7:30 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://hyperrealfilm.club/events/6-15/greener-grass-movie-screening" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-          </table>
-          </td>
-        </tr>
-      </table>
-    </div>
-    
-    
-    
-    
-    
-    
-    <div class="film-card is-event">
-      
-      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          
-          <td class="film-poster-cell" valign="top">
-            <a href="https://letterboxd.com/tmdb/574007/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/xfowKY71EQGTSsdkpzfsjZrPtLT.jpg" alt="" width="44" height="65" loading="lazy"></a>
-          </td>
-          
-          <td class="film-info" valign="top">
-            <div class="film-info-header">
-              
-              <div class="film-title-row">
-                <a class="film-title" href="https://letterboxd.com/tmdb/574007/" target="_blank">Tejano at Hyperreal Film C</a>
-              </div>
-            </div>
-          
-          
-          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jun 16</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">7:30 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://hyperrealfilm.club/events/6-16/tejano-movie-screening" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-          </table>
-          </td>
-        </tr>
-      </table>
-    </div>
-    
-    
-    
-    
-    
-    
-    <div class="film-card is-event">
-      
-      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          
-          <td class="film-poster-cell" valign="top">
             <a href="https://letterboxd.com/tmdb/11836/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/1rvzKV1d18EbDVaEd4VDzK3cgnY.jpg" alt="" width="44" height="65" loading="lazy"></a>
           </td>
           
@@ -4384,57 +4169,6 @@
           <div class="films-list">
             
             
-    
-    
-    
-    
-    
-    <div class="film-card is-event">
-      
-      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          
-          <td class="film-poster-cell" valign="top">
-            <a href="https://letterboxd.com/tmdb/578/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/lxM6kqilAdpdhqUl2biYp5frUxE.jpg" alt="" width="44" height="65" loading="lazy"></a>
-          </td>
-          
-          <td class="film-info" valign="top">
-            <div class="film-info-header">
-              
-              <div class="film-title-row">
-                <a class="film-title" href="https://letterboxd.com/tmdb/578/" target="_blank">Jaws</a>
-              </div>
-            </div>
-          
-          
-          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jun 16</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">7:30 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://tickets.austintheatre.org/13986" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-          </table>
-          </td>
-        </tr>
-      </table>
-    </div>
-    
     
     
     
@@ -4821,7 +4555,7 @@
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                   <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jun 15 – Wed Jun 17</a></td>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Wed Jun 17</a></td>
                   </tr>
                   <tr>
                     <td class="sc-chips-td">
@@ -4932,46 +4666,6 @@
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                   <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jun 15</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">10:10 AM</a></span><span class="time-chip"><a class="no-detect">12:35 PM</a></span><span class="time-chip"><a class="no-detect">3:00 PM</a></span><span class="time-chip"><a class="no-detect">5:20 PM</a></span><span class="time-chip"><a class="no-detect">7:40 PM</a></span><span class="time-chip"><a class="no-detect">10:00 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://austin.violetcrown.com/cinema/scary-movie" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jun 16</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">10:00 AM</a></span><span class="time-chip"><a class="no-detect">12:15 PM</a></span><span class="time-chip"><a class="no-detect">2:30 PM</a></span><span class="time-chip"><a class="no-detect">4:45 PM</a></span><span class="time-chip"><a class="no-detect">5:30 PM</a></span><span class="time-chip"><a class="no-detect">10:15 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://austin.violetcrown.com/cinema/scary-movie" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
                     <td class="sc-date-td" colspan="2"><a class="no-detect">Wed Jun 17</a></td>
                   </tr>
                   <tr>
@@ -5036,46 +4730,6 @@
           
           
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jun 15</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">10:15 AM</a></span><span class="time-chip"><a class="no-detect">12:50 PM</a></span><span class="time-chip"><a class="no-detect">3:30 PM</a></span><span class="time-chip"><a class="no-detect">7:25 PM</a></span><span class="time-chip"><a class="no-detect">10:15 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://austin.violetcrown.com/cinema/obsession" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jun 16</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">10:15 AM</a></span><span class="time-chip"><a class="no-detect">12:50 PM</a></span><span class="time-chip"><a class="no-detect">3:00 PM</a></span><span class="time-chip"><a class="no-detect">7:25 PM</a></span><span class="time-chip"><a class="no-detect">10:00 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://austin.violetcrown.com/cinema/obsession" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
             
             
             <tr class="showtime-row">
@@ -5167,46 +4821,6 @@
           
           
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jun 15</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">11:00 AM</a></span><span class="time-chip"><a class="no-detect">1:30 PM</a></span><span class="time-chip"><a class="no-detect">4:00 PM</a></span><span class="time-chip"><a class="no-detect">6:30 PM</a></span><span class="time-chip"><a class="no-detect">9:00 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://austin.violetcrown.com/cinema/backrooms" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-            
-            <tr class="showtime-row">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jun 16</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip"><a class="no-detect">10:00 AM</a></span><span class="time-chip"><a class="no-detect">12:30 PM</a></span><span class="time-chip"><a class="no-detect">3:30 PM</a></span><span class="time-chip"><a class="no-detect">7:45 PM</a></span><span class="time-chip"><a class="no-detect">9:35 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://austin.violetcrown.com/cinema/backrooms" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
             
             
             <tr class="showtime-row">
