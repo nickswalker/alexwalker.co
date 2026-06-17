@@ -574,10 +574,11 @@ footer a:hover{color:var(--amber);}
   }
 
   // CTA back-to-top logo — same fade-in + one-shot pulse, but triggered the
-  // first time it scrolls into view. Falls back to immediate trigger if
-  // IntersectionObserver isn't available.
-  var cta = document.querySelector('.cta-logo');
-  if (cta) {
+  // first time it scrolls into view. The CTA section sits further down in the
+  // DOM than this script, so wait for parse to finish before querying.
+  var initCta = function(){
+    var cta = document.querySelector('.cta-logo');
+    if (!cta) return;
     var fire = function(){
       cta.classList.add('is-loaded');
       setTimeout(function(){ cta.classList.add('is-pulsing'); }, 1500);
@@ -592,12 +593,16 @@ footer a:hover{color:var(--amber);}
     } else {
       fire();
     }
-    // Smooth scroll to top (avoids leaving "#top" in the URL bar)
     cta.addEventListener('click', function(ev){
       ev.preventDefault();
       window.scrollTo({top:0, behavior:'smooth'});
       if (history.replaceState) history.replaceState(null, '', window.location.pathname);
     });
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCta);
+  } else {
+    initCta();
   }
 })();
 </script>
