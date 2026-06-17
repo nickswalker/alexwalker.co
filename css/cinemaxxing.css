@@ -245,10 +245,23 @@ nav .nav-btn:hover{
 .p-event{background:#9DEBF4;border-color:#9DEBF4;--pill-glow:#9DEBF4;}
 .hero h1{
   font-family:'Sansita',Georgia,serif;font-weight:800;
-  font-size:clamp(2.1rem,4.8vw,3.4rem);line-height:1.05;letter-spacing:-.012em;
-  max-width:20ch;margin:0 auto 1.5rem;color:var(--cream);
+  font-size:clamp(1.3rem,2.4vw,1.7rem);line-height:1.2;letter-spacing:-.012em;
+  max-width:24ch;margin:0 auto 2.5rem;color:var(--cream);
 }
-.hero h1 i{font-style:italic;color:var(--amber);font-weight:800;}
+/* Highlight on "70mm, IMAX, or repertory screening." — subtle chromatic
+   aberration (red/cyan misregistration) layered under a marquee-phosphor
+   warm-white halation glow. The combination reads as analog film bloom
+   without the gold-italic AI-marketing tell. */
+.hero h1 i{
+  font-style:italic;font-weight:800;color:#FFFEF7;
+  text-shadow:
+    -0.5px 0 0 rgba(228,72,72,0.7),
+    0.5px 0 0 rgba(80,200,255,0.7),
+    0 0 1px rgba(255,255,255,0.85),
+    0 0 5px rgba(255,235,200,0.55),
+    0 0 14px rgba(255,200,150,0.30),
+    0 0 28px rgba(255,170,110,0.15);
+}
 .hero-sub{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;color:rgba(244,242,225,0.75);max-width:54ch;margin:0 auto 1.5rem;line-height:1.7;}
 .hero-tagline{font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:800;font-size:1.4rem;color:var(--coral);margin:0 0 2.5rem;}
 .form-wrap{display:flex;gap:.5rem;max-width:420px;margin:0 auto;}
@@ -631,7 +644,7 @@ footer a:hover{color:var(--amber);}
   .covered,.about,.cta{padding:4rem 1.25rem;}
   .about.standalone{padding:3.5rem 1.25rem 4.5rem;}
   .hero-logo{max-width:280px;}
-  .hero h1{font-size:2.1rem;}
+  .hero h1{font-size:1.3rem;}
   .form-wrap{flex-direction:column;}
   .cov-grid{gap:2rem;}
   nav .nav-right{gap:.7rem;}
