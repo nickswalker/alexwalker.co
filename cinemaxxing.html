@@ -207,11 +207,16 @@ nav .nav-btn{
 .hero-tagline{font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:800;font-size:1.4rem;color:var(--coral);margin:0 0 2.5rem;}
 .form-wrap{display:flex;gap:.5rem;max-width:420px;margin:0 auto;}
 .form-wrap input{
-  flex:1;padding:.85rem 1.25rem;border:1px solid rgba(244,242,225,0.22);
-  border-radius:999px;background:rgba(244,242,225,0.05);color:var(--cream);
+  flex:1;padding:.85rem 1.25rem;
+  /* Solid dark background + stronger cream border so the input is clearly
+     readable against the grain-overlaid section bg. */
+  background:rgba(0,0,0,0.45);border:1px solid rgba(244,242,225,0.55);
+  border-radius:999px;color:var(--cream);
   font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;outline:none;
+  transition:border-color .2s,background .2s;
 }
-.form-wrap input::placeholder{color:rgba(244,242,225,0.35);}
+.form-wrap input::placeholder{color:rgba(244,242,225,0.6);}
+.form-wrap input:focus{border-color:var(--amber);background:rgba(0,0,0,0.6);}
 .form-wrap button{
   padding:.85rem 1.6rem;background:var(--amber);color:#0B0D11;border:none;border-radius:999px;
   font-family:'Plus Jakarta Sans',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;letter-spacing:.05em;
