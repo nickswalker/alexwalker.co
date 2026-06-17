@@ -182,7 +182,10 @@ nav .nav-btn{
 }
 .pill:hover{transform:scale(1.18) translateY(-2px) rotate(-1.5deg);box-shadow:0 6px 18px -6px currentColor;filter:brightness(1.15);}
 @media (prefers-reduced-motion:reduce){.pill,.pill:hover{transition:none;transform:none;box-shadow:none;filter:none;}}
-.p-70mm{border-color:var(--cyan);color:var(--cyan);}
+.p-70mm-imax{border-color:var(--cyan);color:var(--cyan);}
+/* Standard 70mm — fresh teal, sits in the cool-color family alongside the
+   IMAX 70mm cyan and IMAX blue but visually distinct from both. */
+.p-70mm{border-color:#1FCDA4;color:#1FCDA4;}
 .p-imax{border-color:#3574B9;color:#54D0ED;}
 .p-35mm{border-color:var(--amber);color:var(--amber);}
 .p-dolby{border-color:#EE475E;color:#EE475E;}
@@ -527,6 +530,7 @@ footer a:hover{color:var(--amber);}
     <div class="form-wrap"><input type="email" id="email-a" placeholder="your@email.com"><button onclick="submitA()">Subscribe</button></div>
     <p class="success-msg" id="success-a"></p>
     <div class="pills">
+      <span class="pill p-70mm-imax">IMAX 70mm</span>
       <span class="pill p-70mm">70mm</span>
       <span class="pill p-imax">IMAX</span>
       <span class="pill p-35mm">35mm</span>
@@ -665,11 +669,12 @@ footer a:hover{color:var(--amber);}
       <div class="cov-group">
         <div class="cov-num">i.</div>
         <h3>Premium Large-Format</h3>
-        <p class="cov-desc">IMAX 70mm film at the two Texas theaters that actually project 70mm through IMAX equipment, plus standard 70mm film at Santikos Palladium and digital-laser IMAX at Bob Bullock.</p>
+        <p class="cov-desc">Three flavors of large-format projection covered in one section: IMAX 70mm film (Texas's two true IMAX 70mm theaters), standard 70mm film (Santikos Palladium, plus the occasional Paramount Classic Series run), and digital-laser IMAX (Bob Bullock).</p>
         <ul class="cov-list">
           <li><strong>AMC Rivercenter 11 with Alamo IMAX</strong><span>San Antonio, TX — IMAX 70mm film</span></li>
           <li><strong>Cinemark Dallas XD and IMAX</strong><span>Dallas, TX — IMAX 70mm film</span></li>
           <li><strong>Santikos Palladium</strong><span>San Antonio, TX — standard 70mm film</span></li>
+          <li><strong>Paramount Theatre</strong><span>Austin, TX — standard 70mm (occasional, Classic Series)</span></li>
           <li><strong>Bob Bullock IMAX</strong><span>Austin, TX — digital-laser IMAX only (no 70mm)</span></li>
         </ul>
       </div>
