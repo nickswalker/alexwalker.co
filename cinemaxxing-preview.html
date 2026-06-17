@@ -735,9 +735,9 @@
       color: var(--text-film);
       text-decoration: none;
       /* Explicit line-height (in px, not unitless) so the title's box height
-         matches the format-badge's box height — both render as ~20px tall
+         matches the format-badge's box height — both render as 22px tall
          and vertical-align: middle aligns them visually centered. */
-      line-height: 20px;
+      line-height: 22px;
       display: inline-block;
       vertical-align: middle;
       margin-right: 8px;
@@ -765,11 +765,14 @@
       font-weight: 800;
       letter-spacing: 1.2px;
       text-transform: uppercase;
-      /* Padding + border + font sums to 20px box height — matches the
-         .film-title's line-height so both inline-block elements render as
-         the same height and vertical-align: middle works visually. */
+      /* Padding + border + line-height sums to 22px box height — matches
+         the .film-title's line-height so both inline-block elements render
+         as the same height and vertical-align: middle works visually.
+         Plus Jakarta Sans (the new badge font as of the Courier Prime
+         swap) renders taller at the same font-size than Courier Prime did,
+         so we bumped line-height 10→12 to keep the glyphs from clipping. */
       padding: 4px 8px;
-      line-height: 10px;
+      line-height: 12px;
       border-radius: 3px;
       white-space: nowrap;
       border: 1px solid;
