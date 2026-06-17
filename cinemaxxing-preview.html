@@ -776,6 +776,10 @@
       border-radius: 3px;
       white-space: nowrap;
       border: 1px solid;
+      /* Adjacent badges (e.g. DOLBY VISION + ATMOS) were touching because
+         inline-block elements have no automatic gutter in Gmail/iOS Mail —
+         the whitespace between them in the HTML source gets collapsed. */
+      margin-right: 4px;
     }
     .badge-imax {
       background-color: #13548E;
@@ -956,30 +960,6 @@
         height: 0;
         vertical-align: top;
       }
-      .time-chip {
-        display: inline-block;
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--text-time);
-        white-space: nowrap;
-        /* Explicit line-height + padding sums to exactly 22px tall so the
-           chip's box height matches the .tickets-link button next to it.
-           vertical-align: middle aligns both visually centered.
-           Wrap spacing comes from the parent cell's line-height: 2 — no
-           need for margin-bottom here, which would shift the visual
-           center down and break alignment with the tickets button. */
-        line-height: 16px;
-        padding: 3px 12px;
-        vertical-align: middle;
-        background-color: var(--bg-card);
-        border-radius: 6px;
-        margin-right: 8px;
-      }
-      .time-chip:last-child { margin-right: 0; }
-      .time-chip.sold-out {
-        color: var(--sold-out);
-        text-decoration: line-through;
-      }
       .showtime-tickets {
         width: 1%;
         white-space: nowrap;
@@ -987,6 +967,29 @@
         padding-left: 8px !important;
         padding-top: 0 !important;
       }
+    }
+    /* .time-chip rules deliberately live OUTSIDE @media all. Gmail web and
+       iOS Mail strip @media all entirely, which left chips rendering as
+       bare unstyled text (no pill, no gap → "6:10 PM9:30 PM" all run
+       together). Premailer now inlines these onto every chip — costs ~5KB
+       per send but the chips actually look like chips. */
+    .time-chip {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-time);
+      white-space: nowrap;
+      line-height: 16px;
+      padding: 3px 12px;
+      vertical-align: middle;
+      background-color: var(--bg-card);
+      border-radius: 6px;
+      margin-right: 8px;
+    }
+    .time-chip:last-child { margin-right: 0; }
+    .time-chip.sold-out {
+      color: var(--sold-out);
+      text-decoration: line-through;
     }
 
         .tickets-link {
