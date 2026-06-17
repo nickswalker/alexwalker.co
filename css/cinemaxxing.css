@@ -149,6 +149,11 @@ nav .nav-btn:hover{
   display:inline-block;line-height:0;border-radius:6px;max-width:380px;width:100%;
   margin:0 auto 2rem;
   opacity:0;transform:translateY(10px);
+  /* Explicit zero-shadow baseline so the hover transition interpolates
+     smoothly between identical filter() function lists. Without this, the
+     base filter is `none` and browsers snap rather than animate when
+     switching to a drop-shadow on hover. */
+  filter:drop-shadow(0 0 0 rgba(144,200,240,0));
   transition:filter .45s cubic-bezier(0.4,0,0.2,1),
              transform .35s cubic-bezier(0.4,0,0.2,1);
   will-change:filter,transform,opacity;
@@ -212,6 +217,12 @@ nav .nav-btn:hover{
   letter-spacing:.08em;text-transform:uppercase;padding:.5rem 1rem;line-height:1;
   border-radius:4px;border:1.5px solid transparent;cursor:default;
   transform-origin:center;color:#0B0D11;
+  /* --pill-glow is set per-pill below to the pill's BG color so every
+     hover glow has the same visibility and renders in the pill's own
+     palette (rather than using currentColor, which is the text color
+     and was producing white glows on the dark-bg pills + nearly invisible
+     dark glows on the light-bg pills). */
+  --pill-glow:#FBB315;
   transition:transform .42s cubic-bezier(.34,1.56,.64,1),
              box-shadow .45s cubic-bezier(0.4,0,0.2,1),
              filter .35s cubic-bezier(0.4,0,0.2,1);
@@ -219,19 +230,19 @@ nav .nav-btn:hover{
 }
 .pill:hover{
   transform:scale(1.16) translateY(-2px) rotate(-1.5deg);
-  box-shadow:0 0 22px -2px currentColor,0 8px 18px -8px currentColor;
+  box-shadow:0 0 22px -2px var(--pill-glow),0 8px 20px -8px var(--pill-glow);
   filter:brightness(1.08);
 }
 @media (prefers-reduced-motion:reduce){.pill,.pill:hover{transition:none;transform:none;box-shadow:none;filter:none;}}
-.p-70mm-imax{background:var(--cyan);border-color:var(--cyan);}
+.p-70mm-imax{background:var(--cyan);border-color:var(--cyan);--pill-glow:var(--cyan);}
 /* Standard 70mm — fresh teal, sits in the cool-color family alongside the
    IMAX 70mm cyan and IMAX blue but visually distinct from both. */
-.p-70mm{background:#1FCDA4;border-color:#1FCDA4;}
-.p-imax{background:#3574B9;border-color:#3574B9;color:#F4F2E1;}
-.p-35mm{background:var(--amber);border-color:var(--amber);}
-.p-dolby{background:#EE475E;border-color:#EE475E;color:#F4F2E1;}
-.p-hdr{background:var(--coral);border-color:var(--coral);}
-.p-event{background:#9DEBF4;border-color:#9DEBF4;}
+.p-70mm{background:#1FCDA4;border-color:#1FCDA4;--pill-glow:#1FCDA4;}
+.p-imax{background:#3574B9;border-color:#3574B9;color:#F4F2E1;--pill-glow:#3574B9;}
+.p-35mm{background:var(--amber);border-color:var(--amber);--pill-glow:var(--amber);}
+.p-dolby{background:#EE475E;border-color:#EE475E;color:#F4F2E1;--pill-glow:#EE475E;}
+.p-hdr{background:var(--coral);border-color:var(--coral);--pill-glow:var(--coral);}
+.p-event{background:#9DEBF4;border-color:#9DEBF4;--pill-glow:#9DEBF4;}
 .hero h1{
   font-family:'Sansita',Georgia,serif;font-weight:800;
   font-size:clamp(2.1rem,4.8vw,3.4rem);line-height:1.05;letter-spacing:-.012em;
