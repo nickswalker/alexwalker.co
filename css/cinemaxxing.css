@@ -139,26 +139,34 @@ nav .nav-btn:hover{
   font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;
   letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:1.8rem;
 }
-/* Hero logo wrapped in .cmx-logo for fade-in + one-shot pulse + hover glow */
+/* Hero logo wrapped in .cmx-logo for fade-in + one-shot pulse + hover glow.
+   Hover/pulse timings match the rest of the landing's interactive elements
+   (.who-pill / .form-wrap button / .nav-btn): a 0.45s glow fade on the
+   smooth cubic-bezier(0.4,0,0.2,1) curve, and a sinusoidal cubic-bezier
+   (0.45,0,0.55,1) ease-in-out on the one-shot pulse so both the in and
+   out halves feel natural rather than snapping. */
 .cmx-logo{
   display:inline-block;line-height:0;border-radius:6px;max-width:380px;width:100%;
   margin:0 auto 2rem;
   opacity:0;transform:translateY(10px);
-  transition:filter 0.7s cubic-bezier(0.4,0,0.2,1),transform 0.7s cubic-bezier(0.4,0,0.2,1);
+  transition:filter .45s cubic-bezier(0.4,0,0.2,1),
+             transform .35s cubic-bezier(0.4,0,0.2,1);
   will-change:filter,transform,opacity;
 }
 .cmx-logo.is-loaded{
   opacity:1;transform:translateY(0);
-  transition:opacity 0.6s cubic-bezier(0.4,0,0.2,1),transform 0.6s cubic-bezier(0.4,0,0.2,1),filter 0.7s cubic-bezier(0.4,0,0.2,1);
+  transition:opacity .6s cubic-bezier(0.4,0,0.2,1),
+             transform .6s cubic-bezier(0.4,0,0.2,1),
+             filter .45s cubic-bezier(0.4,0,0.2,1);
 }
-.cmx-logo img{display:block;width:100%;height:auto;opacity:.94;transition:opacity 0.6s ease;margin:0 auto;}
+.cmx-logo img{display:block;width:100%;height:auto;opacity:.94;transition:opacity .45s cubic-bezier(0.4,0,0.2,1);margin:0 auto;}
 .cmx-logo:hover{filter:drop-shadow(0 0 16px rgba(144,200,240,0.6));transform:translateY(-1px);}
 .cmx-logo:hover img{opacity:1;}
 @keyframes cmx-pulse{
   0%,100%{filter:drop-shadow(0 0 0 rgba(120,200,255,0)) drop-shadow(0 0 0 rgba(120,200,255,0));}
   50%{filter:drop-shadow(0 0 12px rgba(120,200,255,0.45)) drop-shadow(0 0 30px rgba(120,200,255,0.25));}
 }
-.cmx-logo.is-pulsing{animation:cmx-pulse 2.6s cubic-bezier(0.4,0,0.2,1) 1;}
+.cmx-logo.is-pulsing{animation:cmx-pulse 2.6s cubic-bezier(0.45,0,0.55,1) 1;}
 @media (prefers-reduced-motion:reduce){
   .cmx-logo,.cmx-logo img{transition-duration:0.1s;}
   .cmx-logo:hover{transform:none;}
@@ -411,18 +419,25 @@ nav .nav-btn:hover{
 .bio p{font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;color:rgba(244,242,225,0.72);line-height:1.7;margin-bottom:.75rem;}
 .bio-favs-label{display:block;font-family:'Sansita',Georgia,serif;font-style:italic;font-size:.85rem;color:rgba(244,242,225,0.5);margin-bottom:.15rem;font-weight:400;}
 .bio-favs{font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;color:rgba(244,242,225,0.72);}
-/* Bio social icon links — colored SVG icons that desaturate to grayscale by
-   default and pop into full brand color on hover. */
+/* Bio social icon links — full-color brand icons by default with a subtle
+   per-brand glow + lift on hover. Transitions match the rest of the
+   landing's interactive vocabulary: cubic-bezier(0.4,0,0.2,1) for the
+   glow, slightly longer (.45s) so the box-shadow unfurls rather than
+   snaps; brand colors are set as the box-shadow target so each icon
+   glows in its own palette. */
 .bio-handles{margin-top:1.1rem;display:flex;gap:.85rem;align-items:center;}
 .bio-handles a{
   display:inline-flex;align-items:center;justify-content:center;
   width:34px;height:34px;border-radius:50%;
   background:rgba(244,242,225,0.06);border:1px solid rgba(244,242,225,0.12);
-  transition:filter .3s cubic-bezier(0.4,0,0.2,1),background .3s cubic-bezier(0.4,0,0.2,1),border-color .3s cubic-bezier(0.4,0,0.2,1),transform .3s cubic-bezier(0.4,0,0.2,1);
-  filter:grayscale(1) brightness(.92);
+  transition:background .35s cubic-bezier(0.4,0,0.2,1),
+             border-color .35s cubic-bezier(0.4,0,0.2,1),
+             box-shadow .45s cubic-bezier(0.4,0,0.2,1),
+             transform .35s cubic-bezier(0.4,0,0.2,1),
+             filter .35s cubic-bezier(0.4,0,0.2,1);
 }
 .bio-handles a:hover{
-  filter:grayscale(0) brightness(1.05);
+  filter:brightness(1.08);
   background:rgba(244,242,225,0.10);
   border-color:rgba(244,242,225,0.30);
   transform:translateY(-1px);
@@ -430,6 +445,20 @@ nav .nav-btn:hover{
 .bio-handles a svg{display:block;width:18px;height:18px;}
 .bio-handles a.lb{width:auto;height:34px;padding:0 .6rem;border-radius:18px;}
 .bio-handles a.lb svg{width:30px;height:14px;}
+/* Per-brand glow tints — Instagram radial purple→pink, Letterboxd blue,
+   alexwalker.co amber. Same easing + duration as the base; brand-specific
+   color keeps the glow feeling tied to the icon it's around. */
+.bio-handles a[aria-label="Instagram"]:hover{box-shadow:0 0 18px rgba(225,48,108,0.45),0 6px 16px -8px rgba(225,48,108,0.40);}
+.bio-handles a.lb:hover{box-shadow:0 0 18px rgba(64,188,244,0.45),0 6px 16px -8px rgba(64,188,244,0.40);}
+.bio-handles a.aw{
+  font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:800;
+  font-size:14px;letter-spacing:-.02em;color:var(--amber);
+  text-decoration:none;line-height:1;
+}
+.bio-handles a.aw:hover{box-shadow:0 0 18px rgba(251,179,21,0.45),0 6px 16px -8px rgba(251,179,21,0.40);}
+@media (prefers-reduced-motion:reduce){
+  .bio-handles a,.bio-handles a:hover{transition:none;transform:none;box-shadow:none;filter:none;}
+}
 .about-closing{
   font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:400;
   font-size:1.1rem;color:rgba(244,242,225,0.78);max-width:60ch;line-height:1.55;
