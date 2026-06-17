@@ -328,16 +328,13 @@ nav .nav-btn{
   font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;line-height:1.55;
   max-width:62ch;color:var(--cream);font-weight:300;margin-bottom:3rem;
 }
-/* Drop-cap math: the lead's 2 visible lines occupy 1.2rem × 1.55 × 2 ≈
-   3.72rem. The Sansita italic cap renders larger than its font-size box
-   because of its ascender + descender slots. To center the cap on those
-   two lines we shrink the font-size, set explicit line-height to match
-   the two-line height, and bias padding-top so the visual cap-height
-   (which sits near the bottom of the font box) lands on the line
-   centerline. */
+/* Drop-cap: sized so the cap-height spans two lines of body text. Sansita
+   italic has a deep descender slot, so we use line-height .85 to crop
+   the descender's contribution to the glyph box, and a small positive
+   padding-top to push the cap's visual TOP down to line 1's cap line. */
 .about-lead::first-letter{
-  font-family:'Sansita',Georgia,serif;font-size:3.7rem;font-weight:800;font-style:italic;
-  line-height:1;float:left;padding:.35rem .55rem 0 0;color:var(--amber);
+  font-family:'Sansita',Georgia,serif;font-size:4rem;font-weight:800;font-style:italic;
+  line-height:.85;float:left;padding:.05rem .55rem 0 0;color:var(--amber);
 }
 .bios{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:3rem 4rem;margin-bottom:3rem;}
 .bio{padding-top:1.5rem;border-top:1px solid rgba(244,242,225,0.18);}
