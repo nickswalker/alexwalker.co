@@ -321,16 +321,23 @@ nav .nav-btn{
 .about h2{
   font-family:'Sansita',Georgia,serif;font-weight:800;
   font-size:clamp(2.2rem,5vw,3.2rem);letter-spacing:-.012em;
-  margin-bottom:.4rem;color:var(--cream);line-height:1;
+  margin-bottom:.4rem;color:var(--cream);line-height:1;text-align:center;
 }
-.about .sec-sub{font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:400;color:rgba(244,242,225,0.62);font-size:1.05rem;margin-bottom:2.5rem;max-width:42ch;}
+.about .sec-sub{font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:400;color:rgba(244,242,225,0.62);font-size:1.05rem;margin:0 auto 2.5rem;max-width:42ch;text-align:center;}
 .about-lead{
   font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;line-height:1.55;
   max-width:62ch;color:var(--cream);font-weight:300;margin-bottom:3rem;
 }
+/* Drop-cap math: the lead's 2 visible lines occupy 1.2rem × 1.55 × 2 ≈
+   3.72rem. The Sansita italic cap renders larger than its font-size box
+   because of its ascender + descender slots. To center the cap on those
+   two lines we shrink the font-size, set explicit line-height to match
+   the two-line height, and bias padding-top so the visual cap-height
+   (which sits near the bottom of the font box) lands on the line
+   centerline. */
 .about-lead::first-letter{
-  font-family:'Sansita',Georgia,serif;font-size:4.4rem;font-weight:800;font-style:italic;
-  line-height:.85;float:left;padding:.2rem .55rem 0 0;color:var(--amber);
+  font-family:'Sansita',Georgia,serif;font-size:3.7rem;font-weight:800;font-style:italic;
+  line-height:1;float:left;padding:.35rem .55rem 0 0;color:var(--amber);
 }
 .bios{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:3rem 4rem;margin-bottom:3rem;}
 .bio{padding-top:1.5rem;border-top:1px solid rgba(244,242,225,0.18);}
@@ -710,12 +717,12 @@ footer a:hover{color:var(--amber);}
       <div class="cov-group">
         <div class="cov-num">i.</div>
         <h3>Premium Large-Format</h3>
-        <p class="cov-desc">Three flavors of large-format projection covered in one section: IMAX 70mm film (Texas's two true IMAX 70mm theaters), standard 70mm film (Santikos Palladium, plus the occasional Paramount Classic Series run), and digital-laser IMAX (Bob Bullock).</p>
+        <p class="cov-desc">Three flavors of large-format projection covered in one section: IMAX 70mm film at Texas's two true IMAX 70mm theaters, occasional standard 70mm film at the Paramount and Santikos Palladium, and digital-laser IMAX at Bob Bullock.</p>
         <ul class="cov-list">
           <li><strong>AMC Rivercenter 11 with Alamo IMAX</strong><span>San Antonio, TX — IMAX 70mm film</span></li>
           <li><strong>Cinemark Dallas XD and IMAX</strong><span>Dallas, TX — IMAX 70mm film</span></li>
-          <li><strong>Santikos Palladium</strong><span>San Antonio, TX — standard 70mm film</span></li>
-          <li><strong>Paramount Theatre</strong><span>Austin, TX — standard 70mm (occasional, Classic Series)</span></li>
+          <li><strong>Paramount Theatre</strong><span>Austin, TX — occasional standard 70mm</span></li>
+          <li><strong>Santikos Palladium</strong><span>San Antonio, TX — occasional standard 70mm</span></li>
           <li><strong>Bob Bullock IMAX</strong><span>Austin, TX — digital-laser IMAX only (no 70mm)</span></li>
         </ul>
       </div>
@@ -742,7 +749,6 @@ footer a:hover{color:var(--amber);}
         </ul>
       </div>
     </div>
-    <p class="cov-footer">We filter aggressively to keep the digest focused on the best available formats. Standard screenings, museum docs, and filtered-out Alamo shows are all linked from every edition's <strong>full filtered screenings page</strong> — nothing is hidden.</p>
   </div>
 </section>
 
