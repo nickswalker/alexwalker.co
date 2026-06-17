@@ -65,7 +65,7 @@ jobs:
             --no-enforce-https \
             --ignore-missing-alt \
             --ignore-files '/_site/admin/,/_site/cinemaxxing-preview\.html/' \
-            --ignore-urls '/vimeo\.com/,/twitter\.com/,/instagram\.com/,/letterboxd\.com/,/fonts\.googleapis\.com/,/fonts\.gstatic\.com/,/nexus\.tail1c6f41\.ts\.net/,/imdb\.com/,/image\.tmdb\.org/' \
+            --ignore-urls '/vimeo\.com/,/twitter\.com/,/instagram\.com/,/letterboxd\.com/,/fonts\.googleapis\.com/,/fonts\.gstatic\.com/,/nexus\.tail1c6f41\.ts\.net/,/imdb\.com/,/image\.tmdb\.org/,/cinemaxxing\.co/' \
             --swap-urls 'https?\:\/\/alexwalker\.co:' \
             --cache '{ "timeframe": { "external": "30d" } }'
 
