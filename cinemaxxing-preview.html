@@ -730,13 +730,14 @@
          L7  theater-attr     — 10px / 500  (subtle attribution) */
         .film-title {
       font-family: 'Sansita', Georgia, 'Times New Roman', serif;
-      font-size: 14px;
+      font-size: 18px;
       font-weight: 800;
       color: var(--text-film);
       text-decoration: none;
-      /* Explicit line-height (in px, not unitless) so the title's box height
-         matches the format-badge's box height — both render as 22px tall
-         and vertical-align: middle aligns them visually centered. */
+      /* Font-size bumped 14px → 18px so the cap height of "D"/"P"/etc.
+         visually matches the height of the format badge pill next to it.
+         line-height stays 22px so the title's line-box and the badge's
+         box align via vertical-align: middle. */
       line-height: 22px;
       display: inline-block;
       vertical-align: middle;
@@ -1073,7 +1074,7 @@
       .section-desc { font-size: 12px; }
       .films-list { padding: 10px 12px; }
       .film-card { padding: 14px 12px; }
-      .film-title { font-size: 16px; line-height: 1.35; }
+      .film-title { font-size: 18px; line-height: 22px; }
       .film-description { font-size: 13px; line-height: 1.5; }
       .footer { padding: 24px 20px; }
       .footer p { font-size: 14px; }
