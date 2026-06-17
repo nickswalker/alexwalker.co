@@ -240,7 +240,7 @@ nav .nav-btn{
 }
 .covered > *{position:relative;z-index:2;}
 .covered > .grain{position:absolute;inset:0;z-index:1;}
-.covered .inner{max-width:1100px;margin:0 auto;}
+.covered .inner{max-width:980px;margin:0 auto;}
 .covered h2{
   font-family:'Sansita',Georgia,serif;font-weight:800;
   font-size:clamp(2.2rem,5vw,3.4rem);letter-spacing:-.012em;
@@ -251,15 +251,18 @@ nav .nav-btn{
   color:rgba(244,242,225,0.6);font-size:1.05rem;margin:0 auto 2.75rem;
   max-width:46ch;text-align:center;
 }
-.cov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2.5rem;}
-.cov-group{border-top:1px solid rgba(244,242,225,0.18);padding-top:1.25rem;}
+.cov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2.5rem;}
+.cov-group{border-top:1px solid rgba(244,242,225,0.18);padding-top:1.25rem;text-align:center;}
 .cov-num{font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:800;font-size:2rem;margin-bottom:.35rem;display:block;line-height:1;}
 .cov-group:nth-child(1) .cov-num{color:var(--cyan);}
 .cov-group:nth-child(2) .cov-num{color:var(--amber);}
 .cov-group:nth-child(3) .cov-num{color:var(--coral);}
 .cov-group h3{font-family:'Sansita',Georgia,serif;font-weight:800;font-size:1.55rem;margin-bottom:.4rem;color:var(--cream);letter-spacing:-.005em;}
-.cov-desc{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;color:rgba(244,242,225,0.65);line-height:1.55;margin-bottom:1.1rem;}
-.cov-list{list-style:none;display:flex;flex-direction:column;gap:.6rem;font-family:'Plus Jakarta Sans',sans-serif;}
+.cov-desc{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;color:rgba(244,242,225,0.65);line-height:1.55;margin:0 auto 1.4rem;max-width:34ch;}
+/* Lists stay left-aligned (bullets need it) but the list block itself is
+   inline-flex inside a text-align:center column, so the block centers
+   horizontally while its rows stay left-aligned. */
+.cov-list{list-style:none;display:inline-flex;flex-direction:column;gap:.6rem;font-family:'Plus Jakarta Sans',sans-serif;text-align:left;}
 .cov-list li{font-size:.9rem;line-height:1.4;padding-left:.85rem;position:relative;color:rgba(244,242,225,0.95);}
 .cov-list li::before{content:'';position:absolute;left:0;top:.55rem;width:4px;height:4px;border-radius:50%;background:rgba(244,242,225,0.4);}
 .cov-list li span{display:block;font-size:.76rem;color:rgba(244,242,225,0.5);margin-top:.15rem;}
