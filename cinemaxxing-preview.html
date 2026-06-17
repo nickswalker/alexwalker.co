@@ -263,23 +263,26 @@
       line-height: 2.2;
     }
     .top-bar-pill {
+      /* Solid pill — inline-block with explicit line-height keeps the
+         text vertically centered in Gmail's renderer (which strips
+         inline-flex from a/buttons). */
       margin: 0 3px;
       display: inline-block;
-      background-color: transparent;
+      background-color: var(--bg-card);
       border: 1px solid var(--border-card);
       border-radius: 999px;
-      padding: 5px 12px;
+      padding: 6px 13px;
       font-size: 11px;
-      font-weight: 500;
+      font-weight: 600;
+      line-height: 1;
       letter-spacing: 0.2px;
       color: var(--text-body);
       text-decoration: none;
-      opacity: 0.85;
       /* nowrap: Gmail mobile squeezes the 3-pill row and wraps pill text
          onto two lines, overlapping neighbors. One pill = one line. */
       white-space: nowrap;
     }
-    .top-bar-pill:hover { opacity: 1; }
+    .top-bar-pill:hover { background-color: var(--bg-card-hover, var(--bg-card)); }
     .top-bar-pill svg {
       display: inline-block;
       vertical-align: middle;
@@ -332,7 +335,7 @@
       overflow: hidden;
     }
     .stat-label {
-      font-family: 'Courier Prime', 'Courier New', monospace;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 9px;
       font-weight: 700;
       letter-spacing: 1px;
@@ -380,7 +383,7 @@
     .header-edition {
       display: block;
       text-align: center;
-      font-family: 'Courier Prime', 'Courier New', monospace;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 1.5px;
@@ -400,7 +403,7 @@
     }
     .header-35mm-callout a:hover { text-decoration: underline; }
     .header-eyebrow {
-      font-family: 'Courier Prime', 'Courier New', monospace;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 3px;
