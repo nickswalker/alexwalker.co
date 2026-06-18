@@ -291,7 +291,8 @@ nav .nav-btn:hover{
              filter .35s cubic-bezier(0.4,0,0.2,1);
   will-change:transform,box-shadow,filter;
 }
-.pill:hover{
+.pill:hover,
+.pill.is-touched{
   transform:scale(1.16) translateY(-2px) rotate(-1.5deg);
   text-shadow:
     -0.4px 0 0 rgba(228,72,72,0.55),

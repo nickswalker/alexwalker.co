@@ -103,6 +103,50 @@
   } else {
     initCta();
   }
+
+  // Format-pill touch handler — turns the hero pills' :hover effect into a
+  // finger-drag-to-light-up interaction on touchscreens. :hover doesn't
+  // fire during touchmove on iOS/Android, so we track the touch point in
+  // JS and toggle .is-touched on the pill currently under the finger
+  // (which the CSS rule pairs with :hover to deliver the same glow).
+  // No-op on desktop — guarded on 'ontouchstart' so we don't add listeners
+  // that aren't needed.
+  var initPillTouch = function(){
+    var pillsContainer = document.querySelector('.pills');
+    if (!pillsContainer || !('ontouchstart' in window)) return;
+    var lastPill = null;
+    var pillAt = function(x, y){
+      var el = document.elementFromPoint(x, y);
+      while (el && el !== document.body) {
+        if (el.classList && el.classList.contains('pill')) return el;
+        el = el.parentNode;
+      }
+      return null;
+    };
+    var clearAll = function(){
+      var lit = pillsContainer.querySelectorAll('.pill.is-touched');
+      for (var i = 0; i < lit.length; i++) lit[i].classList.remove('is-touched');
+      lastPill = null;
+    };
+    var handle = function(e){
+      var t = e.touches && e.touches[0];
+      if (!t) return;
+      var pill = pillAt(t.clientX, t.clientY);
+      if (pill === lastPill) return;
+      if (lastPill) lastPill.classList.remove('is-touched');
+      if (pill) pill.classList.add('is-touched');
+      lastPill = pill;
+    };
+    pillsContainer.addEventListener('touchstart',  handle,    {passive:true});
+    pillsContainer.addEventListener('touchmove',   handle,    {passive:true});
+    pillsContainer.addEventListener('touchend',    clearAll,  {passive:true});
+    pillsContainer.addEventListener('touchcancel', clearAll,  {passive:true});
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPillTouch);
+  } else {
+    initPillTouch();
+  }
 })();
 </script>
 
