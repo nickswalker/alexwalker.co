@@ -21,7 +21,7 @@
   --leak-deep:#3C1B3F;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;scroll-padding-top:120px;}
 body{
   background:var(--ink);color:var(--cream);
   font-family:'Plus Jakarta Sans',-apple-system,system-ui,sans-serif;
@@ -329,14 +329,15 @@ nav .nav-btn:hover{
 .hero-sub{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;color:rgba(244,242,225,0.75);max-width:54ch;margin:0 auto 1.5rem;line-height:1.7;}
 .hero-tagline{font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:800;font-size:1.4rem;color:var(--coral);margin:0 0 2.5rem;}
 /* The hero/cta Subscribe form wrapped in #subscribe so the nav-bar
-   Subscribe link can anchor here. scroll-margin-top offsets the sticky
-   nav (~68px tall) plus a little breathing room so the form lands just
-   below the nav, not pinned underneath it. */
-.form-block{scroll-margin-top:90px;}
+   Subscribe link can anchor here. scroll-padding-top on <html> handles
+   the actual anchor offset (see html rule near top) — keeps the form
+   well clear of the sticky nav AND of the page edge so the eyebrow +
+   logo remain partially visible above. */
+.form-block{scroll-margin-top:140px;}
 .form-note{
   font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:400;
-  font-size:.85rem;color:rgba(244,242,225,0.55);
-  margin:.85rem auto 0;max-width:46ch;
+  font-size:.72rem;color:rgba(244,242,225,0.38);
+  margin:1.65rem auto 0;max-width:46ch;letter-spacing:.02em;
 }
 .form-wrap{display:flex;gap:.5rem;max-width:420px;margin:0 auto;}
 .form-wrap input{
