@@ -119,5 +119,26 @@
   <a href="cinemaxxing.html">Home</a> · © Cinemaxxing 2026 · Austin, TX · <a href="mailto:hello@cinemaxxing.co">hello@cinemaxxing.co</a>
 </footer>
 
+<!-- Anonymous visitor counter + outbound-click tracker. Pings the
+     movie-tool Flask backend over the Tailscale funnel. Hashed (IP + UA),
+     no cookies, no third party. -->
+<noscript>
+  <img src="https://nexus.tail1c6f41.ts.net/p.gif?p=/about" alt="" width="1" height="1"
+       style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;"
+       referrerpolicy="no-referrer-when-downgrade" data-proofer-ignore>
+</noscript>
+<script type="module">
+  import { sendPagePixel, initOutboundLinkTracking } from './js/cinemaxxing-visit-log.js';
+  if (document.readyState !== 'loading') {
+    sendPagePixel();
+    initOutboundLinkTracking();
+  } else {
+    document.addEventListener('DOMContentLoaded', function () {
+      sendPagePixel();
+      initOutboundLinkTracking();
+    });
+  }
+</script>
+
 </body>
 </html>
