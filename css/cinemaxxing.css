@@ -96,18 +96,31 @@ nav .nav-btn{
   letter-spacing:.18em;text-transform:uppercase;
   color:#0B0D11;background:var(--amber);
   border:1px solid var(--amber);border-radius:999px;font-weight:700;
+  /* Zero-baseline text-shadow so the chromatic aberration on hover
+     interpolates from a matching shadow list rather than `none`. */
+  text-shadow:0 0 0 rgba(228,72,72,0),0 0 0 rgba(80,200,255,0);
   transition:background .35s cubic-bezier(0.4,0,0.2,1),
              box-shadow .45s cubic-bezier(0.4,0,0.2,1),
+             text-shadow .35s cubic-bezier(0.4,0,0.2,1),
              transform .35s cubic-bezier(0.4,0,0.2,1);
 }
 nav .nav-btn:hover{
   background:#FFC845;
-  box-shadow:0 0 22px rgba(251,179,21,0.45),
-             0 6px 16px -8px rgba(251,179,21,0.55);
+  /* Chromatic aberration on the SUBSCRIBE text */
+  text-shadow:
+    -0.4px 0 0 rgba(228,72,72,0.5),
+    0.4px 0 0 rgba(80,200,255,0.5);
+  /* Four-layer amber phosphor halo — keeps the original amber palette,
+     just gives it depth: tight inner glow → mid → wide outer → soft cast */
+  box-shadow:
+    0 0 1px rgba(251,179,21,0.85),
+    0 0 6px rgba(251,179,21,0.55),
+    0 0 22px rgba(251,179,21,0.42),
+    0 6px 16px -8px rgba(251,179,21,0.5);
   transform:translateY(-1px);
 }
 @media (prefers-reduced-motion:reduce){
-  nav .nav-btn,nav .nav-btn:hover{transition:none;transform:none;box-shadow:none;}
+  nav .nav-btn,nav .nav-btn:hover{transition:none;transform:none;box-shadow:none;text-shadow:none;}
 }
 
 /* ────────── HERO ────────── */
@@ -149,11 +162,19 @@ nav .nav-btn:hover{
   display:inline-block;line-height:0;border-radius:6px;max-width:380px;width:100%;
   margin:0 auto 2rem;
   opacity:0;transform:translateY(10px);
-  /* Explicit zero-shadow baseline so the hover transition interpolates
-     smoothly between identical filter() function lists. Without this, the
-     base filter is `none` and browsers snap rather than animate when
-     switching to a drop-shadow on hover. */
-  filter:drop-shadow(0 0 0 rgba(144,200,240,0));
+  /* Six-layer filter baseline so the hover transition interpolates
+     smoothly between matching drop-shadow() lists:
+       layers 1-2  chromatic aberration (red + cyan offsets)
+       layers 3-6  phosphor halation (tight inner → wide outer)
+     All at zero opacity at rest; hover/pulse fades them in. The shared
+     blue palette stays — analog effect just sits on top of it. */
+  filter:
+    drop-shadow(0 0 0 rgba(228,72,72,0))
+    drop-shadow(0 0 0 rgba(80,200,255,0))
+    drop-shadow(0 0 0 rgba(144,200,240,0))
+    drop-shadow(0 0 0 rgba(144,200,240,0))
+    drop-shadow(0 0 0 rgba(144,200,240,0))
+    drop-shadow(0 0 0 rgba(144,200,240,0));
   transition:filter .45s cubic-bezier(0.4,0,0.2,1),
              transform .35s cubic-bezier(0.4,0,0.2,1);
   will-change:filter,transform,opacity;
@@ -165,11 +186,36 @@ nav .nav-btn:hover{
              filter .45s cubic-bezier(0.4,0,0.2,1);
 }
 .cmx-logo img{display:block;width:100%;height:auto;opacity:.94;transition:opacity .45s cubic-bezier(0.4,0,0.2,1);margin:0 auto;}
-.cmx-logo:hover{filter:drop-shadow(0 0 16px rgba(144,200,240,0.6));transform:translateY(-1px);}
+.cmx-logo:hover{
+  filter:
+    drop-shadow(-0.6px 0 0 rgba(228,72,72,0.35))
+    drop-shadow(0.6px 0 0 rgba(80,200,255,0.35))
+    drop-shadow(0 0 1px rgba(144,200,240,0.7))
+    drop-shadow(0 0 6px rgba(144,200,240,0.55))
+    drop-shadow(0 0 16px rgba(144,200,240,0.5))
+    drop-shadow(0 0 32px rgba(144,200,240,0.28));
+  transform:translateY(-1px);
+}
 .cmx-logo:hover img{opacity:1;}
 @keyframes cmx-pulse{
-  0%,100%{filter:drop-shadow(0 0 0 rgba(120,200,255,0)) drop-shadow(0 0 0 rgba(120,200,255,0));}
-  50%{filter:drop-shadow(0 0 12px rgba(120,200,255,0.45)) drop-shadow(0 0 30px rgba(120,200,255,0.25));}
+  0%,100%{
+    filter:
+      drop-shadow(0 0 0 rgba(228,72,72,0))
+      drop-shadow(0 0 0 rgba(80,200,255,0))
+      drop-shadow(0 0 0 rgba(120,200,255,0))
+      drop-shadow(0 0 0 rgba(120,200,255,0))
+      drop-shadow(0 0 0 rgba(120,200,255,0))
+      drop-shadow(0 0 0 rgba(120,200,255,0));
+  }
+  50%{
+    filter:
+      drop-shadow(-0.5px 0 0 rgba(228,72,72,0.28))
+      drop-shadow(0.5px 0 0 rgba(80,200,255,0.28))
+      drop-shadow(0 0 1px rgba(120,200,255,0.55))
+      drop-shadow(0 0 6px rgba(120,200,255,0.45))
+      drop-shadow(0 0 12px rgba(120,200,255,0.45))
+      drop-shadow(0 0 30px rgba(120,200,255,0.25));
+  }
 }
 .cmx-logo.is-pulsing{animation:cmx-pulse 2.6s cubic-bezier(0.45,0,0.55,1) 1;}
 @media (prefers-reduced-motion:reduce){
@@ -192,17 +238,25 @@ nav .nav-btn:hover{
   color:#3A0810;background:var(--amber);
   border:1.5px solid var(--amber);border-radius:999px;
   padding:.95rem 1.95rem;line-height:1;text-decoration:none;
+  text-shadow:0 0 0 rgba(228,72,72,0),0 0 0 rgba(80,200,255,0);
   transition:background .35s cubic-bezier(0.4,0,0.2,1),
              box-shadow .5s cubic-bezier(0.4,0,0.2,1),
+             text-shadow .35s cubic-bezier(0.4,0,0.2,1),
              transform .35s cubic-bezier(0.4,0,0.2,1);
 }
 .who-pill:hover{
   background:#FFC845;transform:translateY(-2px);
-  box-shadow:0 0 36px rgba(251,179,21,0.5),
-             0 12px 28px -10px rgba(251,179,21,0.6);
+  text-shadow:
+    -0.5px 0 0 rgba(228,72,72,0.5),
+    0.5px 0 0 rgba(80,200,255,0.5);
+  box-shadow:
+    0 0 1px rgba(251,179,21,0.9),
+    0 0 8px rgba(251,179,21,0.65),
+    0 0 36px rgba(251,179,21,0.45),
+    0 12px 28px -10px rgba(251,179,21,0.55);
 }
 @media (prefers-reduced-motion:reduce){
-  .who-pill,.who-pill:hover{transition:none;transform:none;box-shadow:none;}
+  .who-pill,.who-pill:hover{transition:none;transform:none;box-shadow:none;text-shadow:none;}
 }
 
 /* Format pills — solid colored fills with dark text. Bouncy hover scale +
@@ -223,17 +277,27 @@ nav .nav-btn:hover{
      and was producing white glows on the dark-bg pills + nearly invisible
      dark glows on the light-bg pills). */
   --pill-glow:#FBB315;
+  text-shadow:0 0 0 rgba(228,72,72,0),0 0 0 rgba(80,200,255,0);
   transition:transform .42s cubic-bezier(.34,1.56,.64,1),
              box-shadow .45s cubic-bezier(0.4,0,0.2,1),
+             text-shadow .35s cubic-bezier(0.4,0,0.2,1),
              filter .35s cubic-bezier(0.4,0,0.2,1);
   will-change:transform,box-shadow,filter;
 }
 .pill:hover{
   transform:scale(1.16) translateY(-2px) rotate(-1.5deg);
-  box-shadow:0 0 22px -2px var(--pill-glow),0 8px 20px -8px var(--pill-glow);
+  text-shadow:
+    -0.4px 0 0 rgba(228,72,72,0.55),
+    0.4px 0 0 rgba(80,200,255,0.55);
+  /* Four-layer phosphor halation in the pill's own brand color */
+  box-shadow:
+    0 0 1px var(--pill-glow),
+    0 0 6px var(--pill-glow),
+    0 0 22px -2px var(--pill-glow),
+    0 8px 20px -8px var(--pill-glow);
   filter:brightness(1.08);
 }
-@media (prefers-reduced-motion:reduce){.pill,.pill:hover{transition:none;transform:none;box-shadow:none;filter:none;}}
+@media (prefers-reduced-motion:reduce){.pill,.pill:hover{transition:none;transform:none;box-shadow:none;filter:none;text-shadow:none;}}
 .p-70mm-imax{background:var(--cyan);border-color:var(--cyan);--pill-glow:var(--cyan);}
 /* Standard 70mm — fresh teal, sits in the cool-color family alongside the
    IMAX 70mm cyan and IMAX blue but visually distinct from both. */
@@ -280,17 +344,25 @@ nav .nav-btn:hover{
   display:inline-flex;align-items:center;justify-content:center;
   padding:.85rem 1.6rem;background:var(--amber);color:#0B0D11;border:none;border-radius:999px;
   font-family:'Plus Jakarta Sans',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;letter-spacing:.05em;
+  text-shadow:0 0 0 rgba(228,72,72,0),0 0 0 rgba(80,200,255,0);
   transition:background .35s cubic-bezier(0.4,0,0.2,1),
              box-shadow .45s cubic-bezier(0.4,0,0.2,1),
+             text-shadow .35s cubic-bezier(0.4,0,0.2,1),
              transform .35s cubic-bezier(0.4,0,0.2,1);
 }
 .form-wrap button:hover{
   background:#FFC845;transform:translateY(-1px);
-  box-shadow:0 0 28px rgba(251,179,21,0.45),
-             0 8px 22px -10px rgba(251,179,21,0.55);
+  text-shadow:
+    -0.4px 0 0 rgba(228,72,72,0.5),
+    0.4px 0 0 rgba(80,200,255,0.5);
+  box-shadow:
+    0 0 1px rgba(251,179,21,0.85),
+    0 0 7px rgba(251,179,21,0.6),
+    0 0 28px rgba(251,179,21,0.42),
+    0 8px 22px -10px rgba(251,179,21,0.5);
 }
 @media (prefers-reduced-motion:reduce){
-  .form-wrap button,.form-wrap button:hover{transition:none;transform:none;box-shadow:none;}
+  .form-wrap button,.form-wrap button:hover{transition:none;transform:none;box-shadow:none;text-shadow:none;}
 }
 
 /* ────────── COVERED (IMAX-blue tinted) ────────── */
@@ -469,19 +541,50 @@ nav .nav-btn:hover{
 .bio-handles a svg{display:block;width:18px;height:18px;}
 .bio-handles a.lb{width:auto;height:34px;padding:0 .6rem;border-radius:18px;}
 .bio-handles a.lb svg{width:30px;height:14px;}
-/* Per-brand glow tints — Instagram radial purple→pink, Letterboxd blue,
-   alexwalker.co amber. Same easing + duration as the base; brand-specific
-   color keeps the glow feeling tied to the icon it's around. */
-.bio-handles a[aria-label="Instagram"]:hover{box-shadow:0 0 18px rgba(225,48,108,0.45),0 6px 16px -8px rgba(225,48,108,0.40);}
-.bio-handles a.lb:hover{box-shadow:0 0 18px rgba(64,188,244,0.45),0 6px 16px -8px rgba(64,188,244,0.40);}
+/* Per-brand glow tints, same analog-film treatment family as the rest of
+   the page: a four-layer phosphor halation in each icon's own brand color
+   (tight inner → mid → wide outer → soft cast). The "aw" wordmark also
+   gets a chromatic-aberration text-shadow on hover since it's text and
+   can carry the ±0.3px red/cyan offset. The IG + LB icons are SVG so
+   they take just the layered box-shadow. */
+.bio-handles a[aria-label="Instagram"]:hover{
+  box-shadow:
+    0 0 1px rgba(225,48,108,0.8),
+    0 0 6px rgba(225,48,108,0.55),
+    0 0 18px rgba(225,48,108,0.42),
+    0 6px 16px -8px rgba(225,48,108,0.40);
+}
+.bio-handles a.lb:hover{
+  box-shadow:
+    0 0 1px rgba(64,188,244,0.8),
+    0 0 6px rgba(64,188,244,0.55),
+    0 0 18px rgba(64,188,244,0.42),
+    0 6px 16px -8px rgba(64,188,244,0.40);
+}
 .bio-handles a.aw{
   font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:800;
   font-size:14px;letter-spacing:-.02em;color:var(--amber);
   text-decoration:none;line-height:1;
+  text-shadow:0 0 0 rgba(228,72,72,0),0 0 0 rgba(80,200,255,0);
+  transition:background .35s cubic-bezier(0.4,0,0.2,1),
+             border-color .35s cubic-bezier(0.4,0,0.2,1),
+             box-shadow .45s cubic-bezier(0.4,0,0.2,1),
+             text-shadow .35s cubic-bezier(0.4,0,0.2,1),
+             transform .35s cubic-bezier(0.4,0,0.2,1),
+             filter .35s cubic-bezier(0.4,0,0.2,1);
 }
-.bio-handles a.aw:hover{box-shadow:0 0 18px rgba(251,179,21,0.45),0 6px 16px -8px rgba(251,179,21,0.40);}
+.bio-handles a.aw:hover{
+  text-shadow:
+    -0.3px 0 0 rgba(228,72,72,0.5),
+    0.3px 0 0 rgba(80,200,255,0.5);
+  box-shadow:
+    0 0 1px rgba(251,179,21,0.85),
+    0 0 6px rgba(251,179,21,0.6),
+    0 0 18px rgba(251,179,21,0.45),
+    0 6px 16px -8px rgba(251,179,21,0.40);
+}
 @media (prefers-reduced-motion:reduce){
-  .bio-handles a,.bio-handles a:hover{transition:none;transform:none;box-shadow:none;filter:none;}
+  .bio-handles a,.bio-handles a:hover{transition:none;transform:none;box-shadow:none;filter:none;text-shadow:none;}
 }
 .about-closing{
   font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:400;
