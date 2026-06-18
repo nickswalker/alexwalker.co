@@ -237,7 +237,14 @@ nav .nav-btn:hover{
   letter-spacing:.2em;text-transform:uppercase;
   color:#3A0810;background:var(--amber);
   border:1.5px solid var(--amber);border-radius:999px;
-  padding:.95rem 1.95rem;line-height:1;text-decoration:none;
+  /* Asymmetric horizontal padding compensates for the .2em letter-spacing's
+     trailing whitespace after the last "?" — the pill's intrinsic width
+     includes that trailing space, which shifts the visible text left
+     within the pill and makes the whole pill read as right-of-center
+     relative to the symmetric Cinemaxxing logo below. Adding ~0.18em
+     to the left and trimming the same from the right re-centers the
+     visible glyphs against the pill box. */
+  padding:.95rem 1.78rem .95rem 2.12rem;line-height:1;text-decoration:none;
   text-shadow:0 0 0 rgba(228,72,72,0),0 0 0 rgba(80,200,255,0);
   transition:background .35s cubic-bezier(0.4,0,0.2,1),
              box-shadow .5s cubic-bezier(0.4,0,0.2,1),
@@ -416,7 +423,19 @@ nav .nav-btn:hover{
 .covered h2{
   font-family:'Sansita',Georgia,serif;font-weight:800;
   font-size:clamp(2.2rem,5vw,3.4rem);letter-spacing:-.012em;
-  margin-bottom:.4rem;color:var(--cream);line-height:1;text-align:center;
+  margin-bottom:.4rem;line-height:1;text-align:center;
+  /* Same analog-film treatment as the hero h1 highlight: chromatic
+     aberration (red/cyan ±0.5px misregistration) layered under a
+     marquee-phosphor warm-white halation. Reads as 35mm bloom against
+     the IMAX-navy section background rather than a flat cream heading. */
+  color:#FFFEF7;
+  text-shadow:
+    -0.5px 0 0 rgba(228,72,72,0.7),
+    0.5px 0 0 rgba(80,200,255,0.7),
+    0 0 1px rgba(255,255,255,0.85),
+    0 0 5px rgba(255,235,200,0.55),
+    0 0 14px rgba(255,200,150,0.30),
+    0 0 28px rgba(255,170,110,0.15);
 }
 .covered .sec-sub{
   font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:400;
