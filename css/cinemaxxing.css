@@ -524,7 +524,19 @@ nav .nav-btn:hover{
 .about h2{
   font-family:'Sansita',Georgia,serif;font-weight:800;
   font-size:clamp(2.2rem,5vw,3.2rem);letter-spacing:-.012em;
-  margin-bottom:.4rem;color:var(--cream);line-height:1;text-align:center;
+  margin-bottom:.4rem;line-height:1;text-align:center;
+  /* Analog film highlight — same chromatic aberration + warm-white
+     marquee phosphor halation as the hero h1 italic and the
+     "What's covered" h2. Reads as 35mm bloom against the warm sepia
+     about-section background. */
+  color:#FFFEF7;
+  text-shadow:
+    -0.5px 0 0 rgba(228,72,72,0.7),
+    0.5px 0 0 rgba(80,200,255,0.7),
+    0 0 1px rgba(255,255,255,0.85),
+    0 0 5px rgba(255,235,200,0.55),
+    0 0 14px rgba(255,200,150,0.30),
+    0 0 28px rgba(255,170,110,0.15);
 }
 .about .sec-sub{font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:400;color:rgba(244,242,225,0.62);font-size:1.05rem;margin:0 auto 2.5rem;max-width:42ch;text-align:center;}
 .about-lead{
@@ -541,7 +553,22 @@ nav .nav-btn:hover{
 }
 .bios{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:3rem 4rem;margin-bottom:3rem;}
 .bio{padding-top:1.5rem;border-top:1px solid rgba(244,242,225,0.18);}
-.bio h3{font-family:'Sansita',Georgia,serif;font-size:1.6rem;font-weight:800;margin-bottom:.85rem;color:var(--cream);letter-spacing:-.005em;}
+.bio h3{
+  font-family:'Sansita',Georgia,serif;font-size:1.6rem;font-weight:800;
+  margin-bottom:.85rem;letter-spacing:-.005em;
+  /* Same analog highlight family — applies to "Alex Walker" + "Alex
+     Anderson" names so they read with the same film-bloom treatment
+     as the rest of the page's headlines. Tuned slightly tighter
+     (lighter shadow opacities) since the name is smaller than an h2. */
+  color:#FFFEF7;
+  text-shadow:
+    -0.4px 0 0 rgba(228,72,72,0.6),
+    0.4px 0 0 rgba(80,200,255,0.6),
+    0 0 1px rgba(255,255,255,0.75),
+    0 0 4px rgba(255,235,200,0.45),
+    0 0 12px rgba(255,200,150,0.25),
+    0 0 24px rgba(255,170,110,0.12);
+}
 .bio p{font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;color:rgba(244,242,225,0.72);line-height:1.7;margin-bottom:.75rem;}
 .bio-favs-label{display:block;font-family:'Sansita',Georgia,serif;font-style:italic;font-size:.85rem;color:rgba(244,242,225,0.5);margin-bottom:.15rem;font-weight:400;}
 .bio-favs{font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;color:rgba(244,242,225,0.72);}
