@@ -47,8 +47,11 @@
     <h1>Your weekly guide to premium &amp; special format screenings in Austin so you never miss another <i>70mm, IMAX, or repertory screening.</i></h1>
     <p class="hero-sub">We're cinema lovers who can't keep track of all of the amazing premium and large format screenings in Austin. Cinemaxxing curates all of these listings and sends them to you every Monday.</p>
     <p class="hero-tagline">Maximize your cinema, maximize your life.</p>
-    <div class="form-wrap"><input type="email" id="email-a" placeholder="your@email.com"><button onclick="submitA()">Subscribe</button></div>
-    <p class="success-msg" id="success-a"></p>
+    <div class="form-block" id="subscribe">
+      <div class="form-wrap"><input type="email" id="email-a" placeholder="your@email.com"><button onclick="submitA()">Subscribe</button></div>
+      <p class="form-note">Free to subscribe. Unsubscribe any time.</p>
+      <p class="success-msg" id="success-a"></p>
+    </div>
     <div class="pills">
       <span class="pill p-70mm-imax">IMAX 70mm</span>
       <span class="pill p-70mm">70mm</span>
@@ -287,7 +290,7 @@
      (positioned z-index:3 in .inner) always sits above the leak's coral
      glow. The leak uses absolute positioning to bleed up into the about
      section above, and its bottom extends deep into the CTA. -->
-<section class="cta has-leak-above" id="subscribe">
+<section class="cta has-leak-above">
   <div class="grain heaviest"></div>
   <div class="inner">
     <div class="who-pill-wrap"><a class="who-pill" href="about.html">Who are we??</a></div>
