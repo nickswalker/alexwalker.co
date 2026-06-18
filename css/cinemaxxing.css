@@ -26,6 +26,14 @@ body{
   background:var(--ink);color:var(--cream);
   font-family:'Plus Jakarta Sans',-apple-system,system-ui,sans-serif;
   -webkit-font-smoothing:antialiased;line-height:1.6;
+  /* iOS standalone-mode safe areas. When added to the home screen, the
+     viewport extends all the way under the status bar / notch / Dynamic
+     Island — without this padding, the perforation strip + sticky nav
+     would render under the system UI. env(safe-area-inset-top) returns
+     0 in normal Safari, so this is a no-op outside standalone. */
+  padding-top:env(safe-area-inset-top);
+  padding-left:env(safe-area-inset-left);
+  padding-right:env(safe-area-inset-right);
 }
 img{max-width:100%;display:block;}
 
