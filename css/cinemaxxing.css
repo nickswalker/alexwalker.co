@@ -550,6 +550,18 @@ nav .nav-btn:hover{
 .about-lead::first-letter{
   font-family:'Sansita',Georgia,serif;font-size:4rem;font-weight:800;font-style:italic;
   line-height:.85;float:left;padding:.05rem .55rem 0 0;color:var(--amber);
+  /* Same chromatic + halation family as the other headlines, but the
+     halation glow is tuned amber (rgba(251,179,21,…)) instead of warm-
+     white so the C keeps reading as gold — analog film bloom in the
+     C's own brand color. Chromatic offsets stay red/cyan as on every
+     other treatment so it sits in the same effect family. */
+  text-shadow:
+    -0.5px 0 0 rgba(228,72,72,0.7),
+    0.5px 0 0 rgba(80,200,255,0.7),
+    0 0 1px rgba(251,179,21,0.85),
+    0 0 5px rgba(251,179,21,0.55),
+    0 0 14px rgba(251,179,21,0.32),
+    0 0 28px rgba(251,179,21,0.16);
 }
 .bios{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:3rem 4rem;margin-bottom:3rem;}
 .bio{padding-top:1.5rem;border-top:1px solid rgba(244,242,225,0.18);}
