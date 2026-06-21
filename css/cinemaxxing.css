@@ -365,7 +365,6 @@ nav .nav-btn:hover{
     0 0 28px rgba(255,170,110,0.15);
 }
 .hero-sub{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;color:rgba(244,242,225,0.75);max-width:54ch;margin:0 auto 1.5rem;line-height:1.7;}
-.hero-tagline{font-family:'Sansita',Georgia,serif;font-style:italic;font-weight:800;font-size:1.4rem;color:var(--coral);margin:0 0 2.5rem;}
 /* The hero/cta Subscribe form wrapped in #subscribe so the nav-bar
    Subscribe link can anchor here. scroll-padding-top on <html> handles
    the actual anchor offset (see html rule near top) — keeps the form
