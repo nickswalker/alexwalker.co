@@ -117,16 +117,31 @@
     initCta();
   }
 
-  // First real touch event anywhere on the page flips the body into
-  // touch-device mode. The CSS rule for .pill:hover is gated behind
-  // body:not(.is-touch) so iOS Safari's sticky-:hover (which lingers
-  // after lift) never paints — the JS .is-touched class handles all
-  // visual feedback on touch devices instead. Listener removes itself
-  // after firing so we don't keep churning on every subsequent tap.
-  window.addEventListener('touchstart', function markTouch(){
-    document.body.classList.add('is-touch');
-    window.removeEventListener('touchstart', markTouch);
-  }, {passive:true, once:true});
+  // Toggle body.is-touch based on whichever input type was used most
+  // recently. The CSS .pill:hover rule is gated by body:not(.is-touch)
+  // so iOS Safari's sticky-:hover never paints after a touch — but on
+  // hybrid devices (iPad with mouse, Mac with trackpad+touchscreen
+  // accessory) the user may switch back to mouse, in which case we
+  // need to clear the flag so hover starts working again. pointerdown
+  // exposes pointerType ("mouse" | "touch" | "pen") so we can flip
+  // the body class in both directions as input changes.
+  if ('PointerEvent' in window) {
+    window.addEventListener('pointerdown', function(e){
+      if (e.pointerType === 'touch') {
+        document.body.classList.add('is-touch');
+      } else if (e.pointerType === 'mouse') {
+        document.body.classList.remove('is-touch');
+      }
+    }, true);
+  } else {
+    // Old-Safari fallback (pre-iOS 13): one-shot touchstart sets the
+    // flag; can't unset on mouse because no pointer events to listen
+    // for. Acceptable for the few users on a non-PointerEvent browser.
+    window.addEventListener('touchstart', function markTouch(){
+      document.body.classList.add('is-touch');
+      window.removeEventListener('touchstart', markTouch);
+    }, {passive:true, once:true});
+  }
 
   // Format-pill touch handler — turns the hero pills' :hover effect into a
   // finger-drag-to-light-up interaction on touchscreens. :hover doesn't
