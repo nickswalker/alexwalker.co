@@ -154,11 +154,6 @@
     var pillsContainer = document.querySelector('.pills');
     if (!pillsContainer || !('ontouchstart' in window)) return;
     var lastPill = null;
-    // Intent tracking: a touch sequence starts as 'undecided'; the first
-    // significant movement reveals horizontal vs vertical. Only horizontal
-    // intent locks scroll. Vertical intent passes through to the browser
-    // (which scrolls per touch-action:pan-y). Reset on every touchstart.
-    var startX = 0, startY = 0, intent = null;
     var pillAt = function(x, y){
       var el = document.elementFromPoint(x, y);
       while (el && el !== document.body) {
@@ -171,47 +166,29 @@
       var lit = pillsContainer.querySelectorAll('.pill.is-touched');
       for (var i = 0; i < lit.length; i++) lit[i].classList.remove('is-touched');
       lastPill = null;
-      startX = 0; startY = 0; intent = null;
     };
-    var handleStart = function(e){
+    var handle = function(e){
       var t = e.touches && e.touches[0];
       if (!t) return;
-      startX = t.clientX;
-      startY = t.clientY;
-      intent = null;
-      // Pre-light the pill under the finger (so a tap-and-hold lights up
-      // the pill immediately, before any movement).
-      var pill = pillAt(t.clientX, t.clientY);
-      if (pill) { pill.classList.add('is-touched'); lastPill = pill; }
-    };
-    var handleMove = function(e){
-      var t = e.touches && e.touches[0];
-      if (!t) return;
-      var dx = t.clientX - startX, dy = t.clientY - startY;
-      if (intent === null) {
-        // Wait for a few pixels of motion before deciding. Avoids
-        // mis-categorizing a stationary tap as a swipe.
-        if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
-        intent = (Math.abs(dx) > Math.abs(dy)) ? 'swipe' : 'scroll';
-        if (intent === 'scroll') {
-          // User's actually trying to scroll — let go of the lit pill
-          // and step out of the way.
-          clearAll();
-          return;
-        }
-      }
-      if (intent !== 'swipe') return;
-      if (e.cancelable) e.preventDefault();
       var pill = pillAt(t.clientX, t.clientY);
       if (pill === lastPill) return;
       if (lastPill) lastPill.classList.remove('is-touched');
       if (pill) pill.classList.add('is-touched');
       lastPill = pill;
     };
-    pillsContainer.addEventListener('touchstart',  handleStart, {passive:true});
-    pillsContainer.addEventListener('touchmove',   handleMove,  {passive:false});
-    pillsContainer.addEventListener('touchend',    clearAll,    {passive:true});
-    pillsContainer.addEventListener('touchcancel', clearAll,    {passive:true});
+    // All listeners passive:true — no JS preventDefault anywhere. The
+    // .pills element's `touch-action: pan-y` (in CSS) is what blocks
+    // horizontal browser panning declaratively. That declaration is
+    // checked synchronously by Safari at gesture-start, so vertical
+    // scroll always commits on the very first touchmove of the next
+    // gesture — no carry-over delay from the previous swipe (which
+    // was the symptom of the passive:false approach where iOS would
+    // wait for the touch handler to potentially preventDefault before
+    // committing to scroll).
+    pillsContainer.addEventListener('touchstart',  handle,    {passive:true});
+    pillsContainer.addEventListener('touchmove',   handle,    {passive:true});
+    pillsContainer.addEventListener('touchend',    clearAll,  {passive:true});
+    pillsContainer.addEventListener('touchcancel', clearAll,  {passive:true});
   };
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initPillTouch);
