@@ -117,6 +117,17 @@
     initCta();
   }
 
+  // First real touch event anywhere on the page flips the body into
+  // touch-device mode. The CSS rule for .pill:hover is gated behind
+  // body:not(.is-touch) so iOS Safari's sticky-:hover (which lingers
+  // after lift) never paints — the JS .is-touched class handles all
+  // visual feedback on touch devices instead. Listener removes itself
+  // after firing so we don't keep churning on every subsequent tap.
+  window.addEventListener('touchstart', function markTouch(){
+    document.body.classList.add('is-touch');
+    window.removeEventListener('touchstart', markTouch);
+  }, {passive:true, once:true});
+
   // Format-pill touch handler — turns the hero pills' :hover effect into a
   // finger-drag-to-light-up interaction on touchscreens. :hover doesn't
   // fire during touchmove on iOS/Android, so we track the touch point in

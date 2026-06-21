@@ -299,14 +299,19 @@ nav .nav-btn:hover{
              filter .35s cubic-bezier(0.4,0,0.2,1);
   will-change:transform,box-shadow,filter;
 }
-/* Touch-class state — always live. JS toggles .is-touched on the pill
-   under a finger so dragging across the row lights each pill up in
-   sequence. Lives in its own rule (not chained with :hover) because
-   iOS Safari treats a touch as activating :hover on the first-tapped
-   element and doesn't dismiss it until another element is touched —
-   that was making the first pill stay glowing after the JS already
-   moved .is-touched off it. */
-.pill.is-touched{
+/* Hover effect applies in two situations:
+   (a) the JS touch handler added .is-touched (touch swipe across pills), or
+   (b) a real cursor is hovering AND the body hasn't been marked as a
+       touch device by the touchstart listener at the bottom of
+       cinemaxxing.html.
+   The body.is-touch flag prevents iOS Safari's sticky-:hover behavior
+   from leaving a pill lit after the user lifts their finger. The
+   previous (hover: hover) media-query gate was unreliable on certain
+   Safari + trackpad configurations and disabled the effect on
+   desktops where it should have worked — using a JS-driven flag is
+   more robust. */
+.pill.is-touched,
+body:not(.is-touch) .pill:hover{
   transform:scale(1.16) translateY(-2px) rotate(-1.5deg);
   text-shadow:
     -0.4px 0 0 rgba(228,72,72,0.55),
@@ -317,23 +322,6 @@ nav .nav-btn:hover{
     0 0 22px -2px var(--pill-glow),
     0 8px 20px -8px var(--pill-glow);
   filter:brightness(1.08);
-}
-/* Desktop hover — gated behind (hover: hover) so it only fires on
-   devices with a real mouse pointer. Touch devices skip this entirely
-   and use the .is-touched class above instead. */
-@media (hover:hover){
-  .pill:hover{
-    transform:scale(1.16) translateY(-2px) rotate(-1.5deg);
-    text-shadow:
-      -0.4px 0 0 rgba(228,72,72,0.55),
-      0.4px 0 0 rgba(80,200,255,0.55);
-    box-shadow:
-      0 0 1px var(--pill-glow),
-      0 0 6px var(--pill-glow),
-      0 0 22px -2px var(--pill-glow),
-      0 8px 20px -8px var(--pill-glow);
-    filter:brightness(1.08);
-  }
 }
 @media (prefers-reduced-motion:reduce){.pill,.pill:hover{transition:none;transform:none;box-shadow:none;filter:none;text-shadow:none;}}
 .p-70mm-imax{background:var(--cyan);border-color:var(--cyan);--pill-glow:var(--cyan);}
