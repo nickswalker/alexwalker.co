@@ -170,20 +170,19 @@ nav .nav-btn:hover{
   display:inline-block;line-height:0;border-radius:6px;max-width:380px;width:100%;
   margin:0 auto 2rem;
   opacity:0;transform:translateY(10px);
-  /* Six-layer filter baseline so the hover transition interpolates
-     smoothly between matching drop-shadow() lists:
-       layers 1-2  chromatic aberration (red + cyan offsets)
-       layers 3-6  phosphor halation (tight inner → wide outer)
-     All at zero opacity at rest; hover/pulse fades them in. The shared
-     blue palette stays — analog effect just sits on top of it. */
+  /* Four matching drop-shadow layers, all at offset 0 0, only blur radius
+     and alpha differ. Browsers interpolate this shape cleanly — the
+     earlier version had chromatic-aberration offsets mixed in that
+     Safari was struggling to animate between states (the glow snapped
+     on/off instead of fading). Pure blue phosphor halation mirrors the
+     subscribe button's box-shadow rhythm so the two elements feel like
+     the same effect family. */
   filter:
-    drop-shadow(0 0 0 rgba(228,72,72,0))
-    drop-shadow(0 0 0 rgba(80,200,255,0))
-    drop-shadow(0 0 0 rgba(144,200,240,0))
-    drop-shadow(0 0 0 rgba(144,200,240,0))
-    drop-shadow(0 0 0 rgba(144,200,240,0))
-    drop-shadow(0 0 0 rgba(144,200,240,0));
-  transition:filter .45s cubic-bezier(0.4,0,0.2,1),
+    drop-shadow(0 0 0  rgba(144,200,240,0))
+    drop-shadow(0 0 0  rgba(144,200,240,0))
+    drop-shadow(0 0 0  rgba(144,200,240,0))
+    drop-shadow(0 0 0  rgba(144,200,240,0));
+  transition:filter .55s cubic-bezier(0.4,0,0.2,1),
              transform .35s cubic-bezier(0.4,0,0.2,1);
   will-change:filter,transform,opacity;
 }
@@ -191,37 +190,31 @@ nav .nav-btn:hover{
   opacity:1;transform:translateY(0);
   transition:opacity .6s cubic-bezier(0.4,0,0.2,1),
              transform .6s cubic-bezier(0.4,0,0.2,1),
-             filter .45s cubic-bezier(0.4,0,0.2,1);
+             filter .55s cubic-bezier(0.4,0,0.2,1);
 }
-.cmx-logo img{display:block;width:100%;height:auto;opacity:.94;transition:opacity .45s cubic-bezier(0.4,0,0.2,1);margin:0 auto;}
+.cmx-logo img{display:block;width:100%;height:auto;opacity:.94;transition:opacity .55s cubic-bezier(0.4,0,0.2,1);margin:0 auto;}
 .cmx-logo:hover{
   filter:
-    drop-shadow(-0.6px 0 0 rgba(228,72,72,0.35))
-    drop-shadow(0.6px 0 0 rgba(80,200,255,0.35))
-    drop-shadow(0 0 1px rgba(144,200,240,0.7))
-    drop-shadow(0 0 6px rgba(144,200,240,0.55))
-    drop-shadow(0 0 16px rgba(144,200,240,0.5))
-    drop-shadow(0 0 32px rgba(144,200,240,0.28));
+    drop-shadow(0 0 1px  rgba(144,200,240,0.85))
+    drop-shadow(0 0 6px  rgba(144,200,240,0.65))
+    drop-shadow(0 0 18px rgba(144,200,240,0.50))
+    drop-shadow(0 0 36px rgba(144,200,240,0.30));
   transform:translateY(-1px);
 }
 .cmx-logo:hover img{opacity:1;}
 @keyframes cmx-pulse{
   0%,100%{
     filter:
-      drop-shadow(0 0 0 rgba(228,72,72,0))
-      drop-shadow(0 0 0 rgba(80,200,255,0))
-      drop-shadow(0 0 0 rgba(120,200,255,0))
-      drop-shadow(0 0 0 rgba(120,200,255,0))
-      drop-shadow(0 0 0 rgba(120,200,255,0))
-      drop-shadow(0 0 0 rgba(120,200,255,0));
+      drop-shadow(0 0 0  rgba(120,200,255,0))
+      drop-shadow(0 0 0  rgba(120,200,255,0))
+      drop-shadow(0 0 0  rgba(120,200,255,0))
+      drop-shadow(0 0 0  rgba(120,200,255,0));
   }
   50%{
     filter:
-      drop-shadow(-0.5px 0 0 rgba(228,72,72,0.28))
-      drop-shadow(0.5px 0 0 rgba(80,200,255,0.28))
-      drop-shadow(0 0 1px rgba(120,200,255,0.55))
-      drop-shadow(0 0 6px rgba(120,200,255,0.45))
-      drop-shadow(0 0 12px rgba(120,200,255,0.45))
+      drop-shadow(0 0 1px  rgba(120,200,255,0.7))
+      drop-shadow(0 0 6px  rgba(120,200,255,0.55))
+      drop-shadow(0 0 14px rgba(120,200,255,0.45))
       drop-shadow(0 0 30px rgba(120,200,255,0.25));
   }
 }
