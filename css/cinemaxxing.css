@@ -608,7 +608,7 @@ nav .nav-btn:hover{
     0 0 28px rgba(251,179,21,0.16);
 }
 .bios{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:3rem 4rem;margin-bottom:3rem;}
-.bio{padding-top:1.5rem;border-top:1px solid rgba(244,242,225,0.18);}
+.bio{padding-top:0;}
 .bio h3{
   font-family:'Sansita',Georgia,serif;font-size:1.6rem;font-weight:800;
   margin-bottom:.85rem;letter-spacing:-.005em;
