@@ -153,6 +153,12 @@
       lastPill = null;
     };
     var handle = function(e){
+      // Lock vertical/horizontal page scroll while the finger is on the
+      // pill row — without this, swiping across the pills would scroll
+      // the hero up/down (or rubber-band sideways on iOS) at the same
+      // time, making the lit-pill feedback feel jittery. preventDefault
+      // requires passive:false on the listeners below.
+      if (e.cancelable) e.preventDefault();
       var t = e.touches && e.touches[0];
       if (!t) return;
       var pill = pillAt(t.clientX, t.clientY);
@@ -161,8 +167,8 @@
       if (pill) pill.classList.add('is-touched');
       lastPill = pill;
     };
-    pillsContainer.addEventListener('touchstart',  handle,    {passive:true});
-    pillsContainer.addEventListener('touchmove',   handle,    {passive:true});
+    pillsContainer.addEventListener('touchstart',  handle,    {passive:false});
+    pillsContainer.addEventListener('touchmove',   handle,    {passive:false});
     pillsContainer.addEventListener('touchend',    clearAll,  {passive:true});
     pillsContainer.addEventListener('touchcancel', clearAll,  {passive:true});
   };
