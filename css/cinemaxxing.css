@@ -272,22 +272,21 @@ nav .nav-btn:hover{
    intentional design — overshoot adds character — but the box-shadow and
    filter transitions ride the smoother .4,0,.2,1 curve so the glow itself
    feels natural rather than springy. */
-/* touch-action:none tells the browser *up front* that this element
-   doesn't want default touch behavior (scroll, pan, zoom). On iOS
-   Safari, the JS-level preventDefault() in touchmove arrives after
-   the browser has already committed to a scroll gesture, so the
-   only reliable way to lock vertical scroll while the finger is on
-   the pill row is to declare it in CSS before the touch even
-   starts. Applied to both the container and each pill so the
-   no-scroll declaration is in force regardless of which exact
-   element the finger lands on. */
-.pills{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin:2.25rem auto 0;touch-action:none;}
+/* touch-action:pan-y lets the browser handle vertical scroll *through*
+   the pill row (so the user can scroll past the pills with one finger
+   gesture, and once they release after a swipe, the next vertical touch
+   scrolls immediately — no "takes two tries" stickiness). Horizontal
+   panning is blocked, which keeps the JS swipe-to-light-up handler
+   uncontested. The previous `touch-action:none` was over-restrictive —
+   it locked vertical scroll on the pill row permanently, not just
+   during an active swipe. */
+.pills{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin:2.25rem auto 0;touch-action:pan-y;}
 .pill{
   display:inline-flex;align-items:center;justify-content:center;
   font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;
   letter-spacing:.08em;text-transform:uppercase;padding:.5rem 1rem;line-height:1;
   border-radius:4px;border:1.5px solid transparent;cursor:default;
-  transform-origin:center;color:#0B0D11;touch-action:none;
+  transform-origin:center;color:#0B0D11;touch-action:pan-y;
   /* --pill-glow is set per-pill below to the pill's BG color so every
      hover glow has the same visibility and renders in the pill's own
      palette (rather than using currentColor, which is the text color
