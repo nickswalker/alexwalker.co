@@ -323,7 +323,14 @@
     .stat.is-zero { pointer-events: none; }
     .stat-num {
       font-family: 'Sansita', Georgia, 'Times New Roman', serif;
-      display: block;
+      /* inline-flex so the optional .stat-face (70mm / 35mm only) sits
+         beside the number with both centered vertically through their own
+         centers. text-align:center on the parent .stat still centers the
+         whole thing horizontally. */
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
       font-size: 22px;
       font-weight: 800;
       line-height: 24px;
@@ -350,11 +357,10 @@
       white-space: nowrap;
     }
     .stat-face {
-      display: inline-block;
-      vertical-align: top;
-      margin-left: 4px;
+      /* Flex alignment on parent .stat-num handles position/spacing. */
+      display: inline-flex;
+      align-items: center;
       opacity: 0.7;
-      line-height: 0;
     }
     .stat-face svg { display: block; width: 22px; height: 22px; }
     /* Format pills — DEFAULT is light-mode values (saturated, dark-text on
