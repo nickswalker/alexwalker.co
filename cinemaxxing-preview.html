@@ -323,11 +323,13 @@
     .stat.is-zero { pointer-events: none; }
     .stat-num {
       font-family: 'Sansita', Georgia, 'Times New Roman', serif;
-      /* inline-flex so the optional .stat-face (70mm / 35mm only) sits
-         beside the number with both centered vertically through their own
-         centers. text-align:center on the parent .stat still centers the
-         whole thing horizontally. */
-      display: inline-flex;
+      /* BLOCK-level flex (not inline-flex) so the box never picks up
+         baseline descent from its content. inline-flex around an SVG-bearing
+         child adds ~2px of inline-baseline whitespace below the box that
+         the face-less cells (.stat-num with just text) don't get — that
+         was making 70mm/35mm cards 2px taller than the rest. Block flex
+         eliminates that inline context entirely. */
+      display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
@@ -335,11 +337,10 @@
       font-weight: 800;
       line-height: 24px;
       letter-spacing: -0.5px;
-      /* Fixed 24px box so the 70mm/35mm cells (which embed a 22px face SVG)
-         render the exact same height as the face-less IMAX / Dolby / HDR
-         cells. Without this, vertical-align:middle on the inline-block face
-         pushes the line-box ~2-4px taller and the row stretches to match. */
+      /* Pin to exactly 24px so all five cards line up identically. */
       height: 24px;
+      min-height: 24px;
+      max-height: 24px;
       overflow: hidden;
     }
     .stat-label {
