@@ -327,18 +327,22 @@
          silently downgrades display:flex in some renderings (text falls
          to the left edge), so flex is off the table. The optional
          .stat-face is an inline-block with vertical-align:middle which
-         the surrounding text baselines around. Fixed height keeps all
-         five cards identical regardless of whether a face is present. */
+         the surrounding text baselines around.
+
+         Height is 32px — well above the 22px smile/frown PNG — because
+         iOS Mail / Gmail mobile calculate vertical-align:middle for
+         <img> against a Helvetica baseline that pushes the image bottom
+         past a tight 24px box, clipping the bottom of the face. 32px
+         gives the image room without changing the visual center. */
       display: block;
       text-align: center;
       font-size: 22px;
       font-weight: 800;
-      line-height: 24px;
+      line-height: 32px;
       letter-spacing: -0.5px;
-      height: 24px;
-      min-height: 24px;
-      max-height: 24px;
-      overflow: hidden;
+      height: 32px;
+      min-height: 32px;
+      max-height: 32px;
     }
     .stat-label {
       font-family: 'Plus Jakarta Sans', sans-serif;
