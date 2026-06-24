@@ -511,20 +511,20 @@
     .header-site {
       text-align: center;
       margin: 6px 0 0;
-      /* 13px = Gmail mobile's minimum-text-size floor. Anything smaller
-         gets silently auto-enlarged by Gmail iOS/Android (visual size
-         doesn't match the declared size) which made this credit block
-         render ~30% larger than designed. 13px declared = 13px rendered
-         everywhere. */
-      font-size: 13px;
-      line-height: 1.6;
+      /* 14px clears Gmail's minimum-text-size floor in both the inline
+         preview AND the "View entire message" standalone web view
+         (standalone enforces an even higher threshold than inline).
+         Also pinning line-height to a literal pixel value so Gmail's
+         auto-enlarge — if it still happens on some build — can't make
+         the line box balloon proportionally with the font. */
+      font-size: 14px;
+      line-height: 20px;
       color: var(--text-footer);
     }
     .logo-credit {
       margin: 2px 0 0;
-      /* Same Gmail floor — 12px would still get auto-enlarged. Visual
-         hierarchy below .header-site comes from opacity, not size. */
-      font-size: 13px;
+      font-size: 14px;
+      line-height: 20px;
       opacity: 0.7;
     }
     .header-site-link {
