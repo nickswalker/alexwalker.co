@@ -100,6 +100,32 @@
        !important on every rule because premailer inlines the light-mode defaults
        as style="" attributes; without !important, dark would be silently
        shadowed by the inline light colors. */
+    /* Gmail mobile (Android + some iOS builds) ignores the color-scheme
+       meta tags and applies its OWN auto-darken on top of our colors,
+       biasing the warm cream page background into olive/yellow. Gmail
+       hooks its auto-darken on the [data-ogsc] / [data-ogsb] attribute
+       selectors — targeting those forces our exact dark colors back in
+       and overrides Gmail's tint. These rules duplicate the dark-mode
+       overrides below; both are needed because Gmail mobile and the
+       standard @media (prefers-color-scheme: dark) trigger independently. */
+    body[data-ogsb],
+    [data-ogsc] body,
+    [data-ogsc] .email-wrapper,
+    [data-ogsb] .email-wrapper {
+      background-color: #0e0e0e !important;
+      color: #f0f0f0 !important;
+    }
+    [data-ogsc] .section-card,
+    [data-ogsb] .section-card { background-color: #161616 !important; border-color: #303030 !important; }
+    [data-ogsc] .top-bar-pill,
+    [data-ogsb] .top-bar-pill { background-color: #161616 !important; border-color: #303030 !important; color: #f0f0f0 !important; }
+    [data-ogsc] .stat,
+    [data-ogsb] .stat { background-color: #1c1c1c !important; border-color: #303030 !important; }
+    [data-ogsc] .film-card,
+    [data-ogsb] .film-card { background-color: #1c1c1c !important; border-color: #303030 !important; }
+    [data-ogsc] .header-title,
+    [data-ogsb] .header-title { color: #ffffff !important; }
+
     @media (prefers-color-scheme: dark) {
       :root {
         --bg-page:         #0e0e0e !important;
