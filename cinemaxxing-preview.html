@@ -24,6 +24,15 @@
   <meta name="theme-color" content="#0e0e0e">
   <link rel="icon" type="image/png" href="https://alexwalker.co/img/cinemaxxing-icon-rounded.png">
   <link rel="apple-touch-icon" href="https://alexwalker.co/img/cinemaxxing-icon.png">
+  <!-- Tell email clients (Gmail mobile + Outlook) that this email defines
+       both light AND dark color schemes itself. Without these, Gmail mobile
+       applies its OWN auto-darken algorithm on top of our colors, which
+       biases warm tones into a yellowish/olive cast on the dark background.
+       With these declared, Gmail skips auto-darken and uses our explicit
+       @media (prefers-color-scheme: dark) rules directly — matching how
+       iOS Mail renders. -->
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
   <!-- Web fonts — supported by Apple Mail (macOS + iOS) and Outlook.com;
        other clients fall back to the system stack defined per-class. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,6 +55,11 @@
        email. We default to light and let @media (prefers-color-scheme: dark)
        flip those clients that DO respect the query into dark mode. */
     :root {
+      /* Same opt-out-of-Gmail-auto-darken signal as the <meta> tags above,
+         expressed in CSS for renderers that honor the property but not the
+         meta. Belt-and-suspenders. */
+      color-scheme: light dark;
+      supported-color-schemes: light dark;
       --bg-page:         #F4F2E1;
       --bg-card:         #ffffff;
       --bg-card-header:  #f0f0f0;
