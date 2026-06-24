@@ -323,21 +323,18 @@
     .stat.is-zero { pointer-events: none; }
     .stat-num {
       font-family: 'Sansita', Georgia, 'Times New Roman', serif;
-      /* BLOCK-level flex (not inline-flex) so the box never picks up
-         baseline descent from its content. inline-flex around an SVG-bearing
-         child adds ~2px of inline-baseline whitespace below the box that
-         the face-less cells (.stat-num with just text) don't get — that
-         was making 70mm/35mm cards 2px taller than the rest. Block flex
-         eliminates that inline context entirely. */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      /* Email-safe centering: plain block + text-align center. Gmail web
+         silently downgrades display:flex in some renderings (text falls
+         to the left edge), so flex is off the table. The optional
+         .stat-face is an inline-block with vertical-align:middle which
+         the surrounding text baselines around. Fixed height keeps all
+         five cards identical regardless of whether a face is present. */
+      display: block;
+      text-align: center;
       font-size: 22px;
       font-weight: 800;
       line-height: 24px;
       letter-spacing: -0.5px;
-      /* Pin to exactly 24px so all five cards line up identically. */
       height: 24px;
       min-height: 24px;
       max-height: 24px;
@@ -358,9 +355,15 @@
       white-space: nowrap;
     }
     .stat-face {
-      /* Flex alignment on parent .stat-num handles position/spacing. */
-      display: inline-flex;
-      align-items: center;
+      /* Inline-block with vertical-align:middle is the most bulletproof
+         email-friendly way to sit a small SVG next to text and have both
+         visually centered. line-height:0 stops the inline-block from
+         adding its own baseline descent that would push .stat-num past
+         its fixed 24px height. */
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+      line-height: 0;
       opacity: 0.7;
     }
     .stat-face svg { display: block; width: 22px; height: 22px; }
