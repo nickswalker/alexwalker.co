@@ -511,13 +511,20 @@
     .header-site {
       text-align: center;
       margin: 6px 0 0;
-      font-size: 11px;
+      /* 13px = Gmail mobile's minimum-text-size floor. Anything smaller
+         gets silently auto-enlarged by Gmail iOS/Android (visual size
+         doesn't match the declared size) which made this credit block
+         render ~30% larger than designed. 13px declared = 13px rendered
+         everywhere. */
+      font-size: 13px;
       line-height: 1.6;
       color: var(--text-footer);
     }
     .logo-credit {
       margin: 2px 0 0;
-      font-size: 10px;
+      /* Same Gmail floor — 12px would still get auto-enlarged. Visual
+         hierarchy below .header-site comes from opacity, not size. */
+      font-size: 13px;
       opacity: 0.7;
     }
     .header-site-link {
