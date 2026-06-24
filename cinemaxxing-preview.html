@@ -362,14 +362,15 @@
       /* Hosted PNG instead of inline SVG. Gmail + Outlook strip SVGs from
          email body entirely; iOS Mail's WebKit renders them but clips at
          the baseline. A 22x22 <img> with vertical-align:middle works in
-         every client. opacity dims the icon to match the muted aesthetic
-         of the original SVG. */
+         every client. The PNGs are baked at a mid-saturation hue (cyan
+         for 70mm, amber for 35mm) that reads on both dark + light card
+         backgrounds — no opacity dim because PNG can't switch color in
+         response to prefers-color-scheme. */
       display: inline-block;
       vertical-align: middle;
       margin-right: 10px;
       width: 22px;
       height: 22px;
-      opacity: 0.7;
     }
     /* Format pills — DEFAULT is light-mode values (saturated, dark-text on
        cream). Dark mode overrides via @media. */
@@ -1281,7 +1282,7 @@
               <td class="stat-cell" width="20%">
                 <a class="stat stat-70mm" href="#anchor-70mm">
                   <div class="stat-num">
-                    <img class="stat-face" src="https://alexwalker.co/img/cinemaxxing-smile.png" width="22" height="22" alt="" aria-hidden="true">
+                    <img class="stat-face" src="https://alexwalker.co/img/cinemaxxing-smile-cyan.png" width="22" height="22" alt="" aria-hidden="true">
                     <span>1</span>
                   </div>
                   <div class="stat-label">70mm</div>
@@ -1296,7 +1297,7 @@
               <td class="stat-cell" width="20%">
                 <a class="stat stat-35mm" href="#anchor-35mm">
                   <div class="stat-num">
-                    <img class="stat-face" src="https://alexwalker.co/img/cinemaxxing-smile.png" width="22" height="22" alt="" aria-hidden="true">
+                    <img class="stat-face" src="https://alexwalker.co/img/cinemaxxing-smile-amber.png" width="22" height="22" alt="" aria-hidden="true">
                     <span>1</span>
                   </div>
                   <div class="stat-label">35mm</div>
