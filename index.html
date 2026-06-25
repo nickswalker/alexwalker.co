@@ -517,36 +517,59 @@
   </div>
 </section>
 
-    <section id="cinemaxxing-promo" class="scroll-fade">
-      <a class="cinemaxxing-link" href="https://cinemaxxing.co" target="_blank" rel="noopener" data-goatcounter-click="ext-cinemaxxing.co" aria-label="Cinemaxxing">
-        <img src="img/cinemaxxing-logo.png" alt="Cinemaxxing">
-      </a>
+    <section id="software-promo" class="scroll-fade">
+      <h2 class="software-promo-heading scroll-fade">Software</h2>
+      <div class="software-promo-grid">
+        <div class="software-item">
+          <a class="software-link software-link--cinemaxxing"
+             href="https://cinemaxxing.co" target="_blank" rel="noopener"
+             data-goatcounter-click="ext-cinemaxxing.co" aria-label="Cinemaxxing">
+            <img src="img/cinemaxxing-logo.png" alt="Cinemaxxing">
+          </a>
+          <p class="software-item-label">Screening Guide</p>
+        </div>
+        <div class="software-promo-row">
+          <div class="software-item">
+            <a class="software-link software-link--red"
+               href="/red-calibrator.html"
+               data-goatcounter-click="int-red-calibrator" aria-label="RED Calibrator">
+              <img src="img/red-calibrator-icon.png" alt="RED Calibrator">
+            </a>
+            <p class="software-item-label">RED Calibrator</p>
+          </div>
+          <div class="software-item">
+            <a class="software-link software-link--colorist"
+               href="/colorist-compare.html"
+               data-goatcounter-click="int-colorist-compare" aria-label="Colorist Compare">
+              <img src="img/colorist-compare-icon.png" alt="Colorist Compare">
+            </a>
+            <p class="software-item-label">Colorist Compare</p>
+          </div>
+        </div>
+      </div>
     </section>
     <script>
-    /* One-shot blue glow pulse the first time the Cinemaxxing logo is
-       at least half-visible. Inline + standalone — doesn't depend on
+    /* One-shot blue glow pulse the first time each Software item is at
+       least half-visible. Inline + standalone — doesn't depend on
        site.js or any module load chain, so it fires the same on the
        cinematic homepage, in IG/Threads WebView, and on landscape
-       phones where module-graph quirks have bitten us before.
-       Holds for SETTLE_MS after the observer fires so the parent
-       .scroll-fade transition (0.45s opacity+translateY) finishes and
-       the logo has a beat to "land" before the pulse runs — otherwise
-       the pulse plays while the section is still fading in and is
-       effectively invisible. */
+       phones where module-graph quirks have bitten us before. Each
+       item gets its own SETTLE_MS hold so the parent .scroll-fade
+       transition (0.45s opacity+translateY) finishes and the logo has
+       a beat to "land" before the pulse runs. */
     (function () {
-      var SETTLE_MS = 1000 + 450;  // 1s pause + .scroll-fade transition time
-      var link = document.querySelector('.cinemaxxing-link');
-      if (!link || !('IntersectionObserver' in window)) return;
+      var SETTLE_MS = 1000 + 450;
+      var links = document.querySelectorAll('.software-link');
+      if (!links.length || !('IntersectionObserver' in window)) return;
       var io = new IntersectionObserver(function (entries) {
-        for (var i = 0; i < entries.length; i++) {
-          if (entries[i].isIntersecting) {
-            setTimeout(function () { link.classList.add('is-pulsing'); }, SETTLE_MS);
-            io.disconnect();
-            break;
-          }
-        }
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var el = entry.target;
+          setTimeout(function () { el.classList.add('is-pulsing'); }, SETTLE_MS);
+          io.unobserve(el);
+        });
       }, { threshold: 0.5 });
-      io.observe(link);
+      links.forEach(function (link) { io.observe(link); });
     })();
     </script>
 

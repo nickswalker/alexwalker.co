@@ -1052,51 +1052,124 @@ body.cinematic .clients--logos li > a:hover > img { opacity: 1; }
    glow is a 14px drop-shadow tinted to the logo's blue rail color — feels
    like the light's coming from inside the snowboard rather than a stuck-on
    shadow. Transition is gentle so casual cursors don't trigger a strobe. */
-#cinemaxxing-promo {
+#software-promo {
     text-align: center;
-    /* Pad top + bottom so the logo sits roughly midway between the Bio
-       buttons above it and the Instagram stills row below it. The linger-
-       hint paragraph that sometimes appears above the stills is
-       intentionally treated as non-structural — these margins centre the
-       logo against the stills strip itself, not against the hint. */
+    /* Pad top + bottom so the section sits roughly midway between the Bio
+       buttons above it and the Instagram stills row below it. */
     margin: 90px 0 30px;
     padding: 0 24px;
 }
-.cinemaxxing-link {
+/* Section heading. Same selector pattern as the Bio heading rule below
+   (`body.cinematic #about h2`) so the cascade chain is identical — that
+   guarantees the SOFTWARE heading paints at exactly the same lightness
+   as BIO, not 1-2% brighter from an unscoped-vs-scoped rule difference.
+   Property list is intentionally verbatim from `body.cinematic #about h2`,
+   plus a margin-bottom that gives the icon grid breathing room (BIO uses
+   padding-bottom 16px for the same job — here we want a larger gap
+   before the logo grid starts). */
+body.cinematic #software-promo h2 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    color: rgba(216, 214, 208, 0.7);
+    /* Strip the global h2's 36px line-height so the tracked caps don't
+       carry a 36px gap above/below. */
+    line-height: 1;
+    margin: 0 0 56px;
+    padding: 0;
+}
+/* Outer grid is a column flex: Cinemaxxing wordmark on row 1 (centred,
+   alone), the RED+Colorist icon row on row 2 beneath it. */
+.software-promo-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 64px;
+}
+/* Inner row holds the two app icons side-by-side, centred. Wrap so on
+   very narrow screens they stack rather than overflow. */
+.software-promo-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+}
+.software-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+}
+.software-item-label {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    color: rgba(216, 214, 208, 0.7);
+}
+.software-link {
     display: inline-block;
     line-height: 0;  /* kill the baseline gap under the img */
     border-radius: 6px;
     transition: filter 0.45s ease, transform 0.45s ease;
     will-change: filter, transform;
+    /* Force a stable GPU compositing layer at first paint. Without this,
+       the browser only promotes the element to its own layer when the
+       drop-shadow filter actually starts animating — and that promotion
+       can snap subpixel position, which reads as a 1-2px up/down jitter
+       through the entire 3.2s pulse. The hover state never showed this
+       because it didn't trigger the same layer creation. */
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
-.cinemaxxing-link img {
+.software-link img {
     display: block;
     width: 100%;
-    max-width: 350px;
     height: auto;
     opacity: 0.92;
     transition: opacity 0.45s ease;
 }
-.cinemaxxing-link:hover {
+.software-link--cinemaxxing img { max-width: 320px; }
+/* The two app-icon PNGs have different amounts of transparent bleed
+   inside their canvas — the visible rounded square fills 90.2% of the
+   RED Calibrator PNG but only 81.1% of the Colorist Compare PNG. So at
+   the same max-width, Colorist Compare reads ~10% smaller. Bump its cap
+   by 90.2/81.1 = 1.112 so the painted icons match visually. */
+.software-link--red img         { max-width: 140px; }
+.software-link--colorist img    { max-width: 156px; }
+.software-link:hover {
     filter: drop-shadow(0 0 14px rgba(144, 200, 240, 0.55));
-    transform: translateY(-1px);
+    /* translate3d keeps the Z-axis component so the GPU compositing
+       layer set up at base state isn't torn down when hover swaps the
+       transform value — same trick prevents the position-snap jitter
+       on hover that the base-state translateZ prevents at first paint. */
+    transform: translate3d(0, -1px, 0);
 }
-.cinemaxxing-link:hover img { opacity: 1; }
+.software-link:hover img { opacity: 1; }
 @media (max-width: 700px) {
-    #cinemaxxing-promo { margin: 50px 0 25px; padding: 0 18px; }
-    .cinemaxxing-link img { max-width: 250px; }
+    #software-promo { margin: 50px 0 25px; padding: 0 18px; }
+    .software-promo-grid { gap: 48px; }
+    .software-promo-row  { gap: 56px; }
+    .software-link--cinemaxxing img { max-width: 220px; }
+    .software-link--red img         { max-width: 110px; }
+    .software-link--colorist img    { max-width: 122px; }
 }
 @media (prefers-reduced-motion: reduce) {
-    .cinemaxxing-link, .cinemaxxing-link img { transition-duration: 0.1s; }
-    .cinemaxxing-link:hover { transform: none; }
+    .software-link, .software-link img { transition-duration: 0.1s; }
+    .software-link:hover { transform: none; }
 }
-/* One-shot glow pulse when the logo first scrolls into view. JS in
-   index.html arms an IntersectionObserver that adds .is-pulsing once
-   the link is at least half visible, then disconnects so it never
+/* One-shot glow pulse when each Software item first scrolls into view.
+   JS in index.html arms an IntersectionObserver that adds .is-pulsing
+   once a link is at least half visible, then disconnects so it never
    repeats during the session. Two-shadow stack (tight inner core +
    wider diffuse aura) sells the volume against a dark background;
    peak holds from 22% → 50% so the eye has time to catch it before
-   the fade. Total runtime ~3.2s. */
+   the fade. Total runtime ~3.2s. Keyframe name kept as
+   `cinemaxxing-pulse` for git-blame continuity. */
 @keyframes cinemaxxing-pulse {
     0%   {
         /* ease-in-out on the ramp-up: gentle start, gentle approach
@@ -1120,22 +1193,56 @@ body.cinematic .clients--logos li > a:hover > img { opacity: 1; }
 /* `linear` on the parent so each keyframe's own timing function is the
    thing actually shaping the curve — otherwise the parent's ease-out
    compounds with the per-keyframe ease and the motion gets weird. */
-.cinemaxxing-link.is-pulsing { animation: cinemaxxing-pulse 3.2s linear 1; }
+.software-link.is-pulsing { animation: cinemaxxing-pulse 3.2s linear 1; }
 @media (prefers-reduced-motion: reduce) {
-    .cinemaxxing-link.is-pulsing { animation: none; }
+    .software-link.is-pulsing { animation: none; }
 }
 /* Instagram / Threads / Facebook in-app WebView often reports a wider
    layout viewport than the device's actual screen, so the (max-width:
-   700px) mobile rule above can fail to fire even on a phone screen —
-   leaving the logo at its 350px desktop cap, which looks oversized.
-   Pin the mobile width explicitly via the html.is-instagram-webview
-   class set in _includes/head.html. Tablet (real iPad inside IG) gets
-   a slightly larger cap to match the larger surrounding cells. */
-html.is-instagram-webview .cinemaxxing-link img {
-    max-width: 250px !important;
+   700px) mobile rule above can fail to fire even on a phone screen.
+   Pin the mobile size explicitly via the html.is-instagram-webview
+   class set in _includes/head.html. */
+html.is-instagram-webview .software-link--cinemaxxing img { max-width: 220px !important; }
+html.is-instagram-webview .software-link--red         img { max-width: 110px !important; }
+html.is-instagram-webview .software-link--colorist    img { max-width: 122px !important; }
+html.is-instagram-webview-tablet .software-link--cinemaxxing img { max-width: 320px !important; }
+html.is-instagram-webview-tablet .software-link--red         img { max-width: 140px !important; }
+html.is-instagram-webview-tablet .software-link--colorist    img { max-width: 156px !important; }
+
+/* Shared "Coming Soon" stage used by the /red-calibrator.html and
+   /colorist-compare.html standalone pages. Vertically biased toward the
+   centre of the viewport — generous top padding pushes the icon away
+   from the site header, bottom padding gives the "Back to Main Page"
+   button room to breathe before the copyright strip below it. */
+.coming-soon-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+    padding: 110px 24px 70px;
 }
-html.is-instagram-webview-tablet .cinemaxxing-link img {
-    max-width: 350px !important;
+.coming-soon-stage__icon {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    /* Icon PNGs already have rounded corners baked in; this radius is
+       defensive so any browser that paints a tight bounding box around
+       the alpha edges doesn't show a hard square corner. */
+    border-radius: 28px;
+}
+.coming-soon-stage__caption {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.42em;
+    color: rgba(216, 214, 208, 0.7);
+}
+@media (max-width: 700px) {
+    .coming-soon-stage { padding: 70px 18px 50px; gap: 28px; }
+    .coming-soon-stage__icon   { max-width: 220px; }
+    .coming-soon-stage__caption { font-size: 13px; letter-spacing: 0.32em; }
 }
 
 /*--- = Stills	*/
