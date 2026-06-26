@@ -2183,8 +2183,8 @@ body.loaded header {
 
 .fancybox-toolbar button {
   padding: 10px;
-  /* See .lightbox__btn reset note — same reason. */
-  border-radius: 0;
+  /* See .lightbox__btn reset note — same reason: drop only the inset
+     blue, keep the global rule's round shape. */
   box-shadow: none;
 }
 @media screen and (max-width: 900px) {
@@ -2873,11 +2873,10 @@ dialog.lightbox [hidden] { display: none !important; }
 .lightbox__nav {
     background: transparent;
     border: 0;
-    /* Explicit resets: the global `button` rule sets `border-radius:
-       9999px` and `box-shadow: inset 0 0 0 2px var(--brand-blue)` to
-       style the site's blue-pill CTAs. Lightbox controls are icon-only
-       buttons — neither rounded chrome nor a blue outline belongs here. */
-    border-radius: 0;
+    /* The global `button` rule's `border-radius: 9999px` is intentional
+       — it gives the focus-visible outline and hit area a round shape
+       on these icon buttons. Only the global rule's inset blue shadow
+       needs to be cancelled so they're not painted as blue circles. */
     box-shadow: none;
     color: var(--lb-icon);
     cursor: pointer;
