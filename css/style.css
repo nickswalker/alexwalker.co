@@ -3723,7 +3723,12 @@ body.cinematic #short-films-gallery-link button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s var(--ease-standard), color 0.3s var(--ease-standard);
+    /* No transition on the hover swap: even with bg-blue and text-black
+       animations mathematically synced, the crossover spends most of
+       the duration with mostly-blue text on partly-blue background, so
+       the eye perceives the text "fading in" after the bg has already
+       filled. Instant swap eliminates the dead zone. */
+    transition: none;
 }
 body.cinematic #bio-buttons button:hover,
 body.cinematic #short-films-gallery-link button:hover {
@@ -3760,8 +3765,9 @@ body.cinematic #return button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s var(--ease-standard),
-                color 0.3s var(--ease-standard);
+    /* Instant hover swap (no transition) — see note in the
+       bio-buttons/short-films-gallery-link rule above. */
+    transition: none;
 }
 body.cinematic #return button:hover {
     background-color: var(--brand-blue);
@@ -3779,7 +3785,8 @@ body.cinematic #return button a {
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    transition: color 0.3s var(--ease-standard);
+    /* Match the button: instant hover swap, no transition. */
+    transition: none;
 }
 body.cinematic #return button:hover a { color: #000; }
 body.cinematic #return .text h3 {
