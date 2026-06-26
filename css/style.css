@@ -3701,7 +3701,12 @@ body.cinematic #bio-buttons .buttons-container {
 body.cinematic #bio-buttons button,
 body.cinematic #short-films-gallery-link button {
     background: transparent;
-    border: 1px solid var(--brand-blue);
+    /* Outline via inset box-shadow (see global `button` rule). The
+       global rule above sets a 2 px inset shadow; this cinematic blue-
+       pill family is 1 px in spec, so override the shadow to 1 px and
+       blank the border. */
+    border: 1px solid transparent;
+    box-shadow: inset 0 0 0 1px var(--brand-blue);
     border-radius: 9999px;
     /* All four cinematic blue pills (More Features, More Shorts, Gear List,
        Prop Collection) share the same dimensions on tablet and desktop. The
@@ -3760,6 +3765,12 @@ body.cinematic #return button {
 }
 body.cinematic #return button:hover {
     background-color: var(--brand-blue);
+    /* Set on the button itself so the descendant `<a>` picks it up via
+       inherit. The global `button > a { color: inherit !important }`
+       rule blocks the `#return button:hover a { color: #000 }` selector
+       below from winning on its own, so without this line the text
+       would stay blue against the blue background on hover. */
+    color: #000;
 }
 body.cinematic #return button a {
     color: var(--brand-blue);
