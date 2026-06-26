@@ -1277,6 +1277,17 @@ body.cinematic #colorist-compare h2.coming-soon-stage__title {
     letter-spacing: 0.42em;
     color: rgba(216, 214, 208, 0.7);
 }
+/* App-window preview screenshot. Soft drop-shadow lifts it off the
+   black background; rounded corners are already baked into the PNG. */
+.coming-soon-stage__preview {
+    display: block;
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+    margin-top: 16px;
+    filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+}
 @media (max-width: 700px) {
     .coming-soon-stage { padding: 70px 18px 50px; gap: 28px; }
     body.cinematic #red-calibrator h2.coming-soon-stage__title,
@@ -1286,6 +1297,7 @@ body.cinematic #colorist-compare h2.coming-soon-stage__title {
     }
     .coming-soon-stage__icon   { max-width: 220px; }
     .coming-soon-stage__caption { font-size: 13px; letter-spacing: 0.32em; }
+    .coming-soon-stage__preview { max-width: 360px; margin-top: 8px; }
 }
 /* The global `.full-width-centered { grid-column: 1 / 3 }` (line ~1517)
    makes the Back-to-Main-Page button's wrapper span column 1 + a
