@@ -2183,6 +2183,9 @@ body.loaded header {
 
 .fancybox-toolbar button {
   padding: 10px;
+  /* See .lightbox__btn reset note — same reason. */
+  border-radius: 0;
+  box-shadow: none;
 }
 @media screen and (max-width: 900px) {
   .thumbnails-container h3,
@@ -2870,6 +2873,12 @@ dialog.lightbox [hidden] { display: none !important; }
 .lightbox__nav {
     background: transparent;
     border: 0;
+    /* Explicit resets: the global `button` rule sets `border-radius:
+       9999px` and `box-shadow: inset 0 0 0 2px var(--brand-blue)` to
+       style the site's blue-pill CTAs. Lightbox controls are icon-only
+       buttons — neither rounded chrome nor a blue outline belongs here. */
+    border-radius: 0;
+    box-shadow: none;
     color: var(--lb-icon);
     cursor: pointer;
     padding: 10px;
@@ -3496,6 +3505,9 @@ html.lightbox-up-pseudo-fs { overflow: hidden; }
     display: flex; align-items: center; justify-content: center;
     padding: 0;
     border-radius: 4px;
+    /* Reset the global `button` rule's inset blue box-shadow — these
+       video-player controls are icon-only, not blue-pill CTAs. */
+    box-shadow: none;
     opacity: .92;
     transition: opacity 160ms ease, background 160ms ease;
 }
