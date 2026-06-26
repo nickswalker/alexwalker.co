@@ -1241,12 +1241,14 @@ html.is-instagram-webview-tablet .software-link--colorist    img { max-width: 15
     gap: 36px;
     padding: 110px 24px 70px;
 }
-/* App-name title above the icon. Same typography as the SOFTWARE
-   heading on the homepage so the round-trip (homepage → icon page →
-   back) feels visually continuous. Margin-0 cancels the global h1
-   margin; the parent flex's `gap: 36px` handles spacing. */
-.coming-soon-stage__title {
-    margin: 0;
+/* App-name title above the icon. Scoped under body.cinematic + the
+   page section ID so the cascade chain is identical to
+   `body.cinematic #software-promo h2` on the homepage — same selector
+   shape avoids subtle inheritance differences that made a generic
+   `.coming-soon-stage__title` rule render perceptibly heavier than the
+   SOFTWARE heading even though the explicit property values matched. */
+body.cinematic #red-calibrator h2.coming-soon-stage__title,
+body.cinematic #colorist-compare h2.coming-soon-stage__title {
     text-align: center;
     font-size: 22px;
     font-weight: 300;
@@ -1254,6 +1256,8 @@ html.is-instagram-webview-tablet .software-link--colorist    img { max-width: 15
     letter-spacing: 0.32em;
     color: rgba(216, 214, 208, 0.7);
     line-height: 1;
+    margin: 0;
+    padding: 0;
 }
 .coming-soon-stage__icon {
     display: block;
@@ -1275,7 +1279,11 @@ html.is-instagram-webview-tablet .software-link--colorist    img { max-width: 15
 }
 @media (max-width: 700px) {
     .coming-soon-stage { padding: 70px 18px 50px; gap: 28px; }
-    .coming-soon-stage__title  { font-size: 18px; letter-spacing: 0.28em; }
+    body.cinematic #red-calibrator h2.coming-soon-stage__title,
+    body.cinematic #colorist-compare h2.coming-soon-stage__title {
+        font-size: 18px;
+        letter-spacing: 0.28em;
+    }
     .coming-soon-stage__icon   { max-width: 220px; }
     .coming-soon-stage__caption { font-size: 13px; letter-spacing: 0.32em; }
 }
