@@ -780,6 +780,9 @@ body:not(.is-touch) .pill:hover{
 .ep-fade::after{content:'';position:absolute;left:0;right:0;bottom:0;height:280px;background:linear-gradient(to bottom, rgba(14,14,14,0) 0%, rgba(14,14,14,.85) 60%, rgba(14,14,14,1) 100%);pointer-events:none;}
 .ep-content{padding:24px 16px;display:flex;flex-direction:column;gap:16px;}
 .ep-card{background:#161616;border:1px solid #303030;border-radius:12px;overflow:hidden;}
+/* Header card sits flush on the page background — no border, no fill, no
+   rounding — matching the real email's open-in-browser header treatment. */
+.ep-card.ep-header{background:transparent;border:0;border-radius:0;}
 .ep-header{padding:32px 28px 28px;text-align:center;position:relative;}
 .ep-edition{font-family:'Plus Jakarta Sans',sans-serif;position:absolute;top:14px;left:18px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#f0f0f0;}
 .ep-pills{display:flex;justify-content:center;gap:8px;margin-bottom:22px;}
