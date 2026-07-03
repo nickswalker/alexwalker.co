@@ -13,6 +13,9 @@
 #     camera:   e.g. "iPhone 5"
 #     lens:     e.g. "Tamron AF 17-50mm ƒ2.8"
 #     hide:     true to exclude this post from the row entirely
+"17872977327535462":
+  hide: true
+
 "18059758604491214":
   crop:
     cx: 0.5000
