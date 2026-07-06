@@ -351,6 +351,29 @@
     }
     .format-summary tr:first-child .stat-cell:first-child { padding-left: 0; }
     .format-summary tr:first-child .stat-cell:last-child { padding-right: 0; }
+    /* Standalone-preview-only affordance: a hint above the clickable format
+       tiles that fades in only after the pointer rests on the cluster for a
+       moment (transition-delay on the hover state; 0 on rest so it hides
+       immediately on leave). Reserves its line height always so revealing it
+       causes no layout shift. Never present in the emailed variant — the
+       markup is gated on is_standalone_preview. */
+    .format-hint {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      color: var(--text-body);
+      height: 15px;
+      line-height: 15px;
+      margin-bottom: 4px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      transition-delay: 0s;
+    }
+    .format-hint-zone:hover .format-hint {
+      opacity: 0.4;
+      transition-delay: 0.6s;
+    }
     .stat {
       display: block;
       text-align: center;
@@ -1336,7 +1359,8 @@
     <!-- ── Format summary stats ── -->
     
     <tr>
-      <td class="section-outer">
+      <td class="section-outer format-hint-zone">
+        <div class="format-hint" aria-hidden="true">Click a format to jump to those screenings</div>
         <table class="format-summary" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             <tr>
               <td class="stat-cell" width="20%">
