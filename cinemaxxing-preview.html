@@ -351,28 +351,29 @@
     }
     .format-summary tr:first-child .stat-cell:first-child { padding-left: 0; }
     .format-summary tr:first-child .stat-cell:last-child { padding-right: 0; }
-    /* Standalone-preview-only affordance: a hint above the clickable format
-       tiles that fades in only after the pointer rests on the cluster for a
-       moment (transition-delay on the hover state; 0 on rest so it hides
-       immediately on leave). Reserves its line height always so revealing it
-       causes no layout shift. Never present in the emailed variant — the
-       markup is gated on is_standalone_preview. */
+    /* Standalone-preview-only affordance: an italic hint above the clickable
+       format tiles, in the same Sansita face as the section titles. Collapsed
+       (zero height, no gap) on load; revealed by JS — either when the pointer
+       enters the cluster, or after the cluster has dwelled in view briefly —
+       and left in place once shown. Never present in the emailed variant
+       (markup gated on is_standalone_preview). */
     .format-hint {
       text-align: center;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.3px;
+      font-family: 'Sansita', Georgia, 'Times New Roman', serif;
+      font-style: italic;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.2px;
       color: var(--text-body);
-      height: 15px;
-      line-height: 15px;
-      margin-bottom: 4px;
       opacity: 0;
-      transition: opacity 0.5s ease;
-      transition-delay: 0s;
+      max-height: 0;
+      overflow: hidden;
+      transition: opacity 0.55s ease, max-height 0.55s ease, margin-bottom 0.55s ease;
     }
-    .format-hint-zone:hover .format-hint {
-      opacity: 0.4;
-      transition-delay: 0.6s;
+    .format-hint.is-shown {
+      opacity: 0.55;
+      max-height: 28px;
+      margin-bottom: 8px;
     }
     .stat {
       display: block;
@@ -6810,7 +6811,7 @@
           <p>You're receiving this because you signed up for Cinemaxxing.</p>
           <hr class="footer-divider">
           <p>
-            <a href="mailto:hello@cinemaxxing.co?subject=Unsubscribe%20preview@example.com&amp;body=Please%20unsubscribe%20preview@example.com%20from%20the%20Cinemaxxing%20digest.">Unsubscribe</a>
+            <a href="mailto:hello@cinemaxxing.co?subject=Unsubscribe%20p@e.com&amp;body=Please%20unsubscribe%20p@e.com%20from%20the%20Cinemaxxing%20digest.">Unsubscribe</a>
           </p>
           
           <p style="margin: 12px 0 0;">
@@ -6845,6 +6846,42 @@
       sendPagePixel(); initOutboundLinkTracking();
     });
   }
+</script>
+<script>
+  /* Reveal the format-cards hint once — whichever comes first:
+     (a) the pointer enters the format cluster, or
+     (b) the cluster has dwelled in view for ~2s (user resting at the top).
+     Stays visible afterward. Preview-only; no effect in the emailed HTML. */
+  (function () {
+    var hint = document.querySelector('.format-hint');
+    var zone = document.querySelector('.format-hint-zone');
+    if (!hint || !zone) return;
+    var shown = false, dwell = null;
+    function reveal() {
+      if (shown) return;
+      shown = true;
+      hint.classList.add('is-shown');
+      if (dwell) clearTimeout(dwell);
+      zone.removeEventListener('mouseenter', reveal);
+      if (io) io.disconnect();
+    }
+    zone.addEventListener('mouseenter', reveal);
+    var io = null;
+    if ('IntersectionObserver' in window) {
+      io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && !dwell && !shown) {
+            dwell = setTimeout(reveal, 2000);
+          } else if (!e.isIntersecting && dwell && !shown) {
+            clearTimeout(dwell); dwell = null;   // left view before dwell completed
+          }
+        });
+      }, { threshold: 0.6 });
+      io.observe(zone);
+    } else {
+      dwell = setTimeout(reveal, 2000);   // no IO support — plain timer
+    }
+  })();
 </script>
 
 </body>
