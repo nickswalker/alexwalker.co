@@ -375,6 +375,36 @@
       max-height: 28px;
       margin-bottom: 8px;
     }
+    /* Browser-only day filter (standalone preview). Matches the calm dark
+       palette; the select uses the body font so it reads as a native control. */
+    .day-filter {
+      text-align: center;
+      margin: 4px 0 18px;
+    }
+    .day-filter-label {
+      font-family: 'Sansita', Georgia, 'Times New Roman', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--text-body);
+      margin-right: 10px;
+    }
+    .day-filter-select {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-heading);
+      background-color: var(--bg-film);
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      padding: 7px 12px;
+      cursor: pointer;
+      -webkit-appearance: menulist;
+      appearance: menulist;
+    }
+    .day-filter-select:focus { outline: 2px solid var(--accent, #FBB315); outline-offset: 1px; }
+    /* When a specific day is active, dim the header hint so the filter reads
+       as the active affordance. */
+    .day-filtered .format-hint { opacity: 0 !important; }
     .stat {
       display: block;
       text-align: center;
@@ -1408,6 +1438,21 @@
 
     
     
+    <tr>
+      <td class="section-outer">
+        <div class="day-filter">
+          <label class="day-filter-label" for="day-filter-select">Which day do you want to see a movie?</label>
+          <select id="day-filter-select" class="day-filter-select" aria-label="Filter screenings by day">
+            <option value="all">Any day</option>
+            <option value="2026-07-06">Monday · Jul 6</option><option value="2026-07-07">Tuesday · Jul 7</option><option value="2026-07-08">Wednesday · Jul 8</option><option value="2026-07-09">Thursday · Jul 9</option><option value="2026-07-10">Friday · Jul 10</option><option value="2026-07-11">Saturday · Jul 11</option><option value="2026-07-12">Sunday · Jul 12</option>
+          </select>
+        </div>
+      </td>
+    </tr>
+    
+
+    
+    
 
     
 
@@ -1675,7 +1720,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-07">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -1741,7 +1786,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -1761,7 +1806,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-09">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2120,7 +2165,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-06">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2140,7 +2185,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-07">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2160,7 +2205,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2180,7 +2225,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-09">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2236,7 +2281,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-09">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2256,7 +2301,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-10">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2276,7 +2321,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-11,2026-07-12">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2332,7 +2377,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-09">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2352,7 +2397,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-10,2026-07-11,2026-07-12">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2416,7 +2461,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-06,2026-07-07">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2436,7 +2481,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2492,7 +2537,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-09">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2512,7 +2557,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-10,2026-07-11,2026-07-12">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2702,7 +2747,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-06">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2722,7 +2767,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-09">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2774,7 +2819,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-12">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2826,7 +2871,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2846,7 +2891,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-09">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2898,7 +2943,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-07">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2950,7 +2995,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-06">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2970,7 +3015,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-07">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -2990,7 +3035,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3010,7 +3055,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-09">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3062,7 +3107,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-06">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3114,7 +3159,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-09">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3166,7 +3211,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-07">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3186,7 +3231,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-11">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3238,7 +3283,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-10">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3258,7 +3303,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-11">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3278,7 +3323,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-12">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3330,7 +3375,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-10,2026-07-11">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3431,7 +3476,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-12">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3484,7 +3529,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-06">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3504,7 +3549,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-07">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3524,7 +3569,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3577,7 +3622,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-06">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3597,7 +3642,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-07">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3617,7 +3662,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3670,7 +3715,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-09">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3690,7 +3735,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-10,2026-07-11">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3710,7 +3755,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-12">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3763,7 +3808,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-09">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3783,7 +3828,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-10,2026-07-11,2026-07-12">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3883,7 +3928,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-06">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3935,7 +3980,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-07">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -3987,7 +4032,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4039,7 +4084,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-09">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4091,7 +4136,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-10">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4191,7 +4236,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-09">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4243,7 +4288,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-10">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4295,7 +4340,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-10">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4347,7 +4392,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-12">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4399,7 +4444,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-12">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4457,7 +4502,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-14">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4509,7 +4554,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-15">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4561,7 +4606,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-16">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4661,7 +4706,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-06,2026-07-07">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4681,7 +4726,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4733,7 +4778,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-06,2026-07-07">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4753,7 +4798,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4805,7 +4850,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-06,2026-07-07">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4825,7 +4870,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4877,7 +4922,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-06">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4897,7 +4942,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-07">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4917,7 +4962,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4969,7 +5014,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-09">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -4989,7 +5034,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-10">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -5009,7 +5054,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-11,2026-07-12">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -5061,7 +5106,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-10,2026-07-11,2026-07-12">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -5617,7 +5662,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-11">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -5676,7 +5721,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-11">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -5755,7 +5800,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-07">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -5814,7 +5859,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -5879,7 +5924,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-11">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -5938,7 +5983,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-10">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -5958,7 +6003,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-11">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -6031,7 +6076,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-12">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -6096,7 +6141,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-06">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -6155,7 +6200,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-06">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -6214,7 +6259,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-07">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -6234,7 +6279,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -6293,7 +6338,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-06">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -6352,7 +6397,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-06">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -6372,7 +6417,7 @@
             </tr>
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -6431,7 +6476,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -6490,7 +6535,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -6549,7 +6594,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -6624,7 +6669,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-07">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -6697,7 +6742,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-11">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -6756,7 +6801,7 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row">
+            <tr class="showtime-row" data-days="2026-07-08">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -6881,6 +6926,57 @@
     } else {
       dwell = setTimeout(reveal, 2000);   // no IO support — plain timer
     }
+  })();
+
+  /* Inline day filter. Narrows the whole schedule to one weekday without a
+     reload: hide non-matching showtime rows → hide cards with no visible row →
+     hide sections whose cards all went away. "Any day" restores everything.
+     Preview-only; the emailed HTML has neither the <select> nor data-days. */
+  (function () {
+    var select = document.getElementById('day-filter-select');
+    if (!select) return;
+
+    function anyVisible(nodes) {
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].style.display !== 'none') return true;
+      }
+      return false;
+    }
+
+    function apply(day) {
+      var specific = day && day !== 'all';
+
+      // 1. Showtime rows — match against the day(s) each row covers.
+      var rows = document.querySelectorAll('.showtime-row[data-days]');
+      rows.forEach(function (r) {
+        if (!specific) { r.style.display = ''; return; }
+        var days = (r.getAttribute('data-days') || '').split(',');
+        r.style.display = (days.indexOf(day) >= 0) ? '' : 'none';
+      });
+
+      // 2. Film cards — hide any with no showtime row left visible.
+      var cards = document.querySelectorAll('.film-card');
+      cards.forEach(function (c) {
+        if (!specific) { c.style.display = ''; return; }
+        c.style.display = anyVisible(c.querySelectorAll('.showtime-row[data-days]')) ? '' : 'none';
+      });
+
+      // 3. Sections — collapse a section only if it actually holds film cards
+      //    and none remain visible (leaves the header / format cards / empty
+      //    & error states untouched, since those hold no .film-card).
+      var sections = document.querySelectorAll('.section-card');
+      sections.forEach(function (s) {
+        var all = s.querySelectorAll('.film-card');
+        if (all.length === 0) return;
+        var tr = s.closest('tr');
+        if (!tr) return;
+        tr.style.display = (!specific || anyVisible(all)) ? '' : 'none';
+      });
+
+      document.body.classList.toggle('day-filtered', specific);
+    }
+
+    select.addEventListener('change', function () { apply(select.value); });
   })();
 </script>
 
