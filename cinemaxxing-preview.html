@@ -6934,13 +6934,67 @@
     }
   })();
 
-  /* Inline day filter. Narrows the whole schedule to one weekday without a
-     reload: hide non-matching showtime rows → hide cards with no visible row →
-     hide sections whose cards all went away. "Any day" restores everything.
-     Preview-only; the emailed HTML has neither the <select> nor data-days. */
+  /* Inline day filter + past-screening pruning. Runs on load and on dropdown
+     change. Because this page is a static file viewed all week, "now" is
+     computed in America/Chicago (Central) at VIEW time — independent of the
+     visitor's own timezone — so opening it Wednesday drops Mon/Tue, and
+     today's already-finished showtimes drop too. Preview-only. */
   (function () {
     var select = document.getElementById('day-filter-select');
-    if (!select) return;
+    var rows = document.querySelectorAll('.showtime-row[data-days]');
+    if (!rows.length) return;
+
+    // ── Current date + minutes-past-midnight in Central Time ──
+    function centralNow() {
+      var now = new Date();
+      var dateISO = new Intl.DateTimeFormat('en-CA',
+        { timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit' }
+      ).format(now);                                  // "2026-07-08"
+      var hm = new Intl.DateTimeFormat('en-GB',
+        { timeZone: 'America/Chicago', hour: '2-digit', minute: '2-digit', hour12: false }
+      ).format(now);                                  // "17:30"
+      var p = hm.split(':');
+      return { date: dateISO, minutes: (+p[0]) * 60 + (+p[1]) };
+    }
+    var CT = centralNow();
+
+    function timeMinutes(txt) {
+      var m = (txt || '').trim().toUpperCase().match(/^(\d{1,2}):(\d{2})\s*([AP])M$/);
+      if (!m) return null;                            // "See website"/"Sold Out" → keep
+      var h = (+m[1]) % 12; if (m[3] === 'P') h += 12;
+      return h * 60 + (+m[2]);
+    }
+    function rowDays(r) {
+      return (r.getAttribute('data-days') || '').split(',').filter(Boolean);
+    }
+
+    // ── Mark rows that have already fully happened ──
+    // A row is "past" if its latest day is before today. On a SINGLE-day row
+    // dated today, drop the individual already-passed time chips; if none
+    // remain, the row is past too. (Range rows that include today are left
+    // intact — their times still apply to the future days in the range.)
+    rows.forEach(function (r) {
+      var days = rowDays(r);
+      if (!days.length) return;
+      var maxDay = days.reduce(function (a, b) { return b > a ? b : a; });
+      if (maxDay < CT.date) { r.setAttribute('data-past', '1'); return; }
+      if (days.length === 1 && days[0] === CT.date) {
+        var chips = r.querySelectorAll('.time-chip'), future = false;
+        chips.forEach(function (c) {
+          var mins = timeMinutes(c.textContent);
+          if (mins !== null && mins < CT.minutes) { c.style.display = 'none'; }
+          else { future = true; }
+        });
+        if (chips.length && !future) r.setAttribute('data-past', '1');
+      }
+    });
+
+    // ── Drop already-passed days from the picker ──
+    if (select) {
+      [].slice.call(select.options).forEach(function (o) {
+        if (o.value !== 'all' && o.value < CT.date) o.remove();
+      });
+    }
 
     function anyVisible(nodes) {
       for (var i = 0; i < nodes.length; i++) {
@@ -6952,37 +7006,32 @@
     function apply(day) {
       var specific = day && day !== 'all';
 
-      // 1. Showtime rows — match against the day(s) each row covers.
-      var rows = document.querySelectorAll('.showtime-row[data-days]');
+      // 1. Rows — always hide past rows; otherwise match the selected day.
       rows.forEach(function (r) {
-        if (!specific) { r.style.display = ''; return; }
-        var days = (r.getAttribute('data-days') || '').split(',');
-        r.style.display = (days.indexOf(day) >= 0) ? '' : 'none';
+        var past = r.getAttribute('data-past') === '1';
+        var matches = !specific || rowDays(r).indexOf(day) >= 0;
+        r.style.display = (!past && matches) ? '' : 'none';
       });
 
-      // 2. Film cards — hide any with no showtime row left visible.
-      var cards = document.querySelectorAll('.film-card');
-      cards.forEach(function (c) {
-        if (!specific) { c.style.display = ''; return; }
+      // 2. Cards — hide any with no visible row.
+      document.querySelectorAll('.film-card').forEach(function (c) {
         c.style.display = anyVisible(c.querySelectorAll('.showtime-row[data-days]')) ? '' : 'none';
       });
 
-      // 3. Sections — collapse a section only if it actually holds film cards
-      //    and none remain visible (leaves the header / format cards / empty
-      //    & error states untouched, since those hold no .film-card).
-      var sections = document.querySelectorAll('.section-card');
-      sections.forEach(function (s) {
+      // 3. Sections — collapse only sections that hold film cards but have none
+      //    visible (header / format cards / error states hold no .film-card).
+      document.querySelectorAll('.section-card').forEach(function (s) {
         var all = s.querySelectorAll('.film-card');
         if (all.length === 0) return;
         var tr = s.closest('tr');
-        if (!tr) return;
-        tr.style.display = (!specific || anyVisible(all)) ? '' : 'none';
+        if (tr) tr.style.display = anyVisible(all) ? '' : 'none';
       });
 
       document.body.classList.toggle('day-filtered', specific);
     }
 
-    select.addEventListener('change', function () { apply(select.value); });
+    if (select) select.addEventListener('change', function () { apply(select.value); });
+    apply(select ? select.value : 'all');   // initial pass — prunes past on load
   })();
 </script>
 
