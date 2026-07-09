@@ -386,7 +386,7 @@
       font-style: italic;
       font-size: 15px;
       color: var(--text-body);
-      margin-right: 10px;
+      margin-right: 12px;
     }
     .day-filter-select {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -394,14 +394,16 @@
       font-weight: 600;
       color: var(--text-heading);
       background-color: var(--bg-film);
-      border: 1px solid var(--border-card);
+      /* Permanent amber outline so the picker always reads as the active
+         control, not just on focus. */
+      border: 2px solid var(--accent, #FBB315);
       border-radius: 8px;
       padding: 7px 12px;
       cursor: pointer;
       -webkit-appearance: menulist;
       appearance: menulist;
     }
-    .day-filter-select:focus { outline: 2px solid var(--accent, #FBB315); outline-offset: 1px; }
+    .day-filter-select:focus { outline: none; box-shadow: 0 0 0 3px rgba(251,179,21,0.35); }
     /* When a specific day is active, dim the header hint so the filter reads
        as the active affordance. */
     .day-filtered .format-hint { opacity: 0 !important; }
@@ -1190,6 +1192,10 @@
       .email-wrapper > tbody > tr > td { padding: 12px 8px !important; }
       .email-wrapper { padding: 12px 8px; }
       .header { padding: 24px 20px 24px; }
+      /* Day filter: stack the question above the picker so the narrow-screen
+         layout has clear breathing room instead of crowding them side by side. */
+      .day-filter-label { display: block; margin: 0 0 10px; }
+      .day-filter-select { width: auto; min-width: 60%; }
       /* On narrow viewports, drop the absolutely-positioned edition badge into
          the natural flow above the eyebrow so it doesn't overlap the wrapping
          eyebrow text in the upper-left corner. */
