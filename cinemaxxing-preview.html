@@ -5419,18 +5419,38 @@
     function rowDays(r) {
       return (r.getAttribute('data-days') || '').split(',').filter(Boolean);
     }
+    var WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    var MO = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    function fmtDay(iso) {                                // "2026-07-18" → "Sat Jul 18"
+      var p = iso.split('-');
+      var d = new Date(+p[0], +p[1] - 1, +p[2]);         // date-only, no TZ shift
+      return WD[d.getDay()] + ' ' + MO[d.getMonth()] + ' ' + (+p[2]);
+    }
+    function relabel(r, daysList) {                      // rewrite the date cell to a day range
+      if (!daysList.length) return;
+      var cell = r.querySelector('.sc-date-td a') || r.querySelector('.sc-date-td');
+      if (!cell) return;
+      var first = fmtDay(daysList[0]), last = fmtDay(daysList[daysList.length - 1]);
+      cell.textContent = (first === last) ? first : (first + ' – ' + last);
+    }
 
-    // ── Mark rows that have already fully happened ──
-    // A row is "past" if its latest day is before today. On a SINGLE-day row
-    // dated today, drop the individual already-passed time chips; if none
-    // remain, the row is past too. (Range rows that include today are left
-    // intact — their times still apply to the future days in the range.)
+    // ── Mark rows that have already fully happened + trim partly-past ranges ──
+    // • Latest day before today → the whole row is past.
+    // • A multi-day range whose head is in the past → relabel it to start at
+    //   today (so "Mon Jul 13 – Sat Jul 18" viewed on Jul 18 reads "Sat Jul 18").
+    // • When the only day left is today, drop the individual passed time chips;
+    //   if none remain, the row is past. A range still reaching the future keeps
+    //   its chips — those times are still valid on the upcoming days.
     rows.forEach(function (r) {
       var days = rowDays(r);
       if (!days.length) return;
       var maxDay = days.reduce(function (a, b) { return b > a ? b : a; });
       if (maxDay < CT.date) { r.setAttribute('data-past', '1'); return; }
-      if (days.length === 1 && days[0] === CT.date) {
+
+      var remaining = days.filter(function (d) { return d >= CT.date; });
+      if (remaining.length && remaining.length < days.length) relabel(r, remaining);
+
+      if (remaining.length === 1 && remaining[0] === CT.date) {
         var chips = r.querySelectorAll('.time-chip'), future = false;
         chips.forEach(function (c) {
           var mins = timeMinutes(c.textContent);
