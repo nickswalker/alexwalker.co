@@ -82,6 +82,18 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     }
     .container { max-width: 640px; margin: 0 auto; }
+    /* Film-strip framing + grain overlay, matching the landing page. Grain
+       opacity adapts to light/dark (dark is this page's default). */
+    .cmx-reel { width:auto; height:22px; margin-left:-16px; margin-right:-16px;
+      background-image:url("https://alexwalker.co/img/cinemaxxing-perf-strip.png");
+      background-size:auto 22px; background-repeat:repeat-x; background-position:center;
+      filter:brightness(0.55) saturate(0.85); opacity:.85; }
+    .cmx-reel-top { margin-top:-24px; margin-bottom:20px; }
+    .cmx-reel-bottom { margin-top:20px; margin-bottom:-24px; }
+    .cmx-grain { position:fixed; inset:0; pointer-events:none; z-index:2147483000;
+      background-image:url("https://alexwalker.co/img/cinemaxxing-grain.png");
+      background-size:240px 240px; background-repeat:repeat; opacity:.16; }
+    @media (prefers-color-scheme: light) { .cmx-grain { opacity:.09; } }
     .page-header {
       background-color: var(--bg-card);
       border: 1px solid var(--border-card);
@@ -228,6 +240,8 @@
   </style>
 </head>
 <body>
+<div class="cmx-grain" aria-hidden="true"></div>
+<div class="cmx-reel cmx-reel-top" aria-hidden="true"></div>
 <div class="container">
 
   <div class="page-header">
@@ -260,8 +274,6 @@
         <div class="film-title-row">
           <a class="film-title" href="https://letterboxd.com/tmdb/1108427/" target="_blank">Moana</a>
           
-            <span class="format-badge badge-default">Real D 3D</span>
-          
         </div>
         <div class="showtime-rows">
           
@@ -269,54 +281,7 @@
           <div class="showtime-row">
             <span class="showtime-date">Mon Jul 20</span>
             <div class="showtime-times">
-              <span class="time-chip">1:10 PM</span>
-            </div>
-            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
-          </div>
-          
-          
-          <div class="showtime-row">
-            <span class="showtime-date">Tue Jul 21</span>
-            <div class="showtime-times">
-              <span class="time-chip">1:10 PM</span><span class="time-chip">6:30 PM</span>
-            </div>
-            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
-          </div>
-          
-          
-          <div class="showtime-row">
-            <span class="showtime-date">Wed Jul 22</span>
-            <div class="showtime-times">
-              <span class="time-chip">1:10 PM</span><span class="time-chip">6:30 PM</span>
-            </div>
-            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
-          </div>
-          
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-  
-  
-  
-  <div class="film-card">
-    <div class="film-card-inner">
-      
-      <a href="https://letterboxd.com/tmdb/1108427/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/zKVgiv5qHCvCLT4A2ymJi5QeXDH.jpg" alt="" width="44" height="65" loading="lazy"></a>
-      <div class="film-info">
-        <div class="film-title-row">
-          <a class="film-title" href="https://letterboxd.com/tmdb/1108427/" target="_blank">Moana</a>
-          
-        </div>
-        <div class="showtime-rows">
-          
-          
-          <div class="showtime-row">
-            <span class="showtime-date">Mon Jul 20</span>
-            <div class="showtime-times">
-              <span class="time-chip">12:40 PM</span><span class="time-chip">4:35 PM</span><span class="time-chip">6:40 PM</span><span class="time-chip">7:30 PM</span><span class="time-chip">9:45 PM</span>
+              <span class="time-chip">4:35 PM</span><span class="time-chip">6:40 PM</span><span class="time-chip">7:30 PM</span><span class="time-chip">9:45 PM</span>
             </div>
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
           </div>
@@ -335,6 +300,42 @@
             <span class="showtime-date">Wed Jul 22</span>
             <div class="showtime-times">
               <span class="time-chip">12:30 PM</span><span class="time-chip">5:00 PM</span><span class="time-chip">7:30 PM</span><span class="time-chip">9:50 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Thu Jul 23</span>
+            <div class="showtime-times">
+              <span class="time-chip">6:30 PM</span><span class="time-chip">9:50 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Fri Jul 24</span>
+            <div class="showtime-times">
+              <span class="time-chip">12:45 PM</span><span class="time-chip">6:45 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sat Jul 25</span>
+            <div class="showtime-times">
+              <span class="time-chip">6:45 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sun Jul 26</span>
+            <div class="showtime-times">
+              <span class="time-chip">12:45 PM</span><span class="time-chip">6:45 PM</span>
             </div>
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
           </div>
@@ -367,7 +368,7 @@
           <div class="showtime-row">
             <span class="showtime-date">Mon Jul 20</span>
             <div class="showtime-times">
-              <span class="time-chip">1:00 PM</span><span class="time-chip">2:00 PM</span><span class="time-chip">5:00 PM</span><span class="time-chip">6:00 PM</span><span class="time-chip">9:00 PM</span><span class="time-chip">10:00 PM</span>
+              <span class="time-chip">5:00 PM</span><span class="time-chip">6:00 PM</span><span class="time-chip">9:00 PM</span><span class="time-chip">10:00 PM</span>
             </div>
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
           </div>
@@ -385,7 +386,7 @@
           <div class="showtime-row">
             <span class="showtime-date">Wed Jul 22</span>
             <div class="showtime-times">
-              <span class="time-chip">1:00 PM</span><span class="time-chip">5:00 PM</span><span class="time-chip">9:00 PM</span>
+              <span class="time-chip">1:00 PM</span><span class="time-chip">2:00 PM</span><span class="time-chip">5:00 PM</span><span class="time-chip">6:00 PM</span><span class="time-chip">9:00 PM</span><span class="time-chip">10:00 PM</span>
             </div>
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
           </div>
@@ -452,7 +453,7 @@
           <div class="showtime-row">
             <span class="showtime-date">Mon Jul 20</span>
             <div class="showtime-times">
-              <span class="time-chip">1:45 PM</span><span class="time-chip">6:45 PM</span>
+              <span class="time-chip">6:45 PM</span>
             </div>
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
           </div>
@@ -471,6 +472,42 @@
             <span class="showtime-date">Wed Jul 22</span>
             <div class="showtime-times">
               <span class="time-chip">2:00 PM</span><span class="time-chip">6:45 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Thu Jul 23</span>
+            <div class="showtime-times">
+              <span class="time-chip">2:00 PM</span><span class="time-chip">6:45 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Fri Jul 24</span>
+            <div class="showtime-times">
+              <span class="time-chip">4:50 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sat Jul 25</span>
+            <div class="showtime-times">
+              <span class="time-chip">4:50 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sun Jul 26</span>
+            <div class="showtime-times">
+              <span class="time-chip">4:50 PM</span>
             </div>
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
           </div>
@@ -499,7 +536,7 @@
           <div class="showtime-row">
             <span class="showtime-date">Mon Jul 20</span>
             <div class="showtime-times">
-              <span class="time-chip">12:30 PM</span><span class="time-chip">4:15 PM</span><span class="time-chip">9:15 PM</span>
+              <span class="time-chip">4:15 PM</span><span class="time-chip">9:15 PM</span>
             </div>
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
           </div>
@@ -518,6 +555,71 @@
             <span class="showtime-date">Wed Jul 22</span>
             <div class="showtime-times">
               <span class="time-chip">12:25 PM</span><span class="time-chip">4:25 PM</span><span class="time-chip">9:15 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Thu Jul 23</span>
+            <div class="showtime-times">
+              <span class="time-chip">12:25 PM</span><span class="time-chip">4:25 PM</span><span class="time-chip">9:15 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Fri Jul 24</span>
+            <div class="showtime-times">
+              <span class="time-chip">11:45 AM</span><span class="time-chip">2:40 PM</span><span class="time-chip">8:00 PM</span><span class="time-chip">9:55 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sat Jul 25</span>
+            <div class="showtime-times">
+              <span class="time-chip">11:45 AM</span><span class="time-chip">2:40 PM</span><span class="time-chip">8:00 PM</span><span class="time-chip">9:55 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sun Jul 26</span>
+            <div class="showtime-times">
+              <span class="time-chip">11:45 AM</span><span class="time-chip">2:40 PM</span><span class="time-chip">8:00 PM</span><span class="time-chip">9:55 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  <div class="film-card">
+    <div class="film-card-inner">
+      
+      <a href="https://letterboxd.com/tmdb/1047252/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/nATsUp6TBDj6o0eqkW70uyhEAsZ.jpg" alt="" width="44" height="65" loading="lazy"></a>
+      <div class="film-info">
+        <div class="film-title-row">
+          <a class="film-title" href="https://letterboxd.com/tmdb/1047252/" target="_blank">AMC Screen Unseen: July 20</a>
+          
+        </div>
+        <div class="showtime-rows">
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Mon Jul 20</span>
+            <div class="showtime-times">
+              <span class="time-chip">7:00 PM</span>
             </div>
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
           </div>
@@ -571,6 +673,42 @@
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
           </div>
           
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Thu Jul 23</span>
+            <div class="showtime-times">
+              <span class="time-chip">8:25 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Fri Jul 24</span>
+            <div class="showtime-times">
+              <span class="time-chip">2:10 PM</span><span class="time-chip">7:15 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sat Jul 25</span>
+            <div class="showtime-times">
+              <span class="time-chip">2:10 PM</span><span class="time-chip">7:15 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sun Jul 26</span>
+            <div class="showtime-times">
+              <span class="time-chip">2:10 PM</span><span class="time-chip">7:15 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
         </div>
       </div>
     </div>
@@ -595,7 +733,7 @@
           <div class="showtime-row">
             <span class="showtime-date">Mon Jul 20</span>
             <div class="showtime-times">
-              <span class="time-chip">12:50 PM</span><span class="time-chip">4:05 PM</span><span class="time-chip">9:40 PM</span>
+              <span class="time-chip">9:40 PM</span>
             </div>
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
           </div>
@@ -614,6 +752,42 @@
             <span class="showtime-date">Wed Jul 22</span>
             <div class="showtime-times">
               <span class="time-chip">2:20 PM</span><span class="time-chip">4:05 PM</span><span class="time-chip">9:30 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Thu Jul 23</span>
+            <div class="showtime-times">
+              <span class="time-chip">1:25 PM</span><span class="time-chip">4:05 PM</span><span class="time-chip">9:30 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Fri Jul 24</span>
+            <div class="showtime-times">
+              <span class="time-chip">12:00 PM</span><span class="time-chip">5:15 PM</span><span class="time-chip">9:15 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sat Jul 25</span>
+            <div class="showtime-times">
+              <span class="time-chip">12:00 PM</span><span class="time-chip">5:15 PM</span><span class="time-chip">9:15 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sun Jul 26</span>
+            <div class="showtime-times">
+              <span class="time-chip">12:00 PM</span><span class="time-chip">5:15 PM</span><span class="time-chip">9:15 PM</span>
             </div>
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
           </div>
@@ -630,10 +804,10 @@
   <div class="film-card">
     <div class="film-card-inner">
       
-      <a href="https://letterboxd.com/tmdb/1308767/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/ntW9zzhDmbt3sXDyPXb7SHVuDdB.jpg" alt="" width="44" height="65" loading="lazy"></a>
+      <a href="https://letterboxd.com/tmdb/1734865/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/g7lmKF3WJgjMXM42njhZPmLsObn.jpg" alt="" width="44" height="65" loading="lazy"></a>
       <div class="film-info">
         <div class="film-title-row">
-          <a class="film-title" href="https://letterboxd.com/tmdb/1308767/" target="_blank">Young Washington</a>
+          <a class="film-title" href="https://letterboxd.com/tmdb/1734865/" target="_blank">Mob Psycho 100 Celebrates Its 10th Anniversary</a>
           
         </div>
         <div class="showtime-rows">
@@ -642,25 +816,7 @@
           <div class="showtime-row">
             <span class="showtime-date">Mon Jul 20</span>
             <div class="showtime-times">
-              <span class="time-chip">12:20 PM</span><span class="time-chip">3:30 PM</span>
-            </div>
-            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
-          </div>
-          
-          
-          <div class="showtime-row">
-            <span class="showtime-date">Tue Jul 21</span>
-            <div class="showtime-times">
-              <span class="time-chip">12:35 PM</span><span class="time-chip">3:40 PM</span>
-            </div>
-            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
-          </div>
-          
-          
-          <div class="showtime-row">
-            <span class="showtime-date">Wed Jul 22</span>
-            <div class="showtime-times">
-              <span class="time-chip">12:35 PM</span><span class="time-chip">3:40 PM</span>
+              <span class="time-chip">7:00 PM</span>
             </div>
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
           </div>
@@ -712,6 +868,165 @@
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
           </div>
           
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Thu Jul 23</span>
+            <div class="showtime-times">
+              <span class="time-chip">6:40 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  <div class="film-card">
+    <div class="film-card-inner">
+      
+      <a href="https://letterboxd.com/tmdb/1108427/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/zKVgiv5qHCvCLT4A2ymJi5QeXDH.jpg" alt="" width="44" height="65" loading="lazy"></a>
+      <div class="film-info">
+        <div class="film-title-row">
+          <a class="film-title" href="https://letterboxd.com/tmdb/1108427/" target="_blank">Moana</a>
+          
+            <span class="format-badge badge-default">Real D 3D</span>
+          
+        </div>
+        <div class="showtime-rows">
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Tue Jul 21</span>
+            <div class="showtime-times">
+              <span class="time-chip">1:10 PM</span><span class="time-chip">6:30 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Wed Jul 22</span>
+            <div class="showtime-times">
+              <span class="time-chip">1:10 PM</span><span class="time-chip">6:30 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Thu Jul 23</span>
+            <div class="showtime-times">
+              <span class="time-chip">12:40 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Fri Jul 24</span>
+            <div class="showtime-times">
+              <span class="time-chip">3:50 PM</span><span class="time-chip">9:40 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sat Jul 25</span>
+            <div class="showtime-times">
+              <span class="time-chip">3:50 PM</span><span class="time-chip">9:40 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sun Jul 26</span>
+            <div class="showtime-times">
+              <span class="time-chip">3:50 PM</span><span class="time-chip">9:40 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  <div class="film-card">
+    <div class="film-card-inner">
+      
+      <a href="https://letterboxd.com/tmdb/1308767/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/ntW9zzhDmbt3sXDyPXb7SHVuDdB.jpg" alt="" width="44" height="65" loading="lazy"></a>
+      <div class="film-info">
+        <div class="film-title-row">
+          <a class="film-title" href="https://letterboxd.com/tmdb/1308767/" target="_blank">Young Washington</a>
+          
+        </div>
+        <div class="showtime-rows">
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Tue Jul 21</span>
+            <div class="showtime-times">
+              <span class="time-chip">12:35 PM</span><span class="time-chip">3:40 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Wed Jul 22</span>
+            <div class="showtime-times">
+              <span class="time-chip">12:35 PM</span><span class="time-chip">3:40 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Thu Jul 23</span>
+            <div class="showtime-times">
+              <span class="time-chip">12:35 PM</span><span class="time-chip">3:40 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Fri Jul 24</span>
+            <div class="showtime-times">
+              <span class="time-chip">12:50 PM</span><span class="time-chip">3:50 PM</span><span class="time-chip">7:00 PM</span><span class="time-chip">10:25 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sat Jul 25</span>
+            <div class="showtime-times">
+              <span class="time-chip">12:50 PM</span><span class="time-chip">3:50 PM</span><span class="time-chip">7:00 PM</span><span class="time-chip">10:25 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sun Jul 26</span>
+            <div class="showtime-times">
+              <span class="time-chip">12:50 PM</span><span class="time-chip">3:50 PM</span><span class="time-chip">7:00 PM</span><span class="time-chip">10:25 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
         </div>
       </div>
     </div>
@@ -738,15 +1053,6 @@
           
           
           <div class="showtime-row">
-            <span class="showtime-date">Mon Jul 20</span>
-            <div class="showtime-times">
-              <span class="time-chip">11:45 AM</span>
-            </div>
-            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
-          </div>
-          
-          
-          <div class="showtime-row">
             <span class="showtime-date">Tue Jul 21</span>
             <div class="showtime-times">
               <span class="time-chip">11:45 AM</span>
@@ -763,31 +1069,29 @@
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
           </div>
           
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-  
-  
-  
-  <div class="film-card">
-    <div class="film-card-inner">
-      
-      <a href="https://letterboxd.com/tmdb/1035108/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/emGRpCPzCgVB1evFMXc1vKF0XEM.jpg" alt="" width="44" height="65" loading="lazy"></a>
-      <div class="film-info">
-        <div class="film-title-row">
-          <a class="film-title" href="https://letterboxd.com/tmdb/1035108/" target="_blank">Mob Psycho 100 Celebrates Its 10th Anniversary</a>
           
-        </div>
-        <div class="showtime-rows">
+          <div class="showtime-row">
+            <span class="showtime-date">Fri Jul 24</span>
+            <div class="showtime-times">
+              <span class="time-chip">11:45 AM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
           
           
           <div class="showtime-row">
-            <span class="showtime-date">Mon Jul 20</span>
+            <span class="showtime-date">Sat Jul 25</span>
             <div class="showtime-times">
-              <span class="time-chip">7:00 PM</span>
+              <span class="time-chip">11:45 AM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sun Jul 26</span>
+            <div class="showtime-times">
+              <span class="time-chip">11:45 AM</span>
             </div>
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
           </div>
@@ -804,19 +1108,75 @@
   <div class="film-card">
     <div class="film-card-inner">
       
-      <a href="https://letterboxd.com/tmdb/1047252/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/nATsUp6TBDj6o0eqkW70uyhEAsZ.jpg" alt="" width="44" height="65" loading="lazy"></a>
+      <a href="https://letterboxd.com/tmdb/1439808/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/bcOjxJkmeaIcLJBBmPhyofKEyPm.jpg" alt="" width="44" height="65" loading="lazy"></a>
       <div class="film-info">
         <div class="film-title-row">
-          <a class="film-title" href="https://letterboxd.com/tmdb/1047252/" target="_blank">AMC Screen Unseen: July 20</a>
+          <a class="film-title" href="https://letterboxd.com/tmdb/1439808/" target="_blank">Hadestown: The Musical</a>
           
         </div>
         <div class="showtime-rows">
           
           
           <div class="showtime-row">
-            <span class="showtime-date">Mon Jul 20</span>
+            <span class="showtime-date">Thu Jul 23</span>
             <div class="showtime-times">
-              <span class="time-chip">7:00 PM</span>
+              <span class="time-chip">1:40 PM</span><span class="time-chip">5:00 PM</span><span class="time-chip">7:40 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Fri Jul 24</span>
+            <div class="showtime-times">
+              <span class="time-chip">1:00 PM</span><span class="time-chip">4:20 PM</span><span class="time-chip">7:30 PM</span><span class="time-chip">10:30 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sat Jul 25</span>
+            <div class="showtime-times">
+              <span class="time-chip">1:00 PM</span><span class="time-chip">4:20 PM</span><span class="time-chip">7:30 PM</span><span class="time-chip">10:30 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sun Jul 26</span>
+            <div class="showtime-times">
+              <span class="time-chip">1:00 PM</span><span class="time-chip">4:20 PM</span><span class="time-chip">7:30 PM</span><span class="time-chip">10:30 PM</span>
+            </div>
+            <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  <div class="film-card">
+    <div class="film-card-inner">
+      
+      <a href="https://letterboxd.com/tmdb/1108427/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/zKVgiv5qHCvCLT4A2ymJi5QeXDH.jpg" alt="" width="44" height="65" loading="lazy"></a>
+      <div class="film-info">
+        <div class="film-title-row">
+          <a class="film-title" href="https://letterboxd.com/tmdb/1108427/" target="_blank">Moana: Sensory Friendly Screening</a>
+          
+        </div>
+        <div class="showtime-rows">
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Sat Jul 25</span>
+            <div class="showtime-times">
+              <span class="time-chip">1:15 PM</span>
             </div>
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/san-antonio/amc-rivercenter-11-with-alamo-imax/showtimes" target="_blank">Tickets →</a>
           </div>
@@ -933,7 +1293,7 @@
             <div class="showtime-times">
               <span class="time-chip">11:00 AM</span>
             </div>
-            <a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=628973&amp;CinemarkMovieId=109879&amp;Showtime=2026-07-20T11:00:00" target="_blank">Tickets →</a>
+            <a class="tickets-link" href="https://www.cinemark.com/theatres/tx-dallas/cinemark-dallas-xd-and-imax" target="_blank">Tickets →</a>
           </div>
           
           
@@ -1034,7 +1394,7 @@
           <div class="showtime-row">
             <span class="showtime-date">Tue Jul 21</span>
             <div class="showtime-times">
-              <span class="time-chip">12:10 AM</span><span class="time-chip">8:55 AM</span><span class="time-chip">11:20 AM</span><span class="time-chip">1:50 PM</span><span class="time-chip">4:25 PM</span><span class="time-chip">5:50 PM</span><span class="time-chip">9:40 PM</span>
+              <span class="time-chip">12:10 AM</span><span class="time-chip">8:55 AM</span><span class="time-chip">11:20 AM</span><span class="time-chip">12:35 PM</span><span class="time-chip">1:50 PM</span><span class="time-chip">4:25 PM</span><span class="time-chip">5:50 PM</span><span class="time-chip">9:40 PM</span>
             </div>
             <a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=639770&amp;CinemarkMovieId=107463&amp;Showtime=2026-07-22T00:10:00" target="_blank">Tickets →</a>
           </div>
@@ -1081,9 +1441,9 @@
           <div class="showtime-row">
             <span class="showtime-date">Tue Jul 21</span>
             <div class="showtime-times">
-              <span class="time-chip">12:15 PM</span><span class="time-chip">4:50 PM</span><span class="time-chip">7:35 PM</span>
+              <span class="time-chip">12:15 PM</span><span class="time-chip">4:50 PM</span>
             </div>
-            <a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=639788&amp;CinemarkMovieId=107532&amp;Showtime=2026-07-21T19:35:00" target="_blank">Tickets →</a>
+            <a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=639789&amp;CinemarkMovieId=107532&amp;Showtime=2026-07-21T16:50:00" target="_blank">Tickets →</a>
           </div>
           
           
@@ -1128,7 +1488,7 @@
           <div class="showtime-row">
             <span class="showtime-date">Tue Jul 21</span>
             <div class="showtime-times">
-              <span class="time-chip">12:15 AM</span><span class="time-chip">1:15 AM</span><span class="time-chip">9:15 AM</span><span class="time-chip">1:00 PM</span><span class="time-chip">4:45 PM</span><span class="time-chip">8:30 PM</span>
+              <span class="time-chip">12:15 AM</span><span class="time-chip">1:15 AM</span><span class="time-chip">9:15 AM</span><span class="time-chip">1:00 PM</span><span class="time-chip">4:45 PM</span><span class="time-chip">7:35 PM</span><span class="time-chip">8:30 PM</span>
             </div>
             <a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=639763&amp;CinemarkMovieId=110488&amp;Showtime=2026-07-22T01:15:00" target="_blank">Tickets →</a>
           </div>
@@ -1207,15 +1567,6 @@
               <span class="time-chip">10:20 PM</span>
             </div>
             <a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=639718&amp;CinemarkMovieId=110717&amp;Showtime=2026-07-20T22:20:00" target="_blank">Tickets →</a>
-          </div>
-          
-          
-          <div class="showtime-row">
-            <span class="showtime-date">Tue Jul 21</span>
-            <div class="showtime-times">
-              <span class="time-chip">10:20 PM</span>
-            </div>
-            <a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=639799&amp;CinemarkMovieId=110717&amp;Showtime=2026-07-21T22:20:00" target="_blank">Tickets →</a>
           </div>
           
         </div>
@@ -1383,7 +1734,7 @@
           <div class="showtime-row">
             <span class="showtime-date">Tue Jul 21</span>
             <div class="showtime-times">
-              <span class="time-chip">9:05 AM</span><span class="time-chip">12:35 PM</span><span class="time-chip">4:00 PM</span><span class="time-chip">7:25 PM</span><span class="time-chip">10:50 PM</span>
+              <span class="time-chip">9:05 AM</span><span class="time-chip">4:00 PM</span><span class="time-chip">7:25 PM</span><span class="time-chip">10:50 PM</span>
             </div>
             <a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=639746&amp;CinemarkMovieId=110699&amp;Showtime=2026-07-21T22:50:00" target="_blank">Tickets →</a>
           </div>
@@ -1872,44 +2223,6 @@
   <div class="film-card">
     <div class="film-card-inner">
       
-      <img class="film-poster" src="https://alexwalker.co/img/cinemaxxing-poster-placeholder.png" alt="" width="44" height="65" loading="lazy" style="flex-shrink:0;display:block;">
-      <div class="film-info">
-        <div class="film-title-row">
-          <a class="film-title" href="https://www.cinemark.com/theatres/tx-dallas/cinemark-dallas-xd-and-imax" target="_blank">Cinemark Birthday Party</a>
-          
-        </div>
-        <div class="showtime-rows">
-          
-          
-          <div class="showtime-row">
-            <span class="showtime-date">Sat Jul 25</span>
-            <div class="showtime-times">
-              <span class="time-chip">10:00 AM</span><span class="time-chip">12:00 PM</span><span class="time-chip">2:00 PM</span><span class="time-chip">4:00 PM</span><span class="time-chip">6:00 PM</span>
-            </div>
-            <a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=609431&amp;CinemarkMovieId=88163&amp;Showtime=2026-07-25T18:00:00" target="_blank">Tickets →</a>
-          </div>
-          
-          
-          <div class="showtime-row">
-            <span class="showtime-date">Sun Jul 26</span>
-            <div class="showtime-times">
-              <span class="time-chip">10:00 AM</span><span class="time-chip">12:00 PM</span><span class="time-chip">2:00 PM</span><span class="time-chip">4:00 PM</span><span class="time-chip">6:00 PM</span>
-            </div>
-            <a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=609436&amp;CinemarkMovieId=88163&amp;Showtime=2026-07-26T18:00:00" target="_blank">Tickets →</a>
-          </div>
-          
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-  
-  
-  
-  <div class="film-card">
-    <div class="film-card-inner">
-      
       <a href="https://letterboxd.com/tmdb/1728407/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/mc8eiORrGKvEbe2HwsjCllPKPB5.jpg" alt="" width="44" height="65" loading="lazy"></a>
       <div class="film-info">
         <div class="film-title-row">
@@ -1994,7 +2307,7 @@
           <div class="showtime-row">
             <span class="showtime-date">Mon Jul 20</span>
             <div class="showtime-times">
-              <span class="time-chip">10:00 AM</span><span class="time-chip">2:00 PM</span><span class="time-chip">6:00 PM</span><span class="time-chip">10:00 PM</span>
+              <span class="time-chip">6:00 PM</span><span class="time-chip">10:00 PM</span>
             </div>
             <a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/dallas/amc-northpark-15/showtimes" target="_blank">Tickets →</a>
           </div>
@@ -2720,35 +3033,6 @@
       <a href="https://letterboxd.com/tmdb/804370/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/mWlvHFxTDhq9O5WSOHywa32QIez.jpg" alt="" width="44" height="65" loading="lazy"></a>
       <div class="film-info">
         <div class="film-title-row">
-          <a class="film-title" href="https://letterboxd.com/tmdb/804370/" target="_blank">Arco (Village)</a>
-          
-        </div>
-        <div class="showtime-rows">
-          
-          
-          <div class="showtime-row">
-            <span class="showtime-date">Fri Jul 24</span>
-            <div class="showtime-times">
-              <span class="time-chip">12:30 PM</span>
-            </div>
-            <a class="tickets-link" href="https://drafthouse.com/austin/show/kids-camp-arco" target="_blank">Tickets →</a>
-          </div>
-          
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-  
-  
-  
-  <div class="film-card">
-    <div class="film-card-inner">
-      
-      <a href="https://letterboxd.com/tmdb/804370/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/mWlvHFxTDhq9O5WSOHywa32QIez.jpg" alt="" width="44" height="65" loading="lazy"></a>
-      <div class="film-info">
-        <div class="film-title-row">
           <a class="film-title" href="https://letterboxd.com/tmdb/804370/" target="_blank">Arco (South Lamar)</a>
           
         </div>
@@ -2779,6 +3063,35 @@
       <div class="film-info">
         <div class="film-title-row">
           <a class="film-title" href="https://letterboxd.com/tmdb/804370/" target="_blank">Arco (Lakeline)</a>
+          
+        </div>
+        <div class="showtime-rows">
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Fri Jul 24</span>
+            <div class="showtime-times">
+              <span class="time-chip">12:30 PM</span>
+            </div>
+            <a class="tickets-link" href="https://drafthouse.com/austin/show/kids-camp-arco" target="_blank">Tickets →</a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  <div class="film-card">
+    <div class="film-card-inner">
+      
+      <a href="https://letterboxd.com/tmdb/804370/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/mWlvHFxTDhq9O5WSOHywa32QIez.jpg" alt="" width="44" height="65" loading="lazy"></a>
+      <div class="film-info">
+        <div class="film-title-row">
+          <a class="film-title" href="https://letterboxd.com/tmdb/804370/" target="_blank">Arco (Village)</a>
           
         </div>
         <div class="showtime-rows">
@@ -2930,53 +3243,6 @@
       <a href="https://letterboxd.com/tmdb/823219/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/z2sG41PxfL1hnL1mHbxzSREUtOf.jpg" alt="" width="44" height="65" loading="lazy"></a>
       <div class="film-info">
         <div class="film-title-row">
-          <a class="film-title" href="https://letterboxd.com/tmdb/823219/" target="_blank">Flow (Village)</a>
-          
-        </div>
-        <div class="showtime-rows">
-          
-          
-          <div class="showtime-row">
-            <span class="showtime-date">Mon Jul 20</span>
-            <div class="showtime-times">
-              <span class="time-chip">4:00 PM</span>
-            </div>
-            <a class="tickets-link" href="https://drafthouse.com/austin/show/kids-camp-flow" target="_blank">Tickets →</a>
-          </div>
-          
-          
-          <div class="showtime-row">
-            <span class="showtime-date">Tue Jul 21</span>
-            <div class="showtime-times">
-              <span class="time-chip">4:00 PM</span>
-            </div>
-            <a class="tickets-link" href="https://drafthouse.com/austin/show/kids-camp-flow" target="_blank">Tickets →</a>
-          </div>
-          
-          
-          <div class="showtime-row">
-            <span class="showtime-date">Wed Jul 22</span>
-            <div class="showtime-times">
-              <span class="time-chip">4:20 PM</span>
-            </div>
-            <a class="tickets-link" href="https://drafthouse.com/austin/show/kids-camp-flow" target="_blank">Tickets →</a>
-          </div>
-          
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-  
-  
-  
-  <div class="film-card">
-    <div class="film-card-inner">
-      
-      <a href="https://letterboxd.com/tmdb/823219/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/z2sG41PxfL1hnL1mHbxzSREUtOf.jpg" alt="" width="44" height="65" loading="lazy"></a>
-      <div class="film-info">
-        <div class="film-title-row">
           <a class="film-title" href="https://letterboxd.com/tmdb/823219/" target="_blank">Flow (South Lamar)</a>
           
         </div>
@@ -3005,6 +3271,53 @@
             <span class="showtime-date">Wed Jul 22</span>
             <div class="showtime-times">
               <span class="time-chip">4:00 PM</span>
+            </div>
+            <a class="tickets-link" href="https://drafthouse.com/austin/show/kids-camp-flow" target="_blank">Tickets →</a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  <div class="film-card">
+    <div class="film-card-inner">
+      
+      <a href="https://letterboxd.com/tmdb/823219/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/z2sG41PxfL1hnL1mHbxzSREUtOf.jpg" alt="" width="44" height="65" loading="lazy"></a>
+      <div class="film-info">
+        <div class="film-title-row">
+          <a class="film-title" href="https://letterboxd.com/tmdb/823219/" target="_blank">Flow (Village)</a>
+          
+        </div>
+        <div class="showtime-rows">
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Mon Jul 20</span>
+            <div class="showtime-times">
+              <span class="time-chip">4:00 PM</span>
+            </div>
+            <a class="tickets-link" href="https://drafthouse.com/austin/show/kids-camp-flow" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Tue Jul 21</span>
+            <div class="showtime-times">
+              <span class="time-chip">4:00 PM</span>
+            </div>
+            <a class="tickets-link" href="https://drafthouse.com/austin/show/kids-camp-flow" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Wed Jul 22</span>
+            <div class="showtime-times">
+              <span class="time-chip">4:20 PM</span>
             </div>
             <a class="tickets-link" href="https://drafthouse.com/austin/show/kids-camp-flow" target="_blank">Tickets →</a>
           </div>
@@ -3471,53 +3784,6 @@
       <a href="https://letterboxd.com/tmdb/1108427/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/zKVgiv5qHCvCLT4A2ymJi5QeXDH.jpg" alt="" width="44" height="65" loading="lazy"></a>
       <div class="film-info">
         <div class="film-title-row">
-          <a class="film-title" href="https://letterboxd.com/tmdb/1108427/" target="_blank">Moana (2026) (Slaughter Lane)</a>
-          
-        </div>
-        <div class="showtime-rows">
-          
-          
-          <div class="showtime-row">
-            <span class="showtime-date">Mon Jul 20</span>
-            <div class="showtime-times">
-              <span class="time-chip">10:10 AM</span><span class="time-chip">1:10 PM</span><span class="time-chip">4:10 PM</span><span class="time-chip">7:10 PM</span>
-            </div>
-            <a class="tickets-link" href="https://drafthouse.com/austin/show/moana-2026" target="_blank">Tickets →</a>
-          </div>
-          
-          
-          <div class="showtime-row">
-            <span class="showtime-date">Tue Jul 21</span>
-            <div class="showtime-times">
-              <span class="time-chip">10:10 AM</span><span class="time-chip">12:50 PM</span><span class="time-chip">3:50 PM</span><span class="time-chip">6:50 PM</span><span class="time-chip">10:45 PM</span>
-            </div>
-            <a class="tickets-link" href="https://drafthouse.com/austin/show/moana-2026" target="_blank">Tickets →</a>
-          </div>
-          
-          
-          <div class="showtime-row">
-            <span class="showtime-date">Wed Jul 22</span>
-            <div class="showtime-times">
-              <span class="time-chip">10:10 AM</span><span class="time-chip">1:10 PM</span><span class="time-chip">4:10 PM</span><span class="time-chip">7:15 PM</span><span class="time-chip">10:30 PM</span>
-            </div>
-            <a class="tickets-link" href="https://drafthouse.com/austin/show/moana-2026" target="_blank">Tickets →</a>
-          </div>
-          
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-  
-  
-  
-  <div class="film-card">
-    <div class="film-card-inner">
-      
-      <a href="https://letterboxd.com/tmdb/1108427/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/zKVgiv5qHCvCLT4A2ymJi5QeXDH.jpg" alt="" width="44" height="65" loading="lazy"></a>
-      <div class="film-info">
-        <div class="film-title-row">
           <a class="film-title" href="https://letterboxd.com/tmdb/1108427/" target="_blank">Moana (2026) (Mueller)</a>
           
         </div>
@@ -3562,10 +3828,57 @@
   <div class="film-card">
     <div class="film-card-inner">
       
-      <a href="https://letterboxd.com/tmdb/1731413/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/6dfYiNUrOofAMHHJUxgi7eiVjT2.jpg" alt="" width="44" height="65" loading="lazy"></a>
+      <a href="https://letterboxd.com/tmdb/1108427/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/zKVgiv5qHCvCLT4A2ymJi5QeXDH.jpg" alt="" width="44" height="65" loading="lazy"></a>
       <div class="film-info">
         <div class="film-title-row">
-          <a class="film-title" href="https://letterboxd.com/tmdb/1731413/" target="_blank">Mob Psycho 100 Anniversary Celebration (Lakeline)</a>
+          <a class="film-title" href="https://letterboxd.com/tmdb/1108427/" target="_blank">Moana (2026) (Slaughter Lane)</a>
+          
+        </div>
+        <div class="showtime-rows">
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Mon Jul 20</span>
+            <div class="showtime-times">
+              <span class="time-chip">10:10 AM</span><span class="time-chip">1:10 PM</span><span class="time-chip">4:10 PM</span><span class="time-chip">7:10 PM</span>
+            </div>
+            <a class="tickets-link" href="https://drafthouse.com/austin/show/moana-2026" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Tue Jul 21</span>
+            <div class="showtime-times">
+              <span class="time-chip">10:10 AM</span><span class="time-chip">12:50 PM</span><span class="time-chip">3:50 PM</span><span class="time-chip">6:50 PM</span><span class="time-chip">10:45 PM</span>
+            </div>
+            <a class="tickets-link" href="https://drafthouse.com/austin/show/moana-2026" target="_blank">Tickets →</a>
+          </div>
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Wed Jul 22</span>
+            <div class="showtime-times">
+              <span class="time-chip">10:10 AM</span><span class="time-chip">1:10 PM</span><span class="time-chip">4:10 PM</span><span class="time-chip">7:15 PM</span><span class="time-chip">10:30 PM</span>
+            </div>
+            <a class="tickets-link" href="https://drafthouse.com/austin/show/moana-2026" target="_blank">Tickets →</a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  <div class="film-card">
+    <div class="film-card-inner">
+      
+      <a href="https://letterboxd.com/tmdb/1734865/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/g7lmKF3WJgjMXM42njhZPmLsObn.jpg" alt="" width="44" height="65" loading="lazy"></a>
+      <div class="film-info">
+        <div class="film-title-row">
+          <a class="film-title" href="https://letterboxd.com/tmdb/1734865/" target="_blank">Mob Psycho 100 Anniversary Celebration (Lakeline)</a>
           
         </div>
         <div class="showtime-rows">
@@ -3591,10 +3904,10 @@
   <div class="film-card">
     <div class="film-card-inner">
       
-      <a href="https://letterboxd.com/tmdb/1731413/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/6dfYiNUrOofAMHHJUxgi7eiVjT2.jpg" alt="" width="44" height="65" loading="lazy"></a>
+      <a href="https://letterboxd.com/tmdb/1734865/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/g7lmKF3WJgjMXM42njhZPmLsObn.jpg" alt="" width="44" height="65" loading="lazy"></a>
       <div class="film-info">
         <div class="film-title-row">
-          <a class="film-title" href="https://letterboxd.com/tmdb/1731413/" target="_blank">Mob Psycho 100 Anniversary Celebration (Slaughter Lane)</a>
+          <a class="film-title" href="https://letterboxd.com/tmdb/1734865/" target="_blank">Mob Psycho 100 Anniversary Celebration (Slaughter Lane)</a>
           
         </div>
         <div class="showtime-rows">
@@ -3681,7 +3994,7 @@
       <a href="https://letterboxd.com/tmdb/10719/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/oOleziEempUPu96jkGs0Pj6tKxj.jpg" alt="" width="44" height="65" loading="lazy"></a>
       <div class="film-info">
         <div class="film-title-row">
-          <a class="film-title" href="https://letterboxd.com/tmdb/10719/" target="_blank">Elf (Lakeline)</a>
+          <a class="film-title" href="https://letterboxd.com/tmdb/10719/" target="_blank">Elf (South Lamar)</a>
           
         </div>
         <div class="showtime-rows">
@@ -3710,7 +4023,7 @@
       <a href="https://letterboxd.com/tmdb/10719/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/oOleziEempUPu96jkGs0Pj6tKxj.jpg" alt="" width="44" height="65" loading="lazy"></a>
       <div class="film-info">
         <div class="film-title-row">
-          <a class="film-title" href="https://letterboxd.com/tmdb/10719/" target="_blank">Elf (South Lamar)</a>
+          <a class="film-title" href="https://letterboxd.com/tmdb/10719/" target="_blank">Elf (Lakeline)</a>
           
         </div>
         <div class="showtime-rows">
@@ -4286,35 +4599,6 @@
       <a href="https://letterboxd.com/tmdb/8688/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/gsh9mQKRrr4M90XC9Rr0wxefc9u.jpg" alt="" width="44" height="65" loading="lazy"></a>
       <div class="film-info">
         <div class="film-title-row">
-          <a class="film-title" href="https://letterboxd.com/tmdb/8688/" target="_blank">Snake Eyes (Slaughter Lane)</a>
-          
-        </div>
-        <div class="showtime-rows">
-          
-          
-          <div class="showtime-row">
-            <span class="showtime-date">Wed Jul 22</span>
-            <div class="showtime-times">
-              <span class="time-chip">7:00 PM</span>
-            </div>
-            <a class="tickets-link" href="https://drafthouse.com/austin/show/snake-eyes" target="_blank">Tickets →</a>
-          </div>
-          
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-  
-  
-  
-  <div class="film-card">
-    <div class="film-card-inner">
-      
-      <a href="https://letterboxd.com/tmdb/8688/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/gsh9mQKRrr4M90XC9Rr0wxefc9u.jpg" alt="" width="44" height="65" loading="lazy"></a>
-      <div class="film-info">
-        <div class="film-title-row">
           <a class="film-title" href="https://letterboxd.com/tmdb/8688/" target="_blank">Snake Eyes (Mueller)</a>
           
         </div>
@@ -4345,6 +4629,35 @@
       <div class="film-info">
         <div class="film-title-row">
           <a class="film-title" href="https://letterboxd.com/tmdb/8688/" target="_blank">Snake Eyes (Lakeline)</a>
+          
+        </div>
+        <div class="showtime-rows">
+          
+          
+          <div class="showtime-row">
+            <span class="showtime-date">Wed Jul 22</span>
+            <div class="showtime-times">
+              <span class="time-chip">7:00 PM</span>
+            </div>
+            <a class="tickets-link" href="https://drafthouse.com/austin/show/snake-eyes" target="_blank">Tickets →</a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  <div class="film-card">
+    <div class="film-card-inner">
+      
+      <a href="https://letterboxd.com/tmdb/8688/" target="_blank" style="flex-shrink:0;display:block;"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/gsh9mQKRrr4M90XC9Rr0wxefc9u.jpg" alt="" width="44" height="65" loading="lazy"></a>
+      <div class="film-info">
+        <div class="film-title-row">
+          <a class="film-title" href="https://letterboxd.com/tmdb/8688/" target="_blank">Snake Eyes (Slaughter Lane)</a>
           
         </div>
         <div class="showtime-rows">
@@ -5369,5 +5682,6 @@
     });
   }
 </script>
+<div class="cmx-reel cmx-reel-bottom" aria-hidden="true"></div>
 </body>
 </html>
