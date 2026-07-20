@@ -82,6 +82,18 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     }
     .container { max-width: 640px; margin: 0 auto; }
+    /* Film-strip framing + grain overlay, matching the landing page. Grain
+       opacity adapts to light/dark (dark is this page's default). */
+    .cmx-reel { width:auto; height:22px; margin-left:-16px; margin-right:-16px;
+      background-image:url("https://alexwalker.co/img/cinemaxxing-perf-strip.png");
+      background-size:auto 22px; background-repeat:repeat-x; background-position:center;
+      filter:brightness(0.55) saturate(0.85); opacity:.85; }
+    .cmx-reel-top { margin-top:-24px; margin-bottom:20px; }
+    .cmx-reel-bottom { margin-top:20px; margin-bottom:-24px; }
+    .cmx-grain { position:fixed; inset:0; pointer-events:none; z-index:2147483000;
+      background-image:url("https://alexwalker.co/img/cinemaxxing-grain.png");
+      background-size:240px 240px; background-repeat:repeat; opacity:.16; }
+    @media (prefers-color-scheme: light) { .cmx-grain { opacity:.09; } }
     .page-header {
       background-color: var(--bg-card);
       border: 1px solid var(--border-card);
@@ -240,6 +252,8 @@
 
 </head>
 <body>
+<div class="cmx-grain" aria-hidden="true"></div>
+<div class="cmx-reel cmx-reel-top" aria-hidden="true"></div>
 <div class="container">
 
   <div class="page-header">
@@ -348,7 +362,7 @@
               <div class="showtime-row">
                 <span class="showtime-date">Tue Jul 28</span>
                 
-                <div class="showtime-times"><span class="time-chip">2:30 AM</span><span class="time-chip">7:45 AM</span><span class="time-chip">11:30 AM</span><span class="time-chip">3:15 PM</span><span class="time-chip">7:00 PM</span><span class="time-chip">10:45 PM</span></div>
+                <div class="showtime-times"><span class="time-chip">2:30 AM</span><span class="time-chip">7:45 AM</span><span class="time-chip">11:30 AM</span><span class="time-chip">3:15 PM</span><span class="time-chip">10:45 PM</span></div>
                 <a class="tickets-link buy-advance" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=632793&amp;CinemarkMovieId=104867&amp;Showtime=2026-07-29T02:30:00" target="_blank">Buy Advance Tickets &rarr;</a>
                 
               </div>
@@ -402,7 +416,7 @@
               <div class="showtime-row">
                 <span class="showtime-date">Fri Jul 31</span>
                 
-                <div class="showtime-times"><span class="time-chip">2:30 AM</span><span class="time-chip">7:45 AM</span><span class="time-chip">11:30 AM</span><span class="time-chip">3:15 PM</span><span class="time-chip">7:00 PM</span><span class="time-chip">10:45 PM</span></div>
+                <div class="showtime-times"><span class="time-chip">2:30 AM</span><span class="time-chip">7:45 AM</span><span class="time-chip">11:30 AM</span><span class="time-chip">3:15 PM</span><span class="time-chip">10:45 PM</span></div>
                 <a class="tickets-link buy-advance" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=634502&amp;CinemarkMovieId=104867&amp;Showtime=2026-08-01T02:30:00" target="_blank">Buy Advance Tickets &rarr;</a>
                 
               </div>
@@ -420,7 +434,7 @@
               <div class="showtime-row">
                 <span class="showtime-date">Sat Aug 1</span>
                 
-                <div class="showtime-times"><span class="time-chip">2:30 AM</span><span class="time-chip">7:45 AM</span><span class="time-chip">11:30 AM</span><span class="time-chip">3:15 PM</span><span class="time-chip">7:00 PM</span><span class="time-chip">10:45 PM</span></div>
+                <div class="showtime-times"><span class="time-chip">2:30 AM</span><span class="time-chip">7:45 AM</span><span class="time-chip">11:30 AM</span><span class="time-chip">7:00 PM</span><span class="time-chip">10:45 PM</span></div>
                 <a class="tickets-link buy-advance" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=634507&amp;CinemarkMovieId=104867&amp;Showtime=2026-08-02T02:30:00" target="_blank">Buy Advance Tickets &rarr;</a>
                 
               </div>
@@ -438,7 +452,7 @@
               <div class="showtime-row">
                 <span class="showtime-date">Sun Aug 2</span>
                 
-                <div class="showtime-times"><span class="time-chip">2:30 AM</span><span class="time-chip">7:45 AM</span><span class="time-chip">11:30 AM</span><span class="time-chip">3:15 PM</span><span class="time-chip">7:00 PM</span><span class="time-chip">10:45 PM</span></div>
+                <div class="showtime-times"><span class="time-chip">2:30 AM</span><span class="time-chip">7:00 PM</span><span class="time-chip">10:45 PM</span></div>
                 <a class="tickets-link buy-advance" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=634513&amp;CinemarkMovieId=104867&amp;Showtime=2026-08-03T02:30:00" target="_blank">Buy Advance Tickets &rarr;</a>
                 
               </div>
@@ -626,6 +640,24 @@
           </div>
         </div>
         
+        <div class="film-card format-imax">
+          <div class="film-info">
+            <div class="film-title-row">
+              <span class="film-title">The Odyssey</span>
+              <span class="format-badge badge-imax-70mm">70mm IMAX</span>
+            </div>
+            <div class="showtime-rows">
+              <div class="showtime-row">
+                <span class="showtime-date">Thu Aug 13</span>
+                
+                <div class="showtime-times"><span class="time-chip">2:30 AM</span><span class="time-chip">7:45 AM</span><span class="time-chip">11:30 AM</span><span class="time-chip">3:15 PM</span><span class="time-chip">7:00 PM</span><span class="time-chip">10:45 PM</span></div>
+                <a class="tickets-link buy-advance" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=640191&amp;CinemarkMovieId=104867&amp;Showtime=2026-08-14T02:30:00" target="_blank">Buy Advance Tickets &rarr;</a>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
     
@@ -647,5 +679,6 @@
     });
   }
 </script>
+<div class="cmx-reel cmx-reel-bottom" aria-hidden="true"></div>
 </body>
 </html>
