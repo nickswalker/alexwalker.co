@@ -983,6 +983,10 @@
       .time-chip.sold-out {
         color: #6a6a6a !important;
       }
+      .sold-out-tag {
+        color: #f0897d !important;
+        border-color: rgba(240,137,125,0.5) !important;
+      }
     }
 
     /* Dark-mode badge palette — !important wins over the inlined light defaults. */
@@ -1136,6 +1140,22 @@
     .time-chip.sold-out {
       color: var(--sold-out);
       text-decoration: line-through;
+    }
+    /* The "Sold Out" tag itself stays legible — the strike-through/grey is only
+       for the individual showtimes it applies to. */
+    .sold-out-tag {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #c0392b;
+      border: 1px solid rgba(192,57,43,0.45);
+      border-radius: 3px;
+      padding: 2px 6px;
+      margin-right: 8px;
+      text-decoration: none;
     }
 
         .tickets-link {
@@ -1582,7 +1602,7 @@
                     <td class="sc-chips-td">
                       
                         <span class="time-chip sold-out"><a class="no-detect">2:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">6:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">10:00 PM</a></span>
-                        <span class="time-chip sold-out">Sold Out</span>
+                        <span class="sold-out-tag">Sold Out</span>
                       
                     </td>
                     <td class="sc-tix-td"></td>
@@ -1603,7 +1623,7 @@
                     <td class="sc-chips-td">
                       
                         <span class="time-chip sold-out"><a class="no-detect">3:15 PM</a></span><span class="time-chip sold-out"><a class="no-detect">7:10 PM</a></span>
-                        <span class="time-chip sold-out">Sold Out</span>
+                        <span class="sold-out-tag">Sold Out</span>
                       
                     </td>
                     <td class="sc-tix-td"></td>
@@ -1624,7 +1644,7 @@
                     <td class="sc-chips-td">
                       
                         <span class="time-chip sold-out"><a class="no-detect">2:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">6:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">10:00 PM</a></span>
-                        <span class="time-chip sold-out">Sold Out</span>
+                        <span class="sold-out-tag">Sold Out</span>
                       
                     </td>
                     <td class="sc-tix-td"></td>
