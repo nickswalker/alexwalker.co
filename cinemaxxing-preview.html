@@ -257,10 +257,23 @@
 
     /* General */
     body {
+      margin: 0;
       background-color: var(--bg-page);
       font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       color: var(--text-body);
     }
+    /* Film-strip framing + grain overlay for the IN-BROWSER preview only
+       (elements are gated on is_standalone_preview in the markup, so the
+       emailed HTML never gets them). Light is this page's default; the grain
+       deepens in dark mode. The grain is a fixed overlay so it reads over the
+       opaque .email-wrapper background too. */
+    .cmx-reel { height:22px; background-image:url("https://alexwalker.co/img/cinemaxxing-perf-strip.png");
+      background-size:auto 22px; background-repeat:repeat-x; background-position:center;
+      filter:brightness(0.55) saturate(0.85); opacity:.85; }
+    .cmx-grain { position:fixed; inset:0; pointer-events:none; z-index:2147483000;
+      background-image:url("https://alexwalker.co/img/cinemaxxing-grain.png");
+      background-size:240px 240px; background-repeat:repeat; opacity:.09; }
+    @media (prefers-color-scheme: dark) { .cmx-grain { opacity:.16; } }
 
     /* email-wrapper is now a 100%-width <table>; the padding lives inline on
        its inner <td>. Keeping the bg-color rule here ensures the page bg
@@ -460,7 +473,7 @@
       text-transform: uppercase;
       margin-top: 6px;
       opacity: 0.85;
-      /* nowrap prevents "4K HDR" from breaking onto two lines on narrow
+      /* nowrap prevents "Barco HDR" from breaking onto two lines on narrow
          iPhones — without it, the HDR cell becomes ~9px taller than the
          others and the row stretches to match, leaving the regular cells
          with awkward whitespace at the bottom. */
@@ -790,6 +803,21 @@
       font-weight: 300;
       font-style: italic;
     }
+    /* Heads-up banner at the top of a venue section when part of the week
+       isn't published yet (e.g. Violet Crown's Fri–Sun). Sits between the
+       theater header and the film list. */
+    .week-note {
+      margin: 0 18px 4px;
+      padding: 10px 14px;
+      background-color: rgba(120, 86, 190, 0.10);
+      border: 1px solid rgba(120, 86, 190, 0.35);
+      border-radius: 8px;
+      color: var(--text-body);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .week-note a { color: var(--text-url); text-decoration: underline; font-weight: 600; }
+    [data-ogsc] .week-note { background-color: rgba(150, 118, 220, 0.16) !important; border-color: rgba(150, 118, 220, 0.45) !important; }
     .upcoming-label {
       padding-bottom: 0;
       font-style: normal;
@@ -1381,6 +1409,10 @@
   <![endif]-->
 </head>
 <body>
+
+<div class="cmx-grain" aria-hidden="true"></div>
+<div class="cmx-reel cmx-reel-top" aria-hidden="true"></div>
+
 <!-- Bulletproof centering: outer 100%-width table with align="center" td.
      Replaces the previous <div class="email-wrapper"> + <table align="center">
      pattern — div padding + CSS auto-margin together caused Outlook iOS to
@@ -1465,7 +1497,7 @@
               <td class="stat-cell" width="20%">
                 <a class="stat stat-hdr is-zero" href="#anchor-hdr">
                   <div class="stat-num">0</div>
-                  <div class="stat-label">4K HDR</div>
+                  <div class="stat-label">Barco HDR</div>
                 </a>
               </td>
             </tr>
@@ -1599,27 +1631,6 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row" data-days="2026-07-22">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Wed Jul 22</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        <span class="time-chip sold-out"><a class="no-detect">2:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">6:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">10:00 PM</a></span>
-                        <span class="sold-out-tag">Sold Out</span>
-                      
-                    </td>
-                    <td class="sc-tix-td"></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-            
             <tr class="showtime-row" data-days="2026-07-23">
               <td class="showtime-row-wrap">
                 
@@ -1719,7 +1730,7 @@
                     <td class="sc-chips-td">
                       
                         
-                        <span class="time-chip"><a class="no-detect">2:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">7:45 AM</a></span><span class="time-chip sold-out"><a class="no-detect">11:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">3:15 PM</a></span><span class="time-chip sold-out"><a class="no-detect">7:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">10:45 PM</a></span>
+                        <span class="time-chip"><a class="no-detect">2:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">7:45 AM</a></span><span class="time-chip sold-out"><a class="no-detect">11:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">3:15 PM</a></span><span class="time-chip"><a class="no-detect">7:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">10:45 PM</a></span>
                       
                     </td>
                     <td class="sc-tix-td"><a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=632660&amp;CinemarkMovieId=104867&amp;Showtime=2026-07-21T02:30:00" target="_blank">Tickets</a></td>
@@ -1729,18 +1740,18 @@
             </tr>
             
             
-            <tr class="showtime-row" data-days="2026-07-21,2026-07-22">
+            <tr class="showtime-row" data-days="2026-07-21">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                   <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jul 21 – Wed Jul 22</a></td>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jul 21</a></td>
                   </tr>
                   <tr>
                     <td class="sc-chips-td">
                       
                         
-                        <span class="time-chip"><a class="no-detect">2:30 AM</a></span><span class="time-chip"><a class="no-detect">7:45 AM</a></span><span class="time-chip sold-out"><a class="no-detect">11:30 AM</a></span><span class="time-chip"><a class="no-detect">3:15 PM</a></span><span class="time-chip sold-out"><a class="no-detect">7:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">10:45 PM</a></span>
+                        <span class="time-chip"><a class="no-detect">2:30 AM</a></span><span class="time-chip"><a class="no-detect">7:45 AM</a></span><span class="time-chip sold-out"><a class="no-detect">11:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">3:15 PM</a></span><span class="time-chip sold-out"><a class="no-detect">7:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">10:45 PM</a></span>
                       
                     </td>
                     <td class="sc-tix-td"><a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=632676&amp;CinemarkMovieId=104867&amp;Showtime=2026-07-22T02:30:00" target="_blank">Tickets</a></td>
@@ -1750,21 +1761,21 @@
             </tr>
             
             
-            <tr class="showtime-row" data-days="2026-07-23">
+            <tr class="showtime-row" data-days="2026-07-22,2026-07-23">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                   <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Thu Jul 23</a></td>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Wed Jul 22 – Thu Jul 23</a></td>
                   </tr>
                   <tr>
                     <td class="sc-chips-td">
                       
                         
-                        <span class="time-chip"><a class="no-detect">2:30 AM</a></span><span class="time-chip"><a class="no-detect">7:45 AM</a></span><span class="time-chip"><a class="no-detect">11:30 AM</a></span><span class="time-chip"><a class="no-detect">3:15 PM</a></span><span class="time-chip sold-out"><a class="no-detect">7:00 PM</a></span><span class="time-chip"><a class="no-detect">10:45 PM</a></span>
+                        <span class="time-chip"><a class="no-detect">2:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">7:45 AM</a></span><span class="time-chip sold-out"><a class="no-detect">11:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">3:15 PM</a></span><span class="time-chip sold-out"><a class="no-detect">7:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">10:45 PM</a></span>
                       
                     </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=632708&amp;CinemarkMovieId=104867&amp;Showtime=2026-07-24T02:30:00" target="_blank">Tickets</a></td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=632692&amp;CinemarkMovieId=104867&amp;Showtime=2026-07-23T02:30:00" target="_blank">Tickets</a></td>
                   </tr>
                 </table>
               </td>
@@ -1781,53 +1792,32 @@
                   <tr>
                     <td class="sc-chips-td">
                       
-                        
-                        <span class="time-chip"><a class="no-detect">2:30 AM</a></span><span class="time-chip"><a class="no-detect">7:45 AM</a></span><span class="time-chip"><a class="no-detect">11:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">3:15 PM</a></span><span class="time-chip sold-out"><a class="no-detect">7:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">10:45 PM</a></span>
+                        <span class="time-chip sold-out"><a class="no-detect">2:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">7:45 AM</a></span><span class="time-chip sold-out"><a class="no-detect">11:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">3:15 PM</a></span><span class="time-chip sold-out"><a class="no-detect">7:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">10:45 PM</a></span>
+                        <span class="sold-out-tag">Sold Out</span>
                       
                     </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=632729&amp;CinemarkMovieId=104867&amp;Showtime=2026-07-25T02:30:00" target="_blank">Tickets</a></td>
+                    <td class="sc-tix-td"></td>
                   </tr>
                 </table>
               </td>
             </tr>
             
             
-            <tr class="showtime-row" data-days="2026-07-25">
+            <tr class="showtime-row" data-days="2026-07-25,2026-07-26">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                   <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Sat Jul 25</a></td>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Sat Jul 25 – Sun Jul 26</a></td>
                   </tr>
                   <tr>
                     <td class="sc-chips-td">
                       
                         
-                        <span class="time-chip"><a class="no-detect">2:30 AM</a></span><span class="time-chip"><a class="no-detect">7:45 AM</a></span><span class="time-chip sold-out"><a class="no-detect">11:30 AM</a></span><span class="time-chip"><a class="no-detect">3:15 PM</a></span><span class="time-chip sold-out"><a class="no-detect">7:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">10:45 PM</a></span>
+                        <span class="time-chip"><a class="no-detect">2:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">7:45 AM</a></span><span class="time-chip sold-out"><a class="no-detect">11:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">3:15 PM</a></span><span class="time-chip sold-out"><a class="no-detect">7:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">10:45 PM</a></span>
                       
                     </td>
                     <td class="sc-tix-td"><a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=632745&amp;CinemarkMovieId=104867&amp;Showtime=2026-07-26T02:30:00" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-            
-            <tr class="showtime-row" data-days="2026-07-26">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Sun Jul 26</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        
-                        <span class="time-chip"><a class="no-detect">2:30 AM</a></span><span class="time-chip"><a class="no-detect">7:45 AM</a></span><span class="time-chip sold-out"><a class="no-detect">11:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">3:15 PM</a></span><span class="time-chip"><a class="no-detect">7:00 PM</a></span><span class="time-chip"><a class="no-detect">10:45 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=632761&amp;CinemarkMovieId=104867&amp;Showtime=2026-07-27T02:30:00" target="_blank">Tickets</a></td>
                   </tr>
                 </table>
               </td>
@@ -2041,6 +2031,130 @@
                       
                         
                         <span class="time-chip"><a class="no-detect">10:00 AM</a></span><span class="time-chip"><a class="no-detect">10:30 AM</a></span><span class="time-chip"><a class="no-detect">11:30 AM</a></span><span class="time-chip"><a class="no-detect">2:00 PM</a></span><span class="time-chip"><a class="no-detect">2:40 PM</a></span><span class="time-chip"><a class="no-detect">6:00 PM</a></span><span class="time-chip"><a class="no-detect">6:40 PM</a></span><span class="time-chip"><a class="no-detect">9:00 PM</a></span><span class="time-chip"><a class="no-detect">9:45 PM</a></span><span class="time-chip"><a class="no-detect">10:00 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/the-odyssey" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+            
+            <tr class="showtime-row" data-days="2026-07-23,2026-07-24,2026-07-25,2026-07-26">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Thu Jul 23 – Sun Jul 26</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">10:00 AM</a></span><span class="time-chip"><a class="no-detect">2:00 PM</a></span><span class="time-chip"><a class="no-detect">6:00 PM</a></span><span class="time-chip"><a class="no-detect">10:00 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/the-odyssey" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+          </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+    
+                
+              
+                
+                  
+    
+    
+    
+    
+    
+    
+    <div class="film-card format-70mm" data-count="1">
+      
+      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="film-poster-cell" valign="top">
+            
+            <a href="https://letterboxd.com/tmdb/1368337/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/5rhTDKUhPYvpdQIijFIs5VoWsON.jpg" alt="" width="44" height="65" loading="lazy"></a>
+            
+          </td>
+          <td class="film-info" valign="top">
+            <div class="film-info-header">
+              
+              <div class="film-title-row">
+                <a class="film-title" href="https://letterboxd.com/tmdb/1368337/" target="_blank">The Odyssey (South Lamar)</a><span class="format-badge badge-70mm">70mm</span>
+              </div>
+            </div>
+          
+          
+          <p class="theater-attr"><a href="https://www.google.com/maps/search/?api=1&amp;query=Alamo+Drafthouse,+Austin,+TX+(multiple+locations)" target="_blank">Alamo Drafthouse</a></p>
+          
+          
+          
+          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+            
+            <tr class="showtime-row" data-days="2026-07-20">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jul 20</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">10:00 AM</a></span><span class="time-chip"><a class="no-detect">11:30 AM</a></span><span class="time-chip"><a class="no-detect">1:00 PM</a></span><span class="time-chip"><a class="no-detect">1:30 PM</a></span><span class="time-chip"><a class="no-detect">2:00 PM</a></span><span class="time-chip"><a class="no-detect">3:30 PM</a></span><span class="time-chip"><a class="no-detect">4:30 PM</a></span><span class="time-chip"><a class="no-detect">5:00 PM</a></span><span class="time-chip"><a class="no-detect">5:30 PM</a></span><span class="time-chip"><a class="no-detect">6:00 PM</a></span><span class="time-chip"><a class="no-detect">6:30 PM</a></span><span class="time-chip"><a class="no-detect">8:30 PM</a></span><span class="time-chip"><a class="no-detect">9:00 PM</a></span><span class="time-chip"><a class="no-detect">9:30 PM</a></span><span class="time-chip"><a class="no-detect">10:00 PM</a></span><span class="time-chip"><a class="no-detect">10:30 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/the-odyssey" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+            
+            <tr class="showtime-row" data-days="2026-07-21">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jul 21</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">9:50 AM</a></span><span class="time-chip"><a class="no-detect">10:00 AM</a></span><span class="time-chip"><a class="no-detect">11:00 AM</a></span><span class="time-chip"><a class="no-detect">11:30 AM</a></span><span class="time-chip"><a class="no-detect">12:15 PM</a></span><span class="time-chip"><a class="no-detect">1:30 PM</a></span><span class="time-chip"><a class="no-detect">2:00 PM</a></span><span class="time-chip"><a class="no-detect">3:00 PM</a></span><span class="time-chip"><a class="no-detect">3:30 PM</a></span><span class="time-chip"><a class="no-detect">4:30 PM</a></span><span class="time-chip"><a class="no-detect">5:30 PM</a></span><span class="time-chip"><a class="no-detect">6:00 PM</a></span><span class="time-chip"><a class="no-detect">8:30 PM</a></span><span class="time-chip"><a class="no-detect">9:30 PM</a></span><span class="time-chip"><a class="no-detect">10:00 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/the-odyssey" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+            
+            <tr class="showtime-row" data-days="2026-07-22">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Wed Jul 22</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">10:00 AM</a></span><span class="time-chip"><a class="no-detect">11:30 AM</a></span><span class="time-chip"><a class="no-detect">12:00 PM</a></span><span class="time-chip"><a class="no-detect">1:00 PM</a></span><span class="time-chip"><a class="no-detect">1:30 PM</a></span><span class="time-chip"><a class="no-detect">2:00 PM</a></span><span class="time-chip"><a class="no-detect">3:30 PM</a></span><span class="time-chip"><a class="no-detect">4:30 PM</a></span><span class="time-chip"><a class="no-detect">5:00 PM</a></span><span class="time-chip"><a class="no-detect">5:30 PM</a></span><span class="time-chip"><a class="no-detect">6:00 PM</a></span><span class="time-chip"><a class="no-detect">7:30 PM</a></span>
                       
                     </td>
                     <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/the-odyssey" target="_blank">Tickets</a></td>
@@ -2389,130 +2503,6 @@
             <div class="film-info-header">
               
               <div class="film-title-row">
-                <a class="film-title" href="https://letterboxd.com/tmdb/1368337/" target="_blank">The Odyssey (South Lamar)</a><span class="format-badge badge-70mm">70mm</span>
-              </div>
-            </div>
-          
-          
-          <p class="theater-attr"><a href="https://www.google.com/maps/search/?api=1&amp;query=Alamo+Drafthouse,+Austin,+TX+(multiple+locations)" target="_blank">Alamo Drafthouse</a></p>
-          
-          
-          
-          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row" data-days="2026-07-20">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jul 20</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        
-                        <span class="time-chip"><a class="no-detect">10:00 AM</a></span><span class="time-chip"><a class="no-detect">11:30 AM</a></span><span class="time-chip"><a class="no-detect">1:00 PM</a></span><span class="time-chip"><a class="no-detect">1:30 PM</a></span><span class="time-chip"><a class="no-detect">2:00 PM</a></span><span class="time-chip"><a class="no-detect">3:30 PM</a></span><span class="time-chip"><a class="no-detect">4:30 PM</a></span><span class="time-chip"><a class="no-detect">5:00 PM</a></span><span class="time-chip"><a class="no-detect">5:30 PM</a></span><span class="time-chip"><a class="no-detect">6:00 PM</a></span><span class="time-chip"><a class="no-detect">6:30 PM</a></span><span class="time-chip"><a class="no-detect">8:30 PM</a></span><span class="time-chip"><a class="no-detect">9:00 PM</a></span><span class="time-chip"><a class="no-detect">9:30 PM</a></span><span class="time-chip"><a class="no-detect">10:00 PM</a></span><span class="time-chip"><a class="no-detect">10:30 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/the-odyssey" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-            
-            <tr class="showtime-row" data-days="2026-07-21">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jul 21</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        
-                        <span class="time-chip"><a class="no-detect">9:50 AM</a></span><span class="time-chip"><a class="no-detect">10:00 AM</a></span><span class="time-chip"><a class="no-detect">11:00 AM</a></span><span class="time-chip"><a class="no-detect">11:30 AM</a></span><span class="time-chip"><a class="no-detect">12:15 PM</a></span><span class="time-chip"><a class="no-detect">1:30 PM</a></span><span class="time-chip"><a class="no-detect">2:00 PM</a></span><span class="time-chip"><a class="no-detect">3:00 PM</a></span><span class="time-chip"><a class="no-detect">3:30 PM</a></span><span class="time-chip"><a class="no-detect">4:30 PM</a></span><span class="time-chip"><a class="no-detect">5:30 PM</a></span><span class="time-chip"><a class="no-detect">6:00 PM</a></span><span class="time-chip"><a class="no-detect">8:30 PM</a></span><span class="time-chip"><a class="no-detect">9:30 PM</a></span><span class="time-chip"><a class="no-detect">10:00 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/the-odyssey" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-            
-            <tr class="showtime-row" data-days="2026-07-22">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Wed Jul 22</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        
-                        <span class="time-chip"><a class="no-detect">10:00 AM</a></span><span class="time-chip"><a class="no-detect">11:30 AM</a></span><span class="time-chip"><a class="no-detect">12:00 PM</a></span><span class="time-chip"><a class="no-detect">1:00 PM</a></span><span class="time-chip"><a class="no-detect">1:30 PM</a></span><span class="time-chip"><a class="no-detect">2:00 PM</a></span><span class="time-chip"><a class="no-detect">3:30 PM</a></span><span class="time-chip"><a class="no-detect">4:30 PM</a></span><span class="time-chip"><a class="no-detect">5:00 PM</a></span><span class="time-chip"><a class="no-detect">5:30 PM</a></span><span class="time-chip"><a class="no-detect">6:00 PM</a></span><span class="time-chip"><a class="no-detect">7:30 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/the-odyssey" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-            
-            <tr class="showtime-row" data-days="2026-07-23,2026-07-24,2026-07-25,2026-07-26">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Thu Jul 23 – Sun Jul 26</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        
-                        <span class="time-chip"><a class="no-detect">10:00 AM</a></span><span class="time-chip"><a class="no-detect">2:00 PM</a></span><span class="time-chip"><a class="no-detect">6:00 PM</a></span><span class="time-chip"><a class="no-detect">10:00 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/the-odyssey" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-          </table>
-          </td>
-        </tr>
-      </table>
-    </div>
-    
-                
-              
-                
-                  
-    
-    
-    
-    
-    
-    
-    <div class="film-card format-70mm" data-count="1">
-      
-      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td class="film-poster-cell" valign="top">
-            
-            <a href="https://letterboxd.com/tmdb/1368337/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/5rhTDKUhPYvpdQIijFIs5VoWsON.jpg" alt="" width="44" height="65" loading="lazy"></a>
-            
-          </td>
-          <td class="film-info" valign="top">
-            <div class="film-info-header">
-              
-              <div class="film-title-row">
                 <a class="film-title" href="https://letterboxd.com/tmdb/1368337/" target="_blank">The Odyssey (Lakeline)</a><span class="format-badge badge-70mm">70mm</span>
               </div>
             </div>
@@ -2672,12 +2662,33 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row" data-days="2026-07-20,2026-07-21,2026-07-22,2026-07-23,2026-07-24,2026-07-25,2026-07-26">
+            <tr class="showtime-row" data-days="2026-07-20">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                   <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jul 20 – Sun Jul 26</a></td>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jul 20</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">7:30 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://tickets.fandango.com/transaction/ticketing/mobile/jump.aspx?sdate=2026-07-20%2B15%3A45&amp;from=mov_det_showtimes&amp;source=MobileWeb&amp;mid=245895&amp;tid=AAQCN&amp;dfam=webbrowser&amp;showtimehashcode=v2-bf46a57c51fb78195871220cf4ca09c3a18df9ff1a75fb70e9a41a16bc340e50" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+            
+            <tr class="showtime-row" data-days="2026-07-21,2026-07-22,2026-07-23">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jul 21 – Thu Jul 23</a></td>
                   </tr>
                   <tr>
                     <td class="sc-chips-td">
@@ -2686,7 +2697,49 @@
                         <span class="time-chip"><a class="no-detect">12:00 PM</a></span><span class="time-chip"><a class="no-detect">3:45 PM</a></span><span class="time-chip"><a class="no-detect">7:30 PM</a></span>
                       
                     </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://tickets.fandango.com/transaction/ticketing/mobile/jump.aspx?sdate=2026-07-20%2B12%3A00&amp;from=mov_det_showtimes&amp;source=MobileWeb&amp;mid=245895&amp;tid=AAQCN&amp;dfam=webbrowser&amp;showtimehashcode=v2-3d4746337deaa9c26f7e108b7d9fdab0fd66efbca7fc60925d95e2fbf49fd9e6" target="_blank">Tickets</a></td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://tickets.fandango.com/transaction/ticketing/mobile/jump.aspx?sdate=2026-07-21%2B12%3A00&amp;from=mov_det_showtimes&amp;source=MobileWeb&amp;mid=245895&amp;tid=AAQCN&amp;dfam=webbrowser&amp;showtimehashcode=v2-b870481ddb4e31e6c0e398c14012a83adf5f1945df6ab275b01ca279e93e44eb" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+            
+            <tr class="showtime-row" data-days="2026-07-24">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Fri Jul 24</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">12:00 PM</a></span><span class="time-chip"><a class="no-detect">3:45 PM</a></span><span class="time-chip sold-out"><a class="no-detect">7:30 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://tickets.fandango.com/transaction/ticketing/mobile/jump.aspx?sdate=2026-07-24%2B12%3A00&amp;from=mov_det_showtimes&amp;source=MobileWeb&amp;mid=245895&amp;tid=AAQCN&amp;dfam=webbrowser&amp;showtimehashcode=v2-a78e4507f3dc3765c2f001bda807a9183c35c6c20823bcbfcaf99573dac4848f" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+            
+            <tr class="showtime-row" data-days="2026-07-25,2026-07-26">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Sat Jul 25 – Sun Jul 26</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">12:00 PM</a></span><span class="time-chip"><a class="no-detect">3:45 PM</a></span><span class="time-chip"><a class="no-detect">7:30 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://tickets.fandango.com/transaction/ticketing/mobile/jump.aspx?sdate=2026-07-25%2B12%3A00&amp;from=mov_det_showtimes&amp;source=MobileWeb&amp;mid=245895&amp;tid=AAQCN&amp;dfam=webbrowser&amp;showtimehashcode=v2-1ccd90635b9b9900cd9e8913f219dcad9e8145b0db3c9aec807111b2ee4a52ef" target="_blank">Tickets</a></td>
                   </tr>
                 </table>
               </td>
@@ -2735,12 +2788,33 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row" data-days="2026-07-20,2026-07-21,2026-07-22,2026-07-23">
+            <tr class="showtime-row" data-days="2026-07-20">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                   <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jul 20 – Thu Jul 23</a></td>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jul 20</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">4:15 PM</a></span><span class="time-chip"><a class="no-detect">8:00 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://tickets.fandango.com/transaction/ticketing/mobile/jump.aspx?sdate=2026-07-20%2B16%3A15&amp;from=mov_det_showtimes&amp;source=MobileWeb&amp;mid=245895&amp;tid=AAUHA&amp;dfam=webbrowser&amp;showtimehashcode=v2-25019bbafe83882c6809658d4fbb65d58634c978c48ae11fab199cdca9948660" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+            
+            <tr class="showtime-row" data-days="2026-07-21,2026-07-22,2026-07-23">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jul 21 – Thu Jul 23</a></td>
                   </tr>
                   <tr>
                     <td class="sc-chips-td">
@@ -2749,7 +2823,7 @@
                         <span class="time-chip"><a class="no-detect">12:30 PM</a></span><span class="time-chip"><a class="no-detect">4:15 PM</a></span><span class="time-chip"><a class="no-detect">8:00 PM</a></span>
                       
                     </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://tickets.fandango.com/transaction/ticketing/mobile/jump.aspx?sdate=2026-07-20%2B12%3A30&amp;from=mov_det_showtimes&amp;source=MobileWeb&amp;mid=245895&amp;tid=AAUHA&amp;dfam=webbrowser&amp;showtimehashcode=v2-d7abab32c13b05e39ef3506d66b0b6b4b1db6ae9e8e098fd3f1602e9ee226e20" target="_blank">Tickets</a></td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://tickets.fandango.com/transaction/ticketing/mobile/jump.aspx?sdate=2026-07-21%2B12%3A30&amp;from=mov_det_showtimes&amp;source=MobileWeb&amp;mid=245895&amp;tid=AAUHA&amp;dfam=webbrowser&amp;showtimehashcode=v2-bcb9a391c486ce6326657ad4bfa93db757c805de4fa042dbed0af60bf7e7cdf7" target="_blank">Tickets</a></td>
                   </tr>
                 </table>
               </td>
@@ -2918,7 +2992,7 @@
         <tr>
           <td class="film-poster-cell" valign="top">
             
-            <a href="https://letterboxd.com/tmdb/76341/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/8tZYtuWezp8JbcsvHYO0O46tFbo.jpg" alt="" width="44" height="65" loading="lazy"></a>
+            <a href="https://letterboxd.com/tmdb/76341/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/ulcAi4dKpAjHwYGS08vNyx9H6I9.jpg" alt="" width="44" height="65" loading="lazy"></a>
             
           </td>
           <td class="film-info" valign="top">
@@ -3315,6 +3389,27 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
+            <tr class="showtime-row" data-days="2026-07-20">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jul 20</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">7:00 PM</a></span><span class="time-chip"><a class="no-detect">11:00 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/austin/amc-barton-creek-square-14/showtimes" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+            
             <tr class="showtime-row" data-days="2026-07-21,2026-07-22,2026-07-23,2026-07-24,2026-07-25,2026-07-26">
               <td class="showtime-row-wrap">
                 
@@ -3380,12 +3475,33 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row" data-days="2026-07-20,2026-07-21,2026-07-22,2026-07-23,2026-07-24">
+            <tr class="showtime-row" data-days="2026-07-20">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                   <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jul 20 – Fri Jul 24</a></td>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jul 20</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">6:00 PM</a></span><span class="time-chip"><a class="no-detect">10:00 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://www.amctheatres.com/movie-theatres/austin/amc-dine-in-tech-ridge-10/showtimes" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+            
+            <tr class="showtime-row" data-days="2026-07-21,2026-07-22,2026-07-23,2026-07-24">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jul 21 – Fri Jul 24</a></td>
                   </tr>
                   <tr>
                     <td class="sc-chips-td">
@@ -3579,6 +3695,7 @@
               <a class="theater-url" href="https://www.austinfilm.org/" target="_blank">Website</a>
             </p>
           </div>
+          
           
           <div class="films-list">
             
@@ -3780,27 +3897,6 @@
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             
             
-            <tr class="showtime-row" data-days="2026-07-20">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jul 20</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        
-                        <span class="time-chip"><a class="no-detect">4:00 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000XGa1K2AT" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-            
             <tr class="showtime-row" data-days="2026-07-21">
               <td class="showtime-row-wrap">
                 
@@ -3880,59 +3976,6 @@
         <tr>
           <td class="film-poster-cell" valign="top">
             
-            <a href="https://letterboxd.com/tmdb/16664/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/mR2Znr5WAzL0lI0YEcBtHnqTeUB.jpg" alt="" width="44" height="65" loading="lazy"></a>
-            
-          </td>
-          <td class="film-info" valign="top">
-            <div class="film-info-header">
-              
-              <div class="film-title-row">
-                <a class="film-title" href="https://letterboxd.com/tmdb/16664/" target="_blank">All About Lily Chou-Chou</a>
-              </div>
-            </div>
-          
-          
-          
-          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row" data-days="2026-07-22">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Wed Jul 22</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        
-                        <span class="time-chip"><a class="no-detect">5:00 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000XGiID2A1" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-          </table>
-          </td>
-        </tr>
-      </table>
-    </div>
-    
-    
-    
-    
-    
-    
-    <div class="film-card is-event" data-count="1">
-      
-      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td class="film-poster-cell" valign="top">
-            
             <a href="https://letterboxd.com/tmdb/769/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/9OkCLM73MIU2CrKZbqiT8Ln1wY2.jpg" alt="" width="44" height="65" loading="lazy"></a>
             
           </td>
@@ -3947,27 +3990,6 @@
           
           
           <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row" data-days="2026-07-20">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jul 20</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        
-                        <span class="time-chip"><a class="no-detect">4:15 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000XGexl2AD" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
             
             
             <tr class="showtime-row" data-days="2026-07-23">
@@ -3985,112 +4007,6 @@
                       
                     </td>
                     <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000X2CAA2A3" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-          </table>
-          </td>
-        </tr>
-      </table>
-    </div>
-    
-    
-    
-    
-    
-    
-    <div class="film-card is-event" data-count="1">
-      
-      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td class="film-poster-cell" valign="top">
-            
-            <a href="https://letterboxd.com/tmdb/577/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/whz4bwvqE1OmQHIyqHdZD8jU9CO.jpg" alt="" width="44" height="65" loading="lazy"></a>
-            
-          </td>
-          <td class="film-info" valign="top">
-            <div class="film-info-header">
-              
-              <div class="film-title-row">
-                <a class="film-title" href="https://letterboxd.com/tmdb/577/" target="_blank">To Die For</a>
-              </div>
-            </div>
-          
-          
-          
-          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row" data-days="2026-07-23">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Thu Jul 23</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        
-                        <span class="time-chip"><a class="no-detect">8:00 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000Vmj2b2AB" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-          </table>
-          </td>
-        </tr>
-      </table>
-    </div>
-    
-    
-    
-    
-    
-    
-    <div class="film-card is-event" data-count="1">
-      
-      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td class="film-poster-cell" valign="top">
-            
-            <a href="https://letterboxd.com/tmdb/1337631/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/suX1zqRn7FFlCtLz78JnF9g1Its.jpg" alt="" width="44" height="65" loading="lazy"></a>
-            
-          </td>
-          <td class="film-info" valign="top">
-            <div class="film-info-header">
-              
-              <div class="film-title-row">
-                <a class="film-title" href="https://letterboxd.com/tmdb/1337631/" target="_blank">Asco: Without Permission</a>
-              </div>
-            </div>
-          
-          
-          
-          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row" data-days="2026-07-22">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Wed Jul 22</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        
-                        <span class="time-chip"><a class="no-detect">8:00 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000VmZHp2AN" target="_blank">Tickets</a></td>
                   </tr>
                 </table>
               </td>
@@ -4208,6 +4124,207 @@
         <tr>
           <td class="film-poster-cell" valign="top">
             
+            <a href="https://letterboxd.com/tmdb/16664/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/mR2Znr5WAzL0lI0YEcBtHnqTeUB.jpg" alt="" width="44" height="65" loading="lazy"></a>
+            
+          </td>
+          <td class="film-info" valign="top">
+            <div class="film-info-header">
+              
+              <div class="film-title-row">
+                <a class="film-title" href="https://letterboxd.com/tmdb/16664/" target="_blank">All About Lily Chou-Chou</a>
+              </div>
+            </div>
+          
+          
+          
+          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+            
+            <tr class="showtime-row" data-days="2026-07-22">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Wed Jul 22</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">5:00 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000XGiID2A1" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+          </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+    
+    
+    
+    
+    
+    
+    <div class="film-card is-event" data-count="1">
+      
+      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="film-poster-cell" valign="top">
+            
+            <a href="https://letterboxd.com/tmdb/1337631/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/suX1zqRn7FFlCtLz78JnF9g1Its.jpg" alt="" width="44" height="65" loading="lazy"></a>
+            
+          </td>
+          <td class="film-info" valign="top">
+            <div class="film-info-header">
+              
+              <div class="film-title-row">
+                <a class="film-title" href="https://letterboxd.com/tmdb/1337631/" target="_blank">Asco: Without Permission</a>
+              </div>
+            </div>
+          
+          
+          
+          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+            
+            <tr class="showtime-row" data-days="2026-07-22">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Wed Jul 22</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">8:00 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000VmZHp2AN" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+            
+            <tr class="showtime-row" data-days="2026-07-24">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Fri Jul 24</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">4:00 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000XU6GH2A1" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+            
+            <tr class="showtime-row" data-days="2026-07-26">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Sun Jul 26</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">6:45 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000XU7132AD" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+          </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+    
+    
+    
+    
+    
+    
+    <div class="film-card is-event" data-count="1">
+      
+      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="film-poster-cell" valign="top">
+            
+            <a href="https://letterboxd.com/tmdb/577/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/whz4bwvqE1OmQHIyqHdZD8jU9CO.jpg" alt="" width="44" height="65" loading="lazy"></a>
+            
+          </td>
+          <td class="film-info" valign="top">
+            <div class="film-info-header">
+              
+              <div class="film-title-row">
+                <a class="film-title" href="https://letterboxd.com/tmdb/577/" target="_blank">To Die For</a>
+              </div>
+            </div>
+          
+          
+          
+          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+            
+            <tr class="showtime-row" data-days="2026-07-23">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Thu Jul 23</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">8:00 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000Vmj2b2AB" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+          </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+    
+    
+    
+    
+    
+    
+    <div class="film-card is-event" data-count="1">
+      
+      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="film-poster-cell" valign="top">
+            
             <a href="https://letterboxd.com/tmdb/129/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg" alt="" width="44" height="65" loading="lazy"></a>
             
           </td>
@@ -4256,10 +4373,31 @@
                     <td class="sc-chips-td">
                       
                         
-                        <span class="time-chip"><a class="no-detect">2:30 PM</a></span>
+                        <span class="time-chip"><a class="no-detect">2:30 PM</a></span><span class="time-chip"><a class="no-detect">8:00 PM</a></span>
                       
                     </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000XGlPm2AL" target="_blank">Tickets</a></td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000XU6L72AL" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+            
+            <tr class="showtime-row" data-days="2026-07-26">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Sun Jul 26</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">3:45 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000XU6Mj2AL" target="_blank">Tickets</a></td>
                   </tr>
                 </table>
               </td>
@@ -4620,6 +4758,7 @@
               <a class="theater-url" href="https://hyperrealfilm.club" target="_blank">Website</a>
             </p>
           </div>
+          
           
           <div class="films-list">
             
@@ -4986,6 +5125,7 @@
               <a class="theater-url" href="https://www.austintheatre.org/" target="_blank">Website</a>
             </p>
           </div>
+          
           
           <div class="films-list">
             
@@ -5518,6 +5658,7 @@
             </p>
           </div>
           
+          
           <div class="films-list">
             
             
@@ -5622,7 +5763,7 @@
                     <td class="sc-chips-td">
                       
                         
-                        <span class="time-chip"><a class="no-detect">9:20 AM</a></span><span class="time-chip"><a class="no-detect">12:05 PM</a></span><span class="time-chip"><a class="no-detect">5:25 PM</a></span>
+                        <span class="time-chip"><a class="no-detect">9:20 AM</a></span><span class="time-chip"><a class="no-detect">11:55 AM</a></span><span class="time-chip"><a class="no-detect">5:25 PM</a></span>
                       
                     </td>
                     <td class="sc-tix-td"><a class="tickets-link" href="https://austin.violetcrown.com/cinema/disclosure-day" target="_blank">Tickets</a></td>
@@ -5854,7 +5995,7 @@
                     <td class="sc-chips-td">
                       
                         
-                        <span class="time-chip"><a class="no-detect">9:40 AM</a></span><span class="time-chip"><a class="no-detect">12:25 PM</a></span><span class="time-chip"><a class="no-detect">2:55 PM</a></span><span class="time-chip"><a class="no-detect">5:10 PM</a></span><span class="time-chip"><a class="no-detect">7:40 PM</a></span><span class="time-chip"><a class="no-detect">10:15 PM</a></span>
+                        <span class="time-chip"><a class="no-detect">9:25 AM</a></span><span class="time-chip"><a class="no-detect">12:25 PM</a></span><span class="time-chip"><a class="no-detect">2:55 PM</a></span><span class="time-chip"><a class="no-detect">5:10 PM</a></span><span class="time-chip"><a class="no-detect">7:40 PM</a></span><span class="time-chip"><a class="no-detect">10:15 PM</a></span>
                       
                     </td>
                     <td class="sc-tix-td"><a class="tickets-link" href="https://austin.violetcrown.com/cinema/the-invite" target="_blank">Tickets</a></td>
@@ -6075,23 +6216,23 @@
                   <tr>
                     <td class="sc-chips-td">
                       
-                        
-                        <span class="time-chip"><a class="no-detect">7:00 PM</a></span>
+                        <span class="time-chip sold-out"><a class="no-detect">7:00 PM</a></span>
+                        <span class="sold-out-tag">Sold Out</span>
                       
                     </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://austin.violetcrown.com/cinema/due-west" target="_blank">Tickets</a></td>
+                    <td class="sc-tix-td"></td>
                   </tr>
                 </table>
               </td>
             </tr>
             
             
-            <tr class="showtime-row" data-days="2026-07-24,2026-07-25">
+            <tr class="showtime-row" data-days="2026-07-24">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                   <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Fri Jul 24 – Sat Jul 25</a></td>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Fri Jul 24</a></td>
                   </tr>
                   <tr>
                     <td class="sc-chips-td">
@@ -6193,14 +6334,16 @@
           
             
           
+            
+          
+            
+          
         
       
         
           
             
           
-          
-            
           
             
           
@@ -7081,108 +7224,6 @@
             <div class="film-info-header">
               
               <div class="film-title-row">
-                <a class="film-title" href="https://letterboxd.com/tmdb/823219/" target="_blank">Flow (Village)</a>
-              </div>
-            </div>
-          
-          
-          <p class="theater-attr"><a href="https://www.google.com/maps/search/?api=1&amp;query=Alamo+Drafthouse,+Austin,+TX+(multiple+locations)" target="_blank">Alamo Drafthouse</a></p>
-          
-          
-          
-          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row" data-days="2026-07-20">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jul 20</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        
-                        <span class="time-chip"><a class="no-detect">4:00 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/kids-camp-flow" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-            
-            <tr class="showtime-row" data-days="2026-07-21">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jul 21</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        
-                        <span class="time-chip"><a class="no-detect">4:00 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/kids-camp-flow" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-            
-            <tr class="showtime-row" data-days="2026-07-22">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Wed Jul 22</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        
-                        <span class="time-chip"><a class="no-detect">4:20 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/kids-camp-flow" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-          </table>
-          </td>
-        </tr>
-      </table>
-    </div>
-    
-                  
-                
-                  
-                    
-    
-    
-    
-    
-    
-    <div class="film-card is-event">
-      
-      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td class="film-poster-cell" valign="top">
-            
-            <a href="https://letterboxd.com/tmdb/823219/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/z2sG41PxfL1hnL1mHbxzSREUtOf.jpg" alt="" width="44" height="65" loading="lazy"></a>
-            
-          </td>
-          <td class="film-info" valign="top">
-            <div class="film-info-header">
-              
-              <div class="film-title-row">
                 <a class="film-title" href="https://letterboxd.com/tmdb/823219/" target="_blank">Flow (South Lamar)</a>
               </div>
             </div>
@@ -7249,6 +7290,108 @@
                       
                         
                         <span class="time-chip"><a class="no-detect">4:00 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/kids-camp-flow" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+          </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+    
+                  
+                
+                  
+                    
+    
+    
+    
+    
+    
+    <div class="film-card is-event">
+      
+      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="film-poster-cell" valign="top">
+            
+            <a href="https://letterboxd.com/tmdb/823219/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/z2sG41PxfL1hnL1mHbxzSREUtOf.jpg" alt="" width="44" height="65" loading="lazy"></a>
+            
+          </td>
+          <td class="film-info" valign="top">
+            <div class="film-info-header">
+              
+              <div class="film-title-row">
+                <a class="film-title" href="https://letterboxd.com/tmdb/823219/" target="_blank">Flow (Village)</a>
+              </div>
+            </div>
+          
+          
+          <p class="theater-attr"><a href="https://www.google.com/maps/search/?api=1&amp;query=Alamo+Drafthouse,+Austin,+TX+(multiple+locations)" target="_blank">Alamo Drafthouse</a></p>
+          
+          
+          
+          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+            
+            <tr class="showtime-row" data-days="2026-07-20">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Mon Jul 20</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">4:00 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/kids-camp-flow" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+            
+            <tr class="showtime-row" data-days="2026-07-21">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Tue Jul 21</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">4:00 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/kids-camp-flow" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+            
+            <tr class="showtime-row" data-days="2026-07-22">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Wed Jul 22</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">4:20 PM</a></span>
                       
                     </td>
                     <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/kids-camp-flow" target="_blank">Tickets</a></td>
@@ -7709,7 +7852,7 @@
             <div class="film-info-header">
               
               <div class="film-title-row">
-                <a class="film-title" href="https://letterboxd.com/tmdb/10719/" target="_blank">Elf (Lakeline)</a>
+                <a class="film-title" href="https://letterboxd.com/tmdb/10719/" target="_blank">Elf (South Lamar)</a>
               </div>
             </div>
           
@@ -7769,7 +7912,7 @@
             <div class="film-info-header">
               
               <div class="film-title-row">
-                <a class="film-title" href="https://letterboxd.com/tmdb/10719/" target="_blank">Elf (South Lamar)</a>
+                <a class="film-title" href="https://letterboxd.com/tmdb/10719/" target="_blank">Elf (Lakeline)</a>
               </div>
             </div>
           
@@ -8717,66 +8860,6 @@
             <div class="film-info-header">
               
               <div class="film-title-row">
-                <a class="film-title" href="https://letterboxd.com/tmdb/8688/" target="_blank">Snake Eyes (Slaughter Lane)</a>
-              </div>
-            </div>
-          
-          
-          <p class="theater-attr"><a href="https://www.google.com/maps/search/?api=1&amp;query=Alamo+Drafthouse,+Austin,+TX+(multiple+locations)" target="_blank">Alamo Drafthouse</a></p>
-          
-          
-          
-          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            
-            
-            <tr class="showtime-row" data-days="2026-07-22">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Wed Jul 22</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        
-                        <span class="time-chip"><a class="no-detect">7:00 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/snake-eyes" target="_blank">Tickets</a></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-          </table>
-          </td>
-        </tr>
-      </table>
-    </div>
-    
-                  
-                
-                  
-                    
-    
-    
-    
-    
-    
-    <div class="film-card">
-      
-      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td class="film-poster-cell" valign="top">
-            
-            <a href="https://letterboxd.com/tmdb/8688/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/gsh9mQKRrr4M90XC9Rr0wxefc9u.jpg" alt="" width="44" height="65" loading="lazy"></a>
-            
-          </td>
-          <td class="film-info" valign="top">
-            <div class="film-info-header">
-              
-              <div class="film-title-row">
                 <a class="film-title" href="https://letterboxd.com/tmdb/8688/" target="_blank">Snake Eyes (Mueller)</a>
               </div>
             </div>
@@ -8838,6 +8921,66 @@
               
               <div class="film-title-row">
                 <a class="film-title" href="https://letterboxd.com/tmdb/8688/" target="_blank">Snake Eyes (Lakeline)</a>
+              </div>
+            </div>
+          
+          
+          <p class="theater-attr"><a href="https://www.google.com/maps/search/?api=1&amp;query=Alamo+Drafthouse,+Austin,+TX+(multiple+locations)" target="_blank">Alamo Drafthouse</a></p>
+          
+          
+          
+          <table class="showtime-rows" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+            
+            <tr class="showtime-row" data-days="2026-07-22">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Wed Jul 22</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip"><a class="no-detect">7:00 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://drafthouse.com/austin/show/snake-eyes" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+          </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+    
+                  
+                
+                  
+                    
+    
+    
+    
+    
+    
+    <div class="film-card">
+      
+      <table class="film-card-inner" role="presentation" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="film-poster-cell" valign="top">
+            
+            <a href="https://letterboxd.com/tmdb/8688/" target="_blank"><img class="film-poster" src="https://image.tmdb.org/t/p/w92/gsh9mQKRrr4M90XC9Rr0wxefc9u.jpg" alt="" width="44" height="65" loading="lazy"></a>
+            
+          </td>
+          <td class="film-info" valign="top">
+            <div class="film-info-header">
+              
+              <div class="film-title-row">
+                <a class="film-title" href="https://letterboxd.com/tmdb/8688/" target="_blank">Snake Eyes (Slaughter Lane)</a>
               </div>
             </div>
           
@@ -9372,7 +9515,7 @@
           </p>
           
           <p style="margin: 12px 0 0;">
-            <a class="filtered-link" href="https://cinemaxxing.co/cinemaxxing-filtered.html" target="_blank" rel="noopener">View 125 filtered screenings</a>
+            <a class="filtered-link" href="https://cinemaxxing.co/cinemaxxing-filtered.html" target="_blank" rel="noopener">View 126 filtered screenings</a>
           </p>
           
         </div>
@@ -9596,5 +9739,6 @@
   })();
 </script>
 
+<div class="cmx-reel cmx-reel-bottom" aria-hidden="true"></div>
 </body>
 </html>
