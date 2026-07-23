@@ -497,6 +497,16 @@
       width: 22px;
       height: 22px;
     }
+    /* Snapshot disclaimer under the format cards — email only. */
+    .snapshot-note {
+      margin: 10px 4px 0;
+      text-align: center;
+      font-size: 11px;
+      font-style: italic;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .snapshot-note a { color: var(--text-url); text-decoration: underline; }
     /* Format pills — DEFAULT is light-mode values (saturated, dark-text on
        cream). Dark mode overrides via @media. */
     .stat-70mm  { border-color: #0FBCEC; color: #0FBCEC; }
@@ -1512,6 +1522,17 @@
 
     
     
+    
+    <tr>
+      <td class="section-outer">
+        <p class="snapshot-note" id="cmx-fresh" data-ts="1784850271782"
+           data-prefix="Sold-out status last checked">Sold-out status last checked Thu 6:44 PM</p>
+      </td>
+    </tr>
+    
+
+    
+    
     <tr>
       <td class="section-outer">
         <div class="day-filter">
@@ -1726,7 +1747,7 @@
                     <td class="sc-chips-td">
                       
                         
-                        <span class="time-chip sold-out"><a class="no-detect">2:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">7:45 AM</a></span><span class="time-chip sold-out"><a class="no-detect">11:30 AM</a></span><span class="time-chip"><a class="no-detect">3:15 PM</a></span><span class="time-chip sold-out"><a class="no-detect">7:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">10:45 PM</a></span>
+                        <span class="time-chip sold-out"><a class="no-detect">2:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">7:45 AM</a></span><span class="time-chip sold-out"><a class="no-detect">11:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">3:15 PM</a></span><span class="time-chip"><a class="no-detect">7:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">10:45 PM</a></span>
                       
                     </td>
                     <td class="sc-tix-td"><a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=632704&amp;CinemarkMovieId=104867&amp;Showtime=2026-07-23T15:15:00" target="_blank">Tickets</a></td>
@@ -1736,12 +1757,33 @@
             </tr>
             
             
-            <tr class="showtime-row" data-days="2026-07-24,2026-07-25">
+            <tr class="showtime-row" data-days="2026-07-24">
               <td class="showtime-row-wrap">
                 
                 <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                   <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Fri Jul 24 – Sat Jul 25</a></td>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Fri Jul 24</a></td>
+                  </tr>
+                  <tr>
+                    <td class="sc-chips-td">
+                      
+                        
+                        <span class="time-chip sold-out"><a class="no-detect">2:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">7:45 AM</a></span><span class="time-chip"><a class="no-detect">11:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">3:15 PM</a></span><span class="time-chip sold-out"><a class="no-detect">7:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">10:45 PM</a></span>
+                      
+                    </td>
+                    <td class="sc-tix-td"><a class="tickets-link" href="https://www.cinemark.com/theatres/tx-dallas/cinemark-dallas-xd-and-imax" target="_blank">Tickets</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+            
+            <tr class="showtime-row" data-days="2026-07-25,2026-07-26">
+              <td class="showtime-row-wrap">
+                
+                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td class="sc-date-td" colspan="2"><a class="no-detect">Sat Jul 25 – Sun Jul 26</a></td>
                   </tr>
                   <tr>
                     <td class="sc-chips-td">
@@ -1751,27 +1793,6 @@
                       
                     </td>
                     <td class="sc-tix-td"></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            
-            
-            <tr class="showtime-row" data-days="2026-07-26">
-              <td class="showtime-row-wrap">
-                
-                <table class="showtime-card" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td class="sc-date-td" colspan="2"><a class="no-detect">Sun Jul 26</a></td>
-                  </tr>
-                  <tr>
-                    <td class="sc-chips-td">
-                      
-                        
-                        <span class="time-chip sold-out"><a class="no-detect">2:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">7:45 AM</a></span><span class="time-chip"><a class="no-detect">11:30 AM</a></span><span class="time-chip sold-out"><a class="no-detect">3:15 PM</a></span><span class="time-chip sold-out"><a class="no-detect">7:00 PM</a></span><span class="time-chip sold-out"><a class="no-detect">10:45 PM</a></span>
-                      
-                    </td>
-                    <td class="sc-tix-td"><a class="tickets-link" href="https://www.cinemark.com/TicketSeatMap/?TheaterId=207&amp;ShowtimeId=632758&amp;CinemarkMovieId=104867&amp;Showtime=2026-07-26T11:30:00" target="_blank">Tickets</a></td>
                   </tr>
                 </table>
               </td>
@@ -2735,7 +2756,7 @@
                     <td class="sc-chips-td">
                       
                         
-                        <span class="time-chip"><a class="no-detect">12:30 PM</a></span><span class="time-chip"><a class="no-detect">4:15 PM</a></span><span class="time-chip"><a class="no-detect">8:00 PM</a></span>
+                        <span class="time-chip"><a class="no-detect">12:30 PM</a></span><span class="time-chip"><a class="no-detect">4:15 PM</a></span><span class="time-chip sold-out"><a class="no-detect">8:00 PM</a></span>
                       
                     </td>
                     <td class="sc-tix-td"><a class="tickets-link" href="https://tickets.fandango.com/transaction/ticketing/mobile/jump.aspx?sdate=2026-07-23%2B12%3A30&amp;from=mov_det_showtimes&amp;source=MobileWeb&amp;mid=245895&amp;tid=AAUHA&amp;dfam=webbrowser&amp;showtimehashcode=v2-73495b8457f3f1878f49fd5f4faddb9b8878d7b865d5b096d39f33a7f8bb9845" target="_blank">Tickets</a></td>
@@ -8620,6 +8641,28 @@
   })();
 </script>
 
+
+<script>
+  /* Freshness line: turn the absolute render-time stamp into a live relative
+     one ("checked 23 min ago") so the reader doesn't need timezone context. */
+  (function () {
+    var el = document.getElementById('cmx-fresh');
+    if (!el) return;
+    var ts = +el.getAttribute('data-ts') || 0;
+    if (!ts) return;
+    function tick() {
+      var m = Math.max(0, Math.round((Date.now() - ts) / 60000));
+      var rel = m < 1 ? 'just now'
+              : m < 60 ? m + ' min ago'
+              : m < 1440 ? Math.round(m / 60) + ' hr ago'
+              : Math.round(m / 1440) + ' day(s) ago';
+      el.textContent = el.getAttribute('data-prefix') + ' ' + rel;
+    }
+    tick();
+    setInterval(tick, 60000);
+  }());
+</script>
 <div class="cmx-reel cmx-reel-bottom" aria-hidden="true"></div>
+
 </body>
 </html>
