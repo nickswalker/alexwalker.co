@@ -141,6 +141,7 @@
       padding: 4px 10px;
     }
     .page-back:hover { color: var(--text-url-hover); border-color: var(--text-muted); }
+    .fresh-note { margin: 6px 0 10px; font-size: 11px; font-style: italic; color: var(--text-muted); }
 
     .section-card {
       background-color: var(--bg-card);
@@ -254,6 +255,7 @@
     <p class="page-eyebrow">Cinemaxxing · Edition #14</p>
     <h1 class="page-title">Filtered Out</h1>
     <p class="page-sub">Jul 20 – Jul 26, 2026 · screenings the main digest dropped</p>
+    <p class="fresh-note" id="cmx-fresh" data-ts="1784850271861" data-prefix="Updated">Updated Thu 6:44 PM</p>
     <a class="page-back" href="https://cinemaxxing.co/cinemaxxing-preview.html">← Back to the main schedule</a>
   </div>
 
@@ -5648,6 +5650,25 @@
       sendPagePixel(); initOutboundLinkTracking();
     });
   }
+</script>
+<script>
+  /* Freshness line: relativize the render-time stamp ("Updated 23 min ago"). */
+  (function () {
+    var el = document.getElementById('cmx-fresh');
+    if (!el) return;
+    var ts = +el.getAttribute('data-ts') || 0;
+    if (!ts) return;
+    function tick() {
+      var m = Math.max(0, Math.round((Date.now() - ts) / 60000));
+      var rel = m < 1 ? 'just now'
+              : m < 60 ? m + ' min ago'
+              : m < 1440 ? Math.round(m / 60) + ' hr ago'
+              : Math.round(m / 1440) + ' day(s) ago';
+      el.textContent = el.getAttribute('data-prefix') + ' ' + rel;
+    }
+    tick();
+    setInterval(tick, 60000);
+  }());
 </script>
 <div class="cmx-reel cmx-reel-bottom" aria-hidden="true"></div>
 </body>
