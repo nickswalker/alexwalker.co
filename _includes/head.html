@@ -2,12 +2,31 @@
 {%- assign og_image = page.og_image | default: "ogimage.jpg" -%}
 {%- assign og_url = page.og_url | default: "https://alexwalker.co" -%}
 {%- assign author = page.author | default: "Alex Walker" -%}
+{%- comment -%}
+  Meta description resolution order:
+    1. page.description (front matter) — per-page override
+    2. a domain-aware default. This repo serves BOTH alexwalker.co and
+       cinemaxxing.co; about.html and cinemaxxing*.html are cinemaxxing.co
+       pages, so they get the Cinemaxxing default instead of Alex's.
+  The same value feeds <meta name="description"> and og:description.
+{%- endcomment -%}
+{%- assign page_path = page.path | default: "" -%}
+{%- assign is_cinemaxxing = false -%}
+{%- if page.cinemaxxing or page_path contains "cinemaxxing" or page_path == "about.html" -%}
+  {%- assign is_cinemaxxing = true -%}
+{%- endif -%}
+{%- if is_cinemaxxing -%}
+  {%- assign default_description = "Cinemaxxing — Austin’s weekly guide to premium-format moviegoing: 70mm, IMAX, Dolby Cinema and repertory screenings, updated every week." -%}
+{%- else -%}
+  {%- assign default_description = "Alex Walker — cinematographer and colorist in Austin, Texas. DP on House of Abraham, Texas Cult House, A Christmas in New Hope." -%}
+{%- endif -%}
+{%- assign description = page.description | default: default_description -%}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
     <title>{{ page.title }}</title>
     <meta name="author" content="{{ author }}">
-    <meta name="description" content="Cinematographer, colorist."/>
+    <meta name="description" content="{{ description | escape }}"/>
     <meta name="keywords" content="Cinematographer,Colorist,Director,Portfolio,Photography,Vision,Camera,Experienced,Professional,"/>
     {%- if page.noindex %}
     <meta name="robots" content="noindex">
@@ -16,7 +35,7 @@
     <meta property="og:url" content="{{ og_url }}">
     <meta property="og:image" content="https://alexwalker.co/img/{{ og_image }}">
     <meta property="og:title" content="{{ og_title }}">
-    <meta property="og:description" content="">
+    <meta property="og:description" content="{{ description | escape }}">
 
     <script>
       // Tag the document for Meta in-app WebViews (Instagram, Threads,

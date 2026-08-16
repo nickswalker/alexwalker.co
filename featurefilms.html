@@ -6,6 +6,114 @@ og_image: ogimage2.jpg
 og_title: Feature Films Shot by Alex Walker
 ---
 
+<!-- Per-film entity graph for the features actually shown on this page.
+     Each CreativeWork credits Alex via a Role and points at the Person
+     @id declared on index.html, so the credits attach to one entity. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://alexwalker.co/#person",
+      "name": "Alex Walker",
+      "url": "https://alexwalker.co/"
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-texas-cult-house",
+      "name": "Texas Cult House",
+      "url": "https://www.texasculthousefilm.com",
+      "image": "https://alexwalker.co/img/posters/TCH.jpg",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-house-of-abraham",
+      "name": "House of Abraham",
+      "url": "https://www.houseofabrahammovie.com",
+      "image": "https://alexwalker.co/img/posters/HOAposter.jpg",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-a-christmas-in-new-hope",
+      "name": "A Christmas in New Hope",
+      "url": "https://www.achristmasinnewhope.com",
+      "image": "https://alexwalker.co/img/posters/ACINHPoster2.jpg",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-cowboys-without-borders",
+      "name": "Cowboys Without Borders",
+      "url": "https://linktr.ee/cowboyswithoutborders",
+      "image": "https://alexwalker.co/img/posters/CWOB2.jpg",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-writers-block",
+      "name": "Writer's Block",
+      "url": "https://www.imdb.com/title/tt8697454/",
+      "image": "https://alexwalker.co/img/posters/wb.jpg",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-book-of-ruth",
+      "name": "Book of Ruth",
+      "url": "https://www.imdb.com/title/tt3626006/",
+      "image": "https://alexwalker.co/img/posters/book-of-ruth.jpg",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-no-one-will-know",
+      "name": "No One Will Know",
+      "url": "https://www.imdb.com/title/tt2056663/",
+      "image": "https://alexwalker.co/img/posters/no-one-will-know.jpg",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    }
+  ]
+}
+</script>
+
 <section id="feature-films" class="scroll-fade">
 
     <div class="container columns-span-width scroll-fade">

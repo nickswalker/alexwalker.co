@@ -6,6 +6,104 @@ og_image: ogimage2.jpg
 og_title: Short Films Shot by Alex Walker
 ---
 
+<!-- Per-film entity graph, linked to the Person @id declared on index.html.
+     Only the shorts whose titles are verifiable from this repo are listed
+     (poster filename -> title cross-checked against index.html's
+     data-year/data-rich labels and resume/index.html). The remaining
+     posters on this page carry no alt text or title anywhere in the repo,
+     so they are deliberately left out rather than guessed at; add an alt
+     attribute to a poster and it can be added here. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://alexwalker.co/#person",
+      "name": "Alex Walker",
+      "url": "https://alexwalker.co/"
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-hub-city",
+      "name": "Hub City",
+      "url": "https://www.imdb.com/title/tt33244215/",
+      "image": "https://alexwalker.co/img/posters/hcposter.jpg",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-a-thousand-times-a-day",
+      "name": "A Thousand Times A Day",
+      "url": "https://www.imdb.com/title/tt15003142/",
+      "image": "https://alexwalker.co/img/posters/ATTADposter.jpg",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-a-life-in-technicolor",
+      "name": "A Life In Technicolor",
+      "image": "https://alexwalker.co/img/posters/alitposter.jpg",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-javelina-run",
+      "name": "Javelina Run",
+      "url": "https://www.imdb.com/title/tt10461524/",
+      "image": "https://alexwalker.co/img/posters/JR.jpg",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-guest-of-honor",
+      "name": "Guest of Honor",
+      "url": "https://www.imdb.com/title/tt7579434/",
+      "image": "https://alexwalker.co/img/posters/goh.jpg",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-ya-albi",
+      "name": "Ya Albi",
+      "url": "https://www.imdb.com/title/tt5759066/",
+      "image": "https://alexwalker.co/img/posters/ya.jpg",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    }
+  ]
+}
+</script>
+
 <section id="short-films" class="scroll-fade">
 
     <div class="container columns-span-width scroll-fade">

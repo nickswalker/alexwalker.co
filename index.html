@@ -10,7 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
     <title>Alex Walker's Filmmaking Portfolio</title>
     <meta name="author" content="Alex Walker">
-    <meta name="description" content="Cinematographer, colorist." />
+    <meta name="description"
+        content="Alex Walker — cinematographer and colorist in Austin, Texas. DP on House of Abraham, Texas Cult House, A Christmas in New Hope." />
     <meta name="keywords"
         content="Cinematographer,Colorist,Director,Portfolio,Photography,Vision,Camera,Experienced,Professional,Feature Films, Narrative, Natasha Henstridge, Katrina Bowden, Ryan Cooper, Adrian Grenier, Earth Speeed" />
     <link rel="canonical" href="index.html">
@@ -19,7 +20,8 @@
     <meta property="og:url" content="https://alexwalker.co/">
     <meta property="og:image" content="https://alexwalker.co/img/ogimage.jpg">
     <meta property="og:title" content="Alex Walker's Cinematography and Colorist Portfolio">
-    <meta property="og:description" content="">
+    <meta property="og:description"
+        content="Alex Walker — cinematographer and colorist in Austin, Texas. DP on House of Abraham, Texas Cult House, A Christmas in New Hope.">
 
     <script>
       // Tag the document for Meta in-app WebViews (Instagram, Threads,
@@ -106,14 +108,22 @@
     <script defer src="js/button.js"></script>
     <script defer src="js/glass-return-to-top.js"></script>
     <script defer src="js/glass-watch-reels.js"></script>
+  <!-- Entity graph. The Person node carries a stable @id
+       (https://alexwalker.co/#person) so featurefilms.html, shortfilms.html
+       and any future page can reference the same entity instead of
+       redeclaring it. Films are CreativeWork/Movie nodes in the same graph,
+       each crediting Alex via a schema.org Role. -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
+      "@graph": [
+    {
       "@type": "Person",
       "name": "Alex Walker",
-      "@id": "https://alexwalker.co/",
+      "@id": "https://alexwalker.co/#person",
       "jobTitle": "Cinematographer and Colorist",
       "url": "https://alexwalker.co/",
+      "image": "https://alexwalker.co/img/AlexWalker2024.jpeg",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Austin",
@@ -146,7 +156,75 @@
         "@type": "Organization",
         "name": "The Right Eye Inc.",
         "url": "https://therighteye.com/"
+      },
+      "workExample": [
+        { "@id": "https://alexwalker.co/#film-house-of-abraham" },
+        { "@id": "https://alexwalker.co/#film-texas-cult-house" },
+        { "@id": "https://alexwalker.co/#film-a-christmas-in-new-hope" },
+        { "@id": "https://alexwalker.co/#film-texas-legacy-in-lights" },
+        { "@id": "https://alexwalker.co/#film-cowboys-without-borders" }
+      ]
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-house-of-abraham",
+      "name": "House of Abraham",
+      "url": "https://www.houseofabrahammovie.com",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
       }
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-texas-cult-house",
+      "name": "Texas Cult House",
+      "url": "https://www.texasculthousefilm.com",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-a-christmas-in-new-hope",
+      "name": "A Christmas in New Hope",
+      "url": "https://www.achristmasinnewhope.com",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-texas-legacy-in-lights",
+      "name": "Texas Legacy in Lights",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    },
+    {
+      "@type": ["CreativeWork", "Movie"],
+      "@id": "https://alexwalker.co/#film-cowboys-without-borders",
+      "name": "Cowboys Without Borders",
+      "url": "https://linktr.ee/cowboyswithoutborders",
+      "creditText": "Alex Walker — Director of Photography and Colorist",
+      "contributor": {
+        "@type": "Role",
+        "roleName": ["Director of Photography", "Colorist"],
+        "contributor": { "@id": "https://alexwalker.co/#person" }
+      }
+    }
+      ]
     }
   </script>
 </head>
