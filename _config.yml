@@ -21,3 +21,36 @@ exclude:
   - color-test.html
 include:
   - .well-known
+
+# Sitemap exclusions.
+#
+# jekyll-sitemap lists every .html/.pdf STATIC file as well as every Jekyll
+# page, so a lot of non-content ends up in sitemap.xml. These files must stay
+# BUILT and reachable at their URLs — they are only being dropped from the
+# sitemap, not deleted and not noindexed. jekyll-sitemap honours
+# `sitemap: false`, and Jekyll applies these front matter defaults to static
+# files too (Jekyll::StaticFile#data reads frontmatter_defaults), so a path
+# scope is enough for files that have no front matter of their own.
+defaults:
+  # Archived Rancho El Macho microsite (plus its old raw traffic-log HTML
+  # dumps). Not alexwalker.co content — 15 of the sitemap's 32 URLs.
+  - scope:
+      path: "ranchoelmacho"
+    values:
+      sitemap: false
+
+  # Google Search Console verification file. Must stay served at its exact
+  # URL or verification breaks; it just doesn't belong in the sitemap.
+  - scope:
+      path: "google88bacf39fa2b9f7b.html"
+    values:
+      sitemap: false
+
+  # Stale duplicate of the gear list PDF. The live copy that index.html,
+  # hvac.html, examples.html, secret.html and privatedemo.html all link to is
+  # img/AlexWalker_fullgearlist.pdf; this css/ copy is an older orphan nothing
+  # references, and having both made the same document appear twice.
+  - scope:
+      path: "css/AlexWalker_fullgearlist.pdf"
+    values:
+      sitemap: false
