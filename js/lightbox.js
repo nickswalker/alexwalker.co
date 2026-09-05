@@ -148,9 +148,13 @@ export const RICH_CONFIG = {
         // Same-page hash, not a path — there is no standalone page. See the
         // `deepLink` handling in autoInitLightboxes.
         deepLink: '{{ site.data.tll.url }}',
+        // Object entries (not bare URL strings) so each still carries its own
+        // descriptive alt from _data/tll.yml through to the rendered <img>.
+        // jsonify, not hand-quoting: the alt text has commas and apostrophes
+        // and must survive into a JS string literal intact.
         frames: [
         {%- for frame in site.data.tll.frames %}
-            '{{ frame.src }}',
+            { src: {{ frame.src | jsonify }}, alt: {{ frame.alt | jsonify }} },
         {%- endfor %}
         ],
     },
@@ -242,6 +246,29 @@ export const RICH_CONFIG = {
 
 const IMAGE_EXT = /\.(jpe?g|png|gif|webp|avif|svg)(\?|$)/i;
 const VIDEO_HOSTS = /(youtube\.com|youtu\.be|vimeo\.com|player\.vimeo\.com)/i;
+
+/* Attribute-safe escaping for values interpolated into the HTML strings this
+   module builds (frame alt text comes from _data/*.yml, so it can contain
+   quotes and ampersands as well as the commas/apostrophes it already has). */
+function escapeAttr(s) {
+    if (s == null) return '';
+    return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+/* Alt text for one still in a rich panel's frame strip. Prefer the real
+   description carried on the frame entry (RICH_CONFIG.tll builds these from
+   _data/tll.yml); fall back to the positional label only when a frame has no
+   alt of its own. */
+function frameAlt(entry, i, title) {
+    const own = entry && typeof entry === 'object' ? entry.alt : null;
+    if (own) return own;
+    return `${title || ''} still ${i + 1}`;
+}
 
 function detectType(href) {
     if (!href) return 'iframe';
@@ -1082,9 +1109,12 @@ export class Lightbox {
                     ? `<img class="rich-poster" src="${cfg.poster}" alt="${(cfg.title || '') + ' poster'}">`
                     : '';
                 // Each frame entry can be either a string (URL) or an object
-                // `{ src, aspect }` for per-frame aspect overrides — used when
-                // a film mixes aspect ratios within a single trailer and we
-                // trim each still's letter/pillarbox individually.
+                // `{ src, aspect, alt }` — `aspect` for per-frame aspect
+                // overrides (used when a film mixes aspect ratios within a
+                // single trailer and we trim each still's letter/pillarbox
+                // individually), `alt` for a real description of the still.
+                // A frame that supplies no `alt` falls back to the positional
+                // "<Title> still N" label.
                 const framesHTML = frames.map((entry, i) => {
                     if (!entry) {
                         return `<li class="rich-frame rich-placeholder"><span>Still ${i + 1}</span></li>`;
@@ -1092,7 +1122,8 @@ export class Lightbox {
                     const url = typeof entry === 'string' ? entry : entry.src;
                     const aspect = typeof entry === 'object' && entry.aspect ? entry.aspect : null;
                     const styleAttr = aspect ? ` style="aspect-ratio: ${aspect};"` : '';
-                    return `<li class="rich-frame" data-frame-index="${i}"${styleAttr}><img src="${url}" alt="${(cfg.title || '') + ' still ' + (i + 1)}" loading="lazy"></li>`;
+                    const alt = frameAlt(entry, i, cfg.title);
+                    return `<li class="rich-frame" data-frame-index="${i}"${styleAttr}><img src="${url}" alt="${escapeAttr(alt)}" loading="lazy"></li>`;
                 }).join('');
                 const richKey = item.rich || 'auto';
                 panel.classList.add('lightbox__panel--rich', `rich-${richKey}`);
@@ -1201,10 +1232,12 @@ export class Lightbox {
                 // outer rich lightbox stays mounted underneath; closing the
                 // inner one returns the user to the trailer view.
                 const realFrames = frames
-                    .map((entry) => {
+                    .map((entry, i) => {
                         if (!entry) return null;
                         const href = typeof entry === 'string' ? entry : entry.src;
-                        return { href, type: 'image', caption: '' };
+                        // Same alt as the strip thumbnail, so the blown-up
+                        // still in the nested gallery is described too.
+                        return { href, type: 'image', caption: '', alt: frameAlt(entry, i, cfg.title) };
                     })
                     .filter(Boolean);
                 if (realFrames.length > 0) {
