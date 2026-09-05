@@ -4,9 +4,15 @@
 // object per line to stdout:
 //
 //   {"path":"…","w":1600,"h":670,
-//    "faces":[{"x":0.31,"y":0.22,"w":0.09,"h":0.19}],      // normalised, y from TOP
+//    "faces":[{"x":0.31,"y":0.22,"w":0.09,"h":0.19,"yaw":-1.33,"roll":-0.09}],
+//                                                          // normalised, y from TOP
 //    "saliency":{"x":…,"y":…,"w":…,"h":…},                  // attention bbox, y from TOP
 //    "salientObjects":[…]}
+//
+// `yaw` is the head-turn angle in radians, and it is the ONLY thing the facing
+// signal is built from. It comes free with the face rectangles request at
+// revision 3 — no second model, no extra pass. It is used for SELECTION
+// ORDERING ONLY; the cropper never sees it.
 //
 // Why Vision and not a Python library: it ships with macOS (no install, no
 // model download), VNDetectFaceRectanglesRequest is the same detector Photos
@@ -23,11 +29,16 @@ import Vision
 import AppKit
 
 struct Box: Codable { let x: Double, y: Double, w: Double, h: Double }
+struct Face: Codable {
+    let x: Double, y: Double, w: Double, h: Double
+    let yaw: Double?
+    let roll: Double?
+}
 struct Result: Codable {
     let path: String
     let w: Int
     let h: Int
-    let faces: [Box]
+    let faces: [Face]
     let saliency: Box?
     let salientObjects: [Box]
     let error: String?
@@ -39,6 +50,12 @@ func flip(_ r: CGRect) -> Box {
         y: Double(1.0 - r.origin.y - r.size.height),
         w: Double(r.size.width),
         h: Double(r.size.height))
+}
+
+func face(_ o: VNFaceObservation) -> Face {
+    let b = flip(o.boundingBox)
+    return Face(x: b.x, y: b.y, w: b.w, h: b.h,
+                yaw: o.yaw?.doubleValue, roll: o.roll?.doubleValue)
 }
 
 func analyse(_ path: String) -> Result {
@@ -53,7 +70,11 @@ func analyse(_ path: String) -> Result {
     let attnReq = VNGenerateAttentionBasedSaliencyImageRequest()
     let objReq  = VNGenerateObjectnessBasedSaliencyImageRequest()
 
-    var faces: [Box] = []
+    // Revision 3 is what populates roll/yaw/pitch on the observation. Pinned
+    // explicitly so a future macOS default can't silently drop the angles.
+    faceReq.revision = VNDetectFaceRectanglesRequestRevision3
+
+    var faces: [Face] = []
     var saliency: Box? = nil
     var objects: [Box] = []
     var err: String? = nil
@@ -62,7 +83,7 @@ func analyse(_ path: String) -> Result {
         try handler.perform([faceReq, attnReq, objReq])
 
         if let obs = faceReq.results {
-            faces = obs.map { flip($0.boundingBox) }
+            faces = obs.map(face)
         }
         // Attention saliency returns ONE observation whose salientObjects
         // carry the attention bounding boxes. Union them: a two-shot with a

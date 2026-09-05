@@ -1,0 +1,41 @@
+# Stills kept OUT of the homepage tile shuffle.
+#
+# A still listed here stops appearing in the rotating thumbnail on the
+# Narrative / Commercial grids. It stays exactly where it is in the LIGHTBOX
+# gallery — the lightbox reads its own frame lists (js/lightbox.js and
+# _data/tll.yml) and nothing here touches them. Nothing is deleted, and no
+# derivative is generated for an excluded still, so it costs zero page weight.
+#
+# THE IDENTIFIER IS THE STILL'S SOURCE PATH, copied verbatim from
+# js/lightbox.js (or _data/tll.yml for Texas Legacy in Lights). A leading
+# slash is optional. Use the ORIGINAL path under img/ — never an
+# img/shuffle/... path, which is a generated crop.
+#
+# To find the path for a still: open the tile's lightbox, note which still it
+# is (1st, 2nd, …), and read that entry out of the `frames:` list for that
+# tile's key in js/lightbox.js.
+#
+# Example — this would drop the 3rd House of Abraham still and the 2nd
+# Everyday Dose still from the rotation:
+#
+# exclude_from_shuffle:
+#   - img/hoa/frame3.jpg
+#   - img/commercial/everydaydose/frame2.jpg
+#
+# The build warns on stderr if a path here matches no still, so a typo can't
+# fail silently. Re-run `python3 scripts/build_thumb_shuffle.py` after editing.
+#
+# A tile needs at least 2 stills to shuffle; if exclusions take it below that
+# it simply stops rotating and keeps its authored thumbnail.
+
+exclude_from_shuffle:
+  # Chosen by Alex from the running demo, 2026-09-05. Each of these stays in
+  # its lightbox gallery — this list only removes it from the tile rotation.
+  - img/attad/frame2.jpg     # ECU bearded man, face left, pale wall right
+  - img/jr/frame2.jpg        # saloon, woman in red lace laughing
+  - img/goh/frame3.jpg       # night pool party, string lights
+  - img/amorsui/frame2.jpg   # two women outdoors, freckles
+  - img/alit/frame4.jpg      # near-mono, dark bob in a doorway
+  - img/alit/frame2.jpg      # platinum wig, cigarette holder
+  - img/amorsui/frame3.jpg   # wet hand on hexagonal shower tile
+  - img/jr/frame3.jpg        # ECU older bearded man in wide-brimmed hat

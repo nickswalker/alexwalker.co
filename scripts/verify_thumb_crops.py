@@ -1,115 +1,123 @@
 #!/usr/bin/env python3
-"""Independent verification that the shuffle crops didn't decapitate anyone.
+"""Independent check that the shuffle crops preserved the original framing.
 
-The cropper checks its own arithmetic, which proves nothing. This re-runs
-Apple's Vision face detector from scratch on the WRITTEN DERIVATIVES and
-compares against the detections on the originals:
+The cropper checks its own arithmetic, which proves nothing. This re-derives
+everything from the files actually on disk:
 
-  * every face found in the original must still be found in the crop
-    (matched by mapping the original's face box through the crop window),
-  * a face whose detected box in the crop is materially shorter than the
-    mapped original box is flagged — that is what a clipped forehead or a
-    cut-off chin actually looks like to the detector.
+  HARD RULES (exit 1 if any is broken)
+    * the derivative keeps 100% of the source width — no horizontal crop,
+      no pan; the crop window starts at x=0 and ends at the source width,
+    * the rows removed from the top exactly equal the rows removed from the
+      bottom, and top + kept + bottom accounts for every source row,
+    * the written file's aspect ratio matches the crop window's, so nothing
+      was squashed, and its width never exceeds the source's, so nothing was
+      upscaled.
 
-Exit 0 = clean. Exit 1 = at least one face lost or truncated.
+  REPORT ONLY (never fails the run)
+    * frames where the centred vertical window cuts into a detected face.
+      Those are candidates for a hand-picked vertical offset, and they are
+      listed for Alex to decide on — this script does not move them, and
+      neither does the cropper. Centred is the rule; exceptions are his call.
+
+Usage:  python3 scripts/verify_thumb_crops.py
 """
 
 import json
-import subprocess
 import sys
 from pathlib import Path
 
+from PIL import Image
+
 ROOT = Path(__file__).resolve().parent.parent
-PROBE = ROOT / "scripts" / ".bin" / "vision_probe"
 AUDIT = ROOT / "scripts" / "thumb_shuffle_audit.json"
 
-# A face is "truncated" if the crop's detection keeps less than this fraction
-# of the height the mapped original box predicted.
-HEIGHT_TOLERANCE = 0.80
-
-
-def probe(paths):
-    proc = subprocess.run([str(PROBE)], input="\n".join(paths) + "\n",
-                          capture_output=True, text=True)
-    if proc.returncode != 0:
-        sys.exit(f"vision_probe failed: {proc.stderr}")
-    return {json.loads(l)["path"]: json.loads(l) for l in proc.stdout.splitlines() if l.strip()}
+# A face counts as "cut" only if a real slice of it is gone — a couple of
+# pixels of hair is not worth Alex's attention.
+CLIP_TOLERANCE = 0.06
 
 
 def main():
     audit = json.loads(AUDIT.read_text())
-    with_faces = [a for a in audit if a["faces"] > 0]
-    out_paths = [str(ROOT / a["out"].lstrip("/")) for a in with_faces]
-    detections = probe(out_paths)
+    failures, clipped = [], []
 
-    lost, truncated, recall, ok = [], [], [], 0
-    for a in with_faces:
-        out_abs = str(ROOT / a["out"].lstrip("/"))
-        rec = detections.get(out_abs, {})
-        found = rec.get("faces") or []
-        cw, ch = rec.get("w", 1), rec.get("h", 1)
-        ow, oh = a["orig"]
-        bx0, by0, bx1, by1 = a["box"]
-        scale_x = cw / max(bx1 - bx0, 1)
-        scale_y = ch / max(by1 - by0, 1)
+    for a in audit:
+        out_abs = ROOT / a["out"].lstrip("/")
+        src_abs = ROOT / a["src"].lstrip("/")
+        if not out_abs.exists():
+            failures.append(f"{a['out']}: derivative missing")
+            continue
 
+        with Image.open(src_abs) as im:
+            sw, sh = im.size
+        with Image.open(out_abs) as im:
+            ow, oh = im.size
+
+        x0, y0, x1, y1 = a["box"]
+        top, bottom = a["trimTop"], a["trimBottom"]
+        kept_h = y1 - y0
+
+        # --- horizontal: nothing removed, nothing shifted
+        if x0 != 0 or x1 != sw:
+            failures.append(
+                f"{a['out']}: crop window x=[{x0},{x1}] but source is {sw}px wide")
+        # --- vertical: symmetric, and accounts for every row
+        if top != bottom:
+            failures.append(f"{a['out']}: trimmed {top} rows off the top, {bottom} off the bottom")
+        if top + kept_h + bottom != sh:
+            failures.append(
+                f"{a['out']}: {top}+{kept_h}+{bottom} != source height {sh}")
+        # --- written file: same shape as the window, never enlarged
+        if ow > sw:
+            failures.append(f"{a['out']}: {ow}px wide from a {sw}px source — upscaled")
+        win_aspect = (x1 - x0) / max(kept_h, 1)
+        out_aspect = ow / max(oh, 1)
+        if abs(win_aspect - out_aspect) > 0.01:
+            failures.append(
+                f"{a['out']}: window {win_aspect:.4f} but file {out_aspect:.4f} — squashed")
+
+        # --- report-only: does the centred window cut a face?
         for f in a["faceBoxes"]:
-            # Original face box -> pixels -> crop pixels -> normalised in crop.
-            fx0 = max(f["x"] * ow, 0.0)
-            fy0 = max(f["y"] * oh, 0.0)
-            fx1 = min((f["x"] + f["w"]) * ow, float(ow))
-            fy1 = min((f["y"] + f["h"]) * oh, float(oh))
-            ex0 = (fx0 - bx0) * scale_x / cw
-            ey0 = (fy0 - by0) * scale_y / ch
-            ex1 = (fx1 - bx0) * scale_x / cw
-            ey1 = (fy1 - by0) * scale_y / ch
-            ecx, ecy = (ex0 + ex1) / 2, (ey0 + ey1) / 2
-            exp_h = ey1 - ey0
+            fy0, fy1 = f["y"] * sh, (f["y"] + f["h"]) * sh
+            face_h = max(fy1 - fy0, 1)
+            cut_top = max(y0 - fy0, 0) / face_h
+            cut_bottom = max(fy1 - y1, 0) / face_h
+            if max(cut_top, cut_bottom) > CLIP_TOLERANCE:
+                clipped.append((a["out"], a["src"], round(cut_top, 3),
+                                round(cut_bottom, 3), round(f["h"], 3)))
 
-            # Nearest detection in the crop whose centre is within half the
-            # expected face width of where the face should have landed.
-            best, best_d = None, 1e9
-            for g in found:
-                gcx = g["x"] + g["w"] / 2
-                gcy = g["y"] + g["h"] / 2
-                d = ((gcx - ecx) ** 2 + (gcy - ecy) ** 2) ** 0.5
-                if d < best_d:
-                    best, best_d = g, d
-            if best is None or best_d > max(ex1 - ex0, 0.05):
-                # Not re-detected. Distinguish the two very different causes:
-                # a crop that cut the face off (a real bug) vs. the detector
-                # simply not firing again on a small face after downscaling
-                # (a recall artifact — the pixels are all still there).
-                # Geometry is authoritative for the first.
-                inside = (ex0 >= -0.002 and ey0 >= -0.002
-                          and ex1 <= 1.002 and ey1 <= 1.002)
-                face_px_in_crop = exp_h * ch
-                if inside:
-                    recall.append((a["out"], round(face_px_in_crop), round(ecy, 3)))
-                else:
-                    lost.append((a["out"], round(ecx, 3), round(ecy, 3)))
-            elif best["h"] < exp_h * HEIGHT_TOLERANCE:
-                truncated.append((a["out"], round(best["h"] / exp_h, 2)))
-            else:
-                ok += 1
+    print(f"Checked {len(audit)} derivatives against their sources.")
+    if failures:
+        print(f"\n{len(failures)} CROP RULE VIOLATION(S):")
+        for f in failures:
+            print(f"  ! {f}")
+    else:
+        print("  Full source width kept, vertical trim symmetric, "
+              "no squash, no upscale — all clean.")
 
-    total = sum(a["faces"] for a in with_faces)
-    print(f"Re-detected on {len(with_faces)} derivative crops "
-          f"({total} faces expected from the originals)")
-    print(f"  intact (re-detected):        {ok}")
-    print(f"  CLIPPED by the crop:         {len(lost)}")
-    print(f"  truncated (<{int(HEIGHT_TOLERANCE * 100)}% of height):  {len(truncated)}")
-    print(f"  whole but not re-detected:   {len(recall)}  "
-          f"(geometry says fully inside; detector recall at reduced scale)")
-    for o in lost:
-        print(f"    CLIPPED   {o[0]} expected near x={o[1]} y={o[2]}")
-    for o in truncated:
-        print(f"    TRUNCATED {o[0]} kept {o[1]:.0%} of height")
-    for o in recall:
-        print(f"    recall    {o[0]} face is ~{o[1]}px tall in the crop, centre y={o[2]}")
-    # Only a geometric clip or a measured truncation is a failure. A
-    # small face the detector declines to re-fire on is not.
-    return 1 if (lost or truncated) else 0
+    # A worked example, so the arithmetic is legible rather than asserted.
+    example = max(audit, key=lambda a: a["trimTop"])
+    x0, y0, x1, y1 = example["box"]
+    with Image.open(ROOT / example["src"].lstrip("/")) as im:
+        sw, sh = im.size
+    with Image.open(ROOT / example["out"].lstrip("/")) as im:
+        ow, oh = im.size
+    print(f"\nWorked example — {example['src']}")
+    print(f"  source            {sw} x {sh}  ({sw / sh:.4f}:1)")
+    print(f"  crop window       x 0 -> {x1} (full width), y {y0} -> {y1}")
+    print(f"  rows removed      {example['trimTop']} top, {example['trimBottom']} bottom"
+          f"  (equal: {example['trimTop'] == example['trimBottom']})")
+    print(f"  {example['trimTop']} + {y1 - y0} + {example['trimBottom']} = "
+          f"{example['trimTop'] + (y1 - y0) + example['trimBottom']} = source height {sh}")
+    print(f"  written           {ow} x {oh}  ({ow / oh:.4f}:1)")
+    print(f"  width preserved   {x1 - x0} == {sw}: {x1 - x0 == sw}")
+
+    print(f"\nFrames where the centred window cuts a detected face: {len(clipped)}")
+    print("(reported only — NOT changed. A non-centred vertical offset is Alex's call.)")
+    for out, src, ct, cb, fh in sorted(clipped, key=lambda c: -max(c[2], c[3])):
+        where = f"top {ct:.0%}" if ct >= cb else f"bottom {cb:.0%}"
+        print(f"  · {src}  loses {where} of a face that fills {fh:.0%} of frame height")
+
+    return 1 if failures else 0
 
 
 if __name__ == "__main__":

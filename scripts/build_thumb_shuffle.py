@@ -6,14 +6,26 @@ one still in its lightbox, this:
 
   1. reads the tile's still list from the single source of truth
      (RICH_CONFIG in js/lightbox.js, plus _data/tll.yml for the TLL entry),
-  2. runs each still through Apple's Vision framework (scripts/vision_probe.swift)
-     for face rectangles + attention-based saliency,
-  3. writes a saliency/face-aware crop at the tile's aspect ratio into
+     minus anything opted out in _data/shuffle_exclusions.yml,
+  2. writes a FULL-WIDTH, CENTRED VERTICAL crop at the tile's aspect ratio into
      img/shuffle/<key>/ — originals are never touched,
+  3. runs each still through Apple's Vision framework (scripts/vision_probe.swift)
+     for face rectangles + head yaw, and turns those into a per-frame FACING
+     and CLOSE-UP signal used only to order the shuffle,
   4. measures the CROP (not the original) for palette, luminance, contrast and
      composition, and
   5. emits _data/thumb_shuffle.json (canonical) and data/thumb-shuffle.json
      (fetched by js/thumb-shuffle.js at runtime).
+
+THE CROP RULE, which overrides everything else in this file:
+
+    The horizontal composition of a frame is the cinematographer's decision.
+    This script does not get a vote. Every derivative keeps 100% of the source
+    width — no horizontal crop, no pan, no zoom, no upscale — and reaches the
+    tile's aspect ratio by removing an EQUAL number of rows from the top and
+    the bottom. Nothing about the picture content moves the window. Faces and
+    saliency are read for SELECTION ORDERING ONLY (see facing_signal); if you
+    are ever tempted to feed them back into the geometry, don't.
 
 All the expensive work happens here. The browser only ever reads the JSON.
 
@@ -24,6 +36,7 @@ import colorsys
 import hashlib
 import json
 import re
+import shutil
 import subprocess
 import sys
 from functools import lru_cache
@@ -37,6 +50,7 @@ PROBE = ROOT / "scripts" / ".bin" / "vision_probe"
 OUT_IMG = ROOT / "img" / "shuffle"
 DATA_JSON = ROOT / "data" / "thumb-shuffle.json"
 SITE_DATA_JSON = ROOT / "_data" / "thumb_shuffle.json"
+EXCLUSIONS_YML = ROOT / "_data" / "shuffle_exclusions.yml"
 
 # Tile geometry. Narrative cells are locked to 2.35:1 by
 # `.narrative-cinema li > a` in css/style.css; the commercial grid keeps the
@@ -47,11 +61,21 @@ GEOMETRY = {
 }
 JPEG_QUALITY = 82
 
-# A face must keep at least this much of its own height as clear space above
-# it (hair/headroom) and below (chin/neck) inside the crop. 0.35 of face
-# height is a generous portrait margin — a crop that clips this is rejected
-# and the window is nudged until it fits.
-FACE_PAD = 0.35
+# --- facing / close-up thresholds (SELECTION ONLY — never crop geometry) ---
+# Below this much head turn the subject reads as frontal, which is not a
+# direction. ~17 degrees. Measured on this corpus, yaw agrees with the
+# lookroom convention 74% of the time above 0.20 rad but 85-100% above 0.30,
+# so the threshold sits where the signal is actually trustworthy — a frame
+# we're unsure about is better called neutral than called wrong.
+FACING_YAW = 0.30
+# Calibration uses only unmistakable head turns (~26 degrees), where the
+# lookroom cross-check is itself reliable.
+CALIB_YAW = 0.45
+# A face taller than this fraction of the CROP height is a tight close-up.
+TIGHT_FACE = 0.42
+# Two faces within this area ratio count as co-equal subjects; if they disagree
+# about direction the frame has no single facing.
+CO_SUBJECT_RATIO = 1.6
 
 
 # ---------------------------------------------------------------- source data
@@ -126,7 +150,10 @@ def _yaml_scalar(raw):
     if len(raw) >= 2 and raw[0] in "'\"" and raw[-1] == raw[0]:
         inner = raw[1:-1]
         return inner.replace("''", "'") if raw[0] == "'" else inner
-    return raw
+    # Unquoted scalar: a " #" ends it and starts a comment. Jekyll parses these
+    # same _data files as real YAML, so this reader has to agree with it —
+    # otherwise an annotated entry silently becomes a path that matches nothing.
+    return re.split(r"\s+#", raw, 1)[0].strip()
 
 
 def load_tll_frames():
@@ -180,9 +207,13 @@ def load_tile_order():
     The thumbnail Alex chose for a tile is a still too — it belongs in that
     tile's rotation, and cropping it at build time is what lets the page stop
     shipping the uncropped original.
+
+    Returns (order, thumbs, rewritten) where `rewritten` is the set of tiles
+    whose <img src> a previous run already pointed at a generated crop — the
+    only tiles that could need their authored thumbnail put back.
     """
     html = (ROOT / "index.html").read_text()
-    order, thumbs = [], {}
+    order, thumbs, was_rewritten = [], {}, set()
     for section, pat in GRID_PATTERNS:
         m = re.search(pat, html, re.S)
         if not m:
@@ -203,6 +234,7 @@ def load_tile_order():
         prior = json.loads(SITE_DATA_JSON.read_text()).get("tiles", {})
         for key, src in list(thumbs.items()):
             if src.lstrip("/").startswith("img/shuffle/"):
+                was_rewritten.add(key)
                 orig = (prior.get(key) or {}).get("originalThumb")
                 # Never accept a previously-rewritten path as the "original".
                 if orig and orig.lstrip("/").startswith("img/shuffle/"):
@@ -211,7 +243,7 @@ def load_tile_order():
                     thumbs[key] = orig
                 else:
                     del thumbs[key]
-    return order, thumbs
+    return order, thumbs, was_rewritten
 
 
 def rewrite_index_srcs(mapping):
@@ -264,94 +296,161 @@ def run_vision(paths):
     return out
 
 
-def choose_crop(w, h, aspect, vis):
-    """Pick the crop window, keeping every detected face whole.
+def centred_vertical_crop(w, h, aspect):
+    """Full source width, equal rows off the top and the bottom. Nothing else.
 
-    Order of preference: keep all faces (with headroom) -> centre on the
-    saliency box -> centre on the frame. Returns (box, basis, faces_kept).
+    Takes only the source dimensions and the target ratio — no image content,
+    no Vision data — because there is no input that could legitimately move
+    this window. Returns (box, rows_removed_top, rows_removed_bottom).
+
+    Two cases:
+
+      * Source TALLER than the tile (a 16:9 or 4:3 still in a 2.35 cell):
+        keep the full width, trim to `w / aspect` rows.
+      * Source ALREADY AS WIDE OR WIDER than the tile (the 2.38:1 scope
+        frames): there are no spare rows to remove, and reaching the tile
+        ratio would mean cutting width. It doesn't. The frame is emitted
+        whole and CSS `object-fit: cover` handles the last ~1.6% — centred
+        and symmetric, so the composition still isn't repositioned.
+
+    The removed-row count is forced EVEN so top and bottom are exactly equal.
+    That costs at most one row of height (an aspect error under 0.004) and
+    buys an arithmetic guarantee of symmetry rather than a rounding one.
     """
-    tw, th = (int(round(h * aspect)), h) if w / h > aspect else (w, int(round(w / aspect)))
-    tw, th = min(tw, w), min(th, h)
-
-    sal = vis.get("saliency")
-
-    def px(b):
-        # Vision happily reports a face box that runs off the edge of the
-        # frame when the head is already clipped in the source still. Clamp
-        # to the image: we can only promise the crop doesn't cut MORE than
-        # the original did, and an unclamped box makes the fit test
-        # unsatisfiable for exactly the frames that need it most.
-        x0 = max(b["x"] * w, 0.0)
-        y0 = max(b["y"] * h, 0.0)
-        x1 = min((b["x"] + b["w"]) * w, float(w))
-        y1 = min((b["y"] + b["h"]) * h, float(h))
-        return (x0, y0, max(x1 - x0, 0.0), max(y1 - y0, 0.0))
-
-    faces = [f for f in (vis.get("faces") or []) if px(f)[2] > 1 and px(f)[3] > 1]
-
-    # Region we must not clip: all faces plus headroom, clamped to the frame.
-    # If the padded union is too big to fit the crop window, fall back to the
-    # bare face union — headroom is a nicety, an uncut face is not.
-    must = None
-    if faces:
-        def union(pad):
-            xs0, ys0, xs1, ys1 = [], [], [], []
-            for f in faces:
-                fx, fy, fw, fh = px(f)
-                xs0.append(max(fx - fw * pad, 0.0))
-                ys0.append(max(fy - fh * pad, 0.0))
-                xs1.append(min(fx + fw * (1 + pad), float(w)))
-                ys1.append(min(fy + fh * (1 + pad), float(h)))
-            return (min(xs0), min(ys0), max(xs1), max(ys1))
-
-        must = union(FACE_PAD)
-        if must[2] - must[0] > tw or must[3] - must[1] > th:
-            must = union(0.0)
-
-    # Region we'd LIKE to keep: faces if any, else attention saliency.
-    if must:
-        want, basis = must, "face"
-    elif sal:
-        sx, sy, sw, sh = px(sal)
-        want, basis = (sx, sy, sx + sw, sy + sh), "saliency"
-    else:
-        want, basis = (0, 0, w, h), "center"
-
-    cx = (want[0] + want[2]) / 2
-    cy = (want[1] + want[3]) / 2
-    x0 = int(round(min(max(cx - tw / 2, 0), w - tw)))
-    y0 = int(round(min(max(cy - th / 2, 0), h - th)))
-
-    # If the must-keep region is narrower/shorter than the window but the
-    # centred window still clips it (clamped at an edge), slide the window
-    # until it contains the region. This is what actually prevents a crop
-    # from taking the top off a head.
-    if must:
-        mx0, my0, mx1, my1 = must
-        if mx1 - mx0 <= tw:
-            x0 = int(round(min(max(x0, mx1 - tw), mx0)))
-            x0 = min(max(x0, 0), w - tw)
-        if my1 - my0 <= th:
-            y0 = int(round(min(max(y0, my1 - th), my0)))
-        else:
-            # The face is taller than the window can hold — a big close-up in
-            # a wide cell. Centring it takes a slice off the top of the head
-            # AND the chin, which is the one result this whole exercise is
-            # meant to avoid. Anchor to the top of the face instead: hair and
-            # eyes survive, the crop loses chin/neck, which is how a person
-            # would frame it.
-            y0 = int(round(my0))
-        y0 = min(max(y0, 0), h - th)
-
-    box = (x0, y0, x0 + tw, y0 + th)
-    kept = sum(1 for f in faces if _face_inside(px(f), box))
-    return box, basis, kept, len(faces)
+    th = min(h, int(round(w / aspect)))
+    if (h - th) % 2:
+        th -= 1
+    th = max(th, 1)
+    trim = (h - th) // 2
+    return (0, trim, w, trim + th), trim, trim
 
 
-def _face_inside(face_px, box, pad=0.0):
-    fx, fy, fw, fh = face_px
-    return (fx - fw * pad >= box[0] - 0.5 and fy - fh * pad >= box[1] - 0.5
-            and fx + fw * (1 + pad) <= box[2] + 0.5 and fy + fh * (1 + pad) <= box[3] + 0.5)
+def scale_to_width(crop, max_width):
+    """Downscale to the tile's delivery width. Never upscales."""
+    w, h = crop.size
+    if w <= max_width:
+        return crop
+    # Height follows width exactly, so the crop's own ratio is preserved —
+    # a wider-than-2.35 scope frame must not be squashed into 2.35.
+    return crop.resize((max_width, max(1, int(round(h * max_width / w)))), Image.LANCZOS)
+
+
+# ----------------------------------------- facing + close-up (SELECTION ONLY)
+#
+# These two numbers exist so the shuffle stops putting two tight close-ups of
+# people looking the same way on top of each other. They are consumed by
+# scoreCandidate() in js/thumb-shuffle.js and by nothing else. They are
+# computed AFTER the crop box is fixed and are never passed back into it.
+
+def _face_px(f, w, h):
+    """Face box in pixels, clamped to the frame (Vision overruns clipped heads)."""
+    x0 = max(f["x"] * w, 0.0)
+    y0 = max(f["y"] * h, 0.0)
+    x1 = min((f["x"] + f["w"]) * w, float(w))
+    y1 = min((f["y"] + f["h"]) * h, float(h))
+    return x0, y0, max(x1 - x0, 0.0), max(y1 - y0, 0.0)
+
+
+def calibrate_yaw_sign(vision):
+    """Work out which yaw sign means "facing screen-left", from the corpus.
+
+    Vision documents yaw in radians but not in terms of screen direction, and
+    guessing wrong would invert the whole constraint. So: take every frame
+    with exactly one clearly-turned, clearly-off-centre face and compare the
+    yaw sign against the lookroom convention — a subject placed right of
+    centre is framed that way because they are looking screen-left. Whichever
+    mapping the corpus agrees with wins.
+
+    Returns (sign, agreement, sample_size); `sign` multiplies yaw so that a
+    positive product means screen-left.
+    """
+    agree = total = 0
+    for rec in vision.values():
+        faces = rec.get("faces") or []
+        if len(faces) != 1:
+            continue                      # two-shots have no single lookroom
+        yaw = faces[0].get("yaw")
+        if yaw is None or abs(yaw) < CALIB_YAW:
+            continue
+        cx = faces[0]["x"] + faces[0]["w"] / 2
+        if abs(cx - 0.5) < 0.10:
+            continue                      # centred: lookroom says nothing
+        total += 1
+        if (yaw < 0) == (cx > 0.5):       # hypothesis: negative yaw = screen-left
+            agree += 1
+    if not total:
+        return -1, 0.0, 0
+    sign = -1 if agree * 2 >= total else 1
+    return sign, max(agree, total - agree) / total, total
+
+
+def facing_signal(vis, box, w, h, sign):
+    """(facing, tightness) for one frame.
+
+    facing is 'left' | 'right' | 'neutral', from the head yaw of the largest
+    detected face. Frames with no face, a frontal face, or two co-equal
+    subjects looking opposite ways are NEUTRAL — the constraint should only
+    fire when the direction is unambiguous.
+
+    tightness is that face's height as a fraction of the CROP height, which is
+    what a visitor actually sees in the tile.
+    """
+    crop_h = box[3] - box[1]
+    faces = []
+    for f in vis.get("faces") or []:
+        fx, fy, fw, fh = _face_px(f, w, h)
+        if fw > 1 and fh > 1:
+            faces.append((fw * fh, fh, f.get("yaw")))
+    if not faces:
+        return "neutral", 0.0
+
+    faces.sort(reverse=True, key=lambda t: t[0])
+    area, fh, yaw = faces[0]
+
+    def direction(y):
+        if y is None or abs(y) < FACING_YAW:
+            return "neutral"
+        return "left" if y * sign > 0 else "right"
+
+    facing = direction(yaw)
+    # A two-shot of people facing each other has no single facing.
+    for other_area, _, other_yaw in faces[1:]:
+        if other_area * CO_SUBJECT_RATIO < area:
+            break
+        od = direction(other_yaw)
+        if od != "neutral" and facing != "neutral" and od != facing:
+            facing = "neutral"
+            break
+
+    return facing, round(fh / max(crop_h, 1), 4)
+
+
+# ------------------------------------------------------------------ exclusions
+
+def load_exclusions():
+    """Source stills opted out of the HOMEPAGE ROTATION only.
+
+    Read here and nowhere else, which is what keeps an excluded still fully
+    present in the lightbox: the lightbox's frame lists live in js/lightbox.js
+    and _data/tll.yml and this build never edits them.
+    """
+    if not EXCLUSIONS_YML.exists():
+        return set()
+    out, in_list = set(), False
+    for line in EXCLUSIONS_YML.read_text().splitlines():
+        if re.match(r"^exclude_from_shuffle:\s*$", line):
+            in_list = True
+            continue
+        if in_list and line.strip() and not line.startswith((" ", "-", "\t", "#")):
+            break
+        if not in_list:
+            continue
+        m = re.match(r"^\s*-\s+(.+?)\s*$", line)
+        if m:
+            val = _yaml_scalar(m.group(1))
+            if val:
+                out.add(val.lstrip("/"))
+    return out
 
 
 def measure(img):
@@ -408,21 +507,53 @@ def measure(img):
 
 def build(verify=False):
     config = load_rich_config()
-    order, thumbs = load_tile_order()
+    order, thumbs, rewritten_keys = load_tile_order()
+    excluded = load_exclusions()
+    seen_excluded, dropped_tiles = set(), {}
 
     all_paths, plan = [], []
     for section, keys in order:
         for key in keys:
             frames = list(config.get(key, {}).get("frames", []))
-            if len(frames) < 2:
-                continue
             title = config[key].get("title", "")
+
+            # Number each still by its position in the LIGHTBOX's own list,
+            # before anything is inserted into or removed from it. That
+            # ordinal names the derivative and drives the generic alt text, so
+            # neither shifts when the tile's thumbnail joins the rotation or
+            # when a still is excluded from it.
+            frames = [dict(fr, ord=pos + 1) for pos, fr in enumerate(frames)]
+
+            # Homepage-rotation opt-out. Applied before anything is analysed
+            # or written, so an excluded still costs no derivative and no
+            # bytes — while staying exactly where it is in the lightbox.
+            kept = []
+            for fr in frames:
+                rel = fr["src"].lstrip("/")
+                if rel in excluded:
+                    seen_excluded.add(rel)
+                else:
+                    kept.append(fr)
+            frames = kept
+
+            if len(frames) < 2:
+                # Not enough left to shuffle. Only tiles a previous run had
+                # pointed at a crop need anything done — put the authored
+                # thumbnail back so the page can't reference a derivative
+                # this run won't write.
+                own = thumbs.get(key)
+                if own and key in rewritten_keys:
+                    dropped_tiles[key] = own
+                continue
 
             # The tile's own thumbnail joins its rotation — unless it is
             # byte-identical to a still already in the list (TLL's thumbnail
             # is its 5th still), in which case it's already there.
             own = thumbs.get(key)
             own_abs = ROOT / own.lstrip("/") if own else None
+            if own and own.lstrip("/") in excluded:
+                seen_excluded.add(own.lstrip("/"))
+                own_abs = None
             if own_abs and own_abs.exists() and "/img/shuffle/" not in own:
                 digest = _digest(own_abs)
                 dupe = any(
@@ -447,7 +578,14 @@ def build(verify=False):
 
     print(f"Analysing {len(all_paths)} stills across {len(plan)} tiles…")
     vision = run_vision(all_paths)
+    yaw_sign, yaw_conf, yaw_n = calibrate_yaw_sign(vision)
+    print(f"Yaw convention: {'negative' if yaw_sign < 0 else 'positive'} = screen-left "
+          f"({yaw_conf:.0%} agreement with lookroom over {yaw_n} single-subject frames)")
 
+    # Every derivative is rewritten this pass. Clear the tree first so no crop
+    # from the old saliency cropper can survive as a stale file.
+    if OUT_IMG.exists():
+        shutil.rmtree(OUT_IMG)
     OUT_IMG.mkdir(parents=True, exist_ok=True)
     out_tiles, audit = {}, []
     total_bytes = 0
@@ -464,32 +602,38 @@ def build(verify=False):
             with Image.open(abs_path) as im:
                 im = im.convert("RGB")
                 w, h = im.size
-                box, basis, kept, nfaces = choose_crop(w, h, geo["aspect"], vis)
-                crop = im.crop(box)
-                out_w = geo["width"]
-                out_h = int(round(out_w / geo["aspect"]))
-                crop = crop.resize((out_w, out_h), Image.LANCZOS)
+                # Geometry only. `vis` is deliberately not in scope here.
+                box, trim_top, trim_bottom = centred_vertical_crop(w, h, geo["aspect"])
+                crop = scale_to_width(im.crop(box), geo["width"])
+                out_w, out_h = crop.size
                 stats = measure(crop)
+            facing, tight = facing_signal(vis, box, w, h, yaw_sign)
 
-            name = "thumb" if fr.get("isThumb") else str(i + 1)
+            name = "thumb" if fr.get("isThumb") else str(fr["ord"])
             rel = f"/img/shuffle/{key}/{name}.jpg"
             dest = ROOT / rel.lstrip("/")
             crop.save(dest, "JPEG", quality=JPEG_QUALITY, optimize=True, progressive=True)
             total_bytes += dest.stat().st_size
 
             # The tile's own thumbnail keeps whatever alt the page already
-            # gave it; lightbox stills use their own alt, falling back to the
-            # same positional label js/lightbox.js frameAlt() produces.
+            # gave it — and none of them have one, so it falls back to the
+            # project title rather than shipping an empty alt whenever the
+            # shuffle lands on the thumbnail. Lightbox stills use their own
+            # alt, falling back to the same positional label js/lightbox.js
+            # frameAlt() produces.
             if fr.get("isThumb"):
-                alt = fr.get("alt") or ""
+                alt = fr.get("alt") or title
                 default_src[key] = rel
             else:
-                alt = fr.get("alt") or f"{title} still {i + 1}"
-            items.append({"src": rel, "alt": alt, "i": i, **stats})
+                alt = fr.get("alt") or f"{title} still {fr['ord']}"
+            items.append({"src": rel, "alt": alt, "i": i,
+                          "facing": facing, "tight": tight, **stats})
             audit.append({
                 "tile": key, "section": section, "src": fr["src"], "out": rel,
-                "orig": [w, h], "box": list(box), "basis": basis,
-                "faces": nfaces, "facesKept": kept,
+                "orig": [w, h], "box": list(box), "out_size": [out_w, out_h],
+                "trimTop": trim_top, "trimBottom": trim_bottom,
+                "facing": facing, "tight": tight,
+                "faces": len(vis.get("faces") or []),
                 "faceBoxes": vis.get("faces") or [],
             })
 
@@ -511,18 +655,44 @@ def build(verify=False):
     SITE_DATA_JSON.write_text(json.dumps(payload, indent=1))
     (ROOT / "scripts" / "thumb_shuffle_audit.json").write_text(json.dumps(audit, indent=1))
 
-    rewritten = rewrite_index_srcs(default_src)
+    # Tiles that fell out of the rotation get their authored thumbnail back.
+    rewritten = rewrite_index_srcs({**dropped_tiles, **default_src})
     print(f"index.html tile srcs pointed at build-time crops: {rewritten}")
 
-    n_faces = sum(a["faces"] for a in audit)
-    lost = [a for a in audit if a["facesKept"] < a["faces"]]
+    # --- exclusions -------------------------------------------------------
+    unmatched = sorted(excluded - seen_excluded)
+    print(f"\nExclusions: {len(excluded)} listed, {len(seen_excluded)} matched a still")
+    for u in unmatched:
+        print(f"  ! no still matches '{u}' — check the path in "
+              f"{EXCLUSIONS_YML.relative_to(ROOT)}", file=sys.stderr)
+    for key, src in dropped_tiles.items():
+        print(f"  · tile '{key}' left the rotation (under 2 stills); "
+              f"restored {src}")
+
+    # --- crop arithmetic, verified rather than asserted --------------------
+    bad_width = [a for a in audit if a["box"][2] - a["box"][0] != a["orig"][0]]
+    bad_x = [a for a in audit if a["box"][0] != 0]
+    asym = [a for a in audit if a["trimTop"] != a["trimBottom"]]
+    upscaled = [a for a in audit if a["out_size"][0] > a["orig"][0]]
     print(f"\n{len(audit)} derivatives, {total_bytes:,} bytes total "
           f"({total_bytes / len(audit):,.0f} avg)")
-    print(f"Frames with faces: {sum(1 for a in audit if a['faces'])}; "
-          f"faces detected: {n_faces}; faces clipped by a crop: "
-          f"{sum(a['faces'] - a['facesKept'] for a in lost)}")
-    for a in lost:
-        print(f"  ! {a['out']}  kept {a['facesKept']}/{a['faces']}")
+    print(f"Full source width kept: {len(audit) - len(bad_width)}/{len(audit)}; "
+          f"horizontal offset non-zero: {len(bad_x)}; "
+          f"asymmetric vertical trim: {len(asym)}; upscaled: {len(upscaled)}")
+    if bad_width or bad_x or asym or upscaled:
+        sys.exit("CROP RULE VIOLATED — see above")
+
+    uncropped = [a for a in audit if a["trimTop"] == 0]
+    print(f"Frames needing no vertical trim at all (source already at or wider "
+          f"than the tile): {len(uncropped)}")
+
+    # --- facing / close-up ------------------------------------------------
+    fc = {"left": 0, "right": 0, "neutral": 0}
+    for a in audit:
+        fc[a["facing"]] += 1
+    tight = [a for a in audit if a["tight"] >= TIGHT_FACE]
+    print(f"Facing: {fc['left']} screen-left, {fc['right']} screen-right, "
+          f"{fc['neutral']} neutral; tight close-ups: {len(tight)}")
     return audit
 
 

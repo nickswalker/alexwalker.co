@@ -26,15 +26,18 @@ const PREV_KEY = 'thumb-shuffle-prev';
 // shown for that tile and only reset once they've all been seen.
 const MAX_TILE_HISTORY = 32;
 
-// Neighbours in a 2-column grid: the tile immediately before, and the tile
-// directly above (two back). Those are the two a visitor actually sees
-// side-by-side/stacked, so they're the only ones worth scoring against.
-const NEIGHBOUR_OFFSETS = [1, 2];
+// How much each kind of grid neighbour counts. A tile stacked directly ABOVE
+// another is the harshest comparison a visitor makes — the two frames share a
+// vertical edge and the eye travels straight down between them — so vertical
+// adjacency is weighted well above side-by-side.
+const VERTICAL_WEIGHT = 1.6;
+const HORIZONTAL_WEIGHT = 1.0;
 
 const DARK = 0.25;          // below this mean luminance a frame reads as "dark"
 const CLASH = 0.28;         // hue distance (0..0.5) beyond which two frames clash
 const SAME_BALANCE = 0.12;  // subject sits in the same third
 const SAME_EDGE = 0.02;     // same visual busy-ness
+const TIGHT = 0.42;         // face fills this much of the frame height = close-up
 
 async function fetchJSON(url) {
     try {
@@ -79,36 +82,59 @@ function writePrev(prev) {
  * How well does `cand` sit next to the frames already placed in `neighbours`?
  * Higher is better. Every term is a plain comparison of two build-time
  * numbers, so scoring the whole grid is a few hundred float ops.
+ *
+ * `neighbours` is [{ frame, weight }] — weight says how strongly this pairing
+ * is felt, so a bad stack costs more than the same badness side-by-side.
  */
 function scoreCandidate(cand, neighbours) {
     let score = 0;
 
-    for (const n of neighbours) {
+    for (const { frame: n, weight } of neighbours) {
+        let s = 0;
+
         // Colour. Frames that are both washed out have no palette worth
         // comparing, so only judge hue when both actually carry colour.
         if (cand.saturation >= 0.12 && n.saturation >= 0.12) {
             const d = hueDistance(cand.hue, n.hue);
-            if (d <= 0.14) score += 2.0;        // analogous — reads as one look
-            else if (d < CLASH) score += 0.5;
-            else score -= 2.5;                  // near-opposite — clashes
+            if (d <= 0.14) s += 2.0;            // analogous — reads as one look
+            else if (d < CLASH) s += 0.5;
+            else s -= 2.5;                      // near-opposite — clashes
         }
 
         // Tone. Two dark frames adjacent turn into one black hole in the grid.
-        if (cand.luminance < DARK && n.luminance < DARK) score -= 3.0;
+        if (cand.luminance < DARK && n.luminance < DARK) s -= 3.0;
         // ...but a hard bright/dark jump next to each other is also jarring.
         const lumGap = Math.abs(cand.luminance - n.luminance);
-        if (lumGap > 0.42) score -= 1.2;
-        else if (lumGap > 0.10 && lumGap < 0.30) score += 1.0; // pleasant variation
+        if (lumGap > 0.42) s -= 1.2;
+        else if (lumGap > 0.10 && lumGap < 0.30) s += 1.0; // pleasant variation
 
         // Composition. Same subject placement AND same busy-ness reads as a
         // duplicate even when the images are unrelated.
         if (Math.abs(cand.balance - n.balance) < SAME_BALANCE
             && Math.abs(cand.edge - n.edge) < SAME_EDGE) {
-            score -= 2.0;
+            s -= 2.0;
         }
         // Mirrored subject placement (one left-weighted, one right-weighted)
         // is the classic pleasing pair.
-        if (Math.abs(cand.balance - n.balance) > 0.25) score += 0.8;
+        if (Math.abs(cand.balance - n.balance) > 0.25) s += 0.8;
+
+        // Subject facing. Two people looking the same way in adjacent tiles
+        // read as one shot repeated — the mirrored-pair effect. `facing` is
+        // 'neutral' whenever the build wasn't sure, and neutral never fires
+        // this rule in either direction.
+        const sameFacing = cand.facing && cand.facing !== 'neutral'
+            && cand.facing === n.facing;
+        if (sameFacing) s -= 3.2;
+        else if (cand.facing === 'left' && n.facing === 'right') s += 1.0;
+        else if (cand.facing === 'right' && n.facing === 'left') s += 1.0;
+
+        // Shot size. Two tight close-ups stacked is repetitive even when the
+        // subjects look opposite ways, so this stands on its own — and adds
+        // to the facing penalty when both problems are present.
+        const bothTight = (cand.tight || 0) >= TIGHT && (n.tight || 0) >= TIGHT;
+        if (bothTight) s -= 2.2;
+
+        score += s * weight;
     }
 
     // Break ties without a tie-breaking rule anyone could notice. Small
@@ -116,11 +142,74 @@ function scoreCandidate(cand, neighbours) {
     return score + Math.random() * 0.6;
 }
 
+// Two tiles are in the same row / same column if their edges agree to within
+// this many pixels. Grid tracks line up exactly; this is just float slop.
+const ALIGN_TOLERANCE = 4;
+
+/**
+ * Grid neighbours for every tile, as [{ index, weight }] pointing at EARLIER
+ * tiles only (the ones already decided when this slot is filled).
+ *
+ * Read off the laid-out geometry rather than counted from the CSS, because
+ * the two grids don't agree — Narrative is pinned to 2 columns, Commercial
+ * goes to 4 above 900px — and both collapse on a phone. Asking where the
+ * boxes actually are answers "which tile is directly above this one" for any
+ * column count, any breakpoint, and any ragged final row, with nothing here
+ * to drift out of sync when the stylesheet changes.
+ */
+function gridNeighbours(anchors) {
+    const out = anchors.map(() => []);
+
+    // Group by list first: tiles in different grids are never neighbours,
+    // even where the two grids happen to line up on screen.
+    const byList = new Map();
+    anchors.forEach((a, i) => {
+        const ul = a.closest('ul') || a.parentElement;
+        if (!byList.has(ul)) byList.set(ul, []);
+        byList.get(ul).push(i);
+    });
+
+    const rect = (i) => {
+        const el = anchors[i].closest('li') || anchors[i];
+        const r = el.getBoundingClientRect();
+        return { top: r.top + window.scrollY, left: r.left };
+    };
+
+    for (const indices of byList.values()) {
+        const boxes = new Map(indices.map(i => [i, rect(i)]));
+
+        indices.forEach((i, pos) => {
+            const me = boxes.get(i);
+
+            // Directly above: same column, nearest row that starts higher up.
+            let above = -1;
+            for (const j of indices) {
+                if (j >= i) break;
+                const other = boxes.get(j);
+                if (Math.abs(other.left - me.left) > ALIGN_TOLERANCE) continue;
+                if (me.top - other.top <= ALIGN_TOLERANCE) continue;
+                if (above < 0 || other.top > boxes.get(above).top) above = j;
+            }
+            if (above >= 0) out[i].push({ index: above, weight: VERTICAL_WEIGHT });
+
+            // Immediately left: the previous tile, only if it shares this row.
+            const prev = indices[pos - 1];
+            if (prev !== undefined
+                && Math.abs(boxes.get(prev).top - me.top) <= ALIGN_TOLERANCE) {
+                out[i].push({ index: prev, weight: HORIZONTAL_WEIGHT });
+            }
+        });
+    }
+    return out;
+}
+
 export async function initThumbShuffle() {
     const anchors = Array.from(
         document.querySelectorAll('.thumbnails.playbuttons a[data-rich]')
     ).filter(a => a.querySelector('img'));
     if (!anchors.length) return;
+
+    const neighbourMap = gridNeighbours(anchors);
 
     const data = await fetchJSON(DATA_URL);
     if (!data || !data.tiles) return;
@@ -146,11 +235,11 @@ export async function initThumbShuffle() {
             history = [];
         }
 
-        // Neighbours already decided this pass, in grid-adjacency order.
+        // Neighbours already decided this pass, each with its adjacency weight.
         const neighbours = [];
-        for (const off of NEIGHBOUR_OFFSETS) {
-            const n = chosen[idx - off];
-            if (n) neighbours.push(n);
+        for (const { index, weight } of neighbourMap[idx]) {
+            const n = chosen[index];
+            if (n) neighbours.push({ frame: n, weight });
         }
 
         // Shuffle first so equal scores don't always resolve to the same

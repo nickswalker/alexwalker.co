@@ -19,88 +19,98 @@
    "frames": [
     {
      "src": "/img/shuffle/hoa/thumb.jpg",
-     "alt": "",
+     "alt": "House of Abraham",
      "i": 0,
+     "facing": "neutral",
+     "tight": 0.1749,
      "rgb": [
-      64,
-      48,
-      43
+      66,
+      50,
+      44
      ],
-     "hue": 0.0339,
-     "saturation": 0.3856,
-     "luminance": 0.2004,
-     "contrast": 0.1382,
-     "edge": 0.0369,
-     "balance": 0.4797,
-     "topBottom": 0.0071
+     "hue": 0.0315,
+     "saturation": 0.3934,
+     "luminance": 0.2085,
+     "contrast": 0.1568,
+     "edge": 0.0433,
+     "balance": 0.4865,
+     "topBottom": -0.0399
+    },
+    {
+     "src": "/img/shuffle/hoa/1.jpg",
+     "alt": "House of Abraham still 1",
+     "i": 1,
+     "facing": "left",
+     "tight": 0.4633,
+     "rgb": [
+      78,
+      73,
+      53
+     ],
+     "hue": 0.185,
+     "saturation": 0.4474,
+     "luminance": 0.2851,
+     "contrast": 0.1848,
+     "edge": 0.0543,
+     "balance": 0.4925,
+     "topBottom": 0.0445
     },
     {
      "src": "/img/shuffle/hoa/2.jpg",
      "alt": "House of Abraham still 2",
-     "i": 1,
+     "i": 2,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
-      79,
-      74,
-      54
+      44,
+      31,
+      26
      ],
-     "hue": 0.1818,
-     "saturation": 0.4479,
-     "luminance": 0.2876,
-     "contrast": 0.1853,
-     "edge": 0.0544,
-     "balance": 0.4925,
-     "topBottom": 0.0444
+     "hue": 0.0221,
+     "saturation": 0.4445,
+     "luminance": 0.1321,
+     "contrast": 0.1331,
+     "edge": 0.0262,
+     "balance": 0.5054,
+     "topBottom": -0.0219
     },
     {
      "src": "/img/shuffle/hoa/3.jpg",
      "alt": "House of Abraham still 3",
-     "i": 2,
+     "i": 3,
+     "facing": "left",
+     "tight": 0.4772,
      "rgb": [
-      45,
-      32,
-      27
+      118,
+      94,
+      74
      ],
-     "hue": 0.0238,
-     "saturation": 0.4427,
-     "luminance": 0.134,
-     "contrast": 0.1335,
-     "edge": 0.0264,
-     "balance": 0.5049,
-     "topBottom": -0.0227
+     "hue": 0.0782,
+     "saturation": 0.4266,
+     "luminance": 0.382,
+     "contrast": 0.178,
+     "edge": 0.0487,
+     "balance": 0.536,
+     "topBottom": -0.1047
     },
     {
      "src": "/img/shuffle/hoa/4.jpg",
      "alt": "House of Abraham still 4",
-     "i": 3,
-     "rgb": [
-      120,
-      95,
-      75
-     ],
-     "hue": 0.0779,
-     "saturation": 0.4248,
-     "luminance": 0.3863,
-     "contrast": 0.1761,
-     "edge": 0.0489,
-     "balance": 0.5413,
-     "topBottom": -0.1061
-    },
-    {
-     "src": "/img/shuffle/hoa/5.jpg",
-     "alt": "House of Abraham still 5",
      "i": 4,
+     "facing": "neutral",
+     "tight": 0.6538,
      "rgb": [
       48,
-      41,
+      40,
       34
      ],
-     "hue": 0.0534,
-     "saturation": 0.3067,
-     "luminance": 0.1631,
-     "contrast": 0.196,
-     "edge": 0.0165,
-     "balance": 0.4648,
-     "topBottom": 0.1113
+     "hue": 0.0543,
+     "saturation": 0.3021,
+     "luminance": 0.1628,
+     "contrast": 0.1961,
+     "edge": 0.0166,
+     "balance": 0.4663,
+     "topBottom": 0.114
     }
    ]
   },
@@ -112,88 +122,98 @@
    "frames": [
     {
      "src": "/img/shuffle/tch/thumb.jpg",
-     "alt": "",
+     "alt": "Texas Cult House",
      "i": 0,
+     "facing": "right",
+     "tight": 1.074,
      "rgb": [
-      82,
-      62,
-      44
+      85,
+      66,
+      47
      ],
-     "hue": 0.08,
-     "saturation": 0.4758,
-     "luminance": 0.2557,
-     "contrast": 0.1181,
-     "edge": 0.0244,
-     "balance": 0.3782,
-     "topBottom": -0.046
+     "hue": 0.0817,
+     "saturation": 0.4546,
+     "luminance": 0.2695,
+     "contrast": 0.1229,
+     "edge": 0.0232,
+     "balance": 0.365,
+     "topBottom": -0.018
+    },
+    {
+     "src": "/img/shuffle/tch/1.jpg",
+     "alt": "Texas Cult House still 1",
+     "i": 1,
+     "facing": "right",
+     "tight": 0.1613,
+     "rgb": [
+      26,
+      24,
+      16
+     ],
+     "hue": 0.355,
+     "saturation": 0.5146,
+     "luminance": 0.0952,
+     "contrast": 0.0966,
+     "edge": 0.0202,
+     "balance": 0.4882,
+     "topBottom": -0.0456
     },
     {
      "src": "/img/shuffle/tch/2.jpg",
      "alt": "Texas Cult House still 2",
-     "i": 1,
+     "i": 2,
+     "facing": "left",
+     "tight": 0.7563,
      "rgb": [
-      27,
-      25,
-      16
+      69,
+      44,
+      19
      ],
-     "hue": 0.3507,
-     "saturation": 0.5144,
-     "luminance": 0.0962,
-     "contrast": 0.097,
-     "edge": 0.0202,
-     "balance": 0.4877,
-     "topBottom": -0.0463
+     "hue": 0.097,
+     "saturation": 0.7178,
+     "luminance": 0.1857,
+     "contrast": 0.1069,
+     "edge": 0.0237,
+     "balance": 0.5011,
+     "topBottom": -0.0423
     },
     {
      "src": "/img/shuffle/tch/3.jpg",
      "alt": "Texas Cult House still 3",
-     "i": 2,
+     "i": 3,
+     "facing": "left",
+     "tight": 0.247,
      "rgb": [
-      68,
-      43,
-      19
+      40,
+      24,
+      8
      ],
-     "hue": 0.0972,
-     "saturation": 0.7179,
-     "luminance": 0.1842,
-     "contrast": 0.1072,
-     "edge": 0.0238,
-     "balance": 0.4985,
-     "topBottom": -0.043
+     "hue": 0.1214,
+     "saturation": 0.749,
+     "luminance": 0.1035,
+     "contrast": 0.095,
+     "edge": 0.0209,
+     "balance": 0.4857,
+     "topBottom": 0.0641
     },
     {
      "src": "/img/shuffle/tch/4.jpg",
      "alt": "Texas Cult House still 4",
-     "i": 3,
-     "rgb": [
-      40,
-      25,
-      8
-     ],
-     "hue": 0.1199,
-     "saturation": 0.7511,
-     "luminance": 0.1049,
-     "contrast": 0.0951,
-     "edge": 0.0211,
-     "balance": 0.4873,
-     "topBottom": 0.0649
-    },
-    {
-     "src": "/img/shuffle/tch/5.jpg",
-     "alt": "Texas Cult House still 5",
      "i": 4,
+     "facing": "neutral",
+     "tight": 0.7995,
      "rgb": [
-      36,
+      35,
       34,
-      30
+      29
      ],
-     "hue": 0.2199,
-     "saturation": 0.3242,
-     "luminance": 0.1344,
-     "contrast": 0.1206,
-     "edge": 0.0248,
-     "balance": 0.5089,
-     "topBottom": -0.0236
+     "hue": 0.2197,
+     "saturation": 0.3269,
+     "luminance": 0.1327,
+     "contrast": 0.1203,
+     "edge": 0.0245,
+     "balance": 0.5088,
+     "topBottom": -0.0232
     }
    ]
   },
@@ -205,156 +225,174 @@
    "frames": [
     {
      "src": "/img/shuffle/hc/thumb.jpg",
-     "alt": "",
+     "alt": "Hub City",
      "i": 0,
+     "facing": "right",
+     "tight": 0.195,
      "rgb": [
-      94,
-      78,
-      60
+      103,
+      85,
+      66
      ],
-     "hue": 0.0966,
-     "saturation": 0.3504,
-     "luminance": 0.3149,
-     "contrast": 0.1939,
-     "edge": 0.0509,
-     "balance": 0.5138,
-     "topBottom": -0.1631
+     "hue": 0.0887,
+     "saturation": 0.3666,
+     "luminance": 0.3431,
+     "contrast": 0.1936,
+     "edge": 0.0537,
+     "balance": 0.5072,
+     "topBottom": -0.1129
+    },
+    {
+     "src": "/img/shuffle/hc/1.jpg",
+     "alt": "Hub City still 1",
+     "i": 1,
+     "facing": "neutral",
+     "tight": 0.0,
+     "rgb": [
+      40,
+      38,
+      31
+     ],
+     "hue": 0.5141,
+     "saturation": 0.5696,
+     "luminance": 0.1482,
+     "contrast": 0.1624,
+     "edge": 0.037,
+     "balance": 0.4943,
+     "topBottom": 0.0604
     },
     {
      "src": "/img/shuffle/hc/2.jpg",
      "alt": "Hub City still 2",
-     "i": 1,
+     "i": 2,
+     "facing": "left",
+     "tight": 0.2999,
      "rgb": [
-      41,
-      38,
-      31
+      45,
+      34,
+      18
      ],
-     "hue": 0.5177,
-     "saturation": 0.5674,
-     "luminance": 0.1504,
-     "contrast": 0.1627,
-     "edge": 0.0371,
-     "balance": 0.4935,
-     "topBottom": 0.0613
+     "hue": 0.1282,
+     "saturation": 0.6499,
+     "luminance": 0.1389,
+     "contrast": 0.1338,
+     "edge": 0.0248,
+     "balance": 0.5739,
+     "topBottom": -0.0989
     },
     {
      "src": "/img/shuffle/hc/3.jpg",
      "alt": "Hub City still 3",
-     "i": 2,
+     "i": 3,
+     "facing": "neutral",
+     "tight": 0.2487,
      "rgb": [
-      46,
-      35,
-      18
+      23,
+      25,
+      30
      ],
-     "hue": 0.1273,
-     "saturation": 0.6495,
-     "luminance": 0.1404,
-     "contrast": 0.1337,
-     "edge": 0.0254,
-     "balance": 0.5753,
-     "topBottom": -0.0998
+     "hue": 0.6086,
+     "saturation": 0.6625,
+     "luminance": 0.0981,
+     "contrast": 0.1024,
+     "edge": 0.0225,
+     "balance": 0.5547,
+     "topBottom": 0.002
     },
     {
      "src": "/img/shuffle/hc/4.jpg",
      "alt": "Hub City still 4",
-     "i": 3,
+     "i": 4,
+     "facing": "neutral",
+     "tight": 0.1243,
      "rgb": [
-      24,
-      25,
-      30
+      33,
+      32,
+      33
      ],
-     "hue": 0.6092,
-     "saturation": 0.6558,
-     "luminance": 0.0996,
-     "contrast": 0.1025,
-     "edge": 0.0228,
-     "balance": 0.5554,
-     "topBottom": 0.0021
+     "hue": 0.6189,
+     "saturation": 0.556,
+     "luminance": 0.128,
+     "contrast": 0.1296,
+     "edge": 0.0242,
+     "balance": 0.4869,
+     "topBottom": 0.0803
     },
     {
      "src": "/img/shuffle/hc/5.jpg",
      "alt": "Hub City still 5",
-     "i": 4,
-     "rgb": [
-      34,
-      33,
-      33
-     ],
-     "hue": 0.6196,
-     "saturation": 0.5494,
-     "luminance": 0.13,
-     "contrast": 0.1297,
-     "edge": 0.0244,
-     "balance": 0.4872,
-     "topBottom": 0.0817
-    },
-    {
-     "src": "/img/shuffle/hc/6.jpg",
-     "alt": "Hub City still 6",
      "i": 5,
+     "facing": "left",
+     "tight": 0.2332,
      "rgb": [
       49,
       44,
       37
      ],
-     "hue": 0.0774,
-     "saturation": 0.3975,
-     "luminance": 0.1744,
-     "contrast": 0.0903,
-     "edge": 0.0201,
-     "balance": 0.5068,
-     "topBottom": 0.0404
+     "hue": 0.077,
+     "saturation": 0.3921,
+     "luminance": 0.1735,
+     "contrast": 0.0899,
+     "edge": 0.0199,
+     "balance": 0.5078,
+     "topBottom": 0.0395
+    },
+    {
+     "src": "/img/shuffle/hc/6.jpg",
+     "alt": "Hub City still 6",
+     "i": 6,
+     "facing": "neutral",
+     "tight": 0.0,
+     "rgb": [
+      21,
+      21,
+      20
+     ],
+     "hue": 0.5798,
+     "saturation": 0.6299,
+     "luminance": 0.0812,
+     "contrast": 0.0762,
+     "edge": 0.0171,
+     "balance": 0.5114,
+     "topBottom": -0.0728
     },
     {
      "src": "/img/shuffle/hc/7.jpg",
      "alt": "Hub City still 7",
-     "i": 6,
+     "i": 7,
+     "facing": "right",
+     "tight": 0.3224,
      "rgb": [
-      22,
-      21,
-      20
+      39,
+      36,
+      38
      ],
-     "hue": 0.5811,
-     "saturation": 0.6289,
-     "luminance": 0.0823,
-     "contrast": 0.0763,
-     "edge": 0.0173,
-     "balance": 0.5124,
-     "topBottom": -0.0737
+     "hue": 0.5758,
+     "saturation": 0.5862,
+     "luminance": 0.1447,
+     "contrast": 0.1154,
+     "edge": 0.0298,
+     "balance": 0.4437,
+     "topBottom": 0.044
     },
     {
      "src": "/img/shuffle/hc/8.jpg",
      "alt": "Hub City still 8",
-     "i": 7,
-     "rgb": [
-      39,
-      37,
-      38
-     ],
-     "hue": 0.5763,
-     "saturation": 0.5816,
-     "luminance": 0.1464,
-     "contrast": 0.1153,
-     "edge": 0.0299,
-     "balance": 0.4409,
-     "topBottom": 0.0451
-    },
-    {
-     "src": "/img/shuffle/hc/9.jpg",
-     "alt": "Hub City still 9",
      "i": 8,
+     "facing": "right",
+     "tight": 0.2701,
      "rgb": [
-      87,
-      89,
+      86,
+      88,
       71
      ],
-     "hue": 0.2495,
-     "saturation": 0.3,
-     "luminance": 0.3419,
-     "contrast": 0.2389,
-     "edge": 0.039,
-     "balance": 0.505,
-     "topBottom": 0.2667
+     "hue": 0.252,
+     "saturation": 0.3009,
+     "luminance": 0.3395,
+     "contrast": 0.2395,
+     "edge": 0.0391,
+     "balance": 0.5026,
+     "topBottom": 0.2676
     }
    ]
   },
@@ -366,88 +404,98 @@
    "frames": [
     {
      "src": "/img/shuffle/acinh/thumb.jpg",
-     "alt": "",
+     "alt": "A Christmas In New Hope",
      "i": 0,
+     "facing": "right",
+     "tight": 0.3705,
      "rgb": [
-      76,
-      59,
-      50
+      79,
+      62,
+      52
      ],
-     "hue": 0.054,
-     "saturation": 0.44,
-     "luminance": 0.2427,
-     "contrast": 0.1978,
-     "edge": 0.0414,
-     "balance": 0.4956,
-     "topBottom": -0.0789
+     "hue": 0.0549,
+     "saturation": 0.435,
+     "luminance": 0.2533,
+     "contrast": 0.1974,
+     "edge": 0.0456,
+     "balance": 0.4953,
+     "topBottom": 0.0058
+    },
+    {
+     "src": "/img/shuffle/acinh/1.jpg",
+     "alt": "A Christmas In New Hope still 1",
+     "i": 1,
+     "facing": "left",
+     "tight": 0.3245,
+     "rgb": [
+      112,
+      94,
+      89
+     ],
+     "hue": 0.0323,
+     "saturation": 0.3411,
+     "luminance": 0.3825,
+     "contrast": 0.2075,
+     "edge": 0.0752,
+     "balance": 0.4921,
+     "topBottom": 0.1741
     },
     {
      "src": "/img/shuffle/acinh/2.jpg",
      "alt": "A Christmas In New Hope still 2",
-     "i": 1,
+     "i": 2,
+     "facing": "left",
+     "tight": 0.1015,
      "rgb": [
-      111,
-      93,
-      89
+      107,
+      89,
+      85
      ],
-     "hue": 0.0333,
-     "saturation": 0.3431,
-     "luminance": 0.3796,
-     "contrast": 0.2073,
-     "edge": 0.0745,
-     "balance": 0.4934,
-     "topBottom": 0.1744
+     "hue": 0.0151,
+     "saturation": 0.3272,
+     "luminance": 0.3622,
+     "contrast": 0.2071,
+     "edge": 0.0768,
+     "balance": 0.443,
+     "topBottom": -0.0927
     },
     {
      "src": "/img/shuffle/acinh/3.jpg",
      "alt": "A Christmas In New Hope still 3",
-     "i": 2,
+     "i": 3,
+     "facing": "neutral",
+     "tight": 0.2659,
      "rgb": [
-      109,
-      89,
-      85
+      120,
+      97,
+      68
      ],
-     "hue": 0.0199,
-     "saturation": 0.328,
-     "luminance": 0.3654,
-     "contrast": 0.2141,
-     "edge": 0.0806,
-     "balance": 0.4476,
-     "topBottom": -0.0048
+     "hue": 0.1126,
+     "saturation": 0.5009,
+     "luminance": 0.3908,
+     "contrast": 0.2535,
+     "edge": 0.0561,
+     "balance": 0.4992,
+     "topBottom": 0.2528
     },
     {
      "src": "/img/shuffle/acinh/4.jpg",
      "alt": "A Christmas In New Hope still 4",
-     "i": 3,
-     "rgb": [
-      100,
-      80,
-      55
-     ],
-     "hue": 0.1249,
-     "saturation": 0.5215,
-     "luminance": 0.324,
-     "contrast": 0.2448,
-     "edge": 0.0517,
-     "balance": 0.5144,
-     "topBottom": 0.2108
-    },
-    {
-     "src": "/img/shuffle/acinh/5.jpg",
-     "alt": "A Christmas In New Hope still 5",
      "i": 4,
+     "facing": "right",
+     "tight": 0.386,
      "rgb": [
-      132,
-      109,
-      87
+      118,
+      95,
+      75
      ],
-     "hue": 0.0775,
-     "saturation": 0.4156,
-     "luminance": 0.4398,
-     "contrast": 0.2442,
-     "edge": 0.0662,
-     "balance": 0.4941,
-     "topBottom": 0.1776
+     "hue": 0.0744,
+     "saturation": 0.4503,
+     "luminance": 0.3854,
+     "contrast": 0.242,
+     "edge": 0.0636,
+     "balance": 0.5012,
+     "topBottom": 0.2025
     }
    ]
   },
@@ -459,88 +507,98 @@
    "frames": [
     {
      "src": "/img/shuffle/myth/thumb.jpg",
-     "alt": "",
+     "alt": "Myth",
      "i": 0,
+     "facing": "left",
+     "tight": 0.5598,
      "rgb": [
-      115,
-      105,
-      88
+      122,
+      114,
+      98
      ],
-     "hue": 0.0991,
-     "saturation": 0.3022,
-     "luminance": 0.4166,
-     "contrast": 0.2245,
-     "edge": 0.0654,
-     "balance": 0.5163,
-     "topBottom": -0.0657
+     "hue": 0.0992,
+     "saturation": 0.2915,
+     "luminance": 0.4482,
+     "contrast": 0.2179,
+     "edge": 0.0625,
+     "balance": 0.5307,
+     "topBottom": -0.084
     },
     {
-     "src": "/img/shuffle/myth/2.jpg",
-     "alt": "Myth still 2",
+     "src": "/img/shuffle/myth/1.jpg",
+     "alt": "Myth still 1",
      "i": 1,
+     "facing": "right",
+     "tight": 0.579,
      "rgb": [
       44,
       50,
       60
      ],
-     "hue": 0.5869,
-     "saturation": 0.4997,
-     "luminance": 0.1954,
-     "contrast": 0.1127,
-     "edge": 0.0228,
-     "balance": 0.4816,
+     "hue": 0.586,
+     "saturation": 0.4945,
+     "luminance": 0.1928,
+     "contrast": 0.1135,
+     "edge": 0.0227,
+     "balance": 0.4884,
      "topBottom": -0.0107
     },
     {
-     "src": "/img/shuffle/myth/3.jpg",
-     "alt": "Myth still 3",
+     "src": "/img/shuffle/myth/2.jpg",
+     "alt": "Myth still 2",
      "i": 2,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
       45,
       26,
       17
      ],
-     "hue": 0.0679,
-     "saturation": 0.5517,
-     "luminance": 0.116,
-     "contrast": 0.1168,
-     "edge": 0.029,
-     "balance": 0.4899,
-     "topBottom": -0.0312
+     "hue": 0.068,
+     "saturation": 0.5435,
+     "luminance": 0.1147,
+     "contrast": 0.1161,
+     "edge": 0.0287,
+     "balance": 0.4896,
+     "topBottom": -0.0305
     },
     {
-     "src": "/img/shuffle/myth/4.jpg",
-     "alt": "Myth still 4",
+     "src": "/img/shuffle/myth/3.jpg",
+     "alt": "Myth still 3",
      "i": 3,
+     "facing": "neutral",
+     "tight": 0.1159,
      "rgb": [
       70,
       59,
       42
      ],
-     "hue": 0.1066,
-     "saturation": 0.4719,
-     "luminance": 0.2365,
-     "contrast": 0.1842,
-     "edge": 0.045,
-     "balance": 0.5392,
-     "topBottom": 0.0935
+     "hue": 0.1069,
+     "saturation": 0.4736,
+     "luminance": 0.2349,
+     "contrast": 0.1833,
+     "edge": 0.0453,
+     "balance": 0.542,
+     "topBottom": 0.0911
     },
     {
-     "src": "/img/shuffle/myth/5.jpg",
-     "alt": "Myth still 5",
+     "src": "/img/shuffle/myth/4.jpg",
+     "alt": "Myth still 4",
      "i": 4,
+     "facing": "left",
+     "tight": 0.2645,
      "rgb": [
       53,
-      50,
-      38
+      49,
+      37
      ],
-     "hue": 0.1968,
-     "saturation": 0.4062,
-     "luminance": 0.1946,
-     "contrast": 0.1803,
+     "hue": 0.1972,
+     "saturation": 0.4075,
+     "luminance": 0.1927,
+     "contrast": 0.1796,
      "edge": 0.0489,
-     "balance": 0.5269,
-     "topBottom": 0.0068
+     "balance": 0.5279,
+     "topBottom": 0.0069
     }
    ]
   },
@@ -552,88 +610,98 @@
    "frames": [
     {
      "src": "/img/shuffle/mythbts/thumb.jpg",
-     "alt": "",
+     "alt": "Myth \u2014 Behind the Scenes",
      "i": 0,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
-      124,
-      120,
-      105
+      108,
+      104,
+      87
      ],
-     "hue": 0.1432,
-     "saturation": 0.2061,
-     "luminance": 0.4705,
-     "contrast": 0.2813,
-     "edge": 0.0882,
-     "balance": 0.5053,
-     "topBottom": 0.2987
+     "hue": 0.1402,
+     "saturation": 0.2425,
+     "luminance": 0.4048,
+     "contrast": 0.2486,
+     "edge": 0.0912,
+     "balance": 0.504,
+     "topBottom": 0.1267
     },
     {
-     "src": "/img/shuffle/mythbts/2.jpg",
-     "alt": "Myth \u2014 Behind the Scenes still 2",
+     "src": "/img/shuffle/mythbts/1.jpg",
+     "alt": "Myth \u2014 Behind the Scenes still 1",
      "i": 1,
+     "facing": "neutral",
+     "tight": 0.2714,
      "rgb": [
       122,
       98,
       73
      ],
-     "hue": 0.0954,
-     "saturation": 0.3835,
-     "luminance": 0.3983,
-     "contrast": 0.1881,
-     "edge": 0.0744,
-     "balance": 0.5254,
-     "topBottom": 0.153
+     "hue": 0.0951,
+     "saturation": 0.3863,
+     "luminance": 0.398,
+     "contrast": 0.1871,
+     "edge": 0.0746,
+     "balance": 0.5267,
+     "topBottom": 0.1517
     },
     {
-     "src": "/img/shuffle/mythbts/3.jpg",
-     "alt": "Myth \u2014 Behind the Scenes still 3",
+     "src": "/img/shuffle/mythbts/2.jpg",
+     "alt": "Myth \u2014 Behind the Scenes still 2",
      "i": 2,
+     "facing": "right",
+     "tight": 0.1629,
      "rgb": [
       66,
       59,
       51
      ],
-     "hue": 0.2372,
-     "saturation": 0.2895,
-     "luminance": 0.2336,
-     "contrast": 0.205,
-     "edge": 0.0615,
-     "balance": 0.5051,
-     "topBottom": 0.0785
+     "hue": 0.2369,
+     "saturation": 0.2891,
+     "luminance": 0.234,
+     "contrast": 0.2043,
+     "edge": 0.0618,
+     "balance": 0.5066,
+     "topBottom": 0.0779
     },
     {
-     "src": "/img/shuffle/mythbts/4.jpg",
-     "alt": "Myth \u2014 Behind the Scenes still 4",
+     "src": "/img/shuffle/mythbts/3.jpg",
+     "alt": "Myth \u2014 Behind the Scenes still 3",
      "i": 3,
+     "facing": "neutral",
+     "tight": 0.2541,
      "rgb": [
       65,
       65,
       51
      ],
-     "hue": 0.2173,
-     "saturation": 0.3412,
-     "luminance": 0.2518,
-     "contrast": 0.1819,
-     "edge": 0.0626,
-     "balance": 0.4496,
-     "topBottom": -0.0203
+     "hue": 0.2156,
+     "saturation": 0.3417,
+     "luminance": 0.2503,
+     "contrast": 0.181,
+     "edge": 0.0625,
+     "balance": 0.4478,
+     "topBottom": -0.0186
     },
     {
-     "src": "/img/shuffle/mythbts/5.jpg",
-     "alt": "Myth \u2014 Behind the Scenes still 5",
+     "src": "/img/shuffle/mythbts/4.jpg",
+     "alt": "Myth \u2014 Behind the Scenes still 4",
      "i": 4,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
-      34,
-      32,
+      33,
+      31,
       21
      ],
-     "hue": 0.1763,
-     "saturation": 0.4247,
-     "luminance": 0.1228,
-     "contrast": 0.1086,
-     "edge": 0.0303,
-     "balance": 0.5054,
-     "topBottom": 0.0225
+     "hue": 0.1771,
+     "saturation": 0.4253,
+     "luminance": 0.1215,
+     "contrast": 0.1082,
+     "edge": 0.03,
+     "balance": 0.5058,
+     "topBottom": 0.0222
     }
    ]
   },
@@ -645,88 +713,79 @@
    "frames": [
     {
      "src": "/img/shuffle/attad/thumb.jpg",
-     "alt": "",
+     "alt": "A Thousand Times A Day",
      "i": 0,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
       46,
       43,
       39
      ],
-     "hue": 0.7519,
-     "saturation": 0.4425,
-     "luminance": 0.1708,
-     "contrast": 0.2086,
+     "hue": 0.7475,
+     "saturation": 0.4525,
+     "luminance": 0.1718,
+     "contrast": 0.2091,
      "edge": 0.043,
-     "balance": 0.5028,
-     "topBottom": -0.1082
+     "balance": 0.5001,
+     "topBottom": -0.09
     },
     {
-     "src": "/img/shuffle/attad/2.jpg",
-     "alt": "A Thousand Times A Day still 2",
+     "src": "/img/shuffle/attad/1.jpg",
+     "alt": "A Thousand Times A Day still 1",
      "i": 1,
+     "facing": "neutral",
+     "tight": 0.4106,
      "rgb": [
-      114,
-      114,
-      111
+      112,
+      112,
+      110
      ],
-     "hue": 0.5692,
-     "saturation": 0.2261,
-     "luminance": 0.4459,
-     "contrast": 0.2693,
-     "edge": 0.0197,
-     "balance": 0.5175,
-     "topBottom": 0.0517
+     "hue": 0.5878,
+     "saturation": 0.2404,
+     "luminance": 0.4385,
+     "contrast": 0.2738,
+     "edge": 0.0189,
+     "balance": 0.5252,
+     "topBottom": 0.0605
     },
     {
      "src": "/img/shuffle/attad/3.jpg",
      "alt": "A Thousand Times A Day still 3",
      "i": 2,
+     "facing": "left",
+     "tight": 0.6051,
      "rgb": [
-      110,
-      106,
-      97
+      77,
+      74,
+      70
      ],
-     "hue": 0.0886,
-     "saturation": 0.2351,
-     "luminance": 0.4152,
-     "contrast": 0.3189,
-     "edge": 0.0152,
-     "balance": 0.4816,
-     "topBottom": -0.0282
+     "hue": 0.0712,
+     "saturation": 0.1851,
+     "luminance": 0.2905,
+     "contrast": 0.1416,
+     "edge": 0.0305,
+     "balance": 0.542,
+     "topBottom": 0.0653
     },
     {
      "src": "/img/shuffle/attad/4.jpg",
      "alt": "A Thousand Times A Day still 4",
      "i": 3,
+     "facing": "left",
+     "tight": 0.2091,
      "rgb": [
-      78,
-      74,
-      70
+      116,
+      96,
+      80
      ],
-     "hue": 0.0826,
-     "saturation": 0.165,
-     "luminance": 0.2931,
-     "contrast": 0.1387,
-     "edge": 0.0318,
-     "balance": 0.5402,
-     "topBottom": 0.0495
-    },
-    {
-     "src": "/img/shuffle/attad/5.jpg",
-     "alt": "A Thousand Times A Day still 5",
-     "i": 4,
-     "rgb": [
-      121,
-      102,
-      86
-     ],
-     "hue": 0.073,
-     "saturation": 0.339,
-     "luminance": 0.4106,
-     "contrast": 0.2442,
-     "edge": 0.0643,
-     "balance": 0.5038,
-     "topBottom": 0.2624
+     "hue": 0.0706,
+     "saturation": 0.3434,
+     "luminance": 0.3884,
+     "contrast": 0.2279,
+     "edge": 0.0617,
+     "balance": 0.4983,
+     "topBottom": 0.1958
     }
    ]
   },
@@ -738,156 +797,174 @@
    "frames": [
     {
      "src": "/img/shuffle/tll/thumb.jpg",
-     "alt": "",
+     "alt": "Texas Legacy in Lights",
      "i": 0,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
-      36,
-      34,
+      35,
+      33,
       17
      ],
-     "hue": 0.154,
-     "saturation": 0.5355,
-     "luminance": 0.13,
-     "contrast": 0.0783,
-     "edge": 0.0296,
-     "balance": 0.4402,
-     "topBottom": 0.0293
+     "hue": 0.1507,
+     "saturation": 0.5321,
+     "luminance": 0.1269,
+     "contrast": 0.0787,
+     "edge": 0.0305,
+     "balance": 0.4587,
+     "topBottom": 0.0334
+    },
+    {
+     "src": "/img/shuffle/tll/1.jpg",
+     "alt": "Two women in 1800s dress stand among trees at golden hour \u2014 a young woman in a yellow gingham dress with a white lace collar looks off into the distance while an older woman in a straw bonnet and apron watches her",
+     "i": 1,
+     "facing": "neutral",
+     "tight": 0.2548,
+     "rgb": [
+      56,
+      54,
+      38
+     ],
+     "hue": 0.172,
+     "saturation": 0.3669,
+     "luminance": 0.2091,
+     "contrast": 0.1125,
+     "edge": 0.0426,
+     "balance": 0.4917,
+     "topBottom": -0.0121
     },
     {
      "src": "/img/shuffle/tll/2.jpg",
-     "alt": "Two women in 1800s dress stand among trees at golden hour \u2014 a young woman in a yellow gingham dress with a white lace collar looks off into the distance while an older woman in a straw bonnet and apron watches her",
-     "i": 1,
+     "alt": "A man in a wide-brimmed hat carrying a wooden tool chest walks behind a woman in a pale dress and bonnet through waist-high grass toward a sunlit treeline",
+     "i": 2,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
-      56,
-      55,
-      39
+      99,
+      97,
+      60
      ],
-     "hue": 0.1702,
-     "saturation": 0.3658,
-     "luminance": 0.2111,
-     "contrast": 0.1122,
-     "edge": 0.0426,
-     "balance": 0.496,
-     "topBottom": -0.013
+     "hue": 0.1686,
+     "saturation": 0.4305,
+     "luminance": 0.3726,
+     "contrast": 0.1818,
+     "edge": 0.0545,
+     "balance": 0.5022,
+     "topBottom": -0.0722
     },
     {
      "src": "/img/shuffle/tll/3.jpg",
-     "alt": "A man in a wide-brimmed hat carrying a wooden tool chest walks behind a woman in a pale dress and bonnet through waist-high grass toward a sunlit treeline",
-     "i": 2,
+     "alt": "Close-up of a hand in a yellow gingham sleeve pressing down into ash and gravel on the ground, a dark shape out of focus behind it",
+     "i": 3,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
-      100,
-      98,
-      60
+      77,
+      82,
+      75
      ],
-     "hue": 0.1682,
-     "saturation": 0.43,
-     "luminance": 0.3755,
-     "contrast": 0.1812,
-     "edge": 0.0547,
-     "balance": 0.5034,
-     "topBottom": -0.0718
+     "hue": 0.429,
+     "saturation": 0.2468,
+     "luminance": 0.3148,
+     "contrast": 0.1402,
+     "edge": 0.0291,
+     "balance": 0.5005,
+     "topBottom": 0.0384
     },
     {
      "src": "/img/shuffle/tll/4.jpg",
-     "alt": "Close-up of a hand in a yellow gingham sleeve pressing down into ash and gravel on the ground, a dark shape out of focus behind it",
-     "i": 3,
+     "alt": "A woman in a straw bonnet and floral-print dress seen from behind, head bowed, looking out over a sunlit meadow",
+     "i": 4,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
-      78,
-      82,
-      76
+      88,
+      92,
+      68
      ],
-     "hue": 0.4212,
-     "saturation": 0.246,
-     "luminance": 0.3179,
-     "contrast": 0.1389,
-     "edge": 0.0293,
-     "balance": 0.5076,
-     "topBottom": 0.038
+     "hue": 0.2261,
+     "saturation": 0.3101,
+     "luminance": 0.3494,
+     "contrast": 0.1632,
+     "edge": 0.0292,
+     "balance": 0.4657,
+     "topBottom": -0.0189
     },
     {
      "src": "/img/shuffle/tll/5.jpg",
-     "alt": "A woman in a straw bonnet and floral-print dress seen from behind, head bowed, looking out over a sunlit meadow",
-     "i": 4,
+     "alt": "A rider in a hat and long coat gallops a chestnut horse through the woods at dusk, the trees behind him streaked with motion blur",
+     "i": 5,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
-      89,
-      93,
-      68
+      36,
+      35,
+      18
      ],
-     "hue": 0.2236,
-     "saturation": 0.3093,
-     "luminance": 0.3532,
-     "contrast": 0.1616,
-     "edge": 0.0292,
-     "balance": 0.47,
-     "topBottom": -0.0176
+     "hue": 0.1701,
+     "saturation": 0.524,
+     "luminance": 0.1348,
+     "contrast": 0.0839,
+     "edge": 0.0333,
+     "balance": 0.4457,
+     "topBottom": 0.0361
     },
     {
      "src": "/img/shuffle/tll/6.jpg",
-     "alt": "A rider in a hat and long coat gallops a chestnut horse through the woods at dusk, the trees behind him streaked with motion blur",
-     "i": 5,
+     "alt": "A woman in a straw hat and apron swings a hoe in a wide field of tall grass under an open sky, a timber structure and treeline behind her",
+     "i": 6,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
-      36,
-      36,
-      18
+      124,
+      115,
+      86
      ],
-     "hue": 0.17,
-     "saturation": 0.5236,
-     "luminance": 0.1352,
-     "contrast": 0.0839,
-     "edge": 0.0334,
-     "balance": 0.4443,
-     "topBottom": 0.0362
+     "hue": 0.1276,
+     "saturation": 0.3459,
+     "luminance": 0.449,
+     "contrast": 0.2644,
+     "edge": 0.0587,
+     "balance": 0.4868,
+     "topBottom": 0.0729
     },
     {
      "src": "/img/shuffle/tll/7.jpg",
-     "alt": "A woman in a straw hat and apron swings a hoe in a wide field of tall grass under an open sky, a timber structure and treeline behind her",
-     "i": 6,
-     "rgb": [
-      125,
-      116,
-      87
-     ],
-     "hue": 0.1279,
-     "saturation": 0.3435,
-     "luminance": 0.453,
-     "contrast": 0.2643,
-     "edge": 0.0587,
-     "balance": 0.4868,
-     "topBottom": 0.0762
-    },
-    {
-     "src": "/img/shuffle/tll/8.jpg",
      "alt": "At night, a man leads a saddled horse down a smoky dirt lane past a timber fence, lit by cold blue moonlight",
      "i": 7,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
       18,
-      31,
-      42
+      30,
+      41
      ],
-     "hue": 0.5765,
-     "saturation": 0.5769,
-     "luminance": 0.1122,
-     "contrast": 0.0614,
-     "edge": 0.0123,
-     "balance": 0.5207,
+     "hue": 0.5759,
+     "saturation": 0.5721,
+     "luminance": 0.1106,
+     "contrast": 0.0622,
+     "edge": 0.0122,
+     "balance": 0.517,
      "topBottom": -0.0048
     },
     {
-     "src": "/img/shuffle/tll/9.jpg",
+     "src": "/img/shuffle/tll/8.jpg",
      "alt": "Extreme close-up of a woman's face lit only by firelight from below right, her expression still and fixed",
      "i": 8,
+     "facing": "neutral",
+     "tight": 1.0,
      "rgb": [
       41,
       14,
       5
      ],
-     "hue": 0.0428,
-     "saturation": 0.8564,
-     "luminance": 0.0755,
-     "contrast": 0.0692,
+     "hue": 0.0431,
+     "saturation": 0.8557,
+     "luminance": 0.0747,
+     "contrast": 0.0689,
      "edge": 0.0074,
-     "balance": 0.563,
-     "topBottom": -0.0208
+     "balance": 0.5607,
+     "topBottom": -0.0206
     }
    ]
   },
@@ -899,88 +976,60 @@
    "frames": [
     {
      "src": "/img/shuffle/jr/thumb.jpg",
-     "alt": "",
+     "alt": "Javelina Run",
      "i": 0,
+     "facing": "right",
+     "tight": 0.9023,
      "rgb": [
       60,
       42,
       29
      ],
-     "hue": 0.0728,
-     "saturation": 0.5789,
-     "luminance": 0.1771,
-     "contrast": 0.1263,
-     "edge": 0.0277,
-     "balance": 0.5272,
-     "topBottom": -0.021
+     "hue": 0.0731,
+     "saturation": 0.5776,
+     "luminance": 0.1777,
+     "contrast": 0.1264,
+     "edge": 0.0278,
+     "balance": 0.5276,
+     "topBottom": -0.0177
     },
     {
-     "src": "/img/shuffle/jr/2.jpg",
-     "alt": "Javelina Run still 2",
+     "src": "/img/shuffle/jr/1.jpg",
+     "alt": "Javelina Run still 1",
      "i": 1,
+     "facing": "right",
+     "tight": 0.2318,
      "rgb": [
       50,
-      40,
+      39,
       31
      ],
      "hue": 0.0785,
-     "saturation": 0.3931,
-     "luminance": 0.1612,
-     "contrast": 0.0889,
+     "saturation": 0.3942,
+     "luminance": 0.161,
+     "contrast": 0.0883,
      "edge": 0.0235,
-     "balance": 0.5082,
-     "topBottom": -0.0029
-    },
-    {
-     "src": "/img/shuffle/jr/3.jpg",
-     "alt": "Javelina Run still 3",
-     "i": 2,
-     "rgb": [
-      57,
-      44,
-      36
-     ],
-     "hue": 0.0626,
-     "saturation": 0.3837,
-     "luminance": 0.1809,
-     "contrast": 0.0876,
-     "edge": 0.0298,
-     "balance": 0.5061,
-     "topBottom": -0.007
+     "balance": 0.5041,
+     "topBottom": -0.0036
     },
     {
      "src": "/img/shuffle/jr/4.jpg",
      "alt": "Javelina Run still 4",
-     "i": 3,
-     "rgb": [
-      63,
-      53,
-      40
-     ],
-     "hue": 0.1015,
-     "saturation": 0.3831,
-     "luminance": 0.2113,
-     "contrast": 0.1399,
-     "edge": 0.0237,
-     "balance": 0.4765,
-     "topBottom": -0.0057
-    },
-    {
-     "src": "/img/shuffle/jr/5.jpg",
-     "alt": "Javelina Run still 5",
-     "i": 4,
+     "i": 2,
+     "facing": "right",
+     "tight": 0.1218,
      "rgb": [
       89,
       80,
-      67
+      68
      ],
-     "hue": 0.09,
-     "saturation": 0.3007,
-     "luminance": 0.317,
-     "contrast": 0.2145,
-     "edge": 0.0494,
-     "balance": 0.5247,
-     "topBottom": -0.1376
+     "hue": 0.0901,
+     "saturation": 0.298,
+     "luminance": 0.3191,
+     "contrast": 0.2159,
+     "edge": 0.0499,
+     "balance": 0.5253,
+     "topBottom": -0.1423
     }
    ]
   },
@@ -992,88 +1041,79 @@
    "frames": [
     {
      "src": "/img/shuffle/goh/thumb.jpg",
-     "alt": "",
+     "alt": "Guest of Honor",
      "i": 0,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
-      43,
-      40,
-      36
+      39,
+      34,
+      31
      ],
-     "hue": 0.1037,
-     "saturation": 0.1957,
-     "luminance": 0.1572,
-     "contrast": 0.1362,
-     "edge": 0.0272,
-     "balance": 0.468,
-     "topBottom": 0.0516
+     "hue": 0.0949,
+     "saturation": 0.2299,
+     "luminance": 0.1377,
+     "contrast": 0.1279,
+     "edge": 0.0266,
+     "balance": 0.4859,
+     "topBottom": 0.0837
+    },
+    {
+     "src": "/img/shuffle/goh/1.jpg",
+     "alt": "Guest of Honor still 1",
+     "i": 1,
+     "facing": "left",
+     "tight": 0.1343,
+     "rgb": [
+      106,
+      107,
+      97
+     ],
+     "hue": 0.2403,
+     "saturation": 0.1775,
+     "luminance": 0.4145,
+     "contrast": 0.229,
+     "edge": 0.0572,
+     "balance": 0.5223,
+     "topBottom": 0.0307
     },
     {
      "src": "/img/shuffle/goh/2.jpg",
      "alt": "Guest of Honor still 2",
-     "i": 1,
-     "rgb": [
-      106,
-      107,
-      98
-     ],
-     "hue": 0.2466,
-     "saturation": 0.1786,
-     "luminance": 0.4168,
-     "contrast": 0.2301,
-     "edge": 0.0571,
-     "balance": 0.5212,
-     "topBottom": 0.0306
-    },
-    {
-     "src": "/img/shuffle/goh/3.jpg",
-     "alt": "Guest of Honor still 3",
      "i": 2,
+     "facing": "neutral",
+     "tight": 0.4744,
      "rgb": [
-      119,
-      114,
-      106
+      118,
+      113,
+      105
      ],
-     "hue": 0.0931,
-     "saturation": 0.2067,
-     "luminance": 0.4494,
-     "contrast": 0.2675,
-     "edge": 0.0502,
-     "balance": 0.4854,
-     "topBottom": 0.1763
+     "hue": 0.0935,
+     "saturation": 0.2063,
+     "luminance": 0.4454,
+     "contrast": 0.2679,
+     "edge": 0.0506,
+     "balance": 0.4873,
+     "topBottom": 0.1767
     },
     {
      "src": "/img/shuffle/goh/4.jpg",
      "alt": "Guest of Honor still 4",
      "i": 3,
-     "rgb": [
-      67,
-      63,
-      55
-     ],
-     "hue": 0.1294,
-     "saturation": 0.2619,
-     "luminance": 0.2484,
-     "contrast": 0.1659,
-     "edge": 0.0619,
-     "balance": 0.526,
-     "topBottom": 0.1337
-    },
-    {
-     "src": "/img/shuffle/goh/5.jpg",
-     "alt": "Guest of Honor still 5",
-     "i": 4,
+     "facing": "left",
+     "tight": 0.5844,
      "rgb": [
       75,
-      64,
-      58
+      65,
+      59
      ],
-     "hue": 0.0842,
-     "saturation": 0.2819,
-     "luminance": 0.2585,
-     "contrast": 0.175,
-     "edge": 0.0321,
-     "balance": 0.425,
-     "topBottom": 0.0148
+     "hue": 0.0848,
+     "saturation": 0.2789,
+     "luminance": 0.2614,
+     "contrast": 0.1785,
+     "edge": 0.0328,
+     "balance": 0.4208,
+     "topBottom": 0.0209
     }
    ]
   },
@@ -1085,88 +1125,60 @@
    "frames": [
     {
      "src": "/img/shuffle/amorsui/thumb.jpg",
-     "alt": "",
+     "alt": "Amor Sui",
      "i": 0,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
-      166,
-      152,
-      151
+      163,
+      148,
+      146
      ],
-     "hue": 0.0544,
-     "saturation": 0.1986,
-     "luminance": 0.6079,
-     "contrast": 0.216,
-     "edge": 0.0232,
-     "balance": 0.4835,
-     "topBottom": 0.1886
+     "hue": 0.0551,
+     "saturation": 0.2101,
+     "luminance": 0.5917,
+     "contrast": 0.2192,
+     "edge": 0.0237,
+     "balance": 0.4959,
+     "topBottom": 0.2004
     },
     {
-     "src": "/img/shuffle/amorsui/2.jpg",
-     "alt": "Amor Sui still 2",
+     "src": "/img/shuffle/amorsui/1.jpg",
+     "alt": "Amor Sui still 1",
      "i": 1,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
-      31,
+      30,
       33,
       57
      ],
-     "hue": 0.6534,
-     "saturation": 0.6726,
-     "luminance": 0.1344,
-     "contrast": 0.1452,
-     "edge": 0.036,
-     "balance": 0.4598,
-     "topBottom": 0.061
-    },
-    {
-     "src": "/img/shuffle/amorsui/3.jpg",
-     "alt": "Amor Sui still 3",
-     "i": 2,
-     "rgb": [
-      80,
-      74,
-      70
-     ],
-     "hue": 0.1339,
-     "saturation": 0.2914,
-     "luminance": 0.2937,
-     "contrast": 0.2158,
-     "edge": 0.039,
-     "balance": 0.5291,
-     "topBottom": 0.0109
+     "hue": 0.6532,
+     "saturation": 0.6734,
+     "luminance": 0.1336,
+     "contrast": 0.1444,
+     "edge": 0.0362,
+     "balance": 0.4638,
+     "topBottom": 0.0602
     },
     {
      "src": "/img/shuffle/amorsui/4.jpg",
      "alt": "Amor Sui still 4",
-     "i": 3,
-     "rgb": [
-      65,
-      60,
-      48
-     ],
-     "hue": 0.1181,
-     "saturation": 0.3534,
-     "luminance": 0.236,
-     "contrast": 0.1058,
-     "edge": 0.0196,
-     "balance": 0.6076,
-     "topBottom": -0.0326
-    },
-    {
-     "src": "/img/shuffle/amorsui/5.jpg",
-     "alt": "Amor Sui still 5",
-     "i": 4,
+     "i": 2,
+     "facing": "neutral",
+     "tight": 0.1361,
      "rgb": [
       73,
       70,
       63
      ],
-     "hue": 0.1152,
-     "saturation": 0.3209,
-     "luminance": 0.2751,
+     "hue": 0.1168,
+     "saturation": 0.3197,
+     "luminance": 0.2749,
      "contrast": 0.2067,
-     "edge": 0.0489,
+     "edge": 0.0486,
      "balance": 0.4736,
-     "topBottom": -0.0054
+     "topBottom": -0.0044
     }
    ]
   },
@@ -1178,88 +1190,60 @@
    "frames": [
     {
      "src": "/img/shuffle/alit/thumb.jpg",
-     "alt": "",
+     "alt": "A Life In Technicolor",
      "i": 0,
+     "facing": "left",
+     "tight": 0.4422,
      "rgb": [
-      57,
-      57,
-      57
+      54,
+      54,
+      54
      ],
      "hue": 0.0,
-     "saturation": 0.0007,
-     "luminance": 0.2224,
-     "contrast": 0.2052,
-     "edge": 0.0363,
-     "balance": 0.5052,
-     "topBottom": -0.003
+     "saturation": 0.0006,
+     "luminance": 0.2124,
+     "contrast": 0.1971,
+     "edge": 0.0355,
+     "balance": 0.4883,
+     "topBottom": 0.0274
     },
     {
-     "src": "/img/shuffle/alit/2.jpg",
-     "alt": "A Life In Technicolor still 2",
+     "src": "/img/shuffle/alit/1.jpg",
+     "alt": "A Life In Technicolor still 1",
      "i": 1,
+     "facing": "right",
+     "tight": 0.0919,
      "rgb": [
       73,
-      77,
-      70
+      76,
+      69
      ],
-     "hue": 0.2197,
-     "saturation": 0.1573,
-     "luminance": 0.2959,
-     "contrast": 0.1057,
-     "edge": 0.0293,
-     "balance": 0.4678,
-     "topBottom": 0.0204
+     "hue": 0.2174,
+     "saturation": 0.1576,
+     "luminance": 0.2933,
+     "contrast": 0.1068,
+     "edge": 0.0292,
+     "balance": 0.4676,
+     "topBottom": 0.0203
     },
     {
      "src": "/img/shuffle/alit/3.jpg",
      "alt": "A Life In Technicolor still 3",
      "i": 2,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
-      88,
-      62,
-      43
-     ],
-     "hue": 0.0549,
-     "saturation": 0.6213,
-     "luminance": 0.2598,
-     "contrast": 0.2128,
-     "edge": 0.039,
-     "balance": 0.533,
-     "topBottom": -0.018
-    },
-    {
-     "src": "/img/shuffle/alit/4.jpg",
-     "alt": "A Life In Technicolor still 4",
-     "i": 3,
-     "rgb": [
-      100,
-      100,
-      97
+      102,
+      102,
+      99
      ],
      "hue": 0.0,
-     "saturation": 0.0356,
-     "luminance": 0.3911,
-     "contrast": 0.1684,
-     "edge": 0.0205,
-     "balance": 0.5081,
-     "topBottom": -0.0891
-    },
-    {
-     "src": "/img/shuffle/alit/5.jpg",
-     "alt": "A Life In Technicolor still 5",
-     "i": 4,
-     "rgb": [
-      40,
-      40,
-      39
-     ],
-     "hue": 0.4083,
-     "saturation": 0.0422,
-     "luminance": 0.1582,
-     "contrast": 0.1349,
-     "edge": 0.0221,
-     "balance": 0.5155,
-     "topBottom": -0.0398
+     "saturation": 0.0384,
+     "luminance": 0.399,
+     "contrast": 0.1864,
+     "edge": 0.0257,
+     "balance": 0.5103,
+     "topBottom": 0.0463
     }
    ]
   },
@@ -1271,8 +1255,10 @@
    "frames": [
     {
      "src": "/img/shuffle/comm_everydaydose/thumb.jpg",
-     "alt": "",
+     "alt": "Everyday Dose",
      "i": 0,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
       83,
       56,
@@ -1287,9 +1273,11 @@
      "topBottom": 0.0617
     },
     {
-     "src": "/img/shuffle/comm_everydaydose/2.jpg",
-     "alt": "Everyday Dose still 2",
+     "src": "/img/shuffle/comm_everydaydose/1.jpg",
+     "alt": "Everyday Dose still 1",
      "i": 1,
+     "facing": "right",
+     "tight": 0.3976,
      "rgb": [
       98,
       74,
@@ -1304,9 +1292,11 @@
      "topBottom": 0.0219
     },
     {
-     "src": "/img/shuffle/comm_everydaydose/3.jpg",
-     "alt": "Everyday Dose still 3",
+     "src": "/img/shuffle/comm_everydaydose/2.jpg",
+     "alt": "Everyday Dose still 2",
      "i": 2,
+     "facing": "right",
+     "tight": 0.4022,
      "rgb": [
       93,
       70,
@@ -1321,9 +1311,11 @@
      "topBottom": 0.1154
     },
     {
-     "src": "/img/shuffle/comm_everydaydose/4.jpg",
-     "alt": "Everyday Dose still 4",
+     "src": "/img/shuffle/comm_everydaydose/3.jpg",
+     "alt": "Everyday Dose still 3",
      "i": 3,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
       147,
       114,
@@ -1338,9 +1330,11 @@
      "topBottom": 0.1564
     },
     {
-     "src": "/img/shuffle/comm_everydaydose/5.jpg",
-     "alt": "Everyday Dose still 5",
+     "src": "/img/shuffle/comm_everydaydose/4.jpg",
+     "alt": "Everyday Dose still 4",
      "i": 4,
+     "facing": "neutral",
+     "tight": 0.1955,
      "rgb": [
       96,
       75,
@@ -1364,8 +1358,10 @@
    "frames": [
     {
      "src": "/img/shuffle/comm_wls/thumb.jpg",
-     "alt": "",
+     "alt": "Gold Best Cinematography Award",
      "i": 0,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
       71,
       76,
@@ -1380,72 +1376,80 @@
      "topBottom": 0.1171
     },
     {
-     "src": "/img/shuffle/comm_wls/2.jpg",
-     "alt": "Gold Best Cinematography Award still 2",
+     "src": "/img/shuffle/comm_wls/1.jpg",
+     "alt": "Gold Best Cinematography Award still 1",
      "i": 1,
+     "facing": "neutral",
+     "tight": 0.0898,
      "rgb": [
       69,
-      69,
-      56
+      66,
+      52
      ],
-     "hue": 0.1511,
-     "saturation": 0.3492,
-     "luminance": 0.2672,
-     "contrast": 0.1848,
-     "edge": 0.0387,
-     "balance": 0.4504,
-     "topBottom": -0.1557
+     "hue": 0.1358,
+     "saturation": 0.3784,
+     "luminance": 0.2584,
+     "contrast": 0.1695,
+     "edge": 0.0441,
+     "balance": 0.4846,
+     "topBottom": -0.1158
+    },
+    {
+     "src": "/img/shuffle/comm_wls/2.jpg",
+     "alt": "Gold Best Cinematography Award still 2",
+     "i": 2,
+     "facing": "neutral",
+     "tight": 0.0,
+     "rgb": [
+      62,
+      70,
+      66
+     ],
+     "hue": 0.3992,
+     "saturation": 0.2556,
+     "luminance": 0.2678,
+     "contrast": 0.1715,
+     "edge": 0.0436,
+     "balance": 0.5818,
+     "topBottom": -0.0488
     },
     {
      "src": "/img/shuffle/comm_wls/3.jpg",
      "alt": "Gold Best Cinematography Award still 3",
-     "i": 2,
+     "i": 3,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
-      60,
-      69,
-      64
+      86,
+      90,
+      88
      ],
-     "hue": 0.438,
-     "saturation": 0.2599,
-     "luminance": 0.2614,
-     "contrast": 0.1406,
-     "edge": 0.0469,
-     "balance": 0.5245,
-     "topBottom": -0.0361
+     "hue": 0.5521,
+     "saturation": 0.2543,
+     "luminance": 0.3489,
+     "contrast": 0.2266,
+     "edge": 0.0668,
+     "balance": 0.5473,
+     "topBottom": 0.0252
     },
     {
      "src": "/img/shuffle/comm_wls/4.jpg",
      "alt": "Gold Best Cinematography Award still 4",
-     "i": 3,
-     "rgb": [
-      84,
-      89,
-      88
-     ],
-     "hue": 0.5516,
-     "saturation": 0.2868,
-     "luminance": 0.3461,
-     "contrast": 0.2355,
-     "edge": 0.0677,
-     "balance": 0.5454,
-     "topBottom": 0.0741
-    },
-    {
-     "src": "/img/shuffle/comm_wls/5.jpg",
-     "alt": "Gold Best Cinematography Award still 5",
      "i": 4,
+     "facing": "right",
+     "tight": 0.3076,
      "rgb": [
-      46,
-      39,
-      27
+      42,
+      38,
+      25
      ],
-     "hue": 0.1603,
-     "saturation": 0.5965,
-     "luminance": 0.1559,
-     "contrast": 0.1361,
-     "edge": 0.0354,
-     "balance": 0.4467,
-     "topBottom": -0.0261
+     "hue": 0.1634,
+     "saturation": 0.575,
+     "luminance": 0.148,
+     "contrast": 0.119,
+     "edge": 0.032,
+     "balance": 0.4044,
+     "topBottom": -0.0301
     }
    ]
   },
@@ -1457,8 +1461,10 @@
    "frames": [
     {
      "src": "/img/shuffle/comm_cwb/thumb.jpg",
-     "alt": "",
+     "alt": "Cowboys Without Borders",
      "i": 0,
+     "facing": "right",
+     "tight": 0.1289,
      "rgb": [
       98,
       83,
@@ -1473,72 +1479,80 @@
      "topBottom": 0.066
     },
     {
+     "src": "/img/shuffle/comm_cwb/1.jpg",
+     "alt": "Cowboys Without Borders still 1",
+     "i": 1,
+     "facing": "neutral",
+     "tight": 0.0,
+     "rgb": [
+      109,
+      107,
+      98
+     ],
+     "hue": 0.1504,
+     "saturation": 0.2544,
+     "luminance": 0.418,
+     "contrast": 0.2171,
+     "edge": 0.0588,
+     "balance": 0.4802,
+     "topBottom": -0.053
+    },
+    {
      "src": "/img/shuffle/comm_cwb/2.jpg",
      "alt": "Cowboys Without Borders still 2",
-     "i": 1,
+     "i": 2,
+     "facing": "right",
+     "tight": 0.1423,
      "rgb": [
-      113,
-      110,
-      102
+      112,
+      102,
+      92
      ],
-     "hue": 0.1427,
-     "saturation": 0.2544,
-     "luminance": 0.4313,
-     "contrast": 0.2133,
-     "edge": 0.0593,
-     "balance": 0.4878,
-     "topBottom": -0.0071
+     "hue": 0.0809,
+     "saturation": 0.3005,
+     "luminance": 0.406,
+     "contrast": 0.1835,
+     "edge": 0.077,
+     "balance": 0.5231,
+     "topBottom": -0.063
     },
     {
      "src": "/img/shuffle/comm_cwb/3.jpg",
      "alt": "Cowboys Without Borders still 3",
-     "i": 2,
+     "i": 3,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
-      108,
-      99,
-      91
+      123,
+      120,
+      116
      ],
-     "hue": 0.0712,
-     "saturation": 0.3058,
-     "luminance": 0.3926,
-     "contrast": 0.1882,
-     "edge": 0.0799,
-     "balance": 0.5183,
-     "topBottom": -0.0384
+     "hue": 0.1016,
+     "saturation": 0.1893,
+     "luminance": 0.4729,
+     "contrast": 0.2798,
+     "edge": 0.0277,
+     "balance": 0.4789,
+     "topBottom": 0.4664
     },
     {
      "src": "/img/shuffle/comm_cwb/4.jpg",
      "alt": "Cowboys Without Borders still 4",
-     "i": 3,
-     "rgb": [
-      121,
-      118,
-      114
-     ],
-     "hue": 0.0982,
-     "saturation": 0.1877,
-     "luminance": 0.464,
-     "contrast": 0.2849,
-     "edge": 0.0285,
-     "balance": 0.4925,
-     "topBottom": 0.4718
-    },
-    {
-     "src": "/img/shuffle/comm_cwb/5.jpg",
-     "alt": "Cowboys Without Borders still 5",
      "i": 4,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
-      60,
-      69,
-      66
+      58,
+      67,
+      63
      ],
-     "hue": 0.5095,
-     "saturation": 0.2898,
-     "luminance": 0.2622,
-     "contrast": 0.1024,
-     "edge": 0.0484,
-     "balance": 0.4955,
-     "topBottom": 0.0339
+     "hue": 0.4989,
+     "saturation": 0.2984,
+     "luminance": 0.253,
+     "contrast": 0.0965,
+     "edge": 0.0454,
+     "balance": 0.5039,
+     "topBottom": 0.0444
     }
    ]
   },
@@ -1550,8 +1564,10 @@
    "frames": [
     {
      "src": "/img/shuffle/comm_applovin/thumb.jpg",
-     "alt": "",
+     "alt": "AppLovin Halloween Ad",
      "i": 0,
+     "facing": "right",
+     "tight": 0.2046,
      "rgb": [
       33,
       43,
@@ -1566,9 +1582,11 @@
      "topBottom": 0.0772
     },
     {
-     "src": "/img/shuffle/comm_applovin/2.jpg",
-     "alt": "AppLovin Halloween Ad still 2",
+     "src": "/img/shuffle/comm_applovin/1.jpg",
+     "alt": "AppLovin Halloween Ad still 1",
      "i": 1,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
       35,
       39,
@@ -1583,9 +1601,11 @@
      "topBottom": 0.0154
     },
     {
-     "src": "/img/shuffle/comm_applovin/3.jpg",
-     "alt": "AppLovin Halloween Ad still 3",
+     "src": "/img/shuffle/comm_applovin/2.jpg",
+     "alt": "AppLovin Halloween Ad still 2",
      "i": 2,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
       56,
       74,
@@ -1600,9 +1620,11 @@
      "topBottom": 0.3124
     },
     {
-     "src": "/img/shuffle/comm_applovin/4.jpg",
-     "alt": "AppLovin Halloween Ad still 4",
+     "src": "/img/shuffle/comm_applovin/3.jpg",
+     "alt": "AppLovin Halloween Ad still 3",
      "i": 3,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
       35,
       50,
@@ -1617,9 +1639,11 @@
      "topBottom": 0.0644
     },
     {
-     "src": "/img/shuffle/comm_applovin/5.jpg",
-     "alt": "AppLovin Halloween Ad still 5",
+     "src": "/img/shuffle/comm_applovin/4.jpg",
+     "alt": "AppLovin Halloween Ad still 4",
      "i": 4,
+     "facing": "right",
+     "tight": 0.2845,
      "rgb": [
       35,
       48,
@@ -1645,6 +1669,8 @@
      "src": "/img/shuffle/comm_josey/1.jpg",
      "alt": "Josey Records Ad #3 still 1",
      "i": 0,
+     "facing": "left",
+     "tight": 0.0978,
      "rgb": [
       113,
       109,
@@ -1662,6 +1688,8 @@
      "src": "/img/shuffle/comm_josey/2.jpg",
      "alt": "Josey Records Ad #3 still 2",
      "i": 1,
+     "facing": "neutral",
+     "tight": 0.2001,
      "rgb": [
       97,
       86,
@@ -1679,6 +1707,8 @@
      "src": "/img/shuffle/comm_josey/3.jpg",
      "alt": "Josey Records Ad #3 still 3",
      "i": 2,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
       118,
       97,
@@ -1696,6 +1726,8 @@
      "src": "/img/shuffle/comm_josey/4.jpg",
      "alt": "Josey Records Ad #3 still 4",
      "i": 3,
+     "facing": "neutral",
+     "tight": 0.2863,
      "rgb": [
       119,
       108,
@@ -1719,8 +1751,10 @@
    "frames": [
     {
      "src": "/img/shuffle/comm_goody/thumb.jpg",
-     "alt": "",
+     "alt": "Goody Goody TV Ad",
      "i": 0,
+     "facing": "right",
+     "tight": 0.2427,
      "rgb": [
       122,
       103,
@@ -1735,9 +1769,11 @@
      "topBottom": 0.1198
     },
     {
-     "src": "/img/shuffle/comm_goody/2.jpg",
-     "alt": "Goody Goody TV Ad still 2",
+     "src": "/img/shuffle/comm_goody/1.jpg",
+     "alt": "Goody Goody TV Ad still 1",
      "i": 1,
+     "facing": "neutral",
+     "tight": 0.3003,
      "rgb": [
       126,
       109,
@@ -1752,9 +1788,11 @@
      "topBottom": 0.2194
     },
     {
-     "src": "/img/shuffle/comm_goody/3.jpg",
-     "alt": "Goody Goody TV Ad still 3",
+     "src": "/img/shuffle/comm_goody/2.jpg",
+     "alt": "Goody Goody TV Ad still 2",
      "i": 2,
+     "facing": "left",
+     "tight": 0.2556,
      "rgb": [
       155,
       147,
@@ -1769,9 +1807,11 @@
      "topBottom": 0.1052
     },
     {
-     "src": "/img/shuffle/comm_goody/4.jpg",
-     "alt": "Goody Goody TV Ad still 4",
+     "src": "/img/shuffle/comm_goody/3.jpg",
+     "alt": "Goody Goody TV Ad still 3",
      "i": 3,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
       116,
       116,
@@ -1786,9 +1826,11 @@
      "topBottom": -0.0803
     },
     {
-     "src": "/img/shuffle/comm_goody/5.jpg",
-     "alt": "Goody Goody TV Ad still 5",
+     "src": "/img/shuffle/comm_goody/4.jpg",
+     "alt": "Goody Goody TV Ad still 4",
      "i": 4,
+     "facing": "right",
+     "tight": 0.2502,
      "rgb": [
       89,
       81,
@@ -1812,8 +1854,10 @@
    "frames": [
     {
      "src": "/img/shuffle/comm_targetcool/thumb.jpg",
-     "alt": "",
+     "alt": "TargetCool Customer Journey",
      "i": 0,
+     "facing": "neutral",
+     "tight": 0.4981,
      "rgb": [
       89,
       78,
@@ -1828,9 +1872,11 @@
      "topBottom": 0.15
     },
     {
-     "src": "/img/shuffle/comm_targetcool/2.jpg",
-     "alt": "TargetCool Customer Journey still 2",
+     "src": "/img/shuffle/comm_targetcool/1.jpg",
+     "alt": "TargetCool Customer Journey still 1",
      "i": 1,
+     "facing": "left",
+     "tight": 0.1109,
      "rgb": [
       109,
       105,
@@ -1845,9 +1891,11 @@
      "topBottom": 0.0191
     },
     {
-     "src": "/img/shuffle/comm_targetcool/3.jpg",
-     "alt": "TargetCool Customer Journey still 3",
+     "src": "/img/shuffle/comm_targetcool/2.jpg",
+     "alt": "TargetCool Customer Journey still 2",
      "i": 2,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
       120,
       117,
@@ -1862,9 +1910,11 @@
      "topBottom": -0.0111
     },
     {
-     "src": "/img/shuffle/comm_targetcool/4.jpg",
-     "alt": "TargetCool Customer Journey still 4",
+     "src": "/img/shuffle/comm_targetcool/3.jpg",
+     "alt": "TargetCool Customer Journey still 3",
      "i": 3,
+     "facing": "neutral",
+     "tight": 0.0,
      "rgb": [
       77,
       96,
@@ -1879,9 +1929,11 @@
      "topBottom": 0.1977
     },
     {
-     "src": "/img/shuffle/comm_targetcool/5.jpg",
-     "alt": "TargetCool Customer Journey still 5",
+     "src": "/img/shuffle/comm_targetcool/4.jpg",
+     "alt": "TargetCool Customer Journey still 4",
      "i": 4,
+     "facing": "neutral",
+     "tight": 0.1777,
      "rgb": [
       110,
       100,
