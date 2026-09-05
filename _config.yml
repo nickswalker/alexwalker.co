@@ -45,12 +45,3 @@ defaults:
       path: "google88bacf39fa2b9f7b.html"
     values:
       sitemap: false
-
-  # Stale duplicate of the gear list PDF. The live copy that index.html,
-  # hvac.html, examples.html, secret.html and privatedemo.html all link to is
-  # img/AlexWalker_fullgearlist.pdf; this css/ copy is an older orphan nothing
-  # references, and having both made the same document appear twice.
-  - scope:
-      path: "css/AlexWalker_fullgearlist.pdf"
-    values:
-      sitemap: false
