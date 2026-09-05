@@ -1,7 +1,7 @@
 ---
 # Empty front matter on purpose: it makes Jekyll run Liquid over this file so
-# RICH_CONFIG.tll can be generated from _data/tll.yml — the same data that
-# renders the server-side page at /texas-legacy-in-lights/. Keep Liquid's
+# RICH_CONFIG.tll's still list can be generated from _data/tll.yml — the same
+# data that renders the hidden #tll copy block into index.html. Keep Liquid's
 # `{{` / `{%` delimiters out of the JavaScript below (template literals use
 # `${...}`, which Liquid ignores).
 ---
@@ -133,13 +133,20 @@ export const RICH_CONFIG = {
             '/img/hc/frame8.jpg',
         ],
     },
-    // Generated from _data/tll.yml at build time — the same data that renders
-    // the crawlable page at /texas-legacy-in-lights/. Edit the stills there,
+    // Stills generated from _data/tll.yml at build time — edit them there,
     // not here. 8 real stills, grid is full, no placeholders. (The 5th still
     // doubles as the narrative thumbnail.)
+    //
+    // NOTE the words are NOT here. The prose lives in the hidden
+    // `#tll .rich-copy` block that Jekyll writes into index.html, and
+    // _renderPanels clones that node into the panel. Adding a `copy:` string
+    // to this object would create a second copy of the text that crawlers
+    // can't see — don't.
     tll: {
         title: '{{ site.data.tll.title }}',
         framesOnly: true,
+        // Same-page hash, not a path — there is no standalone page. See the
+        // `deepLink` handling in autoInitLightboxes.
         deepLink: '{{ site.data.tll.url }}',
         frames: [
         {%- for frame in site.data.tll.frames %}
@@ -1074,6 +1081,27 @@ export class Lightbox {
                         ${topHTML}
                         ${framesListHTML}
                     </div>`;
+
+                // Server-rendered prose. When the page ships a hidden
+                // `<div id="<richKey>" class="rich-copy">` (Jekyll writes it
+                // from _data/<key>.yml — see the #tll block in index.html),
+                // CLONE it into the panel instead of building the words from
+                // a JS object. That keeps exactly one copy of the text, and
+                // that copy is real DOM text in the HTML on disk, readable by
+                // crawlers and no-JS visitors before any script runs.
+                //
+                // Clone rather than move: _renderPanels wipes the stage on
+                // every open, so moving the original would destroy it after
+                // the first close.
+                const copySrcEl = document.getElementById(richKey);
+                if (copySrcEl && copySrcEl.classList.contains('rich-copy')) {
+                    const copy = copySrcEl.cloneNode(true);
+                    copy.removeAttribute('id');      // no duplicate ids in the document
+                    copy.removeAttribute('hidden');  // the clone is the visible one
+                    panel.querySelector('.rich-grid').prepend(copy);
+                    panel.classList.add('lightbox__panel--has-copy');
+                }
+
                 this.stage.appendChild(panel);
 
                 // Mobile-portrait layout helper for titles with too-tall a
@@ -1434,18 +1462,27 @@ export function autoInitLightboxes(opts = {}) {
     for (const [, items] of groups) {
         const isImage = items[0].type === 'image';
         const isGallery = items.length > 1 && isImage;
-        // Deep-linkable gallery. A RICH_CONFIG entry with `deepLink` has a
-        // real, server-rendered page behind it (the trigger's href points
-        // there, so the tile still works with JS off and crawlers follow it).
-        // While the lightbox is open we swap the address bar to that path so
-        // the open gallery is shareable, then restore the previous URL on
-        // close. Single-trigger groups only — a multi-item gallery has no one
-        // URL to stand for it.
+        // Deep-linkable gallery. A RICH_CONFIG entry with `deepLink` names a
+        // same-page hash (e.g. '#tll') that the trigger's href points at, so
+        // the tile is a real anchor with JS off. While the lightbox is open we
+        // put that hash in the address bar, making the open gallery shareable,
+        // and clear it again on close. Single-trigger groups only — a
+        // multi-item gallery has no one URL to stand for it.
         const deepLink = items.length === 1 && items[0].rich
             ? (RICH_CONFIG[items[0].rich] || {}).deepLink || null
             : null;
-        // True only while OUR pushed history entry is the current one.
+        // True only while OUR pushed history entry is the current one. Stays
+        // false when the user LANDED on the hash (that entry isn't ours to pop).
         let deepLinked = false;
+        // Drop the hash without touching history depth — used when the gallery
+        // was opened by a direct visit to /#tll, where there's no entry of ours
+        // to go back to and history.back() would leave the site entirely.
+        const clearHash = () => {
+            if (location.hash !== deepLink) return;
+            try {
+                history.replaceState(history.state, '', location.pathname + location.search);
+            } catch (_) {}
+        };
         const lb = new Lightbox({
             nav: items.length > 1,
             slideshow: isGallery,
@@ -1455,32 +1492,47 @@ export function autoInitLightboxes(opts = {}) {
             ...opts,
             onClose: () => {
                 if (opts.onClose) opts.onClose();
-                // Pop our own entry so Back isn't consumed by a URL the user
-                // never navigated to. When the close was itself caused by a
-                // popstate, deepLinked is already false and we do nothing.
+                if (!deepLink) return;
+                // Closing always clears the hash — by two different routes.
                 if (deepLinked) {
+                    // We pushed the entry, so pop it: that both drops the hash
+                    // and leaves Back meaning what it meant before the click,
+                    // rather than being consumed by a URL the user never
+                    // navigated to. (If the close was itself caused by a
+                    // popstate, deepLinked is already false and we skip this.)
                     deepLinked = false;
                     try { history.back(); } catch (_) {}
+                } else {
+                    // Direct landing on /#tll — nothing of ours on the stack,
+                    // so just rewrite the current entry hash-free.
+                    clearHash();
                 }
             },
         });
         lb.setItems(items);
 
         if (deepLink) {
+            // location.hash, not history.state: a visitor who pastes /#tll in
+            // fresh has a null state, and this has to work for them too.
             window.addEventListener('popstate', () => {
-                const onOurEntry = !!(history.state && history.state.lightbox === deepLink);
-                if (onOurEntry && !lb.dialog.open) {
-                    // Forward, back onto our entry: reopen, so the address bar
-                    // never shows the gallery URL with no gallery on screen.
+                const onHash = location.hash === deepLink;
+                if (onHash && !lb.dialog.open) {
+                    // Forward, back onto the hash: reopen, so the address bar
+                    // never shows #tll with no gallery on screen.
                     deepLinked = true;
                     lb.open(0);
-                } else if (!onOurEntry && deepLinked && lb.dialog.open) {
-                    // Back off our entry: close without touching history again
+                } else if (!onHash && lb.dialog.open) {
+                    // Back off the hash: close without touching history again
                     // (the browser has already moved).
                     deepLinked = false;
                     lb.close();
                 }
             });
+
+            // Deep link on page load: /#tll opens the gallery straight away.
+            // deepLinked stays false — the hash entry is the visitor's own, so
+            // closing must clear it via replaceState, not pop off the site.
+            if (location.hash === deepLink) lb.open(0);
         }
 
         items.forEach((item, i) => {

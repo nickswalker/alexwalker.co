@@ -1,17 +1,21 @@
 # Texas Legacy in Lights — ONE source of truth.
 #
-# Two consumers read this file, so the copy and the still list exist exactly
-# once:
-#   1. texas-legacy-in-lights.html — the server-rendered page at
-#      /texas-legacy-in-lights/ (real HTML on disk, crawlable).
-#   2. js/lightbox.js — RICH_CONFIG.tll (the home-page tile's gallery). That
-#      file carries empty front matter so Jekyll runs Liquid over it and the
-#      frame list is generated from `frames` below.
-# Add or reorder a still here and BOTH surfaces follow. Don't hard-code the
-# list in either consumer.
+# There is deliberately NO standalone page for this project. Everything below
+# renders into the home page's existing lightbox, and nothing else:
+#   1. index.html — Jekyll writes the prose into the hidden `#tll` .rich-copy
+#      block at build time, so the words are real DOM text in index.html on
+#      disk (crawlable, present before any JS runs). The lightbox clones that
+#      node; it never rebuilds the copy from JavaScript.
+#   2. js/lightbox.js — RICH_CONFIG.tll (the still list only). That file
+#      carries empty front matter so Jekyll runs Liquid over it and `frames`
+#      below generates the strip.
+# Add or reorder a still here and both surfaces follow. Don't hard-code the
+# copy or the list in either consumer.
 
 title: Texas Legacy in Lights
-url: /texas-legacy-in-lights/
+# Home-page deep link. The tile is a real <a href="#tll"> and the open
+# lightbox puts this in the address bar — there is no separate URL to point at.
+url: "#tll"
 subline: "Director of Photography · Directed by John Franklin Rinehart · Gonzales Memorial Museum, Gonzales, Texas"
 
 paragraphs:

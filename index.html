@@ -205,7 +205,7 @@
       "@type": ["CreativeWork", "Movie"],
       "@id": "https://alexwalker.co/#film-texas-legacy-in-lights",
       "name": "Texas Legacy in Lights",
-      "url": "https://alexwalker.co/texas-legacy-in-lights/",
+      "url": "https://alexwalker.co/#tll",
       "creditText": "Alex Walker — Director of Photography",
       "contributor": {
         "@type": "Role",
@@ -350,14 +350,44 @@
                             </a>
                         </li>
                         <li>
+                            {%- assign tll = site.data.tll -%}
                             <!-- Real href, not javascript:void(0): the lightbox
                                  intercepts the click (preventDefault) so the
-                                 gallery opens exactly as before, but with JS
-                                 off — and for crawlers — this resolves to the
-                                 server-rendered page. -->
-                            <a href="/texas-legacy-in-lights/" class="-by-nine" data-year="Texas Legacy in Lights" data-rich="tll">
-                                <img src="img/narrative/TLLnarr.jpg" alt="{{ site.data.tll.tile_alt | escape }}" />
+                                 gallery opens exactly as before, but this stays
+                                 a genuine link with JS off, and the open
+                                 lightbox is shareable as /#tll. -->
+                            <a href="{{ tll.url }}" class="-by-nine" data-year="Texas Legacy in Lights" data-rich="tll">
+                                <img src="img/narrative/TLLnarr.jpg" alt="{{ tll.tile_alt | escape }}" />
                             </a>
+                            <!-- ===========================================
+                                 The Texas Legacy in Lights copy, written HERE
+                                 by Jekyll from _data/tll.yml at build time —
+                                 real DOM text in index.html on disk, so
+                                 crawlers and no-JS visitors read it without
+                                 running a line of JavaScript. It is hidden,
+                                 not absent.
+
+                                 js/lightbox.js CLONES this node into the
+                                 lightbox panel (see `.rich-copy` in
+                                 _renderPanels). Do NOT also put these words in
+                                 RICH_CONFIG — the whole point is that they
+                                 exist exactly once, and that once is here.
+
+                                 id="tll" is what the tile's href="#tll"
+                                 targets and what the deep-link handler reads
+                                 off location.hash.
+                                 =========================================== -->
+                            <div id="tll" class="rich-copy" hidden>
+                                <h2>{{ tll.title }}</h2>
+                                <p class="rich-copy__subline">{{ tll.subline }}</p>
+                                {%- for paragraph in tll.paragraphs %}
+                                <p>{{ paragraph }}</p>
+                                {%- endfor %}
+                                <p class="rich-copy__link">
+                                    <a href="{{ tll.official_site }}" target="_blank" rel="noopener"
+                                       data-goatcounter-click="ext-texaslegacyinlights.com">{{ tll.official_site_label }}</a>
+                                </p>
+                            </div>
                         </li>
                         <li>
                             <a href="https://www.youtube.com/embed/xxByzOj_yQY" class="-by-nine" data-year="Javelina Run- Short Film" data-rich="jr"><img
