@@ -21,15 +21,30 @@
   {%- assign default_description = "Alex Walker — cinematographer and colorist in Austin, Texas. DP on House of Abraham, Texas Cult House, A Christmas in New Hope." -%}
 {%- endif -%}
 {%- assign description = page.description | default: default_description -%}
+{%- comment -%}
+  Opt-in per-page keyword override. Defaults to the site-wide list, so every
+  existing page's output is byte-identical; only a page that sets `keywords:`
+  in front matter differs (e.g. a credit where "Colorist" would be wrong).
+{%- endcomment -%}
+{%- assign keywords = page.keywords | default: "Cinematographer,Colorist,Director,Portfolio,Photography,Vision,Camera,Experienced,Professional," -%}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
     <title>{{ page.title }}</title>
     <meta name="author" content="{{ author }}">
     <meta name="description" content="{{ description | escape }}"/>
-    <meta name="keywords" content="Cinematographer,Colorist,Director,Portfolio,Photography,Vision,Camera,Experienced,Professional,"/>
+    <meta name="keywords" content="{{ keywords }}"/>
     {%- if page.noindex %}
     <meta name="robots" content="noindex">
+    {%- endif %}
+    {%- comment -%}
+      Opt-in ABSOLUTE canonical. Pages that set `canonical:` in front matter
+      emit it; every other page's output is unchanged (no page.canonical =
+      no tag). Always give the full https://alexwalker.co/... URL — a
+      relative canonical is ambiguous once a page is mirrored on staging.
+    {%- endcomment -%}
+    {%- if page.canonical %}
+    <link rel="canonical" href="{{ page.canonical }}">
     {%- endif %}
 
     <meta property="og:url" content="{{ og_url }}">

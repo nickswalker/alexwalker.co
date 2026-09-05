@@ -1,3 +1,10 @@
+---
+# Empty front matter on purpose: it makes Jekyll run Liquid over this file so
+# RICH_CONFIG.tll can be generated from _data/tll.yml — the same data that
+# renders the server-side page at /texas-legacy-in-lights/. Keep Liquid's
+# `{{` / `{%` delimiters out of the JavaScript below (template literals use
+# `${...}`, which Liquid ignores).
+---
 import { sendVideoPixel, sendVideoDuration } from './visit-log.js';
 import { buildPlayerMarkup, mountPlayer, parseVideoUrl, loadYouTubeApi, loadVimeoApi } from './uniform-player.js';
 
@@ -126,20 +133,18 @@ export const RICH_CONFIG = {
             '/img/hc/frame8.jpg',
         ],
     },
+    // Generated from _data/tll.yml at build time — the same data that renders
+    // the crawlable page at /texas-legacy-in-lights/. Edit the stills there,
+    // not here. 8 real stills, grid is full, no placeholders. (The 5th still
+    // doubles as the narrative thumbnail.)
     tll: {
-        title: 'Texas Legacy in Lights',
+        title: '{{ site.data.tll.title }}',
         framesOnly: true,
-        // 8 real stills — grid is full, no placeholders. (The 5th still
-        // doubles as the narrative thumbnail.)
+        deepLink: '{{ site.data.tll.url }}',
         frames: [
-            '/img/tll/frame1.jpg',
-            '/img/tll/frame2.jpg',
-            '/img/tll/frame3.jpg',
-            '/img/tll/frame4.jpg',
-            '/img/tll/frame5.jpg',
-            '/img/tll/frame6.jpg',
-            '/img/tll/frame7.jpg',
-            '/img/tll/frame8.jpg',
+        {%- for frame in site.data.tll.frames %}
+            '{{ frame.src }}',
+        {%- endfor %}
         ],
     },
 
@@ -1429,6 +1434,18 @@ export function autoInitLightboxes(opts = {}) {
     for (const [, items] of groups) {
         const isImage = items[0].type === 'image';
         const isGallery = items.length > 1 && isImage;
+        // Deep-linkable gallery. A RICH_CONFIG entry with `deepLink` has a
+        // real, server-rendered page behind it (the trigger's href points
+        // there, so the tile still works with JS off and crawlers follow it).
+        // While the lightbox is open we swap the address bar to that path so
+        // the open gallery is shareable, then restore the previous URL on
+        // close. Single-trigger groups only — a multi-item gallery has no one
+        // URL to stand for it.
+        const deepLink = items.length === 1 && items[0].rich
+            ? (RICH_CONFIG[items[0].rich] || {}).deepLink || null
+            : null;
+        // True only while OUR pushed history entry is the current one.
+        let deepLinked = false;
         const lb = new Lightbox({
             nav: items.length > 1,
             slideshow: isGallery,
@@ -1436,8 +1453,35 @@ export function autoInitLightboxes(opts = {}) {
             fullscreen: false,
             caption: (item) => item.caption || '',
             ...opts,
+            onClose: () => {
+                if (opts.onClose) opts.onClose();
+                // Pop our own entry so Back isn't consumed by a URL the user
+                // never navigated to. When the close was itself caused by a
+                // popstate, deepLinked is already false and we do nothing.
+                if (deepLinked) {
+                    deepLinked = false;
+                    try { history.back(); } catch (_) {}
+                }
+            },
         });
         lb.setItems(items);
+
+        if (deepLink) {
+            window.addEventListener('popstate', () => {
+                const onOurEntry = !!(history.state && history.state.lightbox === deepLink);
+                if (onOurEntry && !lb.dialog.open) {
+                    // Forward, back onto our entry: reopen, so the address bar
+                    // never shows the gallery URL with no gallery on screen.
+                    deepLinked = true;
+                    lb.open(0);
+                } else if (!onOurEntry && deepLinked && lb.dialog.open) {
+                    // Back off our entry: close without touching history again
+                    // (the browser has already moved).
+                    deepLinked = false;
+                    lb.close();
+                }
+            });
+        }
 
         items.forEach((item, i) => {
             item.el.addEventListener('click', (e) => {
@@ -1451,6 +1495,14 @@ export function autoInitLightboxes(opts = {}) {
                 if (p && p.provider === 'youtube') loadYouTubeApi();
                 else if (p && p.provider === 'vimeo') loadVimeoApi();
                 lb.open(i);
+                // Address bar follows the open gallery (see `deepLink` above).
+                // Guarded so a re-click while open can't stack entries.
+                if (deepLink && !deepLinked) {
+                    try {
+                        history.pushState({ lightbox: deepLink }, '', deepLink);
+                        deepLinked = true;
+                    } catch (_) {}
+                }
             });
         });
     }

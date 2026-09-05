@@ -1,0 +1,48 @@
+# Texas Legacy in Lights — ONE source of truth.
+#
+# Two consumers read this file, so the copy and the still list exist exactly
+# once:
+#   1. texas-legacy-in-lights.html — the server-rendered page at
+#      /texas-legacy-in-lights/ (real HTML on disk, crawlable).
+#   2. js/lightbox.js — RICH_CONFIG.tll (the home-page tile's gallery). That
+#      file carries empty front matter so Jekyll runs Liquid over it and the
+#      frame list is generated from `frames` below.
+# Add or reorder a still here and BOTH surfaces follow. Don't hard-code the
+# list in either consumer.
+
+title: Texas Legacy in Lights
+url: /texas-legacy-in-lights/
+subline: "Director of Photography · Directed by John Franklin Rinehart · Gonzales Memorial Museum, Gonzales, Texas"
+
+paragraphs:
+  - "A live-action film projected onto the limestone facade of the Gonzales Memorial Museum — believed to be the first permanent projection-mapped narrative film of its kind. It runs twice nightly across a surface roughly 96 by 32 feet, about one and a half times the width of an IMAX screen."
+  - "Shot over seven days with five Blackmagic URSA Cine 12K LF bodies rolling simultaneously to cover a single continuous take, with a PYXIS 6K as B camera, capturing in 12K to hold detail at architectural scale."
+
+official_site: "https://texaslegacyinlights.com"
+official_site_label: "Visit the official project site"
+
+# Trailer: DELIBERATELY EMPTY — no URL has been supplied yet. Fill in a
+# YouTube or Vimeo watch/embed URL here and the page's embed slot picks it
+# up; leaving it blank renders nothing (no empty player, no placeholder).
+trailer:
+
+# Home-page narrative tile (index.html). A crop of frame5.
+tile_alt: "Texas Legacy in Lights — a rider on horseback gallops through the woods at dusk"
+
+frames:
+  - src: /img/tll/frame1.jpg
+    alt: "Two women in 1800s dress stand among trees at golden hour — a young woman in a yellow gingham dress with a white lace collar looks off into the distance while an older woman in a straw bonnet and apron watches her"
+  - src: /img/tll/frame2.jpg
+    alt: "A man in a wide-brimmed hat carrying a wooden tool chest walks behind a woman in a pale dress and bonnet through waist-high grass toward a sunlit treeline"
+  - src: /img/tll/frame3.jpg
+    alt: "Close-up of a hand in a yellow gingham sleeve pressing down into ash and gravel on the ground, a dark shape out of focus behind it"
+  - src: /img/tll/frame4.jpg
+    alt: "A woman in a straw bonnet and floral-print dress seen from behind, head bowed, looking out over a sunlit meadow"
+  - src: /img/tll/frame5.jpg
+    alt: "A rider in a hat and long coat gallops a chestnut horse through the woods at dusk, the trees behind him streaked with motion blur"
+  - src: /img/tll/frame6.jpg
+    alt: "A woman in a straw hat and apron swings a hoe in a wide field of tall grass under an open sky, a timber structure and treeline behind her"
+  - src: /img/tll/frame7.jpg
+    alt: "At night, a man leads a saddled horse down a smoky dirt lane past a timber fence, lit by cold blue moonlight"
+  - src: /img/tll/frame8.jpg
+    alt: "Extreme close-up of a woman's face lit only by firelight from below right, her expression still and fixed"

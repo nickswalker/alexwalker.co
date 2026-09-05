@@ -1,0 +1,70 @@
+---
+layout: project
+permalink: /texas-legacy-in-lights/
+title: Texas Legacy in Lights — Director of Photography | Alex Walker
+og_title: Texas Legacy in Lights — Director of Photography | Alex Walker
+og_url: https://alexwalker.co/texas-legacy-in-lights/
+canonical: https://alexwalker.co/texas-legacy-in-lights/
+author: Alex Walker
+# DP-only credit on this project — the site-wide keyword list includes
+# "Colorist", which would be wrong here.
+keywords: "Cinematographer,Director of Photography,Texas Legacy in Lights,Projection Mapping,Gonzales Texas,Blackmagic URSA Cine 12K LF,Alex Walker"
+description: "Alex Walker was director of photography on Texas Legacy in Lights, a live-action projection-mapped film on the facade of the Gonzales Memorial Museum in Gonzales, Texas, shot on five Blackmagic URSA Cine 12K LF bodies."
+---
+{%- assign tll = site.data.tll -%}
+{%- comment -%}
+  Server-rendered twin of the home page's Texas Legacy in Lights lightbox.
+  Every word and every still below comes from _data/tll.yml, which is the
+  SAME data js/lightbox.js builds RICH_CONFIG.tll from — one source, two
+  surfaces. Nothing here is injected by JavaScript: the prose and the eight
+  <img> tags (with real alt text) are in the HTML on disk so search engines
+  and AI crawlers can read them.
+{%- endcomment -%}
+
+<section id="texas-legacy-in-lights" class="scroll-fade">
+    <div class="container columns-span-width scroll-fade">
+
+        <div class="tll-intro">
+            <h1>{{ tll.title }}</h1>
+            <p class="page-note">{{ tll.subline }}</p>
+
+            {%- for paragraph in tll.paragraphs %}
+            <p>{{ paragraph }}</p>
+            {%- endfor %}
+        </div>
+
+        <!-- ===================================================================
+             TRAILER EMBED SLOT — INTENTIONALLY EMPTY.
+             No trailer URL has been supplied for this project yet. To fill it:
+             set `trailer:` in _data/tll.yml to the YouTube or Vimeo URL and
+             this block renders the embed. Until then nothing is output — no
+             empty iframe, no placeholder. (If/when a trailer lands, a
+             VideoObject entry in the home page's JSON-LD graph would also be
+             appropriate; deliberately not added while the slot is empty.)
+             =================================================================== -->
+        {%- if tll.trailer and tll.trailer != "" %}
+        <div class="tll-trailer">
+            <a href="{{ tll.trailer }}" class="sixteen-by-nine" data-year="{{ tll.title }}">
+                <img src="{{ tll.frames[4].src }}" alt="{{ tll.frames[4].alt | escape }}">
+            </a>
+        </div>
+        {%- endif %}
+
+        <p class="tll-official">
+            <a href="{{ tll.official_site }}" target="_blank" rel="noopener"
+               data-goatcounter-click="ext-texaslegacyinlights.com">{{ tll.official_site_label }}</a>
+        </p>
+
+        <ul class="thumbnails tll-stills">
+            {%- for frame in tll.frames %}
+            <li>
+                <img src="{{ frame.src }}" alt="{{ frame.alt | escape }}" loading="lazy" decoding="async">
+            </li>
+            {%- endfor %}
+        </ul>
+
+        <div id="return" class="full-width-centered">
+            <button><a href="/#cinematographer">Back to Main Page</a></button>
+        </div>
+    </div>
+</section>
