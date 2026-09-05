@@ -96,7 +96,20 @@ ready(() => {
         .catch(err => {
             console.error('[site.js] still-row failed (likely content blocker):', err);
         });
-    stillRowPromise.then(() => {
+
+    // Project-tile shuffle. Same shape as still-row: dynamic import so a
+    // content blocker or a fetch failure can't take the rest of the page
+    // with it, and the tiles simply keep their server-rendered thumbnails.
+    // Runs only where there are tiles to shuffle (the homepage grids).
+    const thumbShufflePromise = isHome
+        ? import('./thumb-shuffle.js')
+            .then(m => m.initThumbShuffle())
+            .catch(err => {
+                console.error('[site.js] thumb-shuffle failed:', err);
+            })
+        : Promise.resolve();
+
+    Promise.all([stillRowPromise, thumbShufflePromise]).then(() => {
         safe('lightboxes', () => autoInitLightboxes());
     });
     // Best-effort: if a content blocker eats visit-log.js, swallow

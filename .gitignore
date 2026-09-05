@@ -5,3 +5,6 @@ _site/
 node_modules/
 .venv/
 .claude/
+
+# Compiled build-time Vision probe (rebuild: swiftc -O -o scripts/.bin/vision_probe scripts/vision_probe.swift)
+scripts/.bin/
