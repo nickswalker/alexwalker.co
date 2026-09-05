@@ -4705,12 +4705,13 @@ html.lightbox-open #glass-wrapper {
       item, so any stray `display` from a broader rule would open a hole in
       the narrative grid. Pinned explicitly rather than trusting the UA
       default for `hidden`.
-   2. IN THE PANEL. The clone has `hidden` removed and renders above the
-      still strip.
+   2. IN THE PANEL. The clone has `hidden` removed and renders BELOW the
+      still strip — the stills are what the tile promised, the prose is what
+      you read after them. See the append (not prepend) in _renderPanels.
 
-   Sizes are viewport-height-relative (vh in the clamps) because the panel
-   does not scroll — the copy and 8 stills have to co-exist in one screen on
-   a laptop as well as a 27" display. */
+   Sizes stay viewport-height-relative (vh in the clamps) so the type scales
+   with the panel; the stills plus the copy are taller than a laptop screen,
+   so the grid scrolls (see .lightbox__panel--has-copy below). */
 .rich-copy[hidden] {
     display: none !important;
 }
@@ -4764,10 +4765,38 @@ html.lightbox-open #glass-wrapper {
     border-bottom-color: #fff;
 }
 
-/* The frames-only grid centres a fixed-height column; with copy above the
-   stills it needs to breathe rather than centre each block independently. */
+/* A panel carrying copy is taller than the viewport on most screens, so the
+   .rich-grid becomes the scroll container: stills pinned at the top, prose
+   scrolling up into view beneath them.
+
+   justify-content is flex-START here, overriding the frames-only centring.
+   Centring a flex column that overflows its container pushes the first
+   child above the top edge, where scrollTop can't reach it — the top row of
+   stills would be permanently cut off. Starting at the top also gives the
+   /#tll deep link the right first frame: open, stills, scrolled to 0.
+
+   overscroll-behavior: contain stops a scroll that runs off the end of the
+   copy from chaining out to the stage's horizontal scroller or the page
+   behind the dialog.
+
+   The dismiss gestures cooperate via _scrollableAncestor() in
+   js/lightbox.js: while this element still has room to scroll in the
+   gesture's direction, wheel and touch let the native scroll through
+   instead of accumulating toward close(). At scrollTop 0 there is no room
+   upward, so pull-to-dismiss still works exactly as before. */
+.lightbox__panel--has-copy .rich-grid {
+    justify-content: flex-start;
+    max-height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Breathing room between the two blocks, plus enough bottom padding that the
+   official-site link at the very end doesn't sit flush against the edge. */
 .lightbox__panel--frames-only.lightbox__panel--has-copy .rich-grid {
     gap: clamp(10px, 2vh, 22px);
+    padding-bottom: clamp(12px, 3vh, 32px);
 }
 
 /* Dim the prose with the stills while a trailer plays, so the same

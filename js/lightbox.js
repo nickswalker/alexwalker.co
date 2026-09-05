@@ -641,6 +641,12 @@ export class Lightbox {
         // of doing the dismiss / horizontal-swipe behaviors.
         let touchPanImg = null;
         let touchPanInitialTx = 0, touchPanInitialTy = 0;
+        // Latched by the scroll guard: this vertical gesture is scrolling a
+        // panel's copy into view, not dismissing. Latched (never cleared
+        // mid-gesture) so that reaching the bottom of the copy while still
+        // dragging doesn't suddenly turn the same continuous finger movement
+        // into a dismiss. Reset on the next touchstart.
+        let touchScrolling = false;
 
         this.stage.addEventListener('touchstart', (e) => {
             if (e.touches.length !== 1) return;
@@ -648,6 +654,7 @@ export class Lightbox {
             touchStartX = t.clientX;
             touchStartY = t.clientY;
             touchDir = null;
+            touchScrolling = false;
             touchStartTime = performance.now();
             touchVelSamples = [{ t: touchStartTime, y: t.clientY }];
             const zoomedPanel = document.elementFromPoint(t.clientX, t.clientY)?.closest('.lightbox__panel.is-zoomed');
@@ -678,6 +685,16 @@ export class Lightbox {
                 touchDir = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
             }
             if (touchDir === 'v') {
+                // Scroll guard. dy > 0 is a finger moving DOWN, which drags
+                // content down = scrolls UP, hence the negated intent.
+                if (!touchScrolling && this._scrollableAncestor(e.target, -dy)) {
+                    touchScrolling = true;
+                    // Undo any dismiss transform from the frames before the
+                    // gesture was classified, so the panel doesn't sit
+                    // slightly offset while the copy scrolls.
+                    this._setDismissDrag(0);
+                }
+                if (touchScrolling) return;   // native scroll owns it
                 e.preventDefault();
                 this._setDismissDrag(dy);
                 const now = performance.now();
@@ -708,6 +725,14 @@ export class Lightbox {
                 // synthetic click event that fires after touchend — we
                 // deliberately do not call _toggleZoomAt here, to avoid
                 // double-toggling (touchend + click).
+                return;
+            }
+
+            // The gesture scrolled the copy — it was never a dismiss, so it
+            // must not become one here no matter how far or fast it ran.
+            if (touchScrolling) {
+                touchScrolling = false;
+                touchDir = null;
                 return;
             }
 
@@ -786,6 +811,20 @@ export class Lightbox {
         this.stage.addEventListener('wheel', (e) => {
             // Only treat dominant-vertical gestures as dismiss intent
             if (Math.abs(e.deltaY) <= Math.abs(e.deltaX) * 1.2) return;
+            // Scroll guard. e.deltaY > 0 asks to scroll further down, which
+            // is already the sign convention _scrollableAncestor expects.
+            if (this._scrollableAncestor(e.target, e.deltaY)) {
+                // Let the browser scroll the copy natively. Clear any partial
+                // dismiss so a flick that starts as dismiss and continues as
+                // scroll doesn't leave the panel translated, and drop the
+                // accumulator so this scrolling never counts toward close().
+                clearTimeout(wheelResetTimer);
+                if (wheelAccum !== 0) {
+                    wheelAccum = 0;
+                    this._setDismissDrag(0);
+                }
+                return;
+            }
             e.preventDefault();
             e.stopPropagation();
             wheelAccum += e.deltaY;
@@ -1093,12 +1132,21 @@ export class Lightbox {
                 // Clone rather than move: _renderPanels wipes the stage on
                 // every open, so moving the original would destroy it after
                 // the first close.
+                //
+                // APPEND, not prepend: the stills come first and the prose
+                // sits UNDERNEATH them, with the official-site link last.
+                // The gallery is the thing people came for; the words are
+                // what they read after. Putting the copy on top pushed the
+                // stills below the fold on a laptop.
                 const copySrcEl = document.getElementById(richKey);
                 if (copySrcEl && copySrcEl.classList.contains('rich-copy')) {
                     const copy = copySrcEl.cloneNode(true);
                     copy.removeAttribute('id');      // no duplicate ids in the document
                     copy.removeAttribute('hidden');  // the clone is the visible one
-                    panel.querySelector('.rich-grid').prepend(copy);
+                    panel.querySelector('.rich-grid').append(copy);
+                    // Marks the panel as taller-than-viewport: the CSS turns
+                    // .rich-grid into a scroll container, and the wheel/touch
+                    // dismiss handlers bail out while it can still scroll.
                     panel.classList.add('lightbox__panel--has-copy');
                 }
 
@@ -1299,6 +1347,59 @@ export class Lightbox {
     }
     _setImageTranslate(img, x, y) {
         img.style.transform = `translate(${x}px, ${y}px) scale(2)`;
+    }
+
+    /**
+     * SCROLL GUARD. Vertical gestures inside the stage normally mean
+     * "dismiss" — wheel accumulates toward close(), a vertical touch drag
+     * pulls the panel away. That is wrong the moment a panel is taller than
+     * the viewport and has content to read (the tll panel: 8 stills with the
+     * project copy underneath). Scrolling down to reach the words would shut
+     * the lightbox.
+     *
+     * So before either handler claims a gesture, ask this: starting at the
+     * event target and walking up to (but not including) the stage, is there
+     * a vertically-scrollable element that STILL HAS ROOM in the direction
+     * the gesture is asking for? If yes, the native scroll owns the gesture
+     * and the dismiss handler stands down entirely — no preventDefault, no
+     * accumulated dismiss distance.
+     *
+     * If the nearest scroller is at its end in that direction, we return null
+     * and dismiss proceeds as before. That is deliberate and it is what keeps
+     * pull-to-dismiss alive: at scrollTop 0 an upward-dismiss gesture (drag
+     * the panel down / wheel up) finds no room above, so it dismisses exactly
+     * like it always did. Same at the bottom for a downward gesture.
+     *
+     * @param {EventTarget} startEl  deepest element under the pointer/finger
+     * @param {number} intent  the scrollTop delta being asked for: POSITIVE
+     *   means scroll further down. Note the two call sites differ in sign —
+     *   wheel passes `e.deltaY` (down-wheel is positive), touch passes `-dy`
+     *   (a finger moving DOWN drags content down, i.e. scrolls UP).
+     * @returns {Element|null} the scroller that should keep the gesture
+     */
+    _scrollableAncestor(startEl, intent) {
+        if (!intent) return null;
+        let el = startEl instanceof Element ? startEl : null;
+        while (el && el !== this.stage && this.stage.contains(el)) {
+            // clientHeight is 0 for display:contents / detached nodes; the
+            // >1 slack absorbs sub-pixel layout rounding.
+            if (el.scrollHeight - el.clientHeight > 1) {
+                const overflowY = getComputedStyle(el).overflowY;
+                if (overflowY === 'auto' || overflowY === 'scroll' || overflowY === 'overlay') {
+                    const max = el.scrollHeight - el.clientHeight;
+                    const hasRoom = intent > 0
+                        ? el.scrollTop < max - 1   // room below
+                        : el.scrollTop > 1;        // room above
+                    // First real scroller wins the gesture either way: if it
+                    // is out of room we stop here rather than looking further
+                    // up, so an inner scroller at its end can't hand the
+                    // gesture to an outer one mid-read.
+                    return hasRoom ? el : null;
+                }
+            }
+            el = el.parentElement;
+        }
+        return null;
     }
 
     _setDismissDrag(dy) {
