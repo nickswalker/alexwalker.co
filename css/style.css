@@ -4792,10 +4792,35 @@ html.lightbox-open #glass-wrapper {
     -webkit-overflow-scrolling: touch;
 }
 
+/* Top breathing room. Every other rich panel centres its grid inside the
+   panel (.lightbox__panel--rich sets align-items: center), so the slack above
+   the content comes for free. A has-copy grid can't: it is height-capped and
+   pinned to flex-start, so its first row of stills landed on the panel's
+   content edge — 36px from the top of the viewport, under the close button.
+   Restore the site's standard lightbox top spacing instead of inventing one:
+   64px, the padding-top every .lightbox__panel carries by default (see the
+   base rule above), which is also the clearance the close button is designed
+   against (toolbar top 16px + 44px button = 60px). */
+.lightbox__panel--frames-only.lightbox__panel--has-copy {
+    padding-top: 64px;
+}
+/* Phone portrait moves the close button to a bottom-centre pill, so nothing
+   sits at the top to clear — drop to 56px, the same mobile panel padding the
+   base .lightbox__panel override uses. */
+@media (max-width: 700px) and (orientation: portrait) {
+    .lightbox__panel--frames-only.lightbox__panel--has-copy {
+        padding-top: 56px;
+    }
+}
+
 /* Breathing room between the two blocks, plus enough bottom padding that the
-   official-site link at the very end doesn't sit flush against the edge. */
+   official-site link at the very end doesn't sit flush against the edge.
+   The grid has exactly two children here (the still strip and the prose), so
+   this gap is the space between the last row of stills and the title. Scaled
+   off the standard .rich-grid gap (22px): that as the floor, double it as the
+   ceiling, so the heading reads as a new block rather than a caption. */
 .lightbox__panel--frames-only.lightbox__panel--has-copy .rich-grid {
-    gap: clamp(10px, 2vh, 22px);
+    gap: clamp(22px, 4.5vh, 44px);
     padding-bottom: clamp(12px, 3vh, 32px);
 }
 
