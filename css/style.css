@@ -4798,29 +4798,60 @@ html.lightbox-open #glass-wrapper {
    pinned to flex-start, so its first row of stills landed on the panel's
    content edge — 36px from the top of the viewport, under the close button.
    Restore the site's standard lightbox top spacing instead of inventing one:
-   64px, the padding-top every .lightbox__panel carries by default (see the
-   base rule above), which is also the clearance the close button is designed
-   against (toolbar top 16px + 44px button = 60px). */
+   more than the 60px the close button occupies (toolbar top 16px + 44px
+   button), so the stills clearly start BELOW the chrome rather than beside it.
+
+   Two things have to be right or the padding silently evaporates — an earlier
+   pass set padding-top: 64px here, confirmed it in the served CSS, and still
+   rendered the first still at y=51:
+
+   1. box-sizing. .rich-grid is content-box, so `height: 100%` resolved to the
+      panel's 800px content box and then ADDED the grid's own 27px
+      padding-bottom on top — an 827px border box inside 800px of room.
+   2. align-items. .lightbox__panel--rich centres its child, so flexbox split
+      that 27px of overflow evenly and pushed 13.5px of the grid back UP
+      through the padding. 64px of padding rendered as 51px of clear space —
+      above the bottom edge of the close button.
+
+   So: pin the grid to the top (no centring, nothing to split) and make it
+   border-box (no overflow to begin with). Then padding-top is exactly the
+   gap you see. Scaled with vh so short laptops and landscape phones step
+   down instead of spending half the panel on empty space. */
 .lightbox__panel--frames-only.lightbox__panel--has-copy {
-    padding-top: 64px;
+    padding-top: clamp(64px, 13vh, 128px);
+    align-items: flex-start;
 }
 /* Phone portrait moves the close button to a bottom-centre pill, so nothing
-   sits at the top to clear — drop to 56px, the same mobile panel padding the
-   base .lightbox__panel override uses. */
+   sits at the top to clear. The stage already contributes 56px of its own
+   padding-top here, so a smaller panel value reads as the same generous gap.
+
+   Specificity note: this MUST out-rank
+   `dialog.lightbox:not(:has(.lightbox__image)) .lightbox__panel` (0,3,1) from
+   the mobile-portrait close-button block above, which was silently winning
+   and clamping this panel to padding-top: 24px. Two classes alone (0,2,0)
+   lose to it; qualifying with `dialog.lightbox[open]` takes this to (0,4,1). */
 @media (max-width: 700px) and (orientation: portrait) {
-    .lightbox__panel--frames-only.lightbox__panel--has-copy {
-        padding-top: 56px;
+    dialog.lightbox[open] .lightbox__panel--frames-only.lightbox__panel--has-copy {
+        padding-top: 44px;
+        align-items: flex-start;
     }
 }
 
 /* Breathing room between the two blocks, plus enough bottom padding that the
    official-site link at the very end doesn't sit flush against the edge.
    The grid has exactly two children here (the still strip and the prose), so
-   this gap is the space between the last row of stills and the title. Scaled
-   off the standard .rich-grid gap (22px): that as the floor, double it as the
-   ceiling, so the heading reads as a new block rather than a caption. */
+   this gap is the space between the last row of stills and the title. The
+   previous clamp did apply (40px measured at 900px tall) but still read as a
+   caption sitting under the photos rather than a new block, so it's widened
+   to ~63px at laptop height — comfortably more than the 14px gutter BETWEEN
+   the still rows, which is what makes the break legible.
+
+   border-box is load-bearing, not tidiness: with content-box the
+   padding-bottom below inflates the grid past `height: 100%` and the overflow
+   gets split back through the panel's padding-top. See the block above. */
 .lightbox__panel--frames-only.lightbox__panel--has-copy .rich-grid {
-    gap: clamp(22px, 4.5vh, 44px);
+    box-sizing: border-box;
+    gap: clamp(32px, 7vh, 72px);
     padding-bottom: clamp(12px, 3vh, 32px);
 }
 
