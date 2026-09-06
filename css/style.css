@@ -4626,33 +4626,6 @@ html.lightbox-open #glass-wrapper {
 .narrative-cinema { grid-template-columns: repeat(2, 1fr) !important; }
 
 
-/* Commercial grid: fill the 16:9 cell with a CENTRED crop.
-   Same mechanism as .narrative-cinema above — declare the cell's aspect on
-   the <a>, then let the img cover it — rather than a second system.
-
-   Why this is needed: .thumbnails img is object-fit: contain (line ~810), and
-   the commercial tiles have no declared cell aspect, so their row height is
-   whatever the 16:9 siblings stretch it to. When thumb-shuffle.js swaps a
-   2.39:1 still into that 16:9 cell, contain letterboxes it — the black bands
-   are painted by the layout, not baked into the JPEG.
-
-   object-fit: cover with the default object-position (50% 50%) crops
-   symmetrically off left and right. No vertical shift, no zoom past what the
-   crop requires, no non-uniform scale. The 16:9 stills in this grid are
-   unaffected: cover in a matching box crops nothing. */
-.commercial-cinema li > a {
-    aspect-ratio: 16 / 9;
-    display: block;
-    overflow: hidden;
-}
-.commercial-cinema li > a > img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    object-position: 50% 50% !important;
-}
-
-
 /* Kill the hover-zoom on thumbnails and stills */
 .thumbnails a img:hover,
 .thumbnails a:hover img,
