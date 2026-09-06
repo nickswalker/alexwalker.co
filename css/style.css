@@ -132,6 +132,19 @@ img {
     max-width: 100%;
 }
 
+/* WebP delivery wrapper. Every <picture> on the site exists only to hand
+   the browser a smaller <source> — it never carries styling of its own,
+   and the existing rules all target the inner <img> (`.software-link img`,
+   `.cmx-logo img`, `.coming-soon-stage__icon`). display:contents removes
+   the picture's own box from the layout tree entirely, so the <img> stays
+   a direct layout child of whatever it was before the wrapper was added.
+   That matters for the flex boxes (.software-link--red/--colorist) where
+   an extra inline box between the flex container and the image would
+   otherwise become the flex item and re-do the centring. */
+picture {
+    display: contents;
+}
+
 p i {
     font-style: italic;
 }

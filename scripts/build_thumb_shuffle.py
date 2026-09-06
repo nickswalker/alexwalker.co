@@ -84,6 +84,9 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import stamp_image_authorship  # noqa: E402  (needs the path above)
+
 ROOT = Path(__file__).resolve().parent.parent
 PROBE = ROOT / "scripts" / ".bin" / "vision_probe"
 OUT_IMG = ROOT / "img" / "shuffle"
@@ -1019,6 +1022,18 @@ def build(verify=False):
             rel = f"/img/shuffle/{key}/{name}.jpg"
             dest = ROOT / rel.lstrip("/")
             crop.save(dest, "JPEG", quality=JPEG_QUALITY, optimize=True, progressive=True)
+            # Pillow writes a bare JPEG — no IPTC, no XMP — so without this
+            # every rebuild would silently strip the authorship off the crops
+            # and the derivatives that get scraped most would be the ones
+            # travelling anonymously. Re-stamped rather than copied through
+            # from the source on purpose: the crop is a different picture at a
+            # different size, so the source's Exif would be describing a frame
+            # this file isn't, while creator/credit/rights are exactly the
+            # properties that do survive a crop. stamp_file() consults the
+            # same allowlist the standalone script does, so the mythbts crops
+            # (Tyler Mann's frames) come out unstamped without this loop
+            # needing to know they exist.
+            stamp_image_authorship.stamp_file(dest)
             total_bytes += dest.stat().st_size
 
             # The tile's own thumbnail keeps whatever alt the page already

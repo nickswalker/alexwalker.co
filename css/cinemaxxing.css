@@ -160,6 +160,13 @@ nav .nav-btn:hover{
   font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;
   letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:1.8rem;
 }
+/* WebP delivery wrapper — see the matching note in style.css. The logo
+   <img>s here are styled via `.cmx-logo img` / `.ep-logo`, so taking the
+   picture's box out of the layout tree keeps .cmx-logo's inline-block
+   shrink-to-fit and line-height:0 behaving exactly as they did when the
+   <img> was its only child. */
+picture{display:contents;}
+
 /* Hero logo wrapped in .cmx-logo for fade-in + one-shot pulse + hover glow.
    Hover/pulse timings match the rest of the landing's interactive elements
    (.who-pill / .form-wrap button / .nav-btn): a 0.45s glow fade on the
