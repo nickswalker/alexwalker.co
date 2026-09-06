@@ -4326,6 +4326,17 @@ div.rich-poster {
     }
 }
 
+/* Bostin Westin: the strip holds ONE image (the lobby installation photo),
+   not a set of four stills. The default 4-equal-columns grid would render it
+   at a quarter width — smaller than a thumbnail — and the ≤800px rule above
+   would give it half. Collapse to a single column at every width so it reads
+   as the companion image to the player above it. Same per-key scoping the
+   ALIT column-weighting override uses; deliberately placed after the mobile
+   blocks so it wins there too without an !important. */
+.lightbox__panel--rich.rich-comm_bostin .rich-grid .rich-frames {
+    grid-template-columns: 1fr;
+}
+
 /* No filter or opacity treatment on video thumbnails — images render at
    full fidelity at rest. The work is the point. */
 

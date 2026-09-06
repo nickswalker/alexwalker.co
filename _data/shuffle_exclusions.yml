@@ -39,3 +39,9 @@ exclude_from_shuffle:
   - img/alit/frame2.jpg      # platinum wig, cigarette holder
   - img/amorsui/frame3.jpg   # wet hand on hexagonal shower tile
   - img/jr/frame3.jpg        # ECU older bearded man in wide-brimmed hat
+
+  # Not a still from the piece: a photograph of the finished install (hotel
+  # lobby, LED wall running his footage). It belongs in the Bostin Westin
+  # lightbox next to the video, but it is architecture, not cinematography,
+  # so it must never rotate into a homepage tile.
+  - img/comm_bostin/lobby-led-wall.jpg

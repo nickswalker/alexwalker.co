@@ -160,8 +160,9 @@ export const RICH_CONFIG = {
     },
 
     // Commercial & Documentary — frames restored for the 8 spots where
-    // we have clean, non-text content. The other three (ford, bostin,
-    // viceguide) stay player-only.
+    // we have clean, non-text content. Ford and viceguide stay player-only;
+    // bostin carries a single installation photograph rather than stills
+    // (see its entry below).
     comm_everydaydose: {
         title: 'Everyday Dose',
         frameAspect: '16 / 9',
@@ -194,7 +195,21 @@ export const RICH_CONFIG = {
             '/img/comm_cwb/frame4.jpg',
         ],
     },
-    comm_bostin: { title: 'Bostin Westin LED Wall' },
+    // Bostin Westin is still player-only as far as STILLS go — the piece is
+    // a screensaver loop and its frames don't cut into a strip. The one
+    // entry below is not a still at all: it's an installation photograph of
+    // the finished 30' wall running the footage in the hotel lobby, which is
+    // the thing worth showing next to the video. It rides the normal frames
+    // mechanism (so it gets the strip layout, the alt text and the nested
+    // zoom gallery for free) and is excluded from the homepage tile shuffle
+    // in _data/shuffle_exclusions.yml — it's a venue photo, not his frame.
+    comm_bostin: {
+        title: 'Bostin Westin LED Wall',
+        frameAspect: '16 / 9',
+        frames: [
+            { src: '/img/comm_bostin/lobby-led-wall.jpg', alt: "The Westin Boston Waterfront hotel lobby, with Alex Walker's sunlit old-growth forest footage playing across the full-height LED video wall that runs the length of the left-hand side" },
+        ],
+    },
     comm_viceguide: { title: 'Vice Guide To Film' },
     comm_applovin: {
         title: 'AppLovin Halloween Ad',
