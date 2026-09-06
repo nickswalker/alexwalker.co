@@ -112,7 +112,21 @@
        (https://alexwalker.co/#person) so featurefilms.html, shortfilms.html
        and any future page can reference the same entity instead of
        redeclaring it. Films are CreativeWork/Movie nodes in the same graph,
-       each crediting Alex via a schema.org Role. -->
+       each crediting Alex via a schema.org Role.
+
+       Descriptions are factual metadata only (director, cast, festival,
+       distributor, format) drawn from copy that already exists in this repo —
+       the bio prose below and _data/tll.yml. Nothing here is written for the
+       machine that isn't already true on the page.
+
+       Texas Legacy in Lights keeps _data/tll.yml as its single source of
+       truth (see the header of that file): the description is captured from
+       it at build time rather than restated here, so editing the YAML moves
+       the structured data too. `jsonify` does the JSON string quoting and
+       escaping, so the em dashes and quotes in that copy stay valid JSON. -->
+  {%- capture tll_description -%}
+    {{- site.data.tll.subline }}. {{ site.data.tll.paragraphs | join: " " -}}
+  {%- endcapture -%}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -170,18 +184,40 @@
       "@id": "https://alexwalker.co/#film-house-of-abraham",
       "name": "House of Abraham",
       "url": "https://www.houseofabrahammovie.com",
+      "description": "Feature film directed by Lisa Belcher, starring Natasha Henstridge, Lukas Hassel and Lin Shaye, released theatrically by Abramorama. Alex Walker was director of photography and colorist.",
       "creditText": "Alex Walker — Director of Photography and Colorist",
       "contributor": {
         "@type": "Role",
         "roleName": ["Director of Photography", "Colorist"],
         "contributor": { "@id": "https://alexwalker.co/#person" }
-      }
+      },
+      "review": [
+        {
+          "@type": "Review",
+          "reviewBody": "Alex Walker's cinematography is a silent accomplice in this dread.",
+          "author": { "@type": "Person", "name": "Kent Hill" },
+          "publisher": { "@type": "Organization", "name": "Film Threat" },
+          "url": "https://filmthreat.com/reviews/house-of-abraham/",
+          "datePublished": "2025-06-13",
+          "itemReviewed": { "@id": "https://alexwalker.co/#film-house-of-abraham" }
+        },
+        {
+          "@type": "Review",
+          "reviewBody": "the sharp cinematography by Alex Walker.",
+          "author": { "@type": "Person", "name": "Jeff York" },
+          "publisher": { "@type": "Organization", "name": "The Establishing Shot" },
+          "url": "https://theestablishingshot.org/2025/07/the-horror-indie-house-of-abraham-impresses-and-unsettles/",
+          "datePublished": "2025-07-06",
+          "itemReviewed": { "@id": "https://alexwalker.co/#film-house-of-abraham" }
+        }
+      ]
     },
     {
       "@type": ["CreativeWork", "Movie"],
       "@id": "https://alexwalker.co/#film-texas-cult-house",
       "name": "Texas Cult House",
       "url": "https://www.texasculthousefilm.com",
+      "description": "Feature film directed by Julia Barnett, starring Ryan Cooper and Adrianne Palicki. It premiered at Austin Film Festival 2024 and is streaming on Tubi. Alex Walker was director of photography and colorist.",
       "creditText": "Alex Walker — Director of Photography and Colorist",
       "contributor": {
         "@type": "Role",
@@ -194,6 +230,7 @@
       "@id": "https://alexwalker.co/#film-a-christmas-in-new-hope",
       "name": "A Christmas in New Hope",
       "url": "https://www.achristmasinnewhope.com",
+      "description": "Feature film directed by Julia Barnett, starring Katrina Bowden, Ryan Cooper and Adrianne Palicki. It had a theatrical release and is now streaming. Alex Walker was director of photography and colorist.",
       "creditText": "Alex Walker — Director of Photography and Colorist",
       "contributor": {
         "@type": "Role",
@@ -206,6 +243,7 @@
       "@id": "https://alexwalker.co/#film-texas-legacy-in-lights",
       "name": "Texas Legacy in Lights",
       "url": "https://alexwalker.co/#tll",
+      "description": {{ tll_description | strip | jsonify }},
       "creditText": "Alex Walker — Director of Photography",
       "contributor": {
         "@type": "Role",
@@ -218,6 +256,7 @@
       "@id": "https://alexwalker.co/#film-cowboys-without-borders",
       "name": "Cowboys Without Borders",
       "url": "https://linktr.ee/cowboyswithoutborders",
+      "description": "Documentary feature film. Alex Walker was director of photography and colorist.",
       "creditText": "Alex Walker — Director of Photography and Colorist",
       "contributor": {
         "@type": "Role",
