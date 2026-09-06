@@ -25,11 +25,6 @@ paragraphs:
 official_site: "https://texaslegacyinlights.com"
 official_site_label: "Visit the official project site"
 
-# Trailer: DELIBERATELY EMPTY — no URL has been supplied yet. Fill in a
-# YouTube or Vimeo watch/embed URL here and the page's embed slot picks it
-# up; leaving it blank renders nothing (no empty player, no placeholder).
-trailer:
-
 # Home-page narrative tile (index.html). A crop of frame5.
 tile_alt: "Texas Legacy in Lights — a rider on horseback gallops through the woods at dusk"
 
