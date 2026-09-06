@@ -114,6 +114,24 @@ async function tileState(page) {
     check('lightbox shows ORIGINAL stills, not the tile crops',
         frames.length > 0 && frames.every(f => !f.startsWith('/img/shuffle/')),
         frames.slice(0, 2).join(', '));
+
+    // ---- 6: the strip never repeats the picture the player poster shows.
+    // The poster IS the tile thumbnail, so whenever the shuffle promoted one
+    // of the project's own stills, that still's slot must be standing in for
+    // the authored thumbnail it displaced — same number of frames, nothing
+    // shown twice. When the shuffle landed on the authored thumbnail instead,
+    // the strip is the untouched authored set and must NOT contain it.
+    // See dedupeGalleryAgainstPoster in js/lightbox.js.
+    const hoaTile = (await tileState(page)).find(t => t.key === 'hoa');
+    const authoredThumb = '/' + data.tiles.hoa.originalThumb.replace(/^\/+/, '');
+    const promotedAStill = /\/\d+\.jpg$/.test(hoaTile.src);
+    check('no frame appears twice in the still strip',
+        new Set(frames).size === frames.length, frames.join(', '));
+    check(promotedAStill
+            ? 'the promoted still is swapped for the thumbnail it displaced'
+            : 'the strip is untouched when the thumbnail itself is on the tile',
+        frames.includes(authoredThumb) === promotedAStill,
+        `tile ${hoaTile.src}, strip ${frames.join(', ')}`);
     await page.keyboard.press('Escape');
     await ctx.close();
 

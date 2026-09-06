@@ -229,6 +229,42 @@ export function chooseFrame(pool, neighbours, banned, fullPool) {
     return { pick: best(pool), forced: true, resetHistory: false };
 }
 
+// A generated crop is named for the still's position in the tile's LIGHTBOX
+// list — /img/shuffle/<tile>/3.jpg is that list's 3rd entry — while
+// `thumb.jpg` is the tile's authored thumbnail, which holds no position in it.
+// That is scripts/build_thumb_shuffle.py's `ord`, and it is the only index the
+// shuffle and the lightbox share.
+const GALLERY_ORDINAL = /\/(\d+)\.jpg$/;
+
+/**
+ * Record on the tile which default still the shuffle just promoted to
+ * thumbnail, and what should stand in for it.
+ *
+ * The lightbox uses the tile's thumbnail as its video poster and then renders
+ * the project's default stills underneath. So every time this module lands on
+ * one of those stills, opening that tile shows the same picture twice — once
+ * as the poster, once in the strip. js/lightbox.js reads the two attributes
+ * written here and swaps that one strip slot for the tile's authored
+ * thumbnail: the image the shuffle displaced. The strip keeps its length, the
+ * repeat goes, and poster + strip still account for every default image.
+ *
+ * Written here rather than worked out over in the lightbox because this is
+ * the only place the pick is known. Cleared rather than left stale when the
+ * pick is the authored thumbnail itself — that one is already absent from the
+ * strip, so the panel is correct untouched.
+ */
+function markDisplacedStill(anchor, tile, pick) {
+    const ordinal = GALLERY_ORDINAL.exec(pick.src);
+    const authored = tile && tile.originalThumb;
+    if (ordinal && authored) {
+        anchor.dataset.galleryReplace = String(Number(ordinal[1]) - 1);
+        anchor.dataset.galleryReplaceWith = '/' + authored.replace(/^\/+/, '');
+    } else {
+        delete anchor.dataset.galleryReplace;
+        delete anchor.dataset.galleryReplaceWith;
+    }
+}
+
 // Two tiles are in the same row / same column if their edges agree to within
 // this many pixels. Grid tracks line up exactly; this is just float slop.
 const ALIGN_TOLERANCE = 4;
@@ -342,9 +378,10 @@ export async function initThumbShuffle() {
         nextPrev[key] = history.slice(-MAX_TILE_HISTORY);
     });
 
-    // Single write pass. Only the <img> changes — the anchor, its href, its
-    // data-rich and the lightbox's own frame list are all untouched, so
-    // clicking a tile still opens the full gallery in the authored order.
+    // Single write pass. The <img> changes, plus two data- attributes naming
+    // the default still this pick displaced — the anchor's href, its data-rich
+    // and the lightbox's own frame list stay untouched, so clicking a tile
+    // still opens the same gallery, at the same length, in the authored order.
     anchors.forEach((anchor, idx) => {
         const pick = chosen[idx];
         if (!pick) return;
@@ -353,6 +390,7 @@ export async function initThumbShuffle() {
         img.src = pick.src;
         // Each still carries its OWN description, not the tile's generic one.
         if (pick.alt) img.alt = pick.alt;
+        markDisplacedStill(anchor, data.tiles[anchor.dataset.rich], pick);
     });
 
     writePrev(Object.assign({}, prev, nextPrev));

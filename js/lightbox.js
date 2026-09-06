@@ -285,6 +285,50 @@ function frameAlt(entry, i, title) {
     return `${title || ''} still ${i + 1}`;
 }
 
+/* Keep the same picture out of the video poster and the still strip at once.
+ *
+ * A rich panel shows the tile's current thumbnail as the player's poster and
+ * the project's default stills underneath it. Those default stills are also
+ * what the homepage shuffle draws from, so whenever it promotes one of them to
+ * be the tile thumbnail the visitor opens the lightbox and sees that frame
+ * twice — once big behind the play button, once again in the strip.
+ *
+ * js/thumb-shuffle.js knows which still it promoted and writes it onto the
+ * trigger anchor as data-gallery-replace (the still's index in this list) and
+ * data-gallery-replace-with (the tile's AUTHORED thumbnail — the image the
+ * shuffle displaced). Swapping that one slot removes the repeat without
+ * shortening the strip: the poster plus the strip still add up to every
+ * default image the project has, just dealt out one place differently.
+ *
+ * Returns `frames` untouched whenever there is nothing to do, so a page
+ * without the shuffle (any sub-page, or a blocked thumb-shuffle.js) renders
+ * exactly the authored list.
+ */
+function dedupeGalleryAgainstPoster(frames, el, title) {
+    const data = el && el.dataset;
+    if (!data || !data.galleryReplaceWith) return frames;
+    const idx = Number(data.galleryReplace);
+    if (!Number.isInteger(idx) || idx < 0 || idx >= frames.length || !frames[idx]) {
+        return frames;
+    }
+    const swap = data.galleryReplaceWith;
+    const srcOf = (entry) => (typeof entry === 'string' ? entry : entry && entry.src) || '';
+    // Never trade one duplicate for another. A tile whose authored thumbnail
+    // IS one of its stills (comm_josey's is frame1, byte-identical, so the
+    // build never gives it a separate thumb crop) would end up showing that
+    // still twice in the strip instead of once. Leave those alone.
+    if (frames.some(entry => srcOf(entry) === swap)) return frames;
+    const out = frames.slice();
+    const prev = frames[idx];
+    // Carry the displaced entry's per-frame aspect override so the strip's
+    // layout doesn't shift; describe the swapped-in image by the project
+    // title, which is the same fallback the build gives the authored
+    // thumbnail when the shuffle puts it on the homepage.
+    const aspect = typeof prev === 'object' && prev.aspect ? prev.aspect : null;
+    out[idx] = aspect ? { src: swap, aspect, alt: title } : { src: swap, alt: title };
+    return out;
+}
+
 function detectType(href) {
     if (!href) return 'iframe';
     if (IMAGE_EXT.test(href)) return 'image';
@@ -1105,7 +1149,15 @@ export class Lightbox {
                 // configured. Titles without a RICH_CONFIG entry (e.g. the
                 // Watch Reels playlist, every Colorist-section video) get
                 // a player-only lightbox — no "Still N" placeholder tiles.
-                const frames = Array.isArray(cfg.frames) ? cfg.frames : [];
+                const configured = Array.isArray(cfg.frames) ? cfg.frames : [];
+                // De-duplicate the strip against the player poster below,
+                // which is this tile's (shuffled) thumbnail. framesOnly
+                // panels have no player and therefore no poster, so there is
+                // nothing for them to collide with and they keep the full
+                // authored set. See dedupeGalleryAgainstPoster.
+                const frames = cfg.framesOnly
+                    ? configured
+                    : dedupeGalleryAgainstPoster(configured, item.el, cfg.title);
                 const parsed = parseVideoUrl(item.href);
                 let playerHTML = '';
                 if (parsed) {
