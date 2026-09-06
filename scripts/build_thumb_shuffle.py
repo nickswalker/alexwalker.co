@@ -34,6 +34,18 @@ THE CROP RULE, which overrides everything else in this file:
     is the one thing allowed to change the window, and it only ever gives
     picture back — it never takes any.
 
+    THE ESCAPE HATCH, which is Alex's call and never the script's (2026-09-05):
+    a still may be named in _data/shuffle_crop.yml with a vertical anchor, and
+    then the rows it has to lose come off asymmetrically — `top` spends the
+    whole trim on the bottom, `bottom` on the top, a number in 0..1 splits it.
+    ABSENT AN ENTRY THE CROP IS CENTRED, so this changes no frame Alex has not
+    named. It also cannot do anything but slide: the kept height, the full
+    width and the no-zoom rule are computed before the anchor is consulted,
+    and both this file and scripts/verify_thumb_crops.py fail the run if an
+    anchored window comes out a different size from the centred one it
+    replaced. Existence of the hatch is not a licence to infer an anchor from
+    the picture — Vision data is as unwelcome here as it is everywhere else.
+
     THE ONE EXCEPTION, and it is Alex's call, not this script's (2026-09-05):
     a COMMERCIAL still whose picture is WIDER than its 16:9 cell is centre-
     cropped horizontally to the cell ratio — equal columns off left and right,
@@ -477,13 +489,21 @@ def _symmetric_extent(span, ideal):
     return max(keep, 2 if span >= 2 else 1)
 
 
-def centred_crop(w, h, aspect, allow_horizontal=False):
+def centred_crop(w, h, aspect, allow_horizontal=False, anchor=None):
     """Centre the picture in the tile's ratio. Geometry only — see THE CROP RULE.
 
-    Takes only the source dimensions and the target ratio — no image content,
-    no Vision data — because there is no input that could legitimately move
-    this window. Returns (box, rows_off_top, rows_off_bottom, cols_off_left,
-    cols_off_right).
+    Takes only the source dimensions, the target ratio, and an OPTIONAL
+    per-frame vertical anchor Alex set by hand in _data/shuffle_crop.yml — no
+    image content, no Vision data, because there is still no input the machine
+    could read that would legitimately move this window. Returns (box,
+    rows_off_top, rows_off_bottom, cols_off_left, cols_off_right).
+
+    `anchor` is None for every frame that isn't named in that file, and None
+    reproduces the old behaviour exactly. When it is a float in 0..1 it is the
+    fraction of the trim taken off the TOP: 0.0 flush top, 0.5 centred (byte
+    identical to None), 1.0 flush bottom. It changes only the SPLIT — the kept
+    height, the full width, and the absence of any zoom are computed first and
+    are not the anchor's to touch.
 
     Three cases:
 
@@ -511,8 +531,15 @@ def centred_crop(w, h, aspect, allow_horizontal=False):
     if (h - th) % 2:
         th -= 1
     th = max(th, 1)
-    trim = (h - th) // 2
-    return (0, trim, w, trim + th), trim, trim, 0, 0
+    slack = h - th
+    if anchor is None:
+        trim = slack // 2
+        return (0, trim, w, trim + th), trim, trim, 0, 0
+    # An anchored frame keeps the SAME window height and width; only the split
+    # moves. The parity snap above is a symmetry device, so it is harmless
+    # here and kept so an anchored frame and its centred twin are the same size.
+    top = min(max(int(round(slack * anchor)), 0), slack)
+    return (0, top, w, top + th), top, slack - top, 0, 0
 
 
 def scale_to_width(crop, max_width):
@@ -643,6 +670,60 @@ def load_exclusions():
     return out
 
 
+ANCHOR_WORDS = {"top": 0.0, "center": 0.5, "centre": 0.5, "middle": 0.5, "bottom": 1.0}
+
+
+def load_crop_anchors():
+    """Per-still vertical crop anchors from _data/shuffle_crop.yml.
+
+    Returns `source path -> fraction of the trim taken off the top`. A still
+    that isn't in the file isn't in the dict, and centred_crop treats a missing
+    anchor and an explicit 0.5 as the same geometry — so the default is centred
+    whether or not this file exists at all.
+
+    Keyed by SOURCE path, exactly like _data/shuffle_exclusions.yml, which is
+    what lets one line cover a lightbox still (js/lightbox.js, _data/tll.yml)
+    or a tile's own authored thumbnail (index.html) without either consumer
+    needing to know this file exists.
+    """
+    path = ROOT / "_data" / "shuffle_crop.yml"
+    if not path.exists():
+        return {}
+    out, in_map = {}, False
+    for line in path.read_text().splitlines():
+        if re.match(r"^crop_y:\s*$", line):
+            in_map = True
+            continue
+        if in_map and line.strip() and not line.startswith((" ", "\t", "#")):
+            break
+        if not in_map:
+            continue
+        m = re.match(r"^\s+([^#\s][^:]*?)\s*:\s*(.+?)\s*$", line)
+        if not m:
+            continue
+        key = _yaml_scalar(m.group(1)).lstrip("/")
+        raw = _yaml_scalar(m.group(2))
+        if not key or not raw:
+            continue
+        word = raw.strip().strip("'\"").lower()
+        if word in ANCHOR_WORDS:
+            out[key] = ANCHOR_WORDS[word]
+            continue
+        try:
+            val = float(word)
+        except ValueError:
+            print(f"  ! crop_y for '{key}' is '{raw}' — expected one of "
+                  f"{sorted(ANCHOR_WORDS)} or a number 0..1; IGNORED",
+                  file=sys.stderr)
+            continue
+        if not 0.0 <= val <= 1.0:
+            print(f"  ! crop_y for '{key}' is {val} — out of range 0..1; "
+                  f"IGNORED", file=sys.stderr)
+            continue
+        out[key] = val
+    return out
+
+
 def measure(img):
     """Palette / luminance / contrast / composition, measured on the crop."""
     small = img.convert("RGB").resize((80, 45), Image.LANCZOS)
@@ -699,7 +780,8 @@ def build(verify=False):
     config = load_rich_config()
     order, thumbs, rewritten_keys = load_tile_order()
     excluded = load_exclusions()
-    seen_excluded, dropped_tiles = set(), {}
+    anchors = load_crop_anchors()
+    seen_excluded, seen_anchored, dropped_tiles = set(), set(), {}
 
     all_paths, plan = [], []
     for section, keys in order:
@@ -795,9 +877,16 @@ def build(verify=False):
                 # Padding off first, so the trim below is spent on picture.
                 picture, bars = strip_bars(im)
                 w, h = picture.size
-                # Geometry only. `vis` is deliberately not in scope here.
+                # Geometry only. `vis` is deliberately not in scope here — the
+                # anchor is a value Alex typed into _data/shuffle_crop.yml, not
+                # anything this script read out of the picture.
+                rel_src = fr["src"].lstrip("/")
+                anchor = anchors.get(rel_src)
+                if anchor is not None:
+                    seen_anchored.add(rel_src)
                 box, trim_top, trim_bottom, cut_left, cut_right = centred_crop(
-                    w, h, geo["aspect"], allow_horizontal=(section == "commercial"))
+                    w, h, geo["aspect"], allow_horizontal=(section == "commercial"),
+                    anchor=anchor)
                 crop = scale_to_width(picture.crop(box), geo["width"])
                 out_w, out_h = crop.size
                 stats = measure(crop)
@@ -831,6 +920,7 @@ def build(verify=False):
                 "box": list(box), "out_size": [out_w, out_h],
                 "trimTop": trim_top, "trimBottom": trim_bottom,
                 "cutLeft": cut_left, "cutRight": cut_right,
+                "anchor": anchor,
                 "facing": facing, "tight": tight,
                 "faces": len(vis.get("faces") or []),
                 "faceBoxes": vis.get("faces") or [],
@@ -904,7 +994,27 @@ def build(verify=False):
         or a["picture"][0] - a["box"][2] != a["cutRight"]
         or a["box"][1] != 0 or a["box"][3] != a["picture"][1]
         or a["trimTop"] or a["trimBottom"])]
-    asym = [a for a in audit if a["trimTop"] != a["trimBottom"]]
+    # An ANCHORED frame is allowed to be asymmetric — that is the whole point
+    # of the anchor — but only in the split. It is held to every other clause
+    # of the rule, and harder: the window it produces must be the SAME SIZE as
+    # the centred window it replaced (no zoom, no extra rows taken), must keep
+    # the full picture width, and must still spend exactly the rows the ratio
+    # demands. So an anchor can move the window and can do nothing else.
+    anchored = [a for a in audit if a.get("anchor") is not None]
+    asym = [a for a in audit
+            if a["trimTop"] != a["trimBottom"] and a.get("anchor") is None]
+    anchor_bad = []
+    for a in anchored:
+        pw, ph = a["picture"]
+        want = centred_crop(pw, ph, GEOMETRY[a["section"]]["aspect"],
+                            allow_horizontal=(a["section"] == "commercial"))[0]
+        kept = a["box"][3] - a["box"][1]
+        if (kept != want[3] - want[1]                       # same height
+                or a["box"][0] != 0 or a["box"][2] != pw    # full width, x=0
+                or a["trimTop"] + a["trimBottom"] != ph - kept  # rows accounted for
+                or a["box"][1] < 0 or a["box"][3] > ph      # inside the picture
+                or a["cutLeft"] or a["cutRight"]):          # no horizontal move
+            anchor_bad.append(a)
     upscaled = [a for a in audit if a["out_size"][0] > a["picture"][0]]
     # Padding removal is the only step allowed to change the window, so it is
     # held to the same standard: equal off both sides, or it didn't happen.
@@ -918,15 +1028,44 @@ def build(verify=False):
           f"({len(h_cropped)} centre-cropped by the commercial exception, "
           f"{len(bad_width)} unexplained); "
           f"horizontal offset non-zero: {len(bad_x)}; "
-          f"asymmetric vertical trim: {len(asym)}; upscaled: {len(upscaled)}; "
+          f"asymmetric vertical trim: {len(asym)} unexplained "
+          f"({len(anchored)} explicitly anchored in _data/shuffle_crop.yml, "
+          f"{len(anchor_bad)} of those breaking a rule the anchor doesn't bend); "
+          f"upscaled: {len(upscaled)}; "
           f"asymmetric padding removal: {len(bar_asym)}")
     print(f"Commercial centre-crop guard rails — asymmetric: {len(h_asym)}; "
           f"outside commercial: {len(h_wrong_section)}; "
           f"applied to a frame not wider than its cell: {len(h_not_wider)}; "
           f"box disagrees with the recorded cut: {len(h_bad_box)}")
     if (bad_width or bad_x or asym or upscaled or bar_asym
-            or h_asym or h_wrong_section or h_not_wider or h_bad_box):
+            or h_asym or h_wrong_section or h_not_wider or h_bad_box
+            or anchor_bad):
         sys.exit("CROP RULE VIOLATED — see above")
+
+    # --- per-frame vertical anchors, frame by frame ------------------------
+    print(f"\nVertical crop anchored by hand (_data/shuffle_crop.yml) — "
+          f"{len(anchored)} frame(s); every other frame is centred:")
+    for a in sorted(anchored, key=lambda a: a["src"]):
+        ph = a["picture"][1]
+        kept = a["box"][3] - a["box"][1]
+        was = (ph - kept) // 2
+        word = {0.0: "top", 0.5: "center", 1.0: "bottom"}.get(a["anchor"], a["anchor"])
+        print(f"  · {a['src']}: picture {a['picture'][0]}x{ph} → keeps "
+              f"{kept} rows at anchor '{word}'; trim was {was} off top / "
+              f"{ph - kept - was} off bottom (centred), now {a['trimTop']} off "
+              f"top / {a['trimBottom']} off bottom; full width "
+              f"{a['box'][2] - a['box'][0]}px kept, no zoom")
+    for miss in sorted(set(anchors) - seen_anchored):
+        print(f"  ! no still matches '{miss}' — check the path in "
+              f"_data/shuffle_crop.yml", file=sys.stderr)
+    # An anchor on a frame with no rows to spend is a no-op, and silence there
+    # would read as "applied".
+    for a in anchored:
+        if a["trimTop"] + a["trimBottom"] == 0:
+            print(f"  ! '{a['src']}' is anchored but needs no vertical trim "
+                  f"({a['picture'][0]}x{a['picture'][1]} is already at or wider "
+                  f"than its cell) — the anchor changes nothing",
+                  file=sys.stderr)
 
     # --- the commercial centre-crop, frame by frame ------------------------
     print(f"\nCommercial centre-crop to 16:9 — {len(h_cropped)} frame(s):")

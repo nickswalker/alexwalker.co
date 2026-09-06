@@ -802,17 +802,17 @@
      "facing": "neutral",
      "tight": 0.0,
      "rgb": [
+      36,
       35,
-      33,
-      17
+      18
      ],
-     "hue": 0.1507,
-     "saturation": 0.5321,
-     "luminance": 0.1269,
-     "contrast": 0.0787,
-     "edge": 0.0305,
-     "balance": 0.4587,
-     "topBottom": 0.0334
+     "hue": 0.157,
+     "saturation": 0.5377,
+     "luminance": 0.1329,
+     "contrast": 0.077,
+     "edge": 0.0299,
+     "balance": 0.4417,
+     "topBottom": 0.0228
     },
     {
      "src": "/img/shuffle/tll/1.jpg",

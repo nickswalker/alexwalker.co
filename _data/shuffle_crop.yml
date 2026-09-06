@@ -1,0 +1,55 @@
+# Per-still VERTICAL CROP ANCHOR for the homepage tile shuffle.
+#
+# THE DEFAULT IS AND STAYS CENTRED. A still that is not listed here gets the
+# ordinary treatment: full source width, no zoom, no horizontal movement, and
+# the rows it has to lose to reach the tile's aspect taken EQUALLY off the top
+# and the bottom. That rule is right for almost every frame and this file does
+# not weaken it — it only lets a NAMED frame say where the trim sits when
+# centring would cut something that has to stay in.
+#
+# Nothing else about the crop changes. Same output size, same full width, same
+# no-zoom. The only thing an entry moves is WHERE the vertical window sits.
+#
+# THE IDENTIFIER IS THE STILL'S SOURCE PATH — the same identifier
+# _data/shuffle_exclusions.yml uses, copied verbatim from js/lightbox.js, from
+# _data/tll.yml, or (for a tile's own authored thumbnail) from the <img src>
+# in index.html. A leading slash is optional. Use the ORIGINAL path under
+# img/ — never an img/shuffle/... path, which is a generated crop.
+#
+# VALUES:
+#   top      — trim comes entirely off the BOTTOM; the window is flush with
+#              the top of the picture. For a frame whose subject is near the
+#              top edge (a head close to frame-top).
+#   bottom   — trim comes entirely off the TOP; window flush with the bottom.
+#   center   — the default, written out. Same as leaving the frame off this
+#              list; useful only to record that it was considered.
+#   0.0-1.0  — the FRACTION of the total trim taken off the TOP. 0.0 == top,
+#              0.5 == center, 1.0 == bottom. Use when the frame needs to move
+#              some of the way, not all of it. Resolution-independent, so it
+#              survives the source being re-exported at another size.
+#
+# A frame that needs NO vertical trim (its source is already at or wider than
+# the tile's aspect — every img/tll/frameN.jpg is 1600x670, i.e. 2.388:1 in a
+# 2.35 cell) has no rows to move, so an entry for it does nothing. The build
+# says so on stderr rather than letting you think it took effect.
+#
+# The build also warns if a path here matches no still, so a typo can't fail
+# silently, and prints every anchored frame's old-vs-new trim in pixels.
+# Re-run `python3 scripts/build_thumb_shuffle.py` after editing.
+
+crop_y:
+  # The Texas Legacy in Lights tile thumbnail. 1152x648 (16:9) into a 2.35
+  # cell = 158 rows to lose. Centred took 79 off the top, which cut the
+  # rider's hat and head off — his hat crowns at y=13 and his chin is at
+  # y~85, so there are only 13 rows of headroom to give. Anchored to the top:
+  # 0 off the top, 158 off the bottom. Full width, no zoom, nothing moves
+  # horizontally; the horse's lower legs go instead of the rider's head.
+  img/narrative/TLLnarr.jpg: top
+
+  # NOT SET, awaiting Alex's call (flagged 2026-09-05). Each of these loses
+  # part of a face to the centred trim; each would be fixed by one line here.
+  # Uncomment to apply — nothing else needs to change.
+  #
+  #   img/narrative/TCHnarr.jpg: top   # top ~20% of a face
+  #   img/hoa/frame4.jpg: top          # top ~12%
+  #   img/attad/frame4.jpg: top        # top ~6% — 0.25 may be enough

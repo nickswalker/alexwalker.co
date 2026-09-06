@@ -11,7 +11,12 @@ everything from the files actually on disk:
     * the derivative keeps 100% of the source's PICTURE width — no horizontal
       crop, no pan; the crop window starts at x=0 and ends at the picture width,
     * the rows removed from the top exactly equal the rows removed from the
-      bottom, and padding + top + kept + bottom accounts for every source row,
+      bottom — UNLESS the still is named in _data/shuffle_crop.yml, in which
+      case the split must be exactly the one that file asks for, and the
+      window must still be the same height a centred crop would have kept.
+      This script reads that YAML itself rather than trusting the audit's
+      `anchor` field, so the build cannot authorise its own exception,
+    * padding + top + kept + bottom accounts for every source row,
     * the written file's aspect ratio matches the crop window's, so nothing
       was squashed, and its width never exceeds the source's, so nothing was
       upscaled,
@@ -70,9 +75,49 @@ def edge_profile(path):
             "left": run(cmax), "right": run(cmax[::-1])}
 
 
+def declared_anchors():
+    """Read _data/shuffle_crop.yml here, independently of the build.
+
+    Deliberately a SECOND reader rather than an import: the build's `anchor`
+    field in the audit is the build's own account of what it was told to do,
+    and the whole point of this script is not to take that account on trust.
+    If the two readers ever disagree the split won't match and the run fails,
+    which is the correct direction to fail in.
+    """
+    path = ROOT / "_data" / "shuffle_crop.yml"
+    if not path.exists():
+        return {}
+    words = {"top": 0.0, "center": 0.5, "centre": 0.5, "middle": 0.5, "bottom": 1.0}
+    out, in_map = {}, False
+    for line in path.read_text().splitlines():
+        if line.rstrip() == "crop_y:":
+            in_map = True
+            continue
+        if in_map and line.strip() and not line.startswith((" ", "\t", "#")):
+            break
+        if not in_map or not line.startswith((" ", "\t")) or line.strip().startswith("#"):
+            continue
+        key, _, val = line.partition(":")
+        key, val = key.strip().lstrip("/"), val.split("#")[0].strip().strip("'\"").lower()
+        if not key or not val:
+            continue
+        if val in words:
+            out[key] = words[val]
+        else:
+            try:
+                f = float(val)
+            except ValueError:
+                continue
+            if 0.0 <= f <= 1.0:
+                out[key] = f
+    return out
+
+
 def main():
     audit = json.loads(AUDIT.read_text())
     failures, clipped, residual, dark_edges, barred = [], [], [], [], []
+    declared = declared_anchors()
+    anchored_seen = []
 
     for a in audit:
         out_abs = ROOT / a["out"].lstrip("/")
@@ -127,9 +172,27 @@ def main():
         if x0 != 0 or x1 != pw:
             failures.append(
                 f"{a['out']}: crop window x=[{x0},{x1}] but picture is {pw}px wide")
-        # --- vertical: symmetric, and accounts for every row of the source
-        if top != bottom:
+        # --- vertical: symmetric, and accounts for every row of the source.
+        # An asymmetric split is legal only where Alex asked for one BY NAME in
+        # _data/shuffle_crop.yml, and then only at the split he asked for.
+        wanted = declared.get(a["src"].lstrip("/"))
+        if top != bottom and wanted is None:
             failures.append(f"{a['out']}: trimmed {top} rows off the top, {bottom} off the bottom")
+        elif wanted is not None:
+            slack = top + bottom
+            expect = min(max(int(round(slack * wanted)), 0), slack)
+            if top != expect:
+                failures.append(
+                    f"{a['out']}: anchor {wanted} over {slack} rows of trim "
+                    f"asks for {expect} off the top, but {top} came off")
+            # The anchor moves the window; it may not resize it. A centred crop
+            # of the same picture would have kept the same number of rows.
+            if kept_h != ph - 2 * (slack // 2) - (slack % 2):
+                failures.append(
+                    f"{a['out']}: anchored window keeps {kept_h} rows, but a "
+                    f"centred crop of the same {pw}x{ph} picture keeps "
+                    f"{ph - 2 * (slack // 2) - (slack % 2)} — an anchor may not zoom")
+            anchored_seen.append((a, wanted, top, bottom, slack // 2))
         if bt + top + kept_h + bottom + bb != sh:
             failures.append(
                 f"{a['out']}: {bt}+{top}+{kept_h}+{bottom}+{bb} != source height {sh}")
@@ -167,7 +230,23 @@ def main():
             print(f"  ! {f}")
     else:
         print("  Padding removal symmetric and real, full picture width kept, "
-              "vertical trim symmetric, no squash, no upscale — all clean.")
+              "vertical trim symmetric (or anchored exactly as "
+              "_data/shuffle_crop.yml asks), no squash, no upscale — all clean.")
+
+    # --- hand-anchored frames, re-derived from the YAML, not from the audit
+    print(f"\nFrames with a hand-set vertical anchor: {len(anchored_seen)} of "
+          f"{len(audit)} ({len(declared)} declared in _data/shuffle_crop.yml). "
+          f"Every other frame is centred.")
+    for a, wanted, top, bottom, was in anchored_seen:
+        word = {0.0: "top", 0.5: "center", 1.0: "bottom"}.get(wanted, wanted)
+        print(f"  · {a['src']} → {a['out']}: anchor '{word}'; "
+              f"{was}/{was} off top/bottom if centred, actually {top}/{bottom} "
+              f"— window {a['box'][3] - a['box'][1]} rows, full "
+              f"{a['box'][2] - a['box'][0]}px width, delivered "
+              f"{a['out_size'][0]}x{a['out_size'][1]}")
+    for miss in sorted(set(declared) - {a["src"].lstrip("/") for a, *_ in anchored_seen}):
+        print(f"  · '{miss}' is declared but no derivative used it (excluded "
+              f"from the shuffle, renamed, or it needs no vertical trim)")
 
     # --- padding, and whether any of it survived into the delivered file
     print(f"\nFrames with baked-in padding: {len(barred)} of {len(audit)}")
