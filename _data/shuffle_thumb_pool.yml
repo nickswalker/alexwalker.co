@@ -1,0 +1,45 @@
+# Per-tile opt-in: let the tile's OWN AUTHORED THUMBNAIL count toward the
+# 2-still minimum that decides whether a tile rotates at all.
+#
+# THE DEFAULT IS OFF, and off is the behaviour every tile has always had:
+#
+#   1. take the tile's lightbox stills,
+#   2. remove anything listed in _data/shuffle_exclusions.yml,
+#   3. if FEWER THAN 2 are left, the tile stops rotating and keeps its
+#      authored thumbnail,
+#   4. otherwise fold the authored thumbnail in at the front of the pool.
+#
+# Because the count in step 3 happens BEFORE step 4, the authored thumbnail
+# can never rescue a tile that exclusions took to one still — even though it
+# is a still too, and even though every rotating tile already carries it.
+# A tile named here moves step 4 ahead of step 3, so its thumbnail is counted
+# like any other candidate. NOTHING ELSE CHANGES: the thumbnail still enters
+# at the front of the pool, still gets the same crop, still de-duplicates
+# against a byte-identical lightbox still, and a tile that is still under two
+# after it is folded in still stops rotating. A tile not listed here is
+# byte-for-byte unaffected — same eligible count, same order, same output.
+#
+# THE IDENTIFIER IS THE TILE KEY — the `data-rich="…"` value on the tile's
+# anchor in index.html, which is also the key in RICH_CONFIG in js/lightbox.js
+# and the directory name under img/shuffle/. NOT a still's path; the other two
+# shuffle data files are keyed by path, this one is not.
+#
+# To turn this on for another project later, add one line: `<key>: true`.
+# `false` (or removing the line) puts that tile back on the default.
+#
+# The build warns on stderr if a key here matches no tile, so a typo can't
+# fail silently, and it prints the eligible count for every tile with and
+# without the flag so the effect is always visible in the build log.
+# Re-run `python3 scripts/build_thumb_shuffle.py` after editing.
+
+count_authored_thumb:
+  # Amor Sui, 2026-09-06 — Alex's call, this tile only.
+  #
+  # Three of its four stills are excluded (frame2, frame3, frame4 in
+  # _data/shuffle_exclusions.yml), leaving only img/amorsui/frame1.jpg. Under
+  # the default that is one still, so the tile stopped rotating and showed its
+  # authored thumbnail img/narrative/temp11.jpg permanently. Counting the
+  # thumbnail makes the pool two — frame1 and temp11 — and the tile rotates
+  # between them. The three excluded stills stay excluded and stay in the
+  # lightbox exactly as before.
+  amorsui: true

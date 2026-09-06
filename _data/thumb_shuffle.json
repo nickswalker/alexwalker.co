@@ -1117,6 +1117,52 @@
     }
    ]
   },
+  "amorsui": {
+   "section": "narrative",
+   "title": "Amor Sui",
+   "originalThumb": "img/narrative/temp11.jpg",
+   "default": "/img/shuffle/amorsui/thumb.jpg",
+   "frames": [
+    {
+     "src": "/img/shuffle/amorsui/thumb.jpg",
+     "alt": "Amor Sui",
+     "i": 0,
+     "facing": "neutral",
+     "tight": 0.0,
+     "rgb": [
+      163,
+      148,
+      146
+     ],
+     "hue": 0.0551,
+     "saturation": 0.2101,
+     "luminance": 0.5917,
+     "contrast": 0.2192,
+     "edge": 0.0237,
+     "balance": 0.4959,
+     "topBottom": 0.2004
+    },
+    {
+     "src": "/img/shuffle/amorsui/1.jpg",
+     "alt": "Amor Sui still 1",
+     "i": 1,
+     "facing": "neutral",
+     "tight": 0.0,
+     "rgb": [
+      30,
+      33,
+      57
+     ],
+     "hue": 0.6532,
+     "saturation": 0.6734,
+     "luminance": 0.1336,
+     "contrast": 0.1444,
+     "edge": 0.0362,
+     "balance": 0.4638,
+     "topBottom": 0.0602
+    }
+   ]
+  },
   "comm_everydaydose": {
    "section": "commercial",
    "title": "Everyday Dose",

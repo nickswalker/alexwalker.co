@@ -670,6 +670,50 @@ def load_exclusions():
     return out
 
 
+def load_thumb_pool_optin():
+    """Tile keys whose AUTHORED THUMBNAIL counts toward the 2-still minimum.
+
+    Read from _data/shuffle_thumb_pool.yml, which is keyed by TILE KEY (the
+    `data-rich` value) rather than by still path — the other two shuffle data
+    files are keyed by path, this one deliberately is not.
+
+    Default OFF for every tile, and off is the behaviour this build has always
+    had: the minimum is tested on the lightbox stills alone, so a tile that
+    exclusions took to one still stops rotating even though its own thumbnail
+    is a perfectly good second candidate. A tile listed here folds its
+    thumbnail in FIRST and is then measured against the minimum. That is the
+    only thing the flag moves — see fold_authored_thumb, which is the same
+    code on both paths.
+    """
+    path = ROOT / "_data" / "shuffle_thumb_pool.yml"
+    if not path.exists():
+        return set()
+    out, in_map = set(), False
+    for line in path.read_text().splitlines():
+        if re.match(r"^count_authored_thumb:\s*$", line):
+            in_map = True
+            continue
+        if in_map and line.strip() and not line.startswith((" ", "\t", "#")):
+            break
+        if not in_map:
+            continue
+        m = re.match(r"^\s+([^#\s][^:]*?)\s*:\s*(.+?)\s*$", line)
+        if not m:
+            continue
+        key = _yaml_scalar(m.group(1)).strip()
+        raw = _yaml_scalar(m.group(2)).strip().strip("'\"").lower()
+        if not key:
+            continue
+        if raw in ("true", "yes", "on"):
+            out.add(key)
+        elif raw in ("false", "no", "off"):
+            continue
+        else:
+            print(f"  ! count_authored_thumb for '{key}' is '{raw}' — expected "
+                  f"true or false; IGNORED", file=sys.stderr)
+    return out
+
+
 ANCHOR_WORDS = {"top": 0.0, "center": 0.5, "centre": 0.5, "middle": 0.5, "bottom": 1.0}
 
 
@@ -781,7 +825,41 @@ def build(verify=False):
     order, thumbs, rewritten_keys = load_tile_order()
     excluded = load_exclusions()
     anchors = load_crop_anchors()
+    thumb_pool_optin = load_thumb_pool_optin()
     seen_excluded, seen_anchored, dropped_tiles = set(), set(), {}
+    seen_optin, pool_counts = set(), {}
+
+    def fold_authored_thumb(key, frames):
+        """Put the tile's own thumbnail at the front of its rotation.
+
+        The thumbnail Alex chose for a tile is a still too, so it belongs in
+        that tile's pool — unless it is byte-identical to a still already in
+        the list (TLL's thumbnail is its 5th still), in which case it is
+        already there, or unless it is itself excluded.
+
+        Called from exactly one of two places depending on
+        _data/shuffle_thumb_pool.yml, and it is the SAME call either way: the
+        flag changes only whether it runs before or after the 2-still minimum,
+        never what it does.
+        """
+        own = thumbs.get(key)
+        if not own:
+            return frames
+        if own.lstrip("/") in excluded:
+            seen_excluded.add(own.lstrip("/"))
+            return frames
+        own_abs = ROOT / own.lstrip("/")
+        if not own_abs.exists() or "/img/shuffle/" in own:
+            return frames
+        digest = _digest(own_abs)
+        dupe = any(
+            (ROOT / f["src"].lstrip("/")).exists()
+            and _digest(ROOT / f["src"].lstrip("/")) == digest
+            for f in frames
+        )
+        if dupe:
+            return frames
+        return [{"src": own, "alt": None, "isThumb": True}] + frames
 
     all_paths, plan = [], []
     for section, keys in order:
@@ -808,6 +886,19 @@ def build(verify=False):
                     kept.append(fr)
             frames = kept
 
+            # THE MINIMUM, and the one thing _data/shuffle_thumb_pool.yml
+            # moves. Off (every tile by default): the minimum is tested on the
+            # lightbox stills alone and the thumbnail is folded in afterwards.
+            # On: the thumbnail is folded in first, so it can be the second
+            # candidate that keeps the tile rotating. Same fold either way.
+            optin = key in thumb_pool_optin
+            if optin:
+                seen_optin.add(key)
+                frames = fold_authored_thumb(key, frames)
+            # Recorded for both worlds so the build log proves, per tile, that
+            # the flag changed the count for the opted-in tile and no other.
+            pool_counts[key] = (len(kept), len(frames) if optin else len(kept))
+
             if len(frames) < 2:
                 # Not enough left to shuffle. Only tiles a previous run had
                 # pointed at a crop need anything done — put the authored
@@ -818,23 +909,8 @@ def build(verify=False):
                     dropped_tiles[key] = own
                 continue
 
-            # The tile's own thumbnail joins its rotation — unless it is
-            # byte-identical to a still already in the list (TLL's thumbnail
-            # is its 5th still), in which case it's already there.
-            own = thumbs.get(key)
-            own_abs = ROOT / own.lstrip("/") if own else None
-            if own and own.lstrip("/") in excluded:
-                seen_excluded.add(own.lstrip("/"))
-                own_abs = None
-            if own_abs and own_abs.exists() and "/img/shuffle/" not in own:
-                digest = _digest(own_abs)
-                dupe = any(
-                    (ROOT / f["src"].lstrip("/")).exists()
-                    and _digest(ROOT / f["src"].lstrip("/")) == digest
-                    for f in frames
-                )
-                if not dupe:
-                    frames.insert(0, {"src": own, "alt": None, "isThumb": True})
+            if not optin:
+                frames = fold_authored_thumb(key, frames)
 
             entries = []
             for i, fr in enumerate(frames):
@@ -846,7 +922,7 @@ def build(verify=False):
                 entries.append((i, fr, abs_path))
             if len(entries) < 2:
                 continue
-            plan.append((key, section, title, entries, own))
+            plan.append((key, section, title, entries, thumbs.get(key)))
 
     print(f"Analysing {len(all_paths)} stills across {len(plan)} tiles…")
     vision = run_vision(all_paths)
@@ -956,6 +1032,25 @@ def build(verify=False):
     for key, src in dropped_tiles.items():
         print(f"  · tile '{key}' left the rotation (under 2 stills); "
               f"restored {src}")
+
+    # --- authored-thumbnail opt-in (_data/shuffle_thumb_pool.yml) ----------
+    # Printed for EVERY tile, not just the opted-in ones: "stills after
+    # exclusions" is the count the minimum used to be tested on, and "counted"
+    # is the count it is tested on now. They differ for exactly the tiles named
+    # in that file, which is the proof that the flag is scoped.
+    print(f"\nAuthored thumbnail counted toward the 2-still minimum "
+          f"(_data/shuffle_thumb_pool.yml) — {len(thumb_pool_optin)} tile(s) "
+          f"opted in; every other tile keeps the default:")
+    for key in sorted(pool_counts):
+        stills, counted = pool_counts[key]
+        mark = "  <-- OPTED IN" if key in thumb_pool_optin else ""
+        print(f"  · {key:18} stills after exclusions {stills}, counted toward "
+              f"the minimum {counted} → "
+              f"{'rotates' if counted >= 2 else 'holds its authored thumbnail'}"
+              f"{mark}")
+    for miss in sorted(thumb_pool_optin - seen_optin):
+        print(f"  ! no tile matches '{miss}' — check the key in "
+              f"_data/shuffle_thumb_pool.yml", file=sys.stderr)
 
     # --- baked-in padding --------------------------------------------------
     barred = [a for a in audit if any(a["bars"])]
