@@ -46,10 +46,25 @@ crop_y:
   # horizontally; the horse's lower legs go instead of the rider's head.
   img/narrative/TLLnarr.jpg: top
 
+  # The Texas Cult House tile thumbnail — the phone-call close-up. 1152x648
+  # (16:9) into a 2.35 cell = 158 rows to lose. Centred took 79 off the top,
+  # which put the crop line THROUGH her eyes: her head is tilted, so her
+  # screen-left eye is the higher one and its lash line is at y~48 with the
+  # pupil at y~72 — both above the old y=79 window top, i.e. cut off.
+  #
+  # 0.15 takes 24 off the top and 134 off the bottom. That clears the higher
+  # lash line by ~24px and keeps BOTH eyebrows whole, so the eyes read with
+  # natural headroom instead of being sliced.
+  #
+  # Deliberately a fraction and NOT `top`: flush-top would keep all 158 rows
+  # of headroom, pushing her mouth to the bottom edge and reading as an
+  # anchored crop rather than a framed one. 0.15 is the smallest move that
+  # gets the eyes fully in with a little room above them.
+  img/narrative/TCHnarr.jpg: 0.15
+
   # NOT SET, awaiting Alex's call (flagged 2026-09-05). Each of these loses
   # part of a face to the centred trim; each would be fixed by one line here.
   # Uncomment to apply — nothing else needs to change.
   #
-  #   img/narrative/TCHnarr.jpg: top   # top ~20% of a face
   #   img/hoa/frame4.jpg: top          # top ~12%
   #   img/attad/frame4.jpg: top        # top ~6% — 0.25 may be enough

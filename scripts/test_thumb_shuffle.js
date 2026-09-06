@@ -39,8 +39,21 @@ async function tileState(page) {
         loads.push(await tileState(page));
     }
 
+    // How many tiles SHOULD rotate is not a constant — a tile drops out when
+    // exclusions take it under the 2-still minimum (it then keeps its authored
+    // thumbnail, the documented fallback) and comes back if it is opted in via
+    // _data/shuffle_thumb_pool.yml. Hardcoding the number here meant every
+    // legitimate exclusion showed up as three red checks. Derive it from the
+    // build's own output instead: data/thumb-shuffle.json lists exactly the
+    // tiles the build decided are rotating, so this still catches the failure
+    // that matters — the PAGE disagreeing with the BUILD.
+    const data = await (await fetch(BASE + '/data/thumb-shuffle.json')).json();
+    const expectedShuffled = Object.keys(data.tiles).length;
+
     const shuffled = loads[0].filter(t => t.src.startsWith('/img/shuffle/'));
-    check('19 tiles are shuffle-enabled', shuffled.length === 19, `${shuffled.length} tiles`);
+    check(`${expectedShuffled} tiles are shuffle-enabled`,
+        shuffled.length === expectedShuffled,
+        `${shuffled.length} tiles`);
 
     let variedTiles = 0;
     const byKey = {};
@@ -52,11 +65,10 @@ async function tileState(page) {
         if (new Set(byKey[k]).size > 1) variedTiles++;
     }
     check('tiles change between loads', variedTiles >= 15,
-        `${variedTiles}/19 tiles showed more than one still over 6 loads`);
+        `${variedTiles}/${expectedShuffled} tiles showed more than one still over 6 loads`);
 
     // No-repeat: within the first N loads (N = pool size) a tile must not
     // show the same still twice.
-    const data = await (await fetch(BASE + '/data/thumb-shuffle.json')).json();
     let violations = [];
     for (const k of Object.keys(byKey)) {
         const pool = data.tiles[k].frames.length;
@@ -64,7 +76,7 @@ async function tileState(page) {
         if (new Set(window).size !== window.length) violations.push(`${k} (pool ${pool})`);
     }
     check('no still repeats before its pool is exhausted', violations.length === 0,
-        violations.length ? violations.join(', ') : 'checked all 19 pools');
+        violations.length ? violations.join(', ') : `checked all ${expectedShuffled} pools`);
 
     // Reshuffle after exhaustion: keep loading past the largest pool and
     // confirm tiles keep producing images rather than going blank/stuck.
@@ -74,13 +86,13 @@ async function tileState(page) {
     }
     const afterExhaustion = await tileState(page);
     check('tiles still render after the pool is exhausted',
-        afterExhaustion.filter(t => t.src.startsWith('/img/shuffle/')).length === 19);
+        afterExhaustion.filter(t => t.src.startsWith('/img/shuffle/')).length === expectedShuffled);
 
     // ---- 5: alt text is per-image, not the tile's generic label.
     const alts = afterExhaustion.filter(t => t.src.startsWith('/img/shuffle/'));
     const withAlt = alts.filter(t => t.alt && t.alt.trim().length);
     check('shuffled images carry their own alt text', withAlt.length >= 14,
-        `${withAlt.length}/19 have non-empty alt`);
+        `${withAlt.length}/${expectedShuffled} have non-empty alt`);
     const tll = alts.find(t => t.key === 'tll');
     // An authored description, not the "<title> still N" positional fallback:
     // several words long and not matching that pattern.
@@ -116,7 +128,7 @@ async function tileState(page) {
         rendered === staticTiles.length && staticTiles.length === 24,
         `${rendered}/${staticTiles.length} tiles`);
     check('no-JS: tiles use the build-time default crop',
-        staticTiles.filter(t => t.src.startsWith('/img/shuffle/')).length === 19);
+        staticTiles.filter(t => t.src.startsWith('/img/shuffle/')).length === expectedShuffled);
     await noJsCtx.close();
 
     await browser.close();

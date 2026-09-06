@@ -1,0 +1,55 @@
+# Pairs of stills that must NEVER land next to each other in the homepage
+# tile shuffle.
+#
+# The shuffle already scores adjacency — js/thumb-shuffle.js compares hue,
+# tone, composition, subject facing and shot size between a candidate and the
+# tiles already placed around it, and picks the best-scoring frame. That is a
+# PREFERENCE: a bad pairing is expensive, but if the dice fall badly enough it
+# can still happen. This file is the escape hatch for the handful of pairings
+# that must not happen at all — it is a HARD CONSTRAINT, checked before the
+# scorer runs, and a banned candidate is removed from the running rather than
+# merely penalised.
+#
+# Use it for repetition the numbers cannot see. The scorer measures colour and
+# geometry; it has no idea what is IN a frame. Two different films can each
+# have a man in a cowboy hat with a guitar, in different light, at different
+# sizes, and every number will say they are a pleasing contrast while a human
+# sees the same photo twice.
+#
+# THE IDENTIFIER IS THE STILL'S SOURCE PATH — the same identifier
+# _data/shuffle_exclusions.yml and _data/shuffle_crop.yml use, copied verbatim
+# from js/lightbox.js, from _data/tll.yml, or (for a tile's own authored
+# thumbnail) from the <img src> in index.html. A leading slash is optional.
+# Use the ORIGINAL path under img/ — never an img/shuffle/... path, which is a
+# generated crop.
+#
+# ONE PAIR PER LINE, as a two-item list:
+#
+#   never_adjacent:
+#     - [img/one/frameN.jpg, img/other/frameM.jpg]
+#
+# The rule is symmetric — order within the pair does not matter, and it holds
+# whichever tile the shuffle happens to fill first. "Adjacent" means adjacent
+# on the LAID-OUT grid, so it covers both stacked (the narrative grid is 2
+# columns on a laptop and 1 on a portrait phone) and side-by-side.
+#
+# The build resolves each path to its generated crop and warns on stderr if a
+# path matches no still — so a typo, or a still that is also listed in
+# shuffle_exclusions.yml, cannot fail silently. Re-run
+# `python3 scripts/build_thumb_shuffle.py` after editing.
+#
+# A pair can only bind if BOTH tiles have somewhere else to go. If every
+# candidate for a slot is banned by what is already around it, the shuffle
+# shows a banned frame rather than an empty tile — the constraint is hard, but
+# it is not allowed to break the page. The build prints each tile's pool size
+# so you can see the headroom.
+
+never_adjacent:
+  # Two men in cowboy hats with acoustic guitars, one per film. Hub City's is
+  # the bar table at night (he is seated behind the bottles, guitar across his
+  # lap); A Christmas in New Hope's is the busker on a stool in front of the
+  # Christmas trees. Different films, different light, but stacked in the grid
+  # they read as one still repeated — and on a portrait phone the narrative
+  # grid is a single column, which puts Hub City directly above A Christmas in
+  # New Hope every time. Reported by Alex 2026-09-06.
+  - [img/hc/frame4.jpg, img/acinh/frame2.jpg]

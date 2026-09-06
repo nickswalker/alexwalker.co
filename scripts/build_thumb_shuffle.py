@@ -714,6 +714,49 @@ def load_thumb_pool_optin():
     return out
 
 
+def load_never_adjacent():
+    """Pairs of SOURCE stills that must never land next to each other.
+
+    Read from _data/shuffle_never_adjacent.yml as a list of two-item lists.
+    Returns [(a, b), ...] of source paths with any leading slash stripped —
+    the same identifier _data/shuffle_exclusions.yml and _data/shuffle_crop.yml
+    use, so one line covers a lightbox still or a tile's authored thumbnail
+    without either consumer needing to know this file exists.
+
+    Resolving those source paths to the generated crops the browser actually
+    compares happens in build(), which is the only place that knows the
+    mapping. Keeping this function to pure parsing means a typo is reported
+    against the line Alex typed, not against a derivative path he never saw.
+    """
+    path = ROOT / "_data" / "shuffle_never_adjacent.yml"
+    if not path.exists():
+        return []
+    out, in_list = [], False
+    for line in path.read_text().splitlines():
+        if re.match(r"^never_adjacent:\s*$", line):
+            in_list = True
+            continue
+        if in_list and line.strip() and not line.startswith((" ", "-", "\t", "#")):
+            break
+        if not in_list:
+            continue
+        m = re.match(r"^\s*-\s*\[\s*(.+?)\s*,\s*(.+?)\s*\]\s*$", line)
+        if not m:
+            # A list entry that isn't a two-item pair is a mistake worth
+            # naming — silently skipping it would look like the rule applied.
+            if re.match(r"^\s*-\s+\S", line):
+                print(f"  ! not a [a, b] pair: {line.strip()} — check "
+                      f"_data/shuffle_never_adjacent.yml", file=sys.stderr)
+            continue
+        a = _yaml_scalar(m.group(1)).strip().strip("'\"").lstrip("/")
+        b = _yaml_scalar(m.group(2)).strip().strip("'\"").lstrip("/")
+        if a and b and a != b:
+            out.append((a, b))
+        elif a == b:
+            print(f"  ! '{a}' is paired with itself — ignored", file=sys.stderr)
+    return out
+
+
 ANCHOR_WORDS = {"top": 0.0, "center": 0.5, "centre": 0.5, "middle": 0.5, "bottom": 1.0}
 
 
@@ -826,6 +869,7 @@ def build(verify=False):
     excluded = load_exclusions()
     anchors = load_crop_anchors()
     thumb_pool_optin = load_thumb_pool_optin()
+    never_pairs = load_never_adjacent()
     seen_excluded, seen_anchored, dropped_tiles = set(), set(), {}
     seen_optin, pool_counts = set(), {}
 
@@ -1009,10 +1053,32 @@ def build(verify=False):
                           "originalThumb": own, "default": default_src[key],
                           "frames": items}
 
+    # --- never-adjacent pairs, resolved source -> generated crop ------------
+    # The browser compares the crops it renders, not the sources Alex typed,
+    # so the pairing is translated here — the one place that holds the
+    # mapping. A side that resolves to nothing is REPORTED rather than
+    # dropped: the usual cause is a typo, or a still that is also in
+    # shuffle_exclusions.yml (in which case it can never be adjacent to
+    # anything and the pair is simply redundant).
+    src_to_out = {a["src"].lstrip("/"): a["out"] for a in audit}
+    never_out, never_report = [], []
+    for a, b in never_pairs:
+        oa, ob = src_to_out.get(a), src_to_out.get(b)
+        if oa and ob:
+            never_out.append([oa, ob])
+            never_report.append((a, b, oa, ob, None))
+        else:
+            missing = ", ".join(p for p, o in ((a, oa), (b, ob)) if not o)
+            never_report.append((a, b, oa, ob, missing))
+
     payload = {
         "version": 1,
         "geometry": {k: {"aspect": round(v["aspect"], 4), "width": v["width"]}
                      for k, v in GEOMETRY.items()},
+        # Flat list of [cropA, cropB]. Symmetric — js/thumb-shuffle.js indexes
+        # it both ways — and deliberately NOT nested under a tile, because the
+        # two halves of a pair live in different tiles by definition.
+        "neverAdjacent": never_out,
         "tiles": out_tiles,
     }
     DATA_JSON.parent.mkdir(parents=True, exist_ok=True)
@@ -1051,6 +1117,31 @@ def build(verify=False):
     for miss in sorted(thumb_pool_optin - seen_optin):
         print(f"  ! no tile matches '{miss}' — check the key in "
               f"_data/shuffle_thumb_pool.yml", file=sys.stderr)
+
+    # --- never-adjacent pairs (_data/shuffle_never_adjacent.yml) -----------
+    # Printed with each side's TILE POOL SIZE, because that is what decides
+    # whether the constraint can actually bind: a tile with one candidate left
+    # has nowhere else to go, and the runtime is documented to show a banned
+    # frame rather than an empty tile. Two healthy pools means the rule holds.
+    tile_of = {a["out"]: a["tile"] for a in audit}
+    print(f"\nNever-adjacent pairs (_data/shuffle_never_adjacent.yml) — "
+          f"{len(never_pairs)} listed, {len(never_out)} resolved to crops:")
+    for a, b, oa, ob, missing in never_report:
+        if missing:
+            print(f"  ! no still matches '{missing}' — check the path in "
+                  f"_data/shuffle_never_adjacent.yml (pair [{a}, {b}] is "
+                  f"NOT in force)", file=sys.stderr)
+            continue
+        ta, tb = tile_of.get(oa, "?"), tile_of.get(ob, "?")
+        na = len(out_tiles.get(ta, {}).get("frames", []))
+        nb = len(out_tiles.get(tb, {}).get("frames", []))
+        print(f"  · {a}  <->  {b}")
+        print(f"      {oa} (tile '{ta}', {na} candidates)")
+        print(f"      {ob} (tile '{tb}', {nb} candidates)")
+        if na < 2 or nb < 2:
+            print(f"  ! tile '{ta if na < 2 else tb}' has no alternative "
+                  f"still — this pair cannot always be honoured",
+                  file=sys.stderr)
 
     # --- baked-in padding --------------------------------------------------
     barred = [a for a in audit if any(a["bars"])]

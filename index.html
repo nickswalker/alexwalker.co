@@ -379,16 +379,6 @@
                             </a>
                         </li>
                         <li>
-                            <a href="https://youtube.com/embed/_5H9xEL8Bk0" class="-by-nine" data-year="Myth Behind the Scenes- Shot by Tyler Mann" data-rich="mythbts">
-                                <img loading="lazy" src="img/shuffle/mythbts/thumb.jpg" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://youtube.com/embed/BSG8qTgcM-A" class="-by-nine" data-year="A Thousand Times A Day- Short Film" data-rich="attad">
-                                <img loading="lazy" src="img/shuffle/attad/thumb.jpg" />
-                            </a>
-                        </li>
-                        <li>
                             {%- assign tll = site.data.tll -%}
                             <!-- Real href, not javascript:void(0): the lightbox
                                  intercepts the click (preventDefault) so the
@@ -427,6 +417,16 @@
                                        data-goatcounter-click="ext-texaslegacyinlights.com">{{ tll.official_site_label }}</a>
                                 </p>
                             </div>
+                        </li>
+                        <li>
+                            <a href="https://youtube.com/embed/BSG8qTgcM-A" class="-by-nine" data-year="A Thousand Times A Day- Short Film" data-rich="attad">
+                                <img loading="lazy" src="img/shuffle/attad/thumb.jpg" />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://youtube.com/embed/_5H9xEL8Bk0" class="-by-nine" data-year="Myth Behind the Scenes- Shot by Tyler Mann" data-rich="mythbts">
+                                <img loading="lazy" src="img/shuffle/mythbts/thumb.jpg" />
+                            </a>
                         </li>
                         <li>
                             <a href="https://www.youtube.com/embed/xxByzOj_yQY" class="-by-nine" data-year="Javelina Run- Short Film" data-rich="jr"><img loading="lazy"
@@ -499,6 +499,29 @@
                             <a href="https://youtube.com/embed/ukfdG8Y8ats" class="-by-nine" data-year="Bostin Westin LED Wall Screensaver" data-rich="comm_bostin"><img loading="lazy"
                                     src="img/commercial/Bostonl.jpg" />
                             </a>
+                            <!-- ===========================================
+                                 THE ONE PLACE THE WESTIN WORDING LIVES.
+                                 Edit the sentence below and nothing else —
+                                 it is not duplicated in js/lightbox.js.
+
+                                 Same mechanism as the #tll block above: a
+                                 hidden `.rich-copy` node that js/lightbox.js
+                                 CLONES into the lightbox panel (see the
+                                 `copySrcEl` lookup in _renderPanels, which
+                                 matches this id against the tile's
+                                 data-rich key). Being real DOM text in
+                                 index.html on disk, crawlers and no-JS
+                                 visitors read it without running any
+                                 JavaScript, and there is exactly one copy.
+
+                                 Do NOT add a `copy:` string to
+                                 RICH_CONFIG.comm_bostin — that would make a
+                                 second, invisible-to-crawlers copy of these
+                                 same words.
+                                 =========================================== -->
+                            <div id="comm_bostin" class="rich-copy" hidden>
+                                <p>Large-format footage created for the LED video wall in the lobby of the Westin Boston.</p>
+                            </div>
                         </li>
                         <li>
                             <a href="https://www.youtube.com/embed/JoHFyLAUnzY" class="-by-nine" data-year="Vice Guide To Film" data-rich="comm_viceguide"><img loading="lazy"

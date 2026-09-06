@@ -47,6 +47,14 @@ exclude_from_shuffle:
   - img/amorsui/frame4.jpg   # therapy two-shot, striped blazer vs. white sofa
   - img/alit/frame3.jpg      # mono, three-arm ceiling light and a stein
 
+  # Third pass, 2026-09-06. Stays in the AppLovin lightbox gallery.
+  # There are two phone-screen frames in this tile and only THIS one goes:
+  # frame1 is the tight insert — nothing but two hands and the lit screen,
+  # no face, no body. frame3 (the long-haired figure holding a phone up in
+  # front of her face) is the other one and it STAYS: it has a person in it
+  # and reads as a shot rather than a product insert.
+  - img/comm_applovin/frame1.jpg  # ECU hands holding a phone, bright game screen
+
   # Not a still from the piece: a photograph of the finished install (hotel
   # lobby, LED wall running his footage). It belongs in the Bostin Westin
   # lightbox next to the video, but it is architecture, not cinematography,

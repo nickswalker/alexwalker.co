@@ -10,6 +10,12 @@
    "width": 1152
   }
  },
+ "neverAdjacent": [
+  [
+   "/img/shuffle/hc/4.jpg",
+   "/img/shuffle/acinh/2.jpg"
+  ]
+ ],
  "tiles": {
   "hoa": {
    "section": "narrative",
@@ -127,17 +133,17 @@
      "facing": "right",
      "tight": 1.074,
      "rgb": [
-      85,
-      66,
-      47
+      83,
+      64,
+      45
      ],
-     "hue": 0.0817,
-     "saturation": 0.4546,
-     "luminance": 0.2695,
-     "contrast": 0.1229,
-     "edge": 0.0232,
-     "balance": 0.365,
-     "topBottom": -0.018
+     "hue": 0.0804,
+     "saturation": 0.4698,
+     "luminance": 0.2602,
+     "contrast": 0.12,
+     "edge": 0.0242,
+     "balance": 0.374,
+     "topBottom": -0.0419
     },
     {
      "src": "/img/shuffle/tch/1.jpg",
@@ -602,193 +608,6 @@
     }
    ]
   },
-  "mythbts": {
-   "section": "narrative",
-   "title": "Myth \u2014 Behind the Scenes",
-   "originalThumb": "img/narrative/temp3.jpg",
-   "default": "/img/shuffle/mythbts/thumb.jpg",
-   "frames": [
-    {
-     "src": "/img/shuffle/mythbts/thumb.jpg",
-     "alt": "Myth \u2014 Behind the Scenes",
-     "i": 0,
-     "facing": "neutral",
-     "tight": 0.0,
-     "rgb": [
-      108,
-      104,
-      87
-     ],
-     "hue": 0.1402,
-     "saturation": 0.2425,
-     "luminance": 0.4048,
-     "contrast": 0.2486,
-     "edge": 0.0912,
-     "balance": 0.504,
-     "topBottom": 0.1267
-    },
-    {
-     "src": "/img/shuffle/mythbts/1.jpg",
-     "alt": "Myth \u2014 Behind the Scenes still 1",
-     "i": 1,
-     "facing": "neutral",
-     "tight": 0.2714,
-     "rgb": [
-      122,
-      98,
-      73
-     ],
-     "hue": 0.0951,
-     "saturation": 0.3863,
-     "luminance": 0.398,
-     "contrast": 0.1871,
-     "edge": 0.0746,
-     "balance": 0.5267,
-     "topBottom": 0.1517
-    },
-    {
-     "src": "/img/shuffle/mythbts/2.jpg",
-     "alt": "Myth \u2014 Behind the Scenes still 2",
-     "i": 2,
-     "facing": "right",
-     "tight": 0.1629,
-     "rgb": [
-      66,
-      59,
-      51
-     ],
-     "hue": 0.2369,
-     "saturation": 0.2891,
-     "luminance": 0.234,
-     "contrast": 0.2043,
-     "edge": 0.0618,
-     "balance": 0.5066,
-     "topBottom": 0.0779
-    },
-    {
-     "src": "/img/shuffle/mythbts/3.jpg",
-     "alt": "Myth \u2014 Behind the Scenes still 3",
-     "i": 3,
-     "facing": "neutral",
-     "tight": 0.2541,
-     "rgb": [
-      65,
-      65,
-      51
-     ],
-     "hue": 0.2156,
-     "saturation": 0.3417,
-     "luminance": 0.2503,
-     "contrast": 0.181,
-     "edge": 0.0625,
-     "balance": 0.4478,
-     "topBottom": -0.0186
-    },
-    {
-     "src": "/img/shuffle/mythbts/4.jpg",
-     "alt": "Myth \u2014 Behind the Scenes still 4",
-     "i": 4,
-     "facing": "neutral",
-     "tight": 0.0,
-     "rgb": [
-      33,
-      31,
-      21
-     ],
-     "hue": 0.1771,
-     "saturation": 0.4253,
-     "luminance": 0.1215,
-     "contrast": 0.1082,
-     "edge": 0.03,
-     "balance": 0.5058,
-     "topBottom": 0.0222
-    }
-   ]
-  },
-  "attad": {
-   "section": "narrative",
-   "title": "A Thousand Times A Day",
-   "originalThumb": "img/narrative/ATTAD2.jpg",
-   "default": "/img/shuffle/attad/thumb.jpg",
-   "frames": [
-    {
-     "src": "/img/shuffle/attad/thumb.jpg",
-     "alt": "A Thousand Times A Day",
-     "i": 0,
-     "facing": "neutral",
-     "tight": 0.0,
-     "rgb": [
-      46,
-      43,
-      39
-     ],
-     "hue": 0.7475,
-     "saturation": 0.4525,
-     "luminance": 0.1718,
-     "contrast": 0.2091,
-     "edge": 0.043,
-     "balance": 0.5001,
-     "topBottom": -0.09
-    },
-    {
-     "src": "/img/shuffle/attad/1.jpg",
-     "alt": "A Thousand Times A Day still 1",
-     "i": 1,
-     "facing": "neutral",
-     "tight": 0.4106,
-     "rgb": [
-      112,
-      112,
-      110
-     ],
-     "hue": 0.5878,
-     "saturation": 0.2404,
-     "luminance": 0.4385,
-     "contrast": 0.2738,
-     "edge": 0.0189,
-     "balance": 0.5252,
-     "topBottom": 0.0605
-    },
-    {
-     "src": "/img/shuffle/attad/3.jpg",
-     "alt": "A Thousand Times A Day still 3",
-     "i": 2,
-     "facing": "left",
-     "tight": 0.6051,
-     "rgb": [
-      77,
-      74,
-      70
-     ],
-     "hue": 0.0712,
-     "saturation": 0.1851,
-     "luminance": 0.2905,
-     "contrast": 0.1416,
-     "edge": 0.0305,
-     "balance": 0.542,
-     "topBottom": 0.0653
-    },
-    {
-     "src": "/img/shuffle/attad/4.jpg",
-     "alt": "A Thousand Times A Day still 4",
-     "i": 3,
-     "facing": "left",
-     "tight": 0.2091,
-     "rgb": [
-      116,
-      96,
-      80
-     ],
-     "hue": 0.0706,
-     "saturation": 0.3434,
-     "luminance": 0.3884,
-     "contrast": 0.2279,
-     "edge": 0.0617,
-     "balance": 0.4983,
-     "topBottom": 0.1958
-    }
-   ]
-  },
   "tll": {
    "section": "narrative",
    "title": "Texas Legacy in Lights",
@@ -965,6 +784,193 @@
      "edge": 0.0074,
      "balance": 0.5607,
      "topBottom": -0.0206
+    }
+   ]
+  },
+  "attad": {
+   "section": "narrative",
+   "title": "A Thousand Times A Day",
+   "originalThumb": "img/narrative/ATTAD2.jpg",
+   "default": "/img/shuffle/attad/thumb.jpg",
+   "frames": [
+    {
+     "src": "/img/shuffle/attad/thumb.jpg",
+     "alt": "A Thousand Times A Day",
+     "i": 0,
+     "facing": "neutral",
+     "tight": 0.0,
+     "rgb": [
+      46,
+      43,
+      39
+     ],
+     "hue": 0.7475,
+     "saturation": 0.4525,
+     "luminance": 0.1718,
+     "contrast": 0.2091,
+     "edge": 0.043,
+     "balance": 0.5001,
+     "topBottom": -0.09
+    },
+    {
+     "src": "/img/shuffle/attad/1.jpg",
+     "alt": "A Thousand Times A Day still 1",
+     "i": 1,
+     "facing": "neutral",
+     "tight": 0.4106,
+     "rgb": [
+      112,
+      112,
+      110
+     ],
+     "hue": 0.5878,
+     "saturation": 0.2404,
+     "luminance": 0.4385,
+     "contrast": 0.2738,
+     "edge": 0.0189,
+     "balance": 0.5252,
+     "topBottom": 0.0605
+    },
+    {
+     "src": "/img/shuffle/attad/3.jpg",
+     "alt": "A Thousand Times A Day still 3",
+     "i": 2,
+     "facing": "left",
+     "tight": 0.6051,
+     "rgb": [
+      77,
+      74,
+      70
+     ],
+     "hue": 0.0712,
+     "saturation": 0.1851,
+     "luminance": 0.2905,
+     "contrast": 0.1416,
+     "edge": 0.0305,
+     "balance": 0.542,
+     "topBottom": 0.0653
+    },
+    {
+     "src": "/img/shuffle/attad/4.jpg",
+     "alt": "A Thousand Times A Day still 4",
+     "i": 3,
+     "facing": "left",
+     "tight": 0.2091,
+     "rgb": [
+      116,
+      96,
+      80
+     ],
+     "hue": 0.0706,
+     "saturation": 0.3434,
+     "luminance": 0.3884,
+     "contrast": 0.2279,
+     "edge": 0.0617,
+     "balance": 0.4983,
+     "topBottom": 0.1958
+    }
+   ]
+  },
+  "mythbts": {
+   "section": "narrative",
+   "title": "Myth \u2014 Behind the Scenes",
+   "originalThumb": "img/narrative/temp3.jpg",
+   "default": "/img/shuffle/mythbts/thumb.jpg",
+   "frames": [
+    {
+     "src": "/img/shuffle/mythbts/thumb.jpg",
+     "alt": "Myth \u2014 Behind the Scenes",
+     "i": 0,
+     "facing": "neutral",
+     "tight": 0.0,
+     "rgb": [
+      108,
+      104,
+      87
+     ],
+     "hue": 0.1402,
+     "saturation": 0.2425,
+     "luminance": 0.4048,
+     "contrast": 0.2486,
+     "edge": 0.0912,
+     "balance": 0.504,
+     "topBottom": 0.1267
+    },
+    {
+     "src": "/img/shuffle/mythbts/1.jpg",
+     "alt": "Myth \u2014 Behind the Scenes still 1",
+     "i": 1,
+     "facing": "neutral",
+     "tight": 0.2714,
+     "rgb": [
+      122,
+      98,
+      73
+     ],
+     "hue": 0.0951,
+     "saturation": 0.3863,
+     "luminance": 0.398,
+     "contrast": 0.1871,
+     "edge": 0.0746,
+     "balance": 0.5267,
+     "topBottom": 0.1517
+    },
+    {
+     "src": "/img/shuffle/mythbts/2.jpg",
+     "alt": "Myth \u2014 Behind the Scenes still 2",
+     "i": 2,
+     "facing": "right",
+     "tight": 0.1629,
+     "rgb": [
+      66,
+      59,
+      51
+     ],
+     "hue": 0.2369,
+     "saturation": 0.2891,
+     "luminance": 0.234,
+     "contrast": 0.2043,
+     "edge": 0.0618,
+     "balance": 0.5066,
+     "topBottom": 0.0779
+    },
+    {
+     "src": "/img/shuffle/mythbts/3.jpg",
+     "alt": "Myth \u2014 Behind the Scenes still 3",
+     "i": 3,
+     "facing": "neutral",
+     "tight": 0.2541,
+     "rgb": [
+      65,
+      65,
+      51
+     ],
+     "hue": 0.2156,
+     "saturation": 0.3417,
+     "luminance": 0.2503,
+     "contrast": 0.181,
+     "edge": 0.0625,
+     "balance": 0.4478,
+     "topBottom": -0.0186
+    },
+    {
+     "src": "/img/shuffle/mythbts/4.jpg",
+     "alt": "Myth \u2014 Behind the Scenes still 4",
+     "i": 4,
+     "facing": "neutral",
+     "tight": 0.0,
+     "rgb": [
+      33,
+      31,
+      21
+     ],
+     "hue": 0.1771,
+     "saturation": 0.4253,
+     "luminance": 0.1215,
+     "contrast": 0.1082,
+     "edge": 0.03,
+     "balance": 0.5058,
+     "topBottom": 0.0222
     }
    ]
   },
@@ -1498,28 +1504,9 @@
      "topBottom": 0.0772
     },
     {
-     "src": "/img/shuffle/comm_applovin/1.jpg",
-     "alt": "AppLovin Halloween Ad still 1",
-     "i": 1,
-     "facing": "neutral",
-     "tight": 0.0,
-     "rgb": [
-      35,
-      39,
-      30
-     ],
-     "hue": 0.2916,
-     "saturation": 0.4803,
-     "luminance": 0.146,
-     "contrast": 0.0925,
-     "edge": 0.0248,
-     "balance": 0.5079,
-     "topBottom": 0.0154
-    },
-    {
      "src": "/img/shuffle/comm_applovin/2.jpg",
      "alt": "AppLovin Halloween Ad still 2",
-     "i": 2,
+     "i": 1,
      "facing": "neutral",
      "tight": 0.0,
      "rgb": [
@@ -1538,7 +1525,7 @@
     {
      "src": "/img/shuffle/comm_applovin/3.jpg",
      "alt": "AppLovin Halloween Ad still 3",
-     "i": 3,
+     "i": 2,
      "facing": "neutral",
      "tight": 0.0,
      "rgb": [
@@ -1557,7 +1544,7 @@
     {
      "src": "/img/shuffle/comm_applovin/4.jpg",
      "alt": "AppLovin Halloween Ad still 4",
-     "i": 4,
+     "i": 3,
      "facing": "right",
      "tight": 0.2845,
      "rgb": [
