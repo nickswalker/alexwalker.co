@@ -805,7 +805,6 @@ def build(verify=False):
     DATA_JSON.parent.mkdir(parents=True, exist_ok=True)
     DATA_JSON.write_text(json.dumps(payload, separators=(",", ":")))
     SITE_DATA_JSON.write_text(json.dumps(payload, indent=1))
-    (ROOT / "scripts" / "thumb_shuffle_audit.json").write_text(json.dumps(audit, indent=1))
 
     # Tiles that fell out of the rotation get their authored thumbnail back.
     rewritten = rewrite_index_srcs({**dropped_tiles, **default_src})
@@ -883,6 +882,11 @@ def build(verify=False):
         print(f"  ! {out} still has padding {found}", file=sys.stderr)
     if residual:
         sys.exit("RESIDUAL PADDING — see above")
+
+    # Written last so the audit carries the read-back edge measurements too,
+    # not just what the build intended to do.
+    (ROOT / "scripts" / "thumb_shuffle_audit.json").write_text(
+        json.dumps(audit, indent=1))
 
     # --- facing / close-up ------------------------------------------------
     fc = {"left": 0, "right": 0, "neutral": 0}
