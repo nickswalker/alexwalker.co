@@ -34,6 +34,26 @@ THE CROP RULE, which overrides everything else in this file:
     is the one thing allowed to change the window, and it only ever gives
     picture back — it never takes any.
 
+    THE ONE EXCEPTION, and it is Alex's call, not this script's (2026-09-05):
+    a COMMERCIAL still whose picture is WIDER than its 16:9 cell is centre-
+    cropped horizontally to the cell ratio — equal columns off left and right,
+    full height kept, no zoom, no vertical shift. Alex accepts losing the
+    sides on those frames because the alternative is what the layout was
+    doing: letterboxing a 2.39:1 delivery into a 16:9 cell and painting black
+    across the top and bottom of the tile. The exception is narrow on purpose:
+
+      * COMMERCIAL only. Narrative cells are 2.35 and the scope frames that
+        overhang them do so by ~1.6%; they keep the full-width rule, and a
+        narrative frame wider than its cell is REPORTED and left alone.
+      * Only frames that are actually wider than the cell. A frame already at
+        or under the cell ratio is untouched by this and takes the vertical
+        trim exactly as before.
+      * Still symmetric, still content-blind. see centred_crop: it takes the
+        dimensions and the target ratio and nothing else. Vision data is no
+        more welcome in the horizontal decision than it ever was in the
+        vertical one — the crop is centred because centred is the only
+        defensible answer, not because anything in the frame asked for it.
+
 All the expensive work happens here. The browser only ever reads the JSON.
 
 Usage:  python3 scripts/build_thumb_shuffle.py [--verify]
@@ -441,33 +461,58 @@ def strip_bars(im):
     return im.crop((left, top, w - right, h - bottom)), bars
 
 
-def centred_vertical_crop(w, h, aspect):
-    """Full source width, equal rows off the top and the bottom. Nothing else.
+def _symmetric_extent(span, ideal):
+    """Largest-fitting extent that leaves an EQUAL cut on both sides.
+
+    A symmetric cut requires the kept extent to have the same parity as the
+    span, so `ideal` is snapped to the NEAREST value of that parity rather
+    than simply rounded down — for a 1600x669 scope frame in a 16:9 cell the
+    ideal width is 1189.33, and 1190 (error 0.67px) beats 1188 (error 1.33px)
+    and happens to be the one that lands on an exact 1152x648 after the
+    delivery downscale. Never returns more than the span.
+    """
+    lo = min(int(ideal) - ((int(ideal) - span) % 2), span)
+    hi = min(lo + 2, span)
+    keep = hi if abs(hi - ideal) < abs(lo - ideal) and hi <= span else lo
+    return max(keep, 2 if span >= 2 else 1)
+
+
+def centred_crop(w, h, aspect, allow_horizontal=False):
+    """Centre the picture in the tile's ratio. Geometry only — see THE CROP RULE.
 
     Takes only the source dimensions and the target ratio — no image content,
     no Vision data — because there is no input that could legitimately move
-    this window. Returns (box, rows_removed_top, rows_removed_bottom).
+    this window. Returns (box, rows_off_top, rows_off_bottom, cols_off_left,
+    cols_off_right).
 
-    Two cases:
+    Three cases:
 
       * Source TALLER than the tile (a 16:9 or 4:3 still in a 2.35 cell):
-        keep the full width, trim to `w / aspect` rows.
-      * Source ALREADY AS WIDE OR WIDER than the tile (the 2.38:1 scope
-        frames): there are no spare rows to remove, and reaching the tile
-        ratio would mean cutting width. It doesn't. The frame is emitted
-        whole and CSS `object-fit: cover` handles the last ~1.6% — centred
-        and symmetric, so the composition still isn't repositioned.
+        keep the full width, trim to `w / aspect` rows, equally off the top
+        and the bottom. The default, and the only case for narrative.
+      * Source WIDER than the tile, `allow_horizontal` (commercial only):
+        keep every row, take `(w - h*aspect)` columns off — half from each
+        side. This is the exception Alex authorised; nothing else may use it.
+      * Source WIDER than the tile, `allow_horizontal` false (narrative
+        scope frames): there are no spare rows to remove and cutting width is
+        not this function's decision to make. The frame is emitted whole and
+        CSS handles the last ~1.6%, centred and symmetric as before.
 
-    The removed-row count is forced EVEN so top and bottom are exactly equal.
-    That costs at most one row of height (an aspect error under 0.004) and
-    buys an arithmetic guarantee of symmetry rather than a rounding one.
+    The removed count is forced EVEN in whichever axis is cut, so the two
+    sides are exactly equal by arithmetic rather than by rounding. That costs
+    at most one pixel of extent, and the picture's centre cannot move.
     """
+    if allow_horizontal and w > h * aspect:
+        tw = _symmetric_extent(w, h * aspect)
+        cut = (w - tw) // 2
+        return (cut, 0, cut + tw, h), 0, 0, cut, cut
+
     th = min(h, int(round(w / aspect)))
     if (h - th) % 2:
         th -= 1
     th = max(th, 1)
     trim = (h - th) // 2
-    return (0, trim, w, trim + th), trim, trim
+    return (0, trim, w, trim + th), trim, trim, 0, 0
 
 
 def scale_to_width(crop, max_width):
@@ -751,7 +796,8 @@ def build(verify=False):
                 picture, bars = strip_bars(im)
                 w, h = picture.size
                 # Geometry only. `vis` is deliberately not in scope here.
-                box, trim_top, trim_bottom = centred_vertical_crop(w, h, geo["aspect"])
+                box, trim_top, trim_bottom, cut_left, cut_right = centred_crop(
+                    w, h, geo["aspect"], allow_horizontal=(section == "commercial"))
                 crop = scale_to_width(picture.crop(box), geo["width"])
                 out_w, out_h = crop.size
                 stats = measure(crop)
@@ -784,6 +830,7 @@ def build(verify=False):
                 "orig": [ow, oh], "bars": list(bars), "picture": [w, h],
                 "box": list(box), "out_size": [out_w, out_h],
                 "trimTop": trim_top, "trimBottom": trim_bottom,
+                "cutLeft": cut_left, "cutRight": cut_right,
                 "facing": facing, "tight": tight,
                 "faces": len(vis.get("faces") or []),
                 "faceBoxes": vis.get("faces") or [],
@@ -836,8 +883,27 @@ def build(verify=False):
     # --- crop arithmetic, verified rather than asserted --------------------
     # Measured against the PICTURE area, which is the source once padding the
     # frame never owned has been taken off.
-    bad_width = [a for a in audit if a["box"][2] - a["box"][0] != a["picture"][0]]
-    bad_x = [a for a in audit if a["box"][0] != 0]
+    # Width may only shrink via the sanctioned commercial centre-crop, and a
+    # frame that took one must have taken the SAME number of columns off each
+    # side and none off the top or bottom. Everything else still has to keep
+    # 100% of the picture width at x=0.
+    def cropped_h(a):
+        return a["cutLeft"] > 0 or a["cutRight"] > 0
+
+    bad_width = [a for a in audit
+                 if a["box"][2] - a["box"][0] != a["picture"][0] and not cropped_h(a)]
+    bad_x = [a for a in audit if a["box"][0] != 0 and not cropped_h(a)]
+    # The exception's own guard rails, checked as hard as the rule they bend.
+    h_asym = [a for a in audit if a["cutLeft"] != a["cutRight"]]
+    h_wrong_section = [a for a in audit if cropped_h(a) and a["section"] != "commercial"]
+    h_not_wider = [a for a in audit
+                   if cropped_h(a)
+                   and a["picture"][0] <= a["picture"][1] * GEOMETRY[a["section"]]["aspect"]]
+    h_bad_box = [a for a in audit if cropped_h(a) and (
+        a["box"][0] != a["cutLeft"]
+        or a["picture"][0] - a["box"][2] != a["cutRight"]
+        or a["box"][1] != 0 or a["box"][3] != a["picture"][1]
+        or a["trimTop"] or a["trimBottom"])]
     asym = [a for a in audit if a["trimTop"] != a["trimBottom"]]
     upscaled = [a for a in audit if a["out_size"][0] > a["picture"][0]]
     # Padding removal is the only step allowed to change the window, so it is
@@ -846,15 +912,54 @@ def build(verify=False):
                 if a["bars"][0] != a["bars"][1] or a["bars"][2] != a["bars"][3]]
     print(f"\n{len(audit)} derivatives, {total_bytes:,} bytes total "
           f"({total_bytes / len(audit):,.0f} avg)")
-    print(f"Full picture width kept: {len(audit) - len(bad_width)}/{len(audit)}; "
+    h_cropped = [a for a in audit if cropped_h(a)]
+    print(f"Full picture width kept: "
+          f"{len(audit) - len(h_cropped) - len(bad_width)}/{len(audit)} "
+          f"({len(h_cropped)} centre-cropped by the commercial exception, "
+          f"{len(bad_width)} unexplained); "
           f"horizontal offset non-zero: {len(bad_x)}; "
           f"asymmetric vertical trim: {len(asym)}; upscaled: {len(upscaled)}; "
           f"asymmetric padding removal: {len(bar_asym)}")
-    if bad_width or bad_x or asym or upscaled or bar_asym:
+    print(f"Commercial centre-crop guard rails — asymmetric: {len(h_asym)}; "
+          f"outside commercial: {len(h_wrong_section)}; "
+          f"applied to a frame not wider than its cell: {len(h_not_wider)}; "
+          f"box disagrees with the recorded cut: {len(h_bad_box)}")
+    if (bad_width or bad_x or asym or upscaled or bar_asym
+            or h_asym or h_wrong_section or h_not_wider or h_bad_box):
         sys.exit("CROP RULE VIOLATED — see above")
 
-    uncropped = [a for a in audit if a["trimTop"] == 0]
-    print(f"Frames needing no vertical trim at all (source already at or wider "
+    # --- the commercial centre-crop, frame by frame ------------------------
+    print(f"\nCommercial centre-crop to 16:9 — {len(h_cropped)} frame(s):")
+    for a in sorted(h_cropped, key=lambda a: a["src"]):
+        pw, ph = a["picture"]
+        bw = a["box"][2] - a["box"][0]
+        print(f"  · {a['src']}: source {pw}x{ph} ({pw / ph:.4f}:1) "
+              f"− {a['cutLeft']}px left, {a['cutRight']}px right "
+              f"({'symmetric' if a['cutLeft'] == a['cutRight'] else 'ASYMMETRIC'}) "
+              f"→ crop {bw}x{ph} ({bw / ph:.4f}:1), full height kept "
+              f"→ delivered {a['out_size'][0]}x{a['out_size'][1]} "
+              f"({a['out_size'][0] / a['out_size'][1]:.4f}:1)")
+
+    # Frames wider than their cell that this build did NOT crop. Narrative is
+    # the whole point of the list: the exception stops at the section
+    # boundary, so a wide narrative frame is reported and left exactly alone.
+    wide_left = [a for a in audit if not cropped_h(a)
+                 and a["picture"][0] > a["picture"][1] * GEOMETRY[a["section"]]["aspect"]]
+    by_tile = {}
+    for a in wide_left:
+        by_tile.setdefault((a["section"], a["tile"]), []).append(a)
+    print(f"\nWider than their cell and LEFT ALONE (full width preserved, "
+          f"centred vertical trim only): {len(wide_left)} frame(s) across "
+          f"{len(by_tile)} tile(s)")
+    for (section, tile), group in sorted(by_tile.items()):
+        pw, ph = group[0]["picture"]
+        cell = GEOMETRY[section]["aspect"]
+        print(f"  · {section}/{tile}: {len(group)} frame(s) at "
+              f"{pw / ph:.4f}:1 in a {cell:.4f}:1 cell "
+              f"(+{(pw / ph / cell - 1) * 100:.1f}%)")
+
+    uncropped = [a for a in audit if a["trimTop"] == 0 and not cropped_h(a)]
+    print(f"Frames needing no crop in either axis (source already at or wider "
           f"than the tile): {len(uncropped)}")
 
     # --- residual padding, measured on what actually got written -----------
@@ -897,7 +1002,68 @@ def build(verify=False):
           f"{fc['neutral']} neutral; tight close-ups: {len(tight)}")
 
     verify_no_residual_bars(audit)
+    verify_commercial_fills_cell(audit)
     return audit
+
+
+# The layout can only letterbox a tile when the derivative's ratio disagrees
+# with the cell's, and the delivery downscale is the last thing that can move
+# it, so the tolerance is expressed in DELIVERED PIXELS: half a pixel of bar
+# across a 648px-tall tile is nothing a browser can paint.
+CELL_RATIO_TOL_PX = 0.5
+
+
+def verify_commercial_fills_cell(audit):
+    """Prove no commercial derivative can letterbox in its 16:9 cell.
+
+    Two independent things have to hold, and neither implies the other:
+
+      * RATIO. The shipped file has to match the cell to within half a
+        delivered pixel, or `object-fit: contain` pads the difference with the
+        page background — which is exactly the black edge Alex reported.
+      * CONTENT. The outermost row and column on every side has to be
+        picture. A frame can fill its cell perfectly and still show a black
+        edge if the black was baked into the source, so the edges are read
+        back off the written JPEG rather than inferred from the arithmetic.
+
+    Reported as measurements, not just a pass: the numbers are the evidence.
+    """
+    comm = [a for a in audit if a["section"] == "commercial"]
+    cell = GEOMETRY["commercial"]["aspect"]
+    bad_ratio, barred = [], []
+
+    print(f"\nCommercial letterbox check — {len(comm)} derivative(s) against a "
+          f"{cell:.4f}:1 cell (tolerance {CELL_RATIO_TOL_PX}px of delivered height):")
+    for a in sorted(comm, key=lambda a: (a["tile"], a["out"])):
+        with Image.open(ROOT / a["out"].lstrip("/")) as im:
+            im = im.convert("RGB")
+            ow, oh = im.size
+            bars = detect_bars(im)
+            e = _edge_luma(im)
+        # How many rows/columns of bar the layout would have to paint.
+        gap_px = abs(oh - ow / cell)
+        flag = ""
+        if gap_px > CELL_RATIO_TOL_PX:
+            bad_ratio.append((a["out"], ow, oh, gap_px))
+            flag = "  <-- WOULD LETTERBOX"
+        if any(bars):
+            barred.append((a["out"], bars))
+            flag += "  <-- BAKED-IN BAR"
+        print(f"  · {a['out']} {ow}x{oh} ({ow / oh:.4f}:1), layout bar "
+              f"{gap_px:.2f}px; edge means top {e['top']:.1f}, "
+              f"bottom {e['bottom']:.1f}, left {e['left']:.1f}, "
+              f"right {e['right']:.1f}{flag}")
+
+    print(f"  → {len(comm) - len(bad_ratio)}/{len(comm)} fill the cell exactly; "
+          f"{len(comm) - len(barred)}/{len(comm)} have picture on all four edges")
+    for out, ow, oh, gap in bad_ratio:
+        print(f"  ! {out} is {ow}x{oh} — the cell would pad {gap:.2f}px",
+              file=sys.stderr)
+    for out, bars in barred:
+        print(f"  ! {out} has a baked-in bar {bars}", file=sys.stderr)
+    if bad_ratio or barred:
+        sys.exit("COMMERCIAL TILE WOULD LETTERBOX — see above")
+    return comm
 
 
 def verify_no_residual_bars(audit):

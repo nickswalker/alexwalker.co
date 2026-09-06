@@ -1382,17 +1382,17 @@
      "facing": "neutral",
      "tight": 0.0898,
      "rgb": [
-      69,
-      66,
-      52
+      73,
+      71,
+      56
      ],
-     "hue": 0.1358,
-     "saturation": 0.3784,
-     "luminance": 0.2584,
-     "contrast": 0.1695,
-     "edge": 0.0441,
-     "balance": 0.4846,
-     "topBottom": -0.1158
+     "hue": 0.1457,
+     "saturation": 0.356,
+     "luminance": 0.2753,
+     "contrast": 0.1838,
+     "edge": 0.0431,
+     "balance": 0.4931,
+     "topBottom": -0.1485
     },
     {
      "src": "/img/shuffle/comm_wls/2.jpg",
@@ -1401,17 +1401,17 @@
      "facing": "neutral",
      "tight": 0.0,
      "rgb": [
-      62,
-      70,
-      66
+      75,
+      84,
+      80
      ],
-     "hue": 0.3992,
-     "saturation": 0.2556,
-     "luminance": 0.2678,
-     "contrast": 0.1715,
-     "edge": 0.0436,
-     "balance": 0.5818,
-     "topBottom": -0.0488
+     "hue": 0.46,
+     "saturation": 0.2214,
+     "luminance": 0.3215,
+     "contrast": 0.156,
+     "edge": 0.0442,
+     "balance": 0.5146,
+     "topBottom": -0.0407
     },
     {
      "src": "/img/shuffle/comm_wls/3.jpg",
@@ -1420,17 +1420,17 @@
      "facing": "neutral",
      "tight": 0.0,
      "rgb": [
-      86,
-      90,
-      88
+      81,
+      87,
+      86
      ],
-     "hue": 0.5521,
-     "saturation": 0.2543,
-     "luminance": 0.3489,
-     "contrast": 0.2266,
-     "edge": 0.0668,
-     "balance": 0.5473,
-     "topBottom": 0.0252
+     "hue": 0.5516,
+     "saturation": 0.2908,
+     "luminance": 0.335,
+     "contrast": 0.2312,
+     "edge": 0.0702,
+     "balance": 0.5458,
+     "topBottom": 0.0802
     },
     {
      "src": "/img/shuffle/comm_wls/4.jpg",
@@ -1439,17 +1439,17 @@
      "facing": "right",
      "tight": 0.3076,
      "rgb": [
-      42,
-      38,
-      25
+      48,
+      41,
+      28
      ],
-     "hue": 0.1634,
-     "saturation": 0.575,
-     "luminance": 0.148,
-     "contrast": 0.119,
-     "edge": 0.032,
-     "balance": 0.4044,
-     "topBottom": -0.0301
+     "hue": 0.1389,
+     "saturation": 0.5949,
+     "luminance": 0.1615,
+     "contrast": 0.1318,
+     "edge": 0.0336,
+     "balance": 0.4021,
+     "topBottom": -0.038
     }
    ]
   },
@@ -1485,17 +1485,17 @@
      "facing": "neutral",
      "tight": 0.0,
      "rgb": [
-      109,
-      107,
-      98
+      113,
+      110,
+      102
      ],
-     "hue": 0.1504,
-     "saturation": 0.2544,
-     "luminance": 0.418,
-     "contrast": 0.2171,
-     "edge": 0.0588,
-     "balance": 0.4802,
-     "topBottom": -0.053
+     "hue": 0.1418,
+     "saturation": 0.2547,
+     "luminance": 0.4324,
+     "contrast": 0.2132,
+     "edge": 0.0592,
+     "balance": 0.4869,
+     "topBottom": -0.0055
     },
     {
      "src": "/img/shuffle/comm_cwb/2.jpg",
@@ -1504,17 +1504,17 @@
      "facing": "right",
      "tight": 0.1423,
      "rgb": [
-      112,
-      102,
-      92
+      106,
+      96,
+      88
      ],
-     "hue": 0.0809,
-     "saturation": 0.3005,
-     "luminance": 0.406,
-     "contrast": 0.1835,
-     "edge": 0.077,
-     "balance": 0.5231,
-     "topBottom": -0.063
+     "hue": 0.0747,
+     "saturation": 0.3217,
+     "luminance": 0.3824,
+     "contrast": 0.1945,
+     "edge": 0.0803,
+     "balance": 0.496,
+     "topBottom": -0.0695
     },
     {
      "src": "/img/shuffle/comm_cwb/3.jpg",
@@ -1523,17 +1523,17 @@
      "facing": "neutral",
      "tight": 0.0,
      "rgb": [
-      123,
       120,
-      116
+      118,
+      114
      ],
-     "hue": 0.1016,
-     "saturation": 0.1893,
-     "luminance": 0.4729,
-     "contrast": 0.2798,
-     "edge": 0.0277,
-     "balance": 0.4789,
-     "topBottom": 0.4664
+     "hue": 0.098,
+     "saturation": 0.1885,
+     "luminance": 0.4629,
+     "contrast": 0.2844,
+     "edge": 0.0285,
+     "balance": 0.4918,
+     "topBottom": 0.4712
     },
     {
      "src": "/img/shuffle/comm_cwb/4.jpg",
@@ -1542,17 +1542,17 @@
      "facing": "neutral",
      "tight": 0.0,
      "rgb": [
-      58,
-      67,
-      63
+      62,
+      70,
+      66
      ],
-     "hue": 0.4989,
-     "saturation": 0.2984,
-     "luminance": 0.253,
-     "contrast": 0.0965,
-     "edge": 0.0454,
-     "balance": 0.5039,
-     "topBottom": 0.0444
+     "hue": 0.4991,
+     "saturation": 0.2865,
+     "luminance": 0.2662,
+     "contrast": 0.0999,
+     "edge": 0.0479,
+     "balance": 0.494,
+     "topBottom": 0.0361
     }
    ]
   },
