@@ -7,7 +7,8 @@ one still in its lightbox, this:
   1. reads the tile's still list from the single source of truth
      (RICH_CONFIG in js/lightbox.js, plus _data/tll.yml for the TLL entry),
      minus anything opted out in _data/shuffle_exclusions.yml,
-  2. writes a FULL-WIDTH, CENTRED VERTICAL crop at the tile's aspect ratio into
+  2. strips any baked-in letterbox/pillarbox padding (see detect_bars) and
+     writes a FULL-WIDTH, CENTRED VERTICAL crop at the tile's aspect ratio into
      img/shuffle/<key>/ — originals are never touched,
   3. runs each still through Apple's Vision framework (scripts/vision_probe.swift)
      for face rectangles + head yaw, and turns those into a per-frame FACING
@@ -20,12 +21,18 @@ one still in its lightbox, this:
 THE CROP RULE, which overrides everything else in this file:
 
     The horizontal composition of a frame is the cinematographer's decision.
-    This script does not get a vote. Every derivative keeps 100% of the source
-    width — no horizontal crop, no pan, no zoom, no upscale — and reaches the
-    tile's aspect ratio by removing an EQUAL number of rows from the top and
-    the bottom. Nothing about the picture content moves the window. Faces and
-    saliency are read for SELECTION ORDERING ONLY (see facing_signal); if you
-    are ever tempted to feed them back into the geometry, don't.
+    This script does not get a vote. Every derivative keeps 100% of the
+    source's PICTURE width — no horizontal crop, no pan, no zoom, no upscale —
+    and reaches the tile's aspect ratio by removing an EQUAL number of rows
+    from the top and the bottom. Nothing about the picture content moves the
+    window. Faces and saliency are read for SELECTION ORDERING ONLY (see
+    facing_signal); if you are ever tempted to feed them back into the
+    geometry, don't.
+
+    "Picture" is the operative word: black the frame was PADDED with is not
+    picture, and detect_bars takes it off before any of the above runs. That
+    is the one thing allowed to change the window, and it only ever gives
+    picture back — it never takes any.
 
 All the expensive work happens here. The browser only ever reads the JSON.
 
@@ -294,6 +301,208 @@ def run_vision(paths):
             rec = json.loads(line)
             out[rec["path"]] = rec
     return out
+
+
+# ------------------------------------------------- baked-in padding removal
+#
+# A few source stills are delivery frames that were PADDED to a different
+# container ratio before being saved, so the black is in the file rather than
+# in the shot. Left alone, the centred vertical trim below spends its rows on
+# that padding instead of on picture, and any padding the trim doesn't happen
+# to reach survives into the tile as a black edge.
+#
+# So padding comes off FIRST and the trim then runs on the recovered picture
+# exactly as it always has. This is padding removal, not reframing: what comes
+# back is the WHOLE picture area, nothing is scaled or repositioned, and no
+# picture content — face, saliency or otherwise — has any say in it.
+
+# Every pixel in a bar must sit at or below this luminance (0-255). Bars are
+# regularly crushed-near-black rather than 0,0,0, so this is a tolerance and
+# not an equality test.
+BAR_TOL = 26.0
+# ...and the first line of picture must be at least this much brighter. A
+# padded edge STOPS, abruptly. A shot that merely falls off into shadow at the
+# border has no such step, and that darkness is the frame, not padding.
+BAR_STEP = 30.0
+# Opposite bars must BOTH be present and agree to within this many pixels.
+# Padding is applied symmetrically, so a one-sided dark run is a dark part of
+# the shot — a night exterior that falls off to black at frame left, say. A
+# genuinely one-sided pad is indistinguishable from that, so it is left on:
+# this file would rather ship a bar than invent a reframe.
+BAR_SYMMETRY = 2
+# ...and each side must be at least this thick. Encoders leave the odd single
+# crushed scan line at an edge (img/comm_earthspeed/frame1.jpg has one); that
+# is a compression artefact, not a delivery pad, and trimming it would count
+# as touching a frame that has no bars.
+BAR_MIN = 3
+
+
+def _bar_run(line_max, line_p90):
+    """Length of the leading run of pure-padding lines, or 0 if there is none.
+
+    `line_max` is the brightest pixel in each line, so a line only counts as
+    padding when the WHOLE line is dark — one lit pixel disqualifies it. The
+    step test then uses the 90th percentile of the first surviving line, which
+    is robust to a soft encode boundary without being fooled by a stray
+    highlight.
+    """
+    n = len(line_max)
+    k = 0
+    while k < n and line_max[k] <= BAR_TOL:
+        k += 1
+    if k == 0 or k >= n:
+        return 0
+    if line_p90[k] - line_max[:k].max() < BAR_STEP:
+        return 0
+    return k
+
+
+def detect_bars(im):
+    """Baked-in padding thickness as (top, bottom, left, right) pixels.
+
+    Measured per frame, never hardcoded. Deliberately conservative in both
+    directions: anything this can't prove is padding it reports as no padding,
+    because leaving a bar on is a cosmetic problem while trimming picture is a
+    reframe — and reframing is the one thing this script must never do.
+    """
+    a = np.asarray(im.convert("RGB")).astype(np.float32)
+    lum = 0.2126 * a[..., 0] + 0.7152 * a[..., 1] + 0.0722 * a[..., 2]
+    rmax, rp90 = lum.max(axis=1), np.percentile(lum, 90, axis=1)
+    cmax, cp90 = lum.max(axis=0), np.percentile(lum, 90, axis=0)
+
+    top = _bar_run(rmax, rp90)
+    bottom = _bar_run(rmax[::-1], rp90[::-1])
+    left = _bar_run(cmax, cp90)
+    right = _bar_run(cmax[::-1], cp90[::-1])
+
+    def paired(a, b):
+        # Both sides, both thick enough, and the same size to within a
+        # rounding pixel — otherwise this is not padding and nothing comes off.
+        # Returning min(a, b) for both keeps the removal exactly symmetric, so
+        # the picture's centre cannot move even by half a pixel.
+        if min(a, b) < BAR_MIN or abs(a - b) > BAR_SYMMETRY:
+            return 0, 0
+        return min(a, b), min(a, b)
+
+    top, bottom = paired(top, bottom)
+    left, right = paired(left, right)
+    return top, bottom, left, right
+
+
+def strip_bars(im):
+    """(picture, bars) — the frame with its padding removed, and what came off."""
+    bars = detect_bars(im)
+    if not any(bars):
+        return im, bars
+    top, bottom, left, right = bars
+    w, h = im.size
+    return im.crop((left, top, w - right, h - bottom)), bars
+
+
+# --------------------------------------------------- baked-in bar detection
+#
+# A few source stills arrived already letterboxed: the picture was padded out
+# to a container ratio and flattened, so the black is INSIDE the JPEG. The
+# centred vertical trim can't tell padding from picture, so it spends its
+# spare rows on the bars and the tile ships with black edges.
+#
+# Removing that padding is not reframing. The bars are not the photograph;
+# they are packaging around it. Once they're off, the ordinary centred trim
+# runs on the recovered picture exactly as before — same rule, correct input.
+#
+# The whole difficulty is telling a bar from a dark EDGE OF THE PICTURE, and
+# this corpus is full of the latter: night interiors, vignettes, a doorframe
+# down one side of frame. Getting that wrong would eat real image. So the
+# detector is deliberately hard to satisfy, and every test below exists
+# because some real frame in this corpus fails it:
+#
+#   * DARK and FLAT — a bar has no content. `hoa/frame2`'s vignette is dark
+#     but graded, so its columns carry a standard deviation a bar never has.
+#   * SYMMETRIC to within a couple of pixels — padding is applied equally to
+#     both sides; a dark side of a room is not. This is the test that does
+#     the real work: `hc/frame3` is uniform and black down the left edge for
+#     69px, and down the right for 357px. Picture, and rejected as picture.
+#   * BIG ENOUGH to be padding rather than a dark first row, and small enough
+#     that we're not about to throw away a third of the frame.
+#   * SURROUNDING SOMETHING BRIGHTER — if the whole file is dark, there is no
+#     contrast to reason from and we leave it alone.
+#
+# Anything that fails any of these keeps every pixel it came with.
+
+BAR_MAX_LUMA = 24.0     # 8-bit; bars are rarely a clean 0 after compression
+BAR_MAX_STD = 6.0       # a bar is flat — a dark graded edge is not
+BAR_MAX_ASYM = 2        # px difference allowed between opposite bars
+BAR_MIN_PX = 4          # below this it's a dark row, not padding
+BAR_MAX_FRAC = 0.40     # never surrender more than this much of a dimension
+BAR_MIN_PICTURE_LUMA = 60.0   # the recovered picture has to be brighter
+
+
+def _edge_run(luma, std):
+    """Length of the leading dark, flat run — plus its blend row, if any.
+
+    Scaling a letterboxed frame leaves a partially-mixed row where the bar
+    met the picture: too bright to be bar, too dark to be picture. Left
+    behind it reads as a grey smear along the tile edge, which is the very
+    thing we're removing the bars to avoid. So after the strictly-black run
+    we absorb up to two rows that are still under half the brightness of the
+    picture behind them.
+    """
+    n = 0
+    while n < len(luma) and luma[n] <= BAR_MAX_LUMA and std[n] <= BAR_MAX_STD:
+        n += 1
+    if n == 0:
+        return 0
+    for _ in range(2):
+        if n >= len(luma) - 10:
+            break
+        picture = float(np.median(luma[n + 1:n + 11]))
+        if luma[n] < 0.5 * picture:
+            n += 1
+        else:
+            break
+    return n
+
+
+def _bar_pair(luma, std, span):
+    """Detected padding on one axis, as an equal amount taken off both ends.
+
+    Returns 0 unless both ends independently look like padding AND agree to
+    within BAR_MAX_ASYM. When they disagree by a pixel or two — a rounding
+    artefact of whatever wrote the file — the LARGER is used on both sides,
+    because keeping the picture centred matters more than the odd row and
+    trimming unequally would slide the frame.
+    """
+    lead = _edge_run(luma, std)
+    tail = _edge_run(luma[::-1], std[::-1])
+    if lead < BAR_MIN_PX or tail < BAR_MIN_PX:
+        return 0
+    if abs(lead - tail) > BAR_MAX_ASYM:
+        return 0
+    bar = max(lead, tail)
+    if 2 * bar > BAR_MAX_FRAC * span:
+        return 0
+    return bar
+
+
+def detect_bars(im):
+    """(top, bottom, left, right) padding to remove. Equal per axis, or zero.
+
+    Measures each row/column by its 99.5th percentile rather than its maximum
+    so a handful of stray bright pixels — sensor noise, a compression
+    speckle — can't disqualify an otherwise perfect bar.
+    """
+    g = np.asarray(im.convert("L"), dtype=np.float32)
+    h, w = g.shape
+    rows, cols = np.percentile(g, 99.5, axis=1), np.percentile(g, 99.5, axis=0)
+    v = _bar_pair(rows, g.std(axis=1), h)
+    hz = _bar_pair(cols, g.std(axis=0), w)
+    if not v and not hz:
+        return 0, 0, 0, 0
+    # Sanity: whatever is left has to look like a picture.
+    inner = g[v:h - v or None, hz:w - hz or None]
+    if inner.size == 0 or np.percentile(inner, 99.5) < BAR_MIN_PICTURE_LUMA:
+        return 0, 0, 0, 0
+    return v, v, hz, hz
 
 
 def centred_vertical_crop(w, h, aspect):
@@ -601,13 +810,19 @@ def build(verify=False):
             vis = vision.get(str(abs_path), {})
             with Image.open(abs_path) as im:
                 im = im.convert("RGB")
-                w, h = im.size
+                ow, oh = im.size
+                # Padding off first, so the trim below is spent on picture.
+                picture, bars = strip_bars(im)
+                w, h = picture.size
                 # Geometry only. `vis` is deliberately not in scope here.
                 box, trim_top, trim_bottom = centred_vertical_crop(w, h, geo["aspect"])
-                crop = scale_to_width(im.crop(box), geo["width"])
+                crop = scale_to_width(picture.crop(box), geo["width"])
                 out_w, out_h = crop.size
                 stats = measure(crop)
-            facing, tight = facing_signal(vis, box, w, h, yaw_sign)
+            # Face rectangles are normalised to the UNSTRIPPED file, so they
+            # keep the original dimensions; `box` only supplies the crop
+            # height that tightness is a fraction of.
+            facing, tight = facing_signal(vis, box, ow, oh, yaw_sign)
 
             name = "thumb" if fr.get("isThumb") else str(fr["ord"])
             rel = f"/img/shuffle/{key}/{name}.jpg"
@@ -630,7 +845,8 @@ def build(verify=False):
                           "facing": facing, "tight": tight, **stats})
             audit.append({
                 "tile": key, "section": section, "src": fr["src"], "out": rel,
-                "orig": [w, h], "box": list(box), "out_size": [out_w, out_h],
+                "orig": [ow, oh], "bars": list(bars), "picture": [w, h],
+                "box": list(box), "out_size": [out_w, out_h],
                 "trimTop": trim_top, "trimBottom": trim_bottom,
                 "facing": facing, "tight": tight,
                 "faces": len(vis.get("faces") or []),
@@ -669,17 +885,37 @@ def build(verify=False):
         print(f"  · tile '{key}' left the rotation (under 2 stills); "
               f"restored {src}")
 
+    # --- baked-in padding --------------------------------------------------
+    barred = [a for a in audit if any(a["bars"])]
+    print(f"\nBaked-in padding stripped from {len(barred)}/{len(audit)} frames")
+    for a in barred:
+        t, b, l, r = a["bars"]
+        pw, ph = a["picture"]
+        ratio = pw / ph
+        # A padded frame is usually a 16:9 container around something else.
+        # Say what the picture actually is rather than forcing it to a ratio.
+        print(f"  · {a['src']} ({a['section']}) {a['orig'][0]}x{a['orig'][1]}: "
+              f"top {t}, bottom {b}, left {l}, right {r} → picture {pw}x{ph} "
+              f"({ratio:.4f}:1{'' if abs(ratio - 16/9) < 0.002 else ' — NOT 16:9'})")
+
     # --- crop arithmetic, verified rather than asserted --------------------
-    bad_width = [a for a in audit if a["box"][2] - a["box"][0] != a["orig"][0]]
+    # Measured against the PICTURE area, which is the source once padding the
+    # frame never owned has been taken off.
+    bad_width = [a for a in audit if a["box"][2] - a["box"][0] != a["picture"][0]]
     bad_x = [a for a in audit if a["box"][0] != 0]
     asym = [a for a in audit if a["trimTop"] != a["trimBottom"]]
-    upscaled = [a for a in audit if a["out_size"][0] > a["orig"][0]]
+    upscaled = [a for a in audit if a["out_size"][0] > a["picture"][0]]
+    # Padding removal is the only step allowed to change the window, so it is
+    # held to the same standard: equal off both sides, or it didn't happen.
+    bar_asym = [a for a in audit
+                if a["bars"][0] != a["bars"][1] or a["bars"][2] != a["bars"][3]]
     print(f"\n{len(audit)} derivatives, {total_bytes:,} bytes total "
           f"({total_bytes / len(audit):,.0f} avg)")
-    print(f"Full source width kept: {len(audit) - len(bad_width)}/{len(audit)}; "
+    print(f"Full picture width kept: {len(audit) - len(bad_width)}/{len(audit)}; "
           f"horizontal offset non-zero: {len(bad_x)}; "
-          f"asymmetric vertical trim: {len(asym)}; upscaled: {len(upscaled)}")
-    if bad_width or bad_x or asym or upscaled:
+          f"asymmetric vertical trim: {len(asym)}; upscaled: {len(upscaled)}; "
+          f"asymmetric padding removal: {len(bar_asym)}")
+    if bad_width or bad_x or asym or upscaled or bar_asym:
         sys.exit("CROP RULE VIOLATED — see above")
 
     uncropped = [a for a in audit if a["trimTop"] == 0]
@@ -693,7 +929,49 @@ def build(verify=False):
     tight = [a for a in audit if a["tight"] >= TIGHT_FACE]
     print(f"Facing: {fc['left']} screen-left, {fc['right']} screen-right, "
           f"{fc['neutral']} neutral; tight close-ups: {len(tight)}")
+
+    verify_no_residual_bars(audit)
     return audit
+
+
+def verify_no_residual_bars(audit):
+    """Re-measure every derivative that SHIPPED for a surviving padded edge.
+
+    Checks the written JPEG rather than the arithmetic that produced it, so a
+    bar detected a pixel short — or one reintroduced by the resample — has
+    somewhere to show up.
+
+    Two distinct results, because conflating them is how you end up trimming
+    picture. A RESIDUAL BAR is a dark edge that steps into picture: padding
+    the strip missed, and a defect. A DARK EDGE is an outermost line that is
+    merely dark, with no step behind it: a shadowed wall, a vignette, a night
+    exterior running to frame edge. That is the shot, it is supposed to be
+    there, and it is listed as a note rather than flagged.
+    """
+    residual, dark = [], []
+    for a in audit:
+        with Image.open(ROOT / a["out"].lstrip("/")) as im:
+            im = im.convert("RGB")
+            bars = detect_bars(im)
+            arr = np.asarray(im).astype(np.float32)
+        lum = 0.2126 * arr[..., 0] + 0.7152 * arr[..., 1] + 0.0722 * arr[..., 2]
+        if any(bars):
+            residual.append((a["out"], bars))
+            continue
+        edges = {"top": lum[0], "bottom": lum[-1], "left": lum[:, 0], "right": lum[:, -1]}
+        hot = {k: round(float(v.max()), 1) for k, v in edges.items() if v.max() <= BAR_TOL}
+        if hot:
+            dark.append((a["out"], hot))
+
+    print(f"\nEdge sample of all {len(audit)} shipped derivatives: "
+          f"{len(residual)} with a residual padded edge")
+    for out, bars in residual:
+        print(f"  ! {out} still padded: top/bottom/left/right {bars}", file=sys.stderr)
+    print(f"  ({len(dark)} have an outermost line that is dark but has no step "
+          f"behind it — that is the shot, not padding)")
+    for out, hot in dark:
+        print(f"    · {out} {hot}")
+    return residual
 
 
 if __name__ == "__main__":
