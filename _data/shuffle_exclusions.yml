@@ -40,6 +40,13 @@ exclude_from_shuffle:
   - img/amorsui/frame3.jpg   # wet hand on hexagonal shower tile
   - img/jr/frame3.jpg        # ECU older bearded man in wide-brimmed hat
 
+  # Second pass, 2026-09-05. Both stay in their lightbox galleries.
+  # NOTE: these take Amor Sui and A Life In Technicolor down to ONE eligible
+  # still each — below the 2-still minimum — so both tiles stop rotating and
+  # keep their authored thumbnail. That is the documented fallback, not a bug.
+  - img/amorsui/frame4.jpg   # therapy two-shot, striped blazer vs. white sofa
+  - img/alit/frame3.jpg      # mono, three-arm ceiling light and a stein
+
   # Not a still from the piece: a photograph of the finished install (hotel
   # lobby, LED wall running his footage). It belongs in the Bostin Westin
   # lightbox next to the video, but it is architecture, not cinematography,
