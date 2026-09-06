@@ -6,5 +6,9 @@ node_modules/
 .venv/
 .claude/
 
+# scripts/level_horizon.py imports its JPEG parameters from its sibling
+# scripts/deskew_verticals.py, so running it leaves bytecode behind.
+scripts/__pycache__/
+
 # Compiled build-time Vision probe (rebuild: swiftc -O -o scripts/.bin/vision_probe scripts/vision_probe.swift)
 scripts/.bin/
