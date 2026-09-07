@@ -110,6 +110,58 @@ jobs:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: rsync -havz * www-data@ssh.nickwalker.us:/var/www/alexwalker.co/
 
+      # The production rsync above deliberately has NO --delete (staging does).
+      # That means deleting a file from this repo never unpublishes it: the
+      # copy already on the server keeps returning 200 forever. Adding --delete
+      # is NOT the fix — production may hold intentionally server-only files
+      # that exist nowhere in this repo, and the flag would erase them
+      # silently. Instead, this step removes an explicit, hand-maintained list
+      # of paths that must no longer be served. It runs before the Cloudflare
+      # purge below so any edge-cached copies are flushed in the same deploy.
+      #
+      # RULES for this list: exact relative paths only — never a glob, never a
+      # directory. Add a path here at the same time you `git rm` the file.
+      # Removing a path from this list is harmless once the file is gone.
+      - name: 🧹 unpublish removed documents
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          ssh www-data@ssh.nickwalker.us 'sh -s' <<'REMOTE'
+          set -u
+          root=/var/www/alexwalker.co
+          failed=0
+          # NOTE: img/AlexWalker_fullgearlist.pdf (no path suffix) is the
+          # CURRENT gear list — it is still in the repo, in the sitemap, and
+          # republished by Nexus's equipment publisher. It must NEVER appear
+          # in this list. Only the _march2024 variant and the css/ copy go.
+          for p in \
+            img/Chapman_MiniScope_Factsheet.pdf \
+            img/Full_Gear_Inventory.pdf \
+            img/Main_Pelican_1510_Complete_Inventory.pdf \
+            img/Main_Pelican_1510_Complete_Inventory_Nov25_2019.pdf \
+            img/Media_Archive.pdf \
+            img/Media_Archive072620.pdf \
+            img/AlexWalker_fullgearlist_march2024.pdf \
+            css/AlexWalker_fullgearlist.pdf \
+            img/AlexWalker_fullgearlist.txt
+          do
+            f="$root/$p"
+            if [ ! -e "$f" ]; then
+              echo "already absent : $p"
+            elif [ -d "$f" ]; then
+              # Defensive: this list is files only. Never recurse a directory.
+              echo "SKIPPED (dir)  : $p"
+              failed=1
+            elif rm -f -- "$f"; then
+              echo "removed        : $p"
+            else
+              echo "FAILED         : $p"
+              failed=1
+            fi
+          done
+          exit "$failed"
+          REMOTE
+
       - name: purge Cloudflare cache
         uses: jakejarvis/cloudflare-purge-action@v0.3.0
         env:
