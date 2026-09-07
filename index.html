@@ -142,9 +142,12 @@
        structured data ONLY: this document embeds no player markup and adding
        any is not the intent. thumbnailUrl is the tile's own poster and
        uploadDate is the real publish date read from each video's YouTube or
-       Vimeo page. NOTE the colorist-grid videos and Myth Behind the Scenes
-       name the cinematographer who actually shot them — Alex colored those,
-       he did not shoot them, and their descriptions must never say otherwise.
+       Vimeo page. NOTE the colorist-grid videos name the cinematographer who
+       actually shot them — Alex colored those, he did not shoot them, and
+       their descriptions must never say otherwise. Myth Behind the Scenes is
+       a separate case again: Tyler Mann shot it and Alex is its SUBJECT, so
+       it credits Tyler as creator and carries Alex only through about /
+       mentions. Never give Alex a creator or colorist role on that node.
 
        Texas Legacy in Lights keeps _data/tll.yml as its single source of
        truth (see the header of that file): the description is captured from
@@ -370,7 +373,7 @@
           "url": "https://www.achristmasinnewhope.com",
           "sameAs": "https://www.imdb.com/title/tt15307512/",
           "image": "https://alexwalker.co/img/posters/ACINHPoster2.jpg",
-          "description": "Television movie A Christmas in New Hope directed by Julia Barnett, starring Katrina Bowden, Ryan Cooper and Adrianne Palicki. It had a theatrical release and is now streaming. Alex Walker was director of photography and colorist.",
+          "description": "Feature film A Christmas in New Hope directed by Julia Barnett, starring Katrina Bowden, Ryan Cooper and Adrianne Palicki. It had a theatrical release and is now streaming. Alex Walker was director of photography and colorist.",
           "datePublished": "2024",
           "duration": "PT94M",
           "genre": [
@@ -978,7 +981,7 @@
           "@type": "VideoObject",
           "@id": "https://alexwalker.co/#video-acinh",
           "name": "A CHRISTMAS IN NEW HOPE - TRAILER",
-          "description": "Trailer for the television movie A Christmas in New Hope, directed by Julia Barnett and starring Katrina Bowden and Ryan Cooper. Alex Walker was director of photography and colorist.",
+          "description": "Trailer for the feature film A Christmas in New Hope, directed by Julia Barnett and starring Katrina Bowden and Ryan Cooper. Alex Walker was director of photography and colorist.",
           "thumbnailUrl": "https://alexwalker.co/img/shuffle/acinh/thumb.jpg",
           "embedUrl": "https://player.vimeo.com/video/984991085?h=721137dae6",
           "uploadDate": "2024-07-16"
@@ -1005,10 +1008,36 @@
           "@type": "VideoObject",
           "@id": "https://alexwalker.co/#video-mythbts",
           "name": "Cannon Lady Pictures 'Myth' TV Pilot- Behind the Scenes, Shot by Tyler Mann",
-          "description": "Behind-the-scenes featurette for the television pilot Myth, produced by Cannon Lady Pictures and shot by Tyler Mann.",
+          "description": "Behind-the-scenes documentary shot by Tyler Mann, showing cinematographer Alex Walker photographing the television pilot Myth for Cannon Lady Pictures in Austin, Texas. Tyler Mann shot this video; Alex Walker is its subject, not its camera operator.",
           "thumbnailUrl": "https://alexwalker.co/img/shuffle/mythbts/thumb.jpg",
           "embedUrl": "https://youtube.com/embed/_5H9xEL8Bk0",
-          "uploadDate": "2024-10-19T09:46:35-07:00"
+          "uploadDate": "2024-10-19T09:46:35-07:00",
+          "creator": {
+            "@type": "Person",
+            "name": "Tyler Mann",
+            "jobTitle": "Cinematographer"
+          },
+          "about": [
+            {
+              "@type": "TVEpisode",
+              "@id": "https://alexwalker.co/#film-myth",
+              "name": "Myth",
+              "description": "Television pilot produced by Cannon Lady Pictures, photographed by Austin, Texas cinematographer Alex Walker.",
+              "productionCompany": {
+                "@type": "Organization",
+                "name": "Cannon Lady Pictures"
+              },
+              "contributor": {
+                "@id": "https://alexwalker.co/#person"
+              }
+            },
+            {
+              "@id": "https://alexwalker.co/#person"
+            }
+          ],
+          "mentions": {
+            "@id": "https://alexwalker.co/#person"
+          }
         },
         {
           "@type": "VideoObject",
