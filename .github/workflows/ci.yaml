@@ -122,6 +122,8 @@ jobs:
       # RULES for this list: exact relative paths only — never a glob, never a
       # directory. Add a path here at the same time you `git rm` the file.
       # Removing a path from this list is harmless once the file is gone.
+      # A second, separate list below rmdirs directories left EMPTY by the
+      # first — see the comment there; it is not an exception to these rules.
       - name: 🧹 unpublish removed documents
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
@@ -143,7 +145,10 @@ jobs:
             img/Media_Archive072620.pdf \
             img/AlexWalker_fullgearlist_march2024.pdf \
             css/AlexWalker_fullgearlist.pdf \
-            img/AlexWalker_fullgearlist.txt
+            img/AlexWalker_fullgearlist.txt \
+            resume/index.html \
+            resume/resume.css \
+            resume/custom-style.css
           do
             f="$root/$p"
             if [ ! -e "$f" ]; then
@@ -157,6 +162,25 @@ jobs:
             else
               echo "FAILED         : $p"
               failed=1
+            fi
+          done
+          # Directories are never touched by the list above (it is files only,
+          # and a directory in it is a hard error). But a directory left empty
+          # after its files go still answers /path/ — nginx serves 403 for a
+          # dir with no index, not the 404 we want. So empty parents are
+          # cleaned up here with rmdir, which REFUSES a non-empty directory:
+          # this can never delete something still being served. Non-fatal by
+          # design — same rules otherwise, exact relative paths, no globs.
+          for d in \
+            resume
+          do
+            f="$root/$d"
+            if [ ! -e "$f" ]; then
+              echo "already absent : $d/"
+            elif rmdir -- "$f" 2>/dev/null; then
+              echo "removed empty  : $d/"
+            else
+              echo "kept, NOT empty: $d/"
             fi
           done
           exit "$failed"
