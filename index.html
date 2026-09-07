@@ -1389,10 +1389,21 @@
                                 {%- for paragraph in tll.paragraphs %}
                                 <p>{{ paragraph }}</p>
                                 {%- endfor %}
-                                <p class="rich-copy__link">
-                                    <a href="{{ tll.official_site }}" target="_blank" rel="noopener"
+                                <!-- Outbound links. .button-row is the existing
+                                     side-by-side flex container and
+                                     .external-button the existing pill
+                                     treatment (both in css/style.css); the
+                                     row's gap is what keeps the two pills off
+                                     each other. URLs and labels come from
+                                     _data/tll.yml — never hard-code them here. -->
+                                <div class="rich-copy__link button-row">
+                                    <a class="external-button" href="{{ tll.official_site }}" target="_blank" rel="noopener"
                                        data-goatcounter-click="ext-texaslegacyinlights.com">{{ tll.official_site_label }}</a>
-                                </p>
+                                    {%- if tll.press_url %}
+                                    <a class="external-button" href="{{ tll.press_url }}" target="_blank" rel="noopener"
+                                       data-goatcounter-click="ext-blackmagicdesign.com">{{ tll.press_label }}</a>
+                                    {%- endif %}
+                                </div>
                             </div>
                         </li>
                         <li>

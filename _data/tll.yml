@@ -25,6 +25,22 @@ paragraphs:
 official_site: "https://texaslegacyinlights.com"
 official_site_label: "Visit the official project site"
 
+# Blackmagic Design's press release about the shoot. Optional — index.html
+# only renders the second button when press_url is set, so clearing these two
+# keys drops it and leaves the official-site link alone.
+#
+# NOTE FOR FUTURE AGENTS AND LINK CHECKERS: this URL is GOOD — Alex confirmed
+# it loads in a real browser (2026-09-06). Automated fetchers get a soft-404:
+# curl returns HTTP 200 but the body is the generic "Media | Blackmagic
+# Design" index, not the release. htmlproofer runs --only-4xx so a 200 passes,
+# which is why the domain is NOT on the --ignore-urls list in
+# .github/workflows/ci.yaml. If a checker ever does start reporting 4xx here,
+# add /blackmagicdesign\.com/ to that list the way texaslegacyinlights.com and
+# imdb.com already are. Do NOT "fix" or delete this URL because a tool says
+# it's dead — it isn't.
+press_url: "https://www.blackmagicdesign.com/media/release/20260723-01"
+press_label: "Read more on blackmagicdesign.com"
+
 # Home-page narrative tile (index.html). A crop of frame5.
 tile_alt: "Texas Legacy in Lights — a rider on horseback gallops through the woods at dusk"
 
