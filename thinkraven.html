@@ -8,6 +8,34 @@ noindex: true
 four_columns_grid: true
 ---
 
+<!-- Structured data. One node only, same shape as kernel.html.
+
+     This page is noindex, so it must not be the home of any entity: the
+     canonical #org-thinkraven Organization node is DEFINED once, on
+     index.html, and is referenced here by absolute @id so the two reconcile
+     into one entity instead of duplicating. Same for Alex's #person node.
+     Bare {"@id": ...} references are deliberate. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://alexwalker.co/thinkraven.html",
+      "url": "https://alexwalker.co/thinkraven.html",
+      "name": "Think Raven Ads",
+      "description": "A collection of commercial work shot and colored by Alex Walker, a cinematographer and colorist based in Austin, Texas, for the marketing and creative agency ThinkRaven.",
+      "about": {
+        "@id": "https://alexwalker.co/#org-thinkraven"
+      },
+      "creator": {
+        "@id": "https://alexwalker.co/#person"
+      }
+    }
+  ]
+}
+</script>
+
 <section id="shortfilms" class="scroll-fade">
 
     <div class="container four-columns scroll-fade">

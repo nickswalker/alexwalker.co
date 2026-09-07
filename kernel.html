@@ -8,6 +8,35 @@ noindex: true
 four_columns_grid: true
 ---
 
+<!-- Structured data. One node only.
+
+     This page is noindex, so it must not be the home of any entity: the
+     canonical #org-kernel Organization node is DEFINED once, on index.html,
+     and is referenced here by absolute @id so the two reconcile into one
+     entity instead of duplicating. Same for Alex's #person node. Bare
+     {"@id": ...} references are deliberate - adding properties here would
+     collide two competing definitions on a single @id. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://alexwalker.co/kernel.html",
+      "url": "https://alexwalker.co/kernel.html",
+      "name": "Kernel Ads",
+      "description": "A collection of television and web commercials shot by Alex Walker, a cinematographer and colorist based in Austin, Texas, for the creative agency Kernel. Alex Walker was director of photography on these advertisements; they were directed by Bill Morgan.",
+      "about": {
+        "@id": "https://alexwalker.co/#org-kernel"
+      },
+      "creator": {
+        "@id": "https://alexwalker.co/#person"
+      }
+    }
+  ]
+}
+</script>
+
 <section id="shortfilms" class="scroll-fade">
 
     <div class="container four-columns scroll-fade">
