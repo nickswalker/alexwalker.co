@@ -46,6 +46,22 @@ that file and would rebuild it from the corrected source anyway, and writing it
 here keeps the two copies of the picture from disagreeing in the meantime. TLL
 frames are wider than the tile cell, so the build gives them no vertical crop —
 their derivative is a plain resize to width, which is what save_jpeg does.
+
+--angle OVERRIDES THE MEASUREMENT, for frames the banding method reads wrong.
+Banding assumes the frame's strongest horizontal structure IS the horizon. In
+an interior that assumption can fail outright: on img/hc/frame4.jpg — the Hub
+City card-table two-shot — the strongest horizontal structure is the table edge
+and the wall bands behind it, which run off to a vanishing point well off-axis,
+and banding reads -2.46deg where the window jambs say the roll is +1.07deg. It
+is not a near miss; it is the wrong sign, and it clears the MIN_SHARPENING
+floor at 19%, so the floor does not catch it. When the operator has measured
+the roll from something better, pass it here. The verification then switches
+from banding to the vertical lean of the frame's long architectural segments —
+the measurement deskew_verticals.py uses — so the check still bites.
+
+Usage:
+    python3 scripts/level_horizon.py img/hc/frame4.jpg --angle 1.069 \
+        --shuffle-out img/shuffle/hc/4.jpg
 """
 
 import argparse
@@ -54,7 +70,8 @@ import sys
 import cv2
 import numpy as np
 
-from deskew_verticals import GALLERY_QUALITY, SHUFFLE_QUALITY, SHUFFLE_WIDTH, save_jpeg
+from deskew_verticals import (GALLERY_QUALITY, SHUFFLE_QUALITY, SHUFFLE_WIDTH,
+                              save_jpeg, vertical_segments)
 
 # Search range for the roll. A frame further out than this is tilted on
 # purpose — a dutch angle is a decision, not a mistake, and this should not
@@ -123,6 +140,22 @@ def tilt(bgr):
     return best, scores[j] / banding(gray, 0.0) - 1.0
 
 
+def vertical_lean(bgr):
+    """Signed length-weighted lean of the long near-vertical segments, degrees.
+
+    deskew_verticals.lean() takes the absolute value because a keystone fans
+    verticals both ways and only the spread matters. A roll tips every vertical
+    the SAME way, so here the sign is the whole point, and levelling has to
+    drive this towards zero rather than merely shrink it. Returns None when the
+    frame has no architecture long enough to vote.
+    """
+    segments = vertical_segments(bgr)
+    if not segments:
+        return None
+    return float(np.average([s[4] for s in segments],
+                            weights=[s[5] for s in segments]))
+
+
 def fill_scale(w, h, degrees):
     """Zoom that makes a rotated w x h frame cover a w x h output with no gaps.
 
@@ -140,6 +173,8 @@ def main():
     ap.add_argument("image", help="still to correct, rewritten in place")
     ap.add_argument("--shuffle-out", help="also write the homepage tile crop here")
     ap.add_argument("--dry-run", action="store_true", help="measure only")
+    ap.add_argument("--angle", type=float, help="roll in degrees, measured by the "
+                    "operator; skips the banding measurement (see module docstring)")
     args = ap.parse_args()
 
     bgr = cv2.imread(args.image)
@@ -147,33 +182,48 @@ def main():
         sys.exit(f"cannot read {args.image}")
     h, w = bgr.shape[:2]
 
-    before, sharpening = tilt(bgr)
-    if before is None:
-        sys.exit("  no horizon peak inside "
-                 f"+/-{SEARCH_DEGREES}deg — leave this one alone")
-    print(f"{args.image}: horizon tilt {before:+.3f}deg "
-          f"(levelling sharpens the banding by {sharpening * 100:.1f}%)")
-    # Level first, floor second: a frame this script has already corrected
-    # measures level AND flat (there is no tilt left for levelling to sharpen),
-    # so testing the floor first would report its own output as horizonless.
-    if abs(before) < LEVEL_ENOUGH:
-        print(f"  already within {LEVEL_ENOUGH}deg of level — nothing to do")
-        return
-    if sharpening < MIN_SHARPENING:
-        sys.exit(f"  under the {MIN_SHARPENING * 100:.0f}% floor — this frame has no "
-                 "horizon to level, leave it alone")
+    # Which measurement verifies the result has to match which one chose the
+    # angle, or the check is answering a different question than the edit.
+    if args.angle is not None:
+        measure, unit = vertical_lean, "vertical lean"
+        before = args.angle
+        observed = measure(bgr)
+        if observed is None:
+            sys.exit("  no long vertical segments — cannot verify an --angle "
+                     "correction on this frame")
+        print(f"{args.image}: rotating {before:+.3f}deg as given "
+              f"({unit} {observed:+.3f}deg)")
+    else:
+        measure, unit = lambda b: tilt(b)[0], "tilt"
+        before, sharpening = tilt(bgr)
+        if before is None:
+            sys.exit("  no horizon peak inside "
+                     f"+/-{SEARCH_DEGREES}deg — leave this one alone")
+        print(f"{args.image}: horizon tilt {before:+.3f}deg "
+              f"(levelling sharpens the banding by {sharpening * 100:.1f}%)")
+        # Level first, floor second: a frame this script has already corrected
+        # measures level AND flat (there is no tilt left for levelling to
+        # sharpen), so testing the floor first would report its own output as
+        # horizonless.
+        if abs(before) < LEVEL_ENOUGH:
+            print(f"  already within {LEVEL_ENOUGH}deg of level — nothing to do")
+            return
+        if sharpening < MIN_SHARPENING:
+            sys.exit(f"  under the {MIN_SHARPENING * 100:.0f}% floor — this frame has no "
+                     "horizon to level, leave it alone")
+        observed = before
 
     scale = fill_scale(w, h, before)
     fixed = rotate(bgr, before, scale, cv2.INTER_LANCZOS4)
-    after, _ = tilt(fixed)
+    after = measure(fixed)
     print(f"  rotate {before:+.3f}deg, push in {(scale - 1) * 100:.2f}% to refill "
           f"the frame (keeps {w}x{h})")
-    print(f"  tilt {before:+.3f}deg -> {after:+.3f}deg")
+    print(f"  {unit} {observed:+.3f}deg -> {after:+.3f}deg")
 
     # Refuse to ship a regression, by the same measurement that found the
     # problem — so this is a real check, not a formality.
-    if after is None or abs(after) >= abs(before):
-        sys.exit("  correction did not level the horizon — nothing written")
+    if after is None or abs(after) >= abs(observed):
+        sys.exit(f"  correction did not reduce the {unit} — nothing written")
 
     if args.dry_run:
         print("  dry run — nothing written")

@@ -305,19 +305,19 @@
      "alt": "Hub City still 4",
      "i": 4,
      "facing": "neutral",
-     "tight": 0.1243,
+     "tight": 0.1232,
      "rgb": [
-      33,
-      32,
-      33
+      35,
+      34,
+      34
      ],
-     "hue": 0.6189,
-     "saturation": 0.556,
-     "luminance": 0.128,
-     "contrast": 0.1296,
-     "edge": 0.0242,
-     "balance": 0.4869,
-     "topBottom": 0.0803
+     "hue": 0.6206,
+     "saturation": 0.5469,
+     "luminance": 0.1337,
+     "contrast": 0.1304,
+     "edge": 0.0245,
+     "balance": 0.4883,
+     "topBottom": 0.0843
     },
     {
      "src": "/img/shuffle/hc/5.jpg",
