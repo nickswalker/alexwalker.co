@@ -65,3 +65,18 @@ exclude_from_shuffle:
   # lightbox next to the video, but it is architecture, not cinematography,
   # so it must never rotate into a homepage tile.
   - img/comm_bostin/lobby-led-wall.jpg
+
+  # Fifth pass, 2026-09-07. Both stay in their lightbox galleries.
+  #
+  # A Christmas in New Hope keeps 3 eligible stills and goes on rotating.
+  # NOTE: this frame is also the ACINH half of the only pair in
+  # _data/shuffle_never_adjacent.yml. Excluding it here means that pair can
+  # never bind — see the note kept alongside the rule there.
+  - img/acinh/frame2.jpg     # cream cowboy hat, shearling jacket, guitar between the trees
+
+  # Javelina Run's other two stills (frame2, frame3) went in the first pass,
+  # so this takes it to ONE eligible still, img/jr/frame4.jpg. To keep the
+  # tile rotating rather than freezing on its authored thumbnail, `jr` is
+  # opted in to _data/shuffle_thumb_pool.yml — same fix as amorsui — so the
+  # pool is frame4 plus the authored img/narrative/JRtrailer.jpg.
+  - img/jr/frame1.jpg        # three men in cowboy hats standing in a doorway

@@ -52,4 +52,16 @@ never_adjacent:
   # they read as one still repeated — and on a portrait phone the narrative
   # grid is a single column, which puts Hub City directly above A Christmas in
   # New Hope every time. Reported by Alex 2026-09-06.
-  - [img/hc/frame4.jpg, img/acinh/frame2.jpg]
+  #
+  # RETIRED 2026-09-07, kept here as a record rather than as a live rule:
+  #
+  #   - [img/hc/frame4.jpg, img/acinh/frame2.jpg]
+  #
+  # img/acinh/frame2.jpg is now excluded from the rotation outright in
+  # _data/shuffle_exclusions.yml, so the pair could never bind again — one
+  # side is no longer a candidate for any tile. It is commented out rather
+  # than left in place because the build treats a pair whose still is not
+  # eligible as a TYPO and warns on stderr ("no still matches … is NOT in
+  # force"), which would have turned a known, intended state into a standing
+  # build warning. The Hub City frame IS still in rotation, so if the ACINH
+  # still is ever un-excluded, uncomment the line above to restore the rule.

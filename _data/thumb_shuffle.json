@@ -10,12 +10,7 @@
    "width": 1152
   }
  },
- "neverAdjacent": [
-  [
-   "/img/shuffle/hc/4.jpg",
-   "/img/shuffle/acinh/2.jpg"
-  ]
- ],
+ "neverAdjacent": [],
  "tiles": {
   "hoa": {
    "section": "narrative",
@@ -447,28 +442,9 @@
      "topBottom": 0.1741
     },
     {
-     "src": "/img/shuffle/acinh/2.jpg",
-     "alt": "A Christmas In New Hope still 2",
-     "i": 2,
-     "facing": "left",
-     "tight": 0.1015,
-     "rgb": [
-      107,
-      89,
-      85
-     ],
-     "hue": 0.0151,
-     "saturation": 0.3272,
-     "luminance": 0.3622,
-     "contrast": 0.2071,
-     "edge": 0.0768,
-     "balance": 0.443,
-     "topBottom": -0.0927
-    },
-    {
      "src": "/img/shuffle/acinh/3.jpg",
      "alt": "A Christmas In New Hope still 3",
-     "i": 3,
+     "i": 2,
      "facing": "neutral",
      "tight": 0.2659,
      "rgb": [
@@ -487,7 +463,7 @@
     {
      "src": "/img/shuffle/acinh/4.jpg",
      "alt": "A Christmas In New Hope still 4",
-     "i": 4,
+     "i": 3,
      "facing": "right",
      "tight": 0.386,
      "rgb": [
@@ -981,28 +957,9 @@
      "topBottom": -0.0177
     },
     {
-     "src": "/img/shuffle/jr/1.jpg",
-     "alt": "Javelina Run still 1",
-     "i": 1,
-     "facing": "right",
-     "tight": 0.2318,
-     "rgb": [
-      50,
-      39,
-      31
-     ],
-     "hue": 0.0785,
-     "saturation": 0.3942,
-     "luminance": 0.161,
-     "contrast": 0.0883,
-     "edge": 0.0235,
-     "balance": 0.5041,
-     "topBottom": -0.0036
-    },
-    {
      "src": "/img/shuffle/jr/4.jpg",
      "alt": "Javelina Run still 4",
-     "i": 2,
+     "i": 1,
      "facing": "right",
      "tight": 0.1218,
      "rgb": [
