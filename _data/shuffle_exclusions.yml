@@ -55,6 +55,11 @@ exclude_from_shuffle:
   # and reads as a shot rather than a product insert.
   - img/comm_applovin/frame1.jpg  # ECU hands holding a phone, bright game screen
 
+  # Fourth pass, 2026-09-06. Stays in the Texas Legacy in Lights lightbox
+  # gallery. Texas Legacy in Lights keeps 7 eligible stills and goes on
+  # rotating.
+  - img/tll/frame3.jpg       # hand in a yellow gingham sleeve pressed into ash
+
   # Not a still from the piece: a photograph of the finished install (hotel
   # lobby, LED wall running his footage). It belongs in the Bostin Westin
   # lightbox next to the video, but it is architecture, not cinematography,

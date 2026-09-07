@@ -505,6 +505,166 @@
     }
    ]
   },
+  "tll": {
+   "section": "narrative",
+   "title": "Texas Legacy in Lights",
+   "originalThumb": "img/narrative/TLLnarr.jpg",
+   "default": "/img/shuffle/tll/thumb.jpg",
+   "frames": [
+    {
+     "src": "/img/shuffle/tll/thumb.jpg",
+     "alt": "Texas Legacy in Lights",
+     "i": 0,
+     "facing": "neutral",
+     "tight": 0.0,
+     "rgb": [
+      36,
+      35,
+      18
+     ],
+     "hue": 0.157,
+     "saturation": 0.5377,
+     "luminance": 0.1329,
+     "contrast": 0.077,
+     "edge": 0.0299,
+     "balance": 0.4417,
+     "topBottom": 0.0228
+    },
+    {
+     "src": "/img/shuffle/tll/1.jpg",
+     "alt": "Two women in 1800s dress stand among trees at golden hour \u2014 a young woman in a yellow gingham dress with a white lace collar looks off into the distance while an older woman in a straw bonnet and apron watches her",
+     "i": 1,
+     "facing": "neutral",
+     "tight": 0.2548,
+     "rgb": [
+      56,
+      54,
+      38
+     ],
+     "hue": 0.172,
+     "saturation": 0.3669,
+     "luminance": 0.2091,
+     "contrast": 0.1125,
+     "edge": 0.0426,
+     "balance": 0.4917,
+     "topBottom": -0.0121
+    },
+    {
+     "src": "/img/shuffle/tll/2.jpg",
+     "alt": "A man in a wide-brimmed hat carrying a wooden tool chest walks behind a woman in a pale dress and bonnet through waist-high grass toward a sunlit treeline",
+     "i": 2,
+     "facing": "neutral",
+     "tight": 0.0,
+     "rgb": [
+      99,
+      97,
+      60
+     ],
+     "hue": 0.1686,
+     "saturation": 0.4305,
+     "luminance": 0.3726,
+     "contrast": 0.1818,
+     "edge": 0.0545,
+     "balance": 0.5022,
+     "topBottom": -0.0722
+    },
+    {
+     "src": "/img/shuffle/tll/4.jpg",
+     "alt": "A woman in a straw bonnet and floral-print dress seen from behind, head bowed, looking out over a sunlit meadow",
+     "i": 3,
+     "facing": "neutral",
+     "tight": 0.0,
+     "rgb": [
+      88,
+      92,
+      68
+     ],
+     "hue": 0.2261,
+     "saturation": 0.3101,
+     "luminance": 0.3494,
+     "contrast": 0.1632,
+     "edge": 0.0292,
+     "balance": 0.4657,
+     "topBottom": -0.0189
+    },
+    {
+     "src": "/img/shuffle/tll/5.jpg",
+     "alt": "A rider in a hat and long coat gallops a chestnut horse through the woods at dusk, the trees behind him streaked with motion blur",
+     "i": 4,
+     "facing": "neutral",
+     "tight": 0.0,
+     "rgb": [
+      36,
+      35,
+      18
+     ],
+     "hue": 0.1701,
+     "saturation": 0.524,
+     "luminance": 0.1348,
+     "contrast": 0.0839,
+     "edge": 0.0333,
+     "balance": 0.4457,
+     "topBottom": 0.0361
+    },
+    {
+     "src": "/img/shuffle/tll/6.jpg",
+     "alt": "A woman in a straw hat and apron swings a hoe in a wide field of tall grass under an open sky, a timber structure and treeline behind her",
+     "i": 5,
+     "facing": "neutral",
+     "tight": 0.0,
+     "rgb": [
+      125,
+      115,
+      87
+     ],
+     "hue": 0.1264,
+     "saturation": 0.3411,
+     "luminance": 0.4522,
+     "contrast": 0.2644,
+     "edge": 0.0589,
+     "balance": 0.4821,
+     "topBottom": 0.0631
+    },
+    {
+     "src": "/img/shuffle/tll/7.jpg",
+     "alt": "At night, a man leads a saddled horse down a smoky dirt lane past a timber fence, lit by cold blue moonlight",
+     "i": 6,
+     "facing": "neutral",
+     "tight": 0.0,
+     "rgb": [
+      18,
+      30,
+      41
+     ],
+     "hue": 0.5759,
+     "saturation": 0.5721,
+     "luminance": 0.1106,
+     "contrast": 0.0622,
+     "edge": 0.0122,
+     "balance": 0.517,
+     "topBottom": -0.0048
+    },
+    {
+     "src": "/img/shuffle/tll/8.jpg",
+     "alt": "Extreme close-up of a woman's face lit only by firelight from below right, her expression still and fixed",
+     "i": 7,
+     "facing": "neutral",
+     "tight": 1.0,
+     "rgb": [
+      41,
+      14,
+      5
+     ],
+     "hue": 0.0431,
+     "saturation": 0.8557,
+     "luminance": 0.0747,
+     "contrast": 0.0689,
+     "edge": 0.0074,
+     "balance": 0.5607,
+     "topBottom": -0.0206
+    }
+   ]
+  },
   "myth": {
    "section": "narrative",
    "title": "Myth",
@@ -605,185 +765,6 @@
      "edge": 0.0489,
      "balance": 0.5279,
      "topBottom": 0.0069
-    }
-   ]
-  },
-  "tll": {
-   "section": "narrative",
-   "title": "Texas Legacy in Lights",
-   "originalThumb": "img/narrative/TLLnarr.jpg",
-   "default": "/img/shuffle/tll/thumb.jpg",
-   "frames": [
-    {
-     "src": "/img/shuffle/tll/thumb.jpg",
-     "alt": "Texas Legacy in Lights",
-     "i": 0,
-     "facing": "neutral",
-     "tight": 0.0,
-     "rgb": [
-      36,
-      35,
-      18
-     ],
-     "hue": 0.157,
-     "saturation": 0.5377,
-     "luminance": 0.1329,
-     "contrast": 0.077,
-     "edge": 0.0299,
-     "balance": 0.4417,
-     "topBottom": 0.0228
-    },
-    {
-     "src": "/img/shuffle/tll/1.jpg",
-     "alt": "Two women in 1800s dress stand among trees at golden hour \u2014 a young woman in a yellow gingham dress with a white lace collar looks off into the distance while an older woman in a straw bonnet and apron watches her",
-     "i": 1,
-     "facing": "neutral",
-     "tight": 0.2548,
-     "rgb": [
-      56,
-      54,
-      38
-     ],
-     "hue": 0.172,
-     "saturation": 0.3669,
-     "luminance": 0.2091,
-     "contrast": 0.1125,
-     "edge": 0.0426,
-     "balance": 0.4917,
-     "topBottom": -0.0121
-    },
-    {
-     "src": "/img/shuffle/tll/2.jpg",
-     "alt": "A man in a wide-brimmed hat carrying a wooden tool chest walks behind a woman in a pale dress and bonnet through waist-high grass toward a sunlit treeline",
-     "i": 2,
-     "facing": "neutral",
-     "tight": 0.0,
-     "rgb": [
-      99,
-      97,
-      60
-     ],
-     "hue": 0.1686,
-     "saturation": 0.4305,
-     "luminance": 0.3726,
-     "contrast": 0.1818,
-     "edge": 0.0545,
-     "balance": 0.5022,
-     "topBottom": -0.0722
-    },
-    {
-     "src": "/img/shuffle/tll/3.jpg",
-     "alt": "Close-up of a hand in a yellow gingham sleeve pressing down into ash and gravel on the ground, a dark shape out of focus behind it",
-     "i": 3,
-     "facing": "neutral",
-     "tight": 0.0,
-     "rgb": [
-      77,
-      82,
-      75
-     ],
-     "hue": 0.429,
-     "saturation": 0.2468,
-     "luminance": 0.3148,
-     "contrast": 0.1402,
-     "edge": 0.0291,
-     "balance": 0.5005,
-     "topBottom": 0.0384
-    },
-    {
-     "src": "/img/shuffle/tll/4.jpg",
-     "alt": "A woman in a straw bonnet and floral-print dress seen from behind, head bowed, looking out over a sunlit meadow",
-     "i": 4,
-     "facing": "neutral",
-     "tight": 0.0,
-     "rgb": [
-      88,
-      92,
-      68
-     ],
-     "hue": 0.2261,
-     "saturation": 0.3101,
-     "luminance": 0.3494,
-     "contrast": 0.1632,
-     "edge": 0.0292,
-     "balance": 0.4657,
-     "topBottom": -0.0189
-    },
-    {
-     "src": "/img/shuffle/tll/5.jpg",
-     "alt": "A rider in a hat and long coat gallops a chestnut horse through the woods at dusk, the trees behind him streaked with motion blur",
-     "i": 5,
-     "facing": "neutral",
-     "tight": 0.0,
-     "rgb": [
-      36,
-      35,
-      18
-     ],
-     "hue": 0.1701,
-     "saturation": 0.524,
-     "luminance": 0.1348,
-     "contrast": 0.0839,
-     "edge": 0.0333,
-     "balance": 0.4457,
-     "topBottom": 0.0361
-    },
-    {
-     "src": "/img/shuffle/tll/6.jpg",
-     "alt": "A woman in a straw hat and apron swings a hoe in a wide field of tall grass under an open sky, a timber structure and treeline behind her",
-     "i": 6,
-     "facing": "neutral",
-     "tight": 0.0,
-     "rgb": [
-      124,
-      115,
-      86
-     ],
-     "hue": 0.1276,
-     "saturation": 0.3459,
-     "luminance": 0.449,
-     "contrast": 0.2644,
-     "edge": 0.0587,
-     "balance": 0.4868,
-     "topBottom": 0.0729
-    },
-    {
-     "src": "/img/shuffle/tll/7.jpg",
-     "alt": "At night, a man leads a saddled horse down a smoky dirt lane past a timber fence, lit by cold blue moonlight",
-     "i": 7,
-     "facing": "neutral",
-     "tight": 0.0,
-     "rgb": [
-      18,
-      30,
-      41
-     ],
-     "hue": 0.5759,
-     "saturation": 0.5721,
-     "luminance": 0.1106,
-     "contrast": 0.0622,
-     "edge": 0.0122,
-     "balance": 0.517,
-     "topBottom": -0.0048
-    },
-    {
-     "src": "/img/shuffle/tll/8.jpg",
-     "alt": "Extreme close-up of a woman's face lit only by firelight from below right, her expression still and fixed",
-     "i": 8,
-     "facing": "neutral",
-     "tight": 1.0,
-     "rgb": [
-      41,
-      14,
-      5
-     ],
-     "hue": 0.0431,
-     "saturation": 0.8557,
-     "luminance": 0.0747,
-     "contrast": 0.0689,
-     "edge": 0.0074,
-     "balance": 0.5607,
-     "topBottom": -0.0206
     }
    ]
   },
@@ -1716,17 +1697,17 @@
      "facing": "neutral",
      "tight": 0.0,
      "rgb": [
-      116,
-      116,
-      99
+      114,
+      114,
+      97
      ],
-     "hue": 0.1387,
-     "saturation": 0.2916,
-     "luminance": 0.4509,
-     "contrast": 0.2313,
+     "hue": 0.1362,
+     "saturation": 0.2989,
+     "luminance": 0.4428,
+     "contrast": 0.232,
      "edge": 0.0723,
-     "balance": 0.4976,
-     "topBottom": -0.0803
+     "balance": 0.4979,
+     "topBottom": -0.0942
     },
     {
      "src": "/img/shuffle/comm_goody/4.jpg",
