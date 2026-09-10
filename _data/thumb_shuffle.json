@@ -931,52 +931,6 @@
     }
    ]
   },
-  "jr": {
-   "section": "narrative",
-   "title": "Javelina Run",
-   "originalThumb": "img/narrative/JRtrailer.jpg",
-   "default": "/img/shuffle/jr/thumb.jpg",
-   "frames": [
-    {
-     "src": "/img/shuffle/jr/thumb.jpg",
-     "alt": "Javelina Run",
-     "i": 0,
-     "facing": "right",
-     "tight": 0.9023,
-     "rgb": [
-      60,
-      42,
-      29
-     ],
-     "hue": 0.0731,
-     "saturation": 0.5776,
-     "luminance": 0.1777,
-     "contrast": 0.1264,
-     "edge": 0.0278,
-     "balance": 0.5276,
-     "topBottom": -0.0177
-    },
-    {
-     "src": "/img/shuffle/jr/4.jpg",
-     "alt": "Javelina Run still 4",
-     "i": 1,
-     "facing": "right",
-     "tight": 0.1218,
-     "rgb": [
-      89,
-      80,
-      68
-     ],
-     "hue": 0.0901,
-     "saturation": 0.298,
-     "luminance": 0.3191,
-     "contrast": 0.2159,
-     "edge": 0.0499,
-     "balance": 0.5253,
-     "topBottom": -0.1423
-    }
-   ]
-  },
   "goh": {
    "section": "narrative",
    "title": "Guest of Honor",

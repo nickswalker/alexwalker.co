@@ -80,3 +80,12 @@ exclude_from_shuffle:
   # opted in to _data/shuffle_thumb_pool.yml — same fix as amorsui — so the
   # pool is frame4 plus the authored img/narrative/JRtrailer.jpg.
   - img/jr/frame1.jpg        # three men in cowboy hats standing in a doorway
+
+  # Sixth pass, 2026-09-10. Stays in the Javelina Run lightbox gallery.
+  # This is the LAST of Javelina Run's four lightbox stills, so the tile's
+  # pool drops to one — the authored thumbnail alone — and it stops rotating
+  # and keeps img/narrative/JRtrailer.jpg as a static src. That is the
+  # documented fallback and it is the intended outcome here: the authored
+  # thumbnail is a weapon-free close-up. See the note on `jr` in
+  # _data/shuffle_thumb_pool.yml.
+  - img/jr/frame4.jpg        # man firing a revolver on the western street, muzzle smoke across frame

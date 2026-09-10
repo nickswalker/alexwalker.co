@@ -44,11 +44,20 @@ count_authored_thumb:
   # lightbox exactly as before.
   amorsui: true
 
-  # Javelina Run, 2026-09-07 — same situation, same fix.
+  # Javelina Run, 2026-09-07 — added for the same reason as Amor Sui, but as
+  # of 2026-09-10 IT NO LONGER RESCUES THE TILE, AND THAT IS DELIBERATE.
   #
-  # Three of its four stills are now excluded (frame2, frame3 in the first
-  # pass, frame1 in the fifth), leaving only img/jr/frame4.jpg. Counting the
-  # authored thumbnail img/narrative/JRtrailer.jpg makes the pool two, so the
-  # tile keeps rotating instead of freezing on that thumbnail. The three
+  # ALL FOUR of its lightbox stills are now excluded in
+  # _data/shuffle_exclusions.yml (frame2, frame3 in the first pass, frame1 in
+  # the fifth, frame4 in the sixth). Folding in the authored thumbnail
+  # img/narrative/JRtrailer.jpg therefore makes the pool ONE, not two, so the
+  # tile is still under the 2-still minimum: it does not rotate and keeps
+  # JRtrailer.jpg as a static src in index.html. Every jr still except the
+  # authored thumbnail depicts a firearm, and the thumbnail is a weapon-free
+  # close-up — a frozen tile is the wanted result, not a regression.
+  #
+  # The flag is LEFT ON on purpose: it is what makes the tile fall back to its
+  # authored thumbnail cleanly, and if a weapon-free still is ever added to the
+  # lightbox the tile resumes rotating with no further change here. All four
   # excluded stills stay excluded and stay in the lightbox exactly as before.
   jr: true
