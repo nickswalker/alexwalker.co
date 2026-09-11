@@ -1165,17 +1165,18 @@ body.cinematic #software-promo h2 {
        RED Calibrator    90.0%   (2048 canvas, 1844 box)
        Display Bench     83.8%   (1024 canvas,  858 box)
        Colorist Compare  83.8%   (1024 canvas,  858 box)
-   RED at 140px paints 126px, so the other two need 126 / 0.838 = 150px to
-   match. (The Colorist Compare figure changed from 81.1% when its icon was
+   RED at 120px paints 108px, so the other two need 108 / 0.838 = 129px to
+   match. Scale all three together when resizing — the RATIO is what keeps
+   the row even. (The Colorist Compare figure changed from 81.1% when its icon was
    replaced with the v5 app icon — re-measure whenever an icon is swapped,
    or the row quietly goes uneven again.) */
-.software-link--red img         { max-width: 140px; }
-.software-link--bench img       { max-width: 150px; }
-.software-link--colorist img    { max-width: 150px; }
+.software-link--red img         { max-width: 120px; }
+.software-link--bench img       { max-width: 129px; }
+.software-link--colorist img    { max-width: 129px; }
 
 /* Force every app-icon tile into the same square box so their labels land
-   on the same baseline: RED at 140px and the other two at 150px are each
-   auto-centred inside a 156×156 box, which is larger than the biggest cap,
+   on the same baseline: RED at 120px and the other two at 129px are each
+   auto-centred inside a 134×134 box, which is larger than the biggest cap,
    so nothing clips. */
 .software-link--red,
 .software-link--bench,
@@ -1183,8 +1184,8 @@ body.cinematic #software-promo h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 156px;
-    height: 156px;
+    width: 134px;
+    height: 134px;
 }
 /* ⛔ THE BENCH TILE IS NOT A LINK (no page yet) — so it must not lift, glow
    or show a pointer on hover. Everything else about it matches its
@@ -1212,13 +1213,13 @@ body.cinematic #software-promo h2 {
        future app's name turns out to be. */
     .software-promo-row  { flex-direction: column; gap: 44px; }
     .software-link--cinemaxxing img { max-width: 220px; }
-    .software-link--red img         { max-width: 110px; }
-    /* 110 x 0.900 = 99px painted; 99 / 0.838 = 118px for the other two. */
-    .software-link--bench img       { max-width: 118px; }
-    .software-link--colorist img    { max-width: 118px; }
+    .software-link--red img         { max-width: 95px; }
+    /* 95 x 0.900 = 85.5px painted; 85.5 / 0.838 = 102px for the other two. */
+    .software-link--bench img       { max-width: 102px; }
+    .software-link--colorist img    { max-width: 102px; }
     .software-link--red,
     .software-link--bench,
-    .software-link--colorist        { width: 122px; height: 122px; }
+    .software-link--colorist        { width: 106px; height: 106px; }
 }
 @media (prefers-reduced-motion: reduce) {
     .software-link, .software-link img { transition-duration: 0.1s; }
