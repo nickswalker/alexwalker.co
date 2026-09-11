@@ -138,7 +138,7 @@ img {
    `.cmx-logo img`, `.coming-soon-stage__icon`). display:contents removes
    the picture's own box from the layout tree entirely, so the <img> stays
    a direct layout child of whatever it was before the wrapper was added.
-   That matters for the flex boxes (.software-link--red/--colorist) where
+   That matters for the flex boxes (.software-link--camera/--bench/--colorist) where
    an extra inline box between the flex container and the image would
    otherwise become the flex item and re-do the centring. */
 picture {
@@ -1170,7 +1170,7 @@ body.cinematic #software-promo h2 {
    the row even. (The Colorist Compare figure changed from 81.1% when its icon was
    replaced with the v5 app icon — re-measure whenever an icon is swapped,
    or the row quietly goes uneven again.) */
-.software-link--red img         { max-width: 120px; }
+.software-link--camera img      { max-width: 120px; }
 .software-link--bench img       { max-width: 129px; }
 .software-link--colorist img    { max-width: 129px; }
 
@@ -1178,7 +1178,7 @@ body.cinematic #software-promo h2 {
    on the same baseline: RED at 120px and the other two at 129px are each
    auto-centred inside a 134×134 box, which is larger than the biggest cap,
    so nothing clips. */
-.software-link--red,
+.software-link--camera,
 .software-link--bench,
 .software-link--colorist {
     display: flex;
@@ -1213,11 +1213,11 @@ body.cinematic #software-promo h2 {
        future app's name turns out to be. */
     .software-promo-row  { flex-direction: column; gap: 44px; }
     .software-link--cinemaxxing img { max-width: 220px; }
-    .software-link--red img         { max-width: 95px; }
-    /* 95 x 0.900 = 85.5px painted; 85.5 / 0.838 = 102px for the other two. */
+    /* 120 x 0.900 = 108px painted; the 83.8% pair need 118px to match at mobile. */
+    .software-link--camera img      { max-width: 95px; }
     .software-link--bench img       { max-width: 102px; }
     .software-link--colorist img    { max-width: 102px; }
-    .software-link--red,
+    .software-link--camera,
     .software-link--bench,
     .software-link--colorist        { width: 106px; height: 106px; }
 }
@@ -1266,13 +1266,15 @@ body.cinematic #software-promo h2 {
    Pin the mobile size explicitly via the html.is-instagram-webview
    class set in _includes/head.html. */
 html.is-instagram-webview .software-link--cinemaxxing img { max-width: 220px !important; }
-html.is-instagram-webview .software-link--red         img { max-width: 110px !important; }
-html.is-instagram-webview .software-link--colorist    img { max-width: 122px !important; }
+html.is-instagram-webview .software-link--camera      img { max-width: 95px !important; }
+html.is-instagram-webview .software-link--bench       img { max-width: 102px !important; }
+html.is-instagram-webview .software-link--colorist    img { max-width: 102px !important; }
 html.is-instagram-webview-tablet .software-link--cinemaxxing img { max-width: 320px !important; }
-html.is-instagram-webview-tablet .software-link--red         img { max-width: 140px !important; }
-html.is-instagram-webview-tablet .software-link--colorist    img { max-width: 156px !important; }
+html.is-instagram-webview-tablet .software-link--camera      img { max-width: 120px !important; }
+html.is-instagram-webview-tablet .software-link--bench       img { max-width: 129px !important; }
+html.is-instagram-webview-tablet .software-link--colorist    img { max-width: 129px !important; }
 
-/* Shared "Coming Soon" stage used by the /red-calibrator.html and
+/* Shared "Coming Soon" stage used by the /camera-calibrator.html and
    /colorist-compare.html standalone pages. Vertically biased toward the
    centre of the viewport — generous top padding pushes the icon away
    from the site header, bottom padding gives the "Back to Main Page"

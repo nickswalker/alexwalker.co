@@ -1,33 +1,39 @@
 ---
-layout: project
-title: RED Calibrator — Alex Walker
-author: Alex Walker
-og_title: RED Calibrator — Alex Walker
-og_image: og-red-calibrator.jpg
-og_url: https://alexwalker.co/red-calibrator.html
-description: "RED Komodo X calibration tool by Alex Walker — camera calibration workflow for cinematographers, built in Austin, Texas."
+layout: null
+title: RED Calibrator has moved — Camera Calibrator — Alex Walker
+sitemap: false
 ---
+<!--
+  ⛔ THIS URL MUST KEEP WORKING. /red-calibrator.html was the app's public address, it is linked
+  from the homepage's Software section and has been indexed; the app was renamed to Camera
+  Calibrator on 2026-09-10 when it gained ARRI LogC3/LogC4 support alongside RED. Deleting the page
+  would 404 every existing link and throw away the search history with it.
 
-<section id="red-calibrator" class="scroll-fade">
-    <div class="container columns-span-width scroll-fade">
-        <div class="coming-soon-stage scroll-fade">
-            <h2 class="coming-soon-stage__title">RED Calibrator</h2>
-            <p class="coming-soon-stage__caption">Coming Soon</p>
-            <picture>
-                <source srcset="/img/red-calibrator-icon.webp" type="image/webp">
-                <img class="coming-soon-stage__icon"
-                     src="/img/red-calibrator-icon.png"
-                     width="2048" height="2048"
-                     alt="RED Calibrator">
-            </picture>
-            <img class="coming-soon-stage__preview"
-                 src="/img/red-calibrator-window.png"
-                 alt="RED Calibrator app window — calibrating 14 R3D clips">
-        </div>
-
-        <div id="return" class="full-width-centered">
-            <button><a href="/#software-promo">Back to Main Page</a>
-            </button>
-        </div>
-    </div>
-</section>
+  No jekyll-redirect-from in this build, so this is a hand-rolled redirect: a canonical link so
+  search engines fold the ranking into the new URL, a meta refresh for browsers, a JS replace so
+  the old address does not sit in the back-button history, and a real anchor for anyone (or any
+  crawler) that honours none of the three.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RED Calibrator is now Camera Calibrator — Alex Walker</title>
+<link rel="canonical" href="https://alexwalker.co/camera-calibrator.html">
+<meta name="robots" content="noindex, follow">
+<meta http-equiv="refresh" content="0; url=/camera-calibrator.html">
+<script>window.location.replace("/camera-calibrator.html");</script>
+<style>
+  body { background:#121214; color:#d8d6d0; font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+         display:flex; min-height:100vh; margin:0; align-items:center; justify-content:center;
+         text-align:center; padding:24px; }
+  a { color:#8fc4f0; }
+</style>
+</head>
+<body>
+  <p>
+    RED Calibrator is now <strong>Camera Calibrator</strong> — it calibrates ARRI as well as RED.<br>
+    <a href="/camera-calibrator.html">Continue to Camera Calibrator</a>
+  </p>
+</body>
+</html>
