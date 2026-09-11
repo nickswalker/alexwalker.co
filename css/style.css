@@ -4384,6 +4384,25 @@ div.rich-poster {
    blocks so it wins there too without an !important. */
 .lightbox__panel--rich.rich-comm_bostin .rich-grid .rich-frames {
     grid-template-columns: 1fr;
+    /* ⛔ ONE IMAGE ON A 1fr GRID IS A FULL-WIDTH IMAGE. Collapsing to a single
+       column stopped it rendering at a quarter width, but then took it to the
+       other extreme — it filled the panel and dwarfed the player it is meant to
+       accompany. Alex, 2026-09-10: "Make the lobby image ... a lot smaller".
+       Cap it and centre it so it reads as a companion still, not a second hero. */
+    max-width: 420px;
+    margin-inline: auto;
+}
+
+/* ⛔ ONE SENTENCE DOES NOT WANT `text-align: left`. `.rich-copy` centres itself
+   as a block, but `.rich-copy p` forces left alignment — which is right for the
+   multi-paragraph panels and wrong here, where a single short line sat visibly
+   off-centre under a centred image. Scoped to this panel so the prose-heavy
+   ones keep their ragged-right setting. */
+.lightbox__panel--rich.rich-comm_bostin .rich-copy,
+.lightbox__panel--rich.rich-comm_bostin .rich-copy p {
+    text-align: center;
+    max-width: 560px;
+    margin-inline: auto;
 }
 
 /* No filter or opacity treatment on video thumbnails — images render at
