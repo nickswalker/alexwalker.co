@@ -68,14 +68,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link media="all" type="text/css" rel="stylesheet" href="/css/style.css">
+    {%- comment -%}
+      ⛔ CACHE-BUST EVERY DEPLOY. The CSS is served with `Cache-Control: max-age=14400`, so a
+      returning visitor holds it for FOUR HOURS while the HTML — which is not cached that way —
+      updates immediately. Any change that renames a class therefore has a multi-hour window where
+      the browser applies OLD CSS to NEW markup and no rule matches at all.
+
+      That is not hypothetical: 2026-09-10, renaming `.software-link--red` to `--camera` left Alex
+      looking at a Camera Calibrator icon blown up to the full width of its row, because with no
+      matching width rule the `<img>` falls back to `width: 100%`. The server was serving a
+      correct, consistent pair the whole time — measured 120/129/129 — and the only broken copy was
+      the one in his browser.
+
+      `site.time` changes on every build, so the URL changes whenever anything ships and the two
+      files can never again be a version apart. Same for the scripts below.
+    {%- endcomment -%}
+    <link media="all" type="text/css" rel="stylesheet" href="/css/style.css?v={{ site.time | date: '%s' }}">
     <link media="all" type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <script type="module" src="/js/site.js"></script>
+    <script type="module" src="/js/site.js?v={{ site.time | date: '%s' }}"></script>
     <!-- Glass return-to-top button (renders into #glass-wrapper if present) -->
-    <script defer src="/js/container.js"></script>
-    <script defer src="/js/button.js"></script>
-    <script defer src="/js/glass-return-to-top.js"></script>
-    <script defer src="/js/glass-watch-reels.js"></script>
+    <script defer src="/js/container.js?v={{ site.time | date: '%s' }}"></script>
+    <script defer src="/js/button.js?v={{ site.time | date: '%s' }}"></script>
+    <script defer src="/js/glass-return-to-top.js?v={{ site.time | date: '%s' }}"></script>
+    <script defer src="/js/glass-watch-reels.js?v={{ site.time | date: '%s' }}"></script>
     {%- if page.four_columns_grid %}
 
     <style type="text/css">

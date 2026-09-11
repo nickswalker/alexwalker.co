@@ -99,7 +99,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link media="all" type="text/css" rel="stylesheet" href="css/style.css">
+    {%- comment -%}
+      ⛔ CACHE-BUST ON EVERY DEPLOY — see the same note in _includes/head.html. This page has its
+      OWN <head> and does not use that include, so the fix had to be applied here too. That split is
+      precisely how the bug survived the first attempt at fixing it.
+    {%- endcomment -%}
+    <link media="all" type="text/css" rel="stylesheet" href="css/style.css?v={{ site.time | date: '%s' }}">
     <link media="all" type="text/css" rel="stylesheet"
         href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <script type="module" src="js/site.js"></script>
