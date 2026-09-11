@@ -1162,20 +1162,25 @@ body.cinematic #software-promo h2 {
 /* ⛔ SIZE BY THE PAINTED ICON, NOT THE CANVAS. Each PNG carries a different
    amount of transparent bleed, so equal max-widths render visibly unequal
    icons. Measured opaque fill of each file:
-       RED Calibrator    90.0%   (2048 canvas, 1844 box)
+       Camera Calibrator 90.0%   (1024 canvas,  922 box)
        Display Bench     83.8%   (1024 canvas,  858 box)
        Colorist Compare  83.8%   (1024 canvas,  858 box)
-   RED at 120px paints 108px, so the other two need 108 / 0.838 = 129px to
-   match. Scale all three together when resizing — the RATIO is what keeps
-   the row even. (The Colorist Compare figure changed from 81.1% when its icon was
-   replaced with the v5 app icon — re-measure whenever an icon is swapped,
-   or the row quietly goes uneven again.) */
+   Camera Calibrator at 120px paints 108px, so the other two need
+   108 / 0.838 = 129px to match. Scale all three together when resizing — the
+   RATIO is what keeps the row even.
+   ⛔ RE-MEASURE ON EVERY ICON SWAP. Camera Calibrator's art is drawn by the
+   app's own generator (droplet/make_icon.py) which lays its squircle out to
+   90% of the canvas; the other two are exported as macOS renders them, at
+   83.8%. Assuming a swapped icon keeps the old geometry is what made this row
+   uneven twice: Colorist Compare went 81.1% -> 83.8% with the v5 icon, and the
+   first Camera Calibrator export came in at 83.8% before it was replaced with
+   the generator master at 90.0%. */
 .software-link--camera img      { max-width: 120px; }
 .software-link--bench img       { max-width: 129px; }
 .software-link--colorist img    { max-width: 129px; }
 
 /* Force every app-icon tile into the same square box so their labels land
-   on the same baseline: RED at 120px and the other two at 129px are each
+   on the same baseline: Camera Calibrator at 120px and the other two at 129px are each
    auto-centred inside a 134×134 box, which is larger than the biggest cap,
    so nothing clips. */
 .software-link--camera,
