@@ -1,11 +1,24 @@
 name: Sync Instagram Stills
 
+# Instagram token lifecycle lives in scripts/README.md ("Instagram token
+# lifecycle"). Short version: the long-lived IG token lasts ~60 days and is
+# refreshed on EVERY run of this workflow, then written straight back to the
+# IG_ACCESS_TOKEN secret. That write-back is what makes the whole thing
+# self-sustaining — so if it ever fails, this job FAILS LOUDLY rather than
+# warning into a log nobody reads (which is exactly how the token silently
+# died on 2026-09-15).
+
 on:
   schedule:
     # Daily at midnight Central. GitHub cron is UTC-only, so this is
     # 05:00 UTC = 00:00 CDT during daylight saving (Mar–Nov, most of the
     # year) and shifts to 23:00 CST during standard time. Picking the
     # DST anchor since that's the majority window.
+    #
+    # Daily matters for more than fresh photos: the token is refreshed on
+    # every run, so it is renewed ~60x more often than it needs to be. Any
+    # single failed run is harmless; a run failing every day for two months
+    # is what kills the token, and that is now impossible to miss.
     - cron: '0 5 * * *'
   workflow_dispatch:
 
@@ -14,6 +27,18 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      # GITHUB_TOKEN cannot write Actions secrets, so token rotation needs a
+      # separate credential. Both supported shapes resolve to IG_REFRESH_PAT
+      # below, so whichever one Alex provides works with NO code change:
+      #   (a) a GitHub App — set IG_APP_ID + IG_APP_PRIVATE_KEY, and an
+      #       installation token is minted per run (nothing to expire), or
+      #   (b) a classic PAT with scope `repo` and "No expiration" — set
+      #       IG_REFRESH_PAT directly.
+      # Do NOT use a fine-grained PAT: they cap at 366 days and "regenerate"
+      # re-arms the original short window, which is the treadmill we're off.
+      HAS_APP_CREDENTIAL: ${{ secrets.IG_APP_ID != '' }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -24,11 +49,23 @@ jobs:
       - name: Install dependencies
         run: pip install requests Pillow colorthief PyYAML
 
+      # Skipped entirely unless the GitHub App secrets exist, in which case
+      # its output token supersedes IG_REFRESH_PAT in the refresh step below.
+      - name: Mint GitHub App installation token
+        id: app-token
+        if: env.HAS_APP_CREDENTIAL == 'true'
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.IG_APP_ID }}
+          private-key: ${{ secrets.IG_APP_PRIVATE_KEY }}
+
+      # Media sync only. Token refresh is deliberately a LATER, SEPARATE step
+      # so that a broken rotation credential still fails the job loudly
+      # without also throwing away the photos we just fetched.
       - name: Sync Instagram stills
         env:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
-          IG_REFRESH_PAT: ${{ secrets.IG_REFRESH_PAT }}
-        run: python scripts/sync_instagram.py
+        run: python scripts/sync_instagram.py --no-refresh
 
       - name: Commit and push changes
         run: |
@@ -41,3 +78,27 @@ jobs:
             git commit -m "Sync Instagram stills"
             git push
           fi
+
+      # The step that keeps this from ever becoming a manual chore again.
+      # Fails the job if the refreshed token cannot be persisted.
+      - name: Refresh and persist Instagram token
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_REFRESH_PAT: ${{ steps.app-token.outputs.token || secrets.IG_REFRESH_PAT }}
+        run: python scripts/sync_instagram.py --refresh-only
+
+      - name: Failure banner
+        if: failure()
+        run: |
+          {
+            echo "## Instagram sync FAILED"
+            echo
+            echo "alexwalker.co has stopped picking up new Instagram stills."
+            echo "Read the failing step above — it names exactly what expired"
+            echo "and the one action needed."
+            echo
+            echo "Usual cause: the \`IG_ACCESS_TOKEN\` secret expired and needs"
+            echo "a browser re-authorization by Alex (Meta requires a human)."
+            echo "Full runbook: [scripts/README.md](../blob/master/scripts/README.md)"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "::error title=Instagram sync failed::alexwalker.co Instagram stills are no longer updating. See the job summary and scripts/README.md."

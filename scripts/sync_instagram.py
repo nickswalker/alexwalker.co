@@ -5,9 +5,22 @@ Fetches up to MAX_ITEMS recent IMAGE posts (or first image of a carousel)
 from the authenticated IG Business account, downloads originals + thumbs,
 extracts dominant color, writes a hue-sorted YAML data file, and refreshes
 the long-lived access token. Designed to run from GitHub Actions cron.
+
+Token lifecycle (full write-up: scripts/README.md):
+  --no-refresh     sync media only, never touch the token
+  --refresh-only   refresh the long-lived token and PERSIST it back to
+                   the IG_ACCESS_TOKEN repo secret; fatal on any failure
+  (no flag)        both, refresh last
+
+SECURITY: token values are NEVER printed. Every secret this script
+touches is registered with ::add-mask:: and only ever shown as a
+last-4 fingerprint. This repo is PUBLIC and its build logs are public.
 """
+import argparse
 import colorsys
+import json
 import os
+import re
 import subprocess
 import sys
 from datetime import datetime, timedelta, timezone
@@ -28,7 +41,80 @@ try:
 except Exception:
     _smartcrop = None
 
+
+# ---------------------------------------------------------------------------
+# Secret handling. This repository is PUBLIC, so Actions logs are public too.
+# Nothing here may ever emit a token value: we register every secret with the
+# runner's ::add-mask:: command (which redacts it from ALL subsequent log
+# output, including output produced by other steps) and we only ever display
+# a last-4 fingerprint.
+# ---------------------------------------------------------------------------
+ON_ACTIONS = os.environ.get("GITHUB_ACTIONS") == "true"
+_SECRETS = []
+
+
+def _gha(line):
+    """Emit a GitHub Actions workflow command. No-op outside Actions."""
+    if ON_ACTIONS:
+        print(line, flush=True)
+
+
+def mask(secret):
+    """Register a secret with the runner so it is redacted everywhere, and
+    remember it so redact() can scrub it from any text we print ourselves."""
+    if not secret:
+        return
+    if secret not in _SECRETS:
+        _SECRETS.append(secret)
+    _gha(f"::add-mask::{secret}")
+
+
+def fingerprint(secret):
+    """The ONLY representation of a secret allowed in output."""
+    if not secret:
+        return "<unset>"
+    return f"<redacted:...{secret[-4:]}>" if len(secret) >= 4 else "<redacted>"
+
+
+def redact(text):
+    """Belt-and-braces scrub of known secrets out of third-party output
+    (e.g. gh CLI stderr) before we print it."""
+    if not text:
+        return text
+    for secret in _SECRETS:
+        if secret:
+            text = text.replace(secret, fingerprint(secret))
+    # Catch token-shaped strings we were never told about.
+    text = re.sub(r"\b(gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{20,})",
+                  "<redacted:token-shaped>", text)
+    return text
+
+
+def summary(markdown):
+    """Append to the Actions job summary (the big panel on the run page)."""
+    path = os.environ.get("GITHUB_STEP_SUMMARY")
+    if not path:
+        return
+    try:
+        with open(path, "a", encoding="utf-8") as fh:
+            fh.write(markdown.rstrip() + "\n\n")
+    except Exception:
+        pass
+
+
+def die(code, headline, body):
+    """Fail loudly: banner on stderr, an Actions ::error:: annotation, and a
+    job-summary block. Used wherever continuing would mean failing silently."""
+    body = redact(body)
+    print(f"\n{'=' * 72}\n!! {headline}\n{'=' * 72}\n{body}\n", file=sys.stderr)
+    _gha(f"::error title={headline}::" + body.strip().replace("\n", "%0A"))
+    summary(f"## FAILED: {headline}\n\n```\n{body.strip()}\n```")
+    sys.exit(code)
+
+
 TOKEN = os.environ["IG_ACCESS_TOKEN"]
+mask(TOKEN)
+mask(os.environ.get("IG_REFRESH_PAT"))
 REPO_ROOT = Path(__file__).resolve().parent.parent
 IMG_DIR = REPO_ROOT / "img" / "instagram"
 DATA_FILE = REPO_ROOT / "_data" / "instagram.yml"
@@ -40,6 +126,25 @@ THUMB_SIZE = 600  # square thumbnail edge length (in px)
 JPEG_FULL_QUALITY = 88
 JPEG_THUMB_QUALITY = 82
 MIN_DATE = datetime.now(timezone.utc) - timedelta(days=YEARS_BACK * 365)
+
+# The one thing only Alex can do: Meta requires a human to authorize in a
+# browser. Everything downstream of this URL is automated.
+OAUTH_URL = (
+    "https://www.instagram.com/oauth/authorize?"
+    "client_id=2043524626547727&"
+    "redirect_uri=https%3A%2F%2Falexwalker.co%2F&"
+    "response_type=code&"
+    "scope=instagram_business_basic"
+)
+REAUTH_STEPS = (
+    f"  1. Open this URL in a browser and authorize:\n     {OAUTH_URL}\n"
+    "  2. Copy the `code` value out of the resulting alexwalker.co redirect URL.\n"
+    "  3. Exchange it for a long-lived token (scripts/README.md, "
+    "'Re-authorizing from scratch').\n"
+    "  4. Put that long-lived token in the IG_ACCESS_TOKEN repo secret:\n"
+    "     gh secret set IG_ACCESS_TOKEN --repo nickswalker/alexwalker.co\n"
+    "  5. Re-run this workflow. From then on it refreshes itself daily.\n"
+)
 
 
 def make_square_thumb(img, size, manual_crop=None):
@@ -107,13 +212,6 @@ def verify_token():
     nominally last 60 days but get revoked unpredictably (user toggles
     privacy settings, Meta auto-revokes, etc.). Surfacing this here as
     a clear, actionable error beats a 200-line traceback later."""
-    OAUTH_URL = (
-        "https://www.instagram.com/oauth/authorize?"
-        "client_id=2043524626547727&"
-        "redirect_uri=https%3A%2F%2Falexwalker.co%2F&"
-        "response_type=code&"
-        "scope=instagram_business_basic"
-    )
     try:
         r = requests.get(
             "https://graph.instagram.com/me",
@@ -133,19 +231,18 @@ def verify_token():
         code = err.get("code")
     except Exception:
         msg, code = r.text, "?"
-    print(
-        "\nERROR: Instagram access token is invalid or revoked.\n"
-        f"  Meta says: [{code}] {msg}\n\n"
-        "  Long-lived tokens nominally last 60 days but get revoked by\n"
-        "  Meta unpredictably. To regenerate:\n\n"
-        f"  1. Open this URL in a browser and authorize:\n     {OAUTH_URL}\n"
-        "  2. Copy the `code` value from the resulting redirect URL.\n"
-        "  3. Exchange it for a long-lived token (see scripts/README\n"
-        "     or ask Claude to walk through it).\n"
-        "  4. Update the IG_ACCESS_TOKEN secret on GitHub.\n",
-        file=sys.stderr,
+    die(
+        2,
+        "EXPIRED/REVOKED: the IG_ACCESS_TOKEN repo secret "
+        f"({fingerprint(TOKEN)}) is no longer valid",
+        f"Meta says: [{code}] {msg}\n\n"
+        "WHAT EXPIRED: the Instagram long-lived access token stored in the\n"
+        "GitHub secret IG_ACCESS_TOKEN (repo nickswalker/alexwalker.co).\n"
+        "Long-lived tokens last ~60 days; this one is dead, so alexwalker.co\n"
+        "has stopped picking up new Instagram stills.\n\n"
+        "THE ONE ACTION NEEDED - re-authorize in a browser (only Alex can do\n"
+        "this; Meta requires a human):\n\n" + REAUTH_STEPS,
     )
-    sys.exit(2)
 
 
 def fetch_media():
@@ -260,47 +357,176 @@ def sort_key(x):
     return (0, x["hue"])
 
 
-def refresh_token():
+def _gh(args, credential, stdin=None):
+    """Run the gh CLI with the rotation credential in GH_TOKEN. The token
+    value is passed via env/stdin only, never argv (argv is visible to every
+    process on the runner). Returns the CompletedProcess."""
+    env = os.environ.copy()
+    env["GH_TOKEN"] = credential
+    return subprocess.run(["gh", *args], env=env, input=stdin,
+                          capture_output=True, text=True, timeout=120)
+
+
+def rotation_credential():
+    """The credential used to write the refreshed token back to the
+    IG_ACCESS_TOKEN repo secret.
+
+    Deliberately shape-agnostic so Alex can drop in whichever credential he
+    prefers with NO code change — the workflow resolves all of these into
+    IG_REFRESH_PAT before calling us:
+
+      * a GitHub App installation token (minted per-run from the
+        IG_APP_ID + IG_APP_PRIVATE_KEY secrets — nothing to expire), or
+      * a classic PAT created with 'No expiration' and the `repo` scope, or
+      * any other token with write access to this repo's Actions secrets.
+
+    See scripts/README.md for which one is recommended and why."""
+    return os.environ.get("IG_REFRESH_PAT") or ""
+
+
+def refresh_and_persist():
+    """Refresh the Instagram long-lived token and WRITE IT BACK to the
+    IG_ACCESS_TOKEN repo secret.
+
+    Meta long-lived tokens last ~60 days and may be refreshed once they are
+    >24h and <60d old; each refresh returns a fresh 60-day token. Because we
+    run daily, the token is perpetually renewed — PROVIDED the new value is
+    persisted. It is the persistence that failed on 2026-09-15: the write-back
+    referenced a secret (IG_REFRESH_PAT) that had never been created, the
+    failure was a warning rather than an error, and the token quietly aged out.
+
+    So: every failure below is FATAL. A refresh that is not persisted is worse
+    than no refresh at all, because it looks like success."""
     try:
         r = requests.get(
             "https://graph.instagram.com/refresh_access_token",
             params={"grant_type": "ig_refresh_token", "access_token": TOKEN},
             timeout=30,
         )
-        if not r.ok:
-            print(f"Token refresh skipped (HTTP {r.status_code}): {r.text}", file=sys.stderr)
-            return
-        new = r.json()
-        days = new["expires_in"] // 86400
-        print(f"Token refreshed; new expiry in ~{days} days.")
-        new_token = new["access_token"]
-        if new_token == TOKEN:
-            return
-        pat = os.environ.get("IG_REFRESH_PAT")
-        if not pat:
-            print(
-                "\nWARNING: token rotated. IG_REFRESH_PAT not set so the\n"
-                "GitHub secret wasn't updated automatically. Copy the new\n"
-                "token below and update the IG_ACCESS_TOKEN repo secret:\n\n"
-                f"  {new_token}\n",
-                file=sys.stderr,
-            )
-            return
-        env = os.environ.copy()
-        env["GH_TOKEN"] = pat
-        p = subprocess.run(
-            ["gh", "secret", "set", "IG_ACCESS_TOKEN", "--body", new_token],
-            env=env, capture_output=True, text=True,
-        )
-        if p.returncode == 0:
-            print("Rotated IG_ACCESS_TOKEN secret.")
-        else:
-            print(f"Failed to rotate secret: {p.stderr}", file=sys.stderr)
     except Exception as e:
-        print(f"Token refresh failed: {e}", file=sys.stderr)
+        die(3, "Instagram token refresh failed (network)",
+            f"{type(e).__name__}: {e}\n\n"
+            "Transient? Re-run the workflow. If it keeps failing, the token\n"
+            "will expire ~60 days after it was last refreshed.")
+
+    if not r.ok:
+        body = r.text or ""
+        # Meta refuses to refresh a token younger than 24h. That is benign:
+        # the token was just minted and has a full ~60 days of life.
+        if re.search(r"24\s*hour", body, re.I):
+            print("Refresh skipped: token is less than 24h old (Meta's rule). "
+                  "Nothing to persist.")
+            summary("## Instagram token\n\nRefresh skipped - token is <24h old. "
+                    "Next daily run will refresh it.")
+            return
+        die(3, "Instagram token refresh was REFUSED by Meta",
+            f"HTTP {r.status_code}: {body[:500]}\n\n"
+            f"WHAT EXPIRED: the long-lived Instagram token in the\n"
+            f"IG_ACCESS_TOKEN repo secret ({fingerprint(TOKEN)}) can no longer\n"
+            "be refreshed - it is past its ~60 day life or was revoked.\n\n"
+            "THE ONE ACTION NEEDED - re-authorize in a browser:\n\n" + REAUTH_STEPS)
+
+    data = r.json()
+    new_token = data.get("access_token") or ""
+    mask(new_token)
+    days = int(data.get("expires_in", 0)) // 86400
+
+    if not new_token:
+        die(3, "Instagram returned no access_token on refresh",
+            f"Response keys: {sorted(data)}")
+
+    if new_token == TOKEN:
+        print(f"Token refreshed in place; expiry extended to ~{days} days. "
+              "Same value, nothing to persist.")
+        summary(f"## Instagram token OK\n\nRefreshed in place, "
+                f"~{days} days of life. Fingerprint {fingerprint(TOKEN)}.")
+        return
+
+    credential = rotation_credential()
+    if not credential:
+        die(4,
+            "Instagram token ROTATED but CANNOT BE SAVED - no rotation credential",
+            "Meta issued a new long-lived token, but there is no credential to\n"
+            "write it into the IG_ACCESS_TOKEN repo secret, so the new value is\n"
+            "being DISCARDED. The old token keeps ageing and will die.\n\n"
+            "(The new token is deliberately NOT printed - this repo is public\n"
+            f"and its logs are public. Fingerprint only: {fingerprint(new_token)})\n\n"
+            "THE ONE ACTION NEEDED - give the workflow a non-expiring credential.\n"
+            "Either set BOTH of these repo secrets:\n"
+            "    IG_APP_ID, IG_APP_PRIVATE_KEY   (a GitHub App - preferred)\n"
+            "or set this one:\n"
+            "    IG_REFRESH_PAT                  (classic PAT, scope `repo`,\n"
+            "                                     expiration: No expiration)\n\n"
+            "Then re-run this workflow. See scripts/README.md.")
+    mask(credential)
+
+    repo = os.environ.get("GITHUB_REPOSITORY") or "nickswalker/alexwalker.co"
+    try:
+        p = _gh(["secret", "set", "IG_ACCESS_TOKEN", "--repo", repo],
+                credential, stdin=new_token)
+    except FileNotFoundError:
+        die(5, "Cannot persist refreshed Instagram token - gh CLI not found",
+            "scripts/sync_instagram.py --refresh-only needs the gh CLI. It is\n"
+            "preinstalled on GitHub-hosted runners; install it if running "
+            "elsewhere.")
+    except subprocess.TimeoutExpired:
+        die(5, "Cannot persist refreshed Instagram token - gh timed out",
+            "`gh secret set` did not return within 120s.")
+
+    if p.returncode != 0:
+        die(5, "FAILED to persist the refreshed Instagram token",
+            f"`gh secret set IG_ACCESS_TOKEN --repo {repo}` exited "
+            f"{p.returncode}.\n"
+            f"stderr: {redact(p.stderr)[:600]}\n\n"
+            "The refreshed token has been DISCARDED and the stored one keeps\n"
+            "ageing. Most likely the rotation credential lacks write access to\n"
+            "this repo's Actions secrets, or it has expired.\n\n"
+            "THE ONE ACTION NEEDED: replace the rotation credential with one\n"
+            "that can write repo secrets and does not expire "
+            "(see scripts/README.md).")
+
+    # Read back: `gh secret set` exiting 0 is not proof the value landed.
+    updated = None
+    try:
+        v = _gh(["api", f"repos/{repo}/actions/secrets/IG_ACCESS_TOKEN"], credential)
+        if v.returncode == 0:
+            updated = (json.loads(v.stdout) or {}).get("updated_at")
+    except Exception:
+        pass
+    if updated:
+        age = datetime.now(timezone.utc) - datetime.fromisoformat(
+            updated.replace("Z", "+00:00"))
+        if age > timedelta(minutes=10):
+            die(6, "IG_ACCESS_TOKEN secret did NOT change",
+                f"`gh secret set` reported success but the secret's updated_at\n"
+                f"is still {updated} ({int(age.total_seconds() // 60)} minutes "
+                "old).\nTreating this as a failed rotation rather than trusting "
+                "it.")
+
+    print(f"Rotated IG_ACCESS_TOKEN secret -> {fingerprint(new_token)}; "
+          f"valid ~{days} days"
+          + (f" (secret updated_at {updated})" if updated else "") + ".")
+    summary(f"## Instagram token rotated\n\n"
+            f"- New token persisted to the `IG_ACCESS_TOKEN` secret\n"
+            f"- Fingerprint: `{fingerprint(new_token)}`\n"
+            f"- Valid for ~{days} days\n"
+            f"- Secret `updated_at`: `{updated or 'unverified'}`")
 
 
 def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    g = ap.add_mutually_exclusive_group()
+    g.add_argument("--no-refresh", action="store_true",
+                   help="sync media only; do not touch the access token")
+    g.add_argument("--refresh-only", action="store_true",
+                   help="only refresh + persist the access token")
+    args = ap.parse_args()
+
+    if args.refresh_only:
+        verify_token()
+        refresh_and_persist()
+        return
+
     IMG_DIR.mkdir(parents=True, exist_ok=True)
     DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
 
@@ -340,7 +566,8 @@ def main():
         yaml.dump(processed, fh, sort_keys=False, allow_unicode=True)
     print(f"Wrote {len(processed)} entries to {DATA_FILE.relative_to(REPO_ROOT)}.")
 
-    refresh_token()
+    if not args.no_refresh:
+        refresh_and_persist()
 
 
 if __name__ == "__main__":
