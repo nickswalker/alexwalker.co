@@ -45,3 +45,24 @@ defaults:
       path: "google88bacf39fa2b9f7b.html"
     values:
       sitemap: false
+
+  # Cinemaxxing pages live at cinemaxxing.co (its own domain + its own sitemap,
+  # served via the redirect Worker). They are built from this repo but must NOT
+  # appear in alexwalker.co's sitemap — their canonical tags already attribute
+  # them to cinemaxxing.co. Still served at their URLs; only dropped from sitemap.
+  - scope:
+      path: "cinemaxxing.html"
+    values:
+      sitemap: false
+  - scope:
+      path: "cinemaxxing-advance.html"
+    values:
+      sitemap: false
+  - scope:
+      path: "cinemaxxing-filtered.html"
+    values:
+      sitemap: false
+  - scope:
+      path: "cinemaxxing-preview.html"
+    values:
+      sitemap: false
