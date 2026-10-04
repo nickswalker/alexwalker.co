@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Cinemaxxing — Austin's Weekly Premium Cinema Schedule</title>
-<meta name="description" content="Your weekly guide to premium formats & special screenings in Austin — 70mm, IMAX, and repertory.">
+<meta name="description" content="Austin's weekly guide to 70mm, IMAX, 35mm &amp; repertory screenings — the premium-format and special showtimes worth leaving the house for. Free every Monday.">
 <!-- Canonical points at cinemaxxing.co so this content is attributed to its own
      domain even when crawled at alexwalker.co/cinemaxxing.html (one shared build). -->
 <link rel="canonical" href="https://cinemaxxing.co/">
@@ -37,7 +37,10 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<!-- Fonts loaded non-render-blocking (media=print flips to all on load); display=swap
+     already set, so text paints immediately in the fallback then swaps. -->
+<link href="https://fonts.googleapis.com/css2?family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="css/cinemaxxing.css">
 
 <!-- Structured data: establishes Cinemaxxing as its own entity (distinct from the
@@ -93,7 +96,7 @@
 <div class="reel"></div>
 
 <nav>
-  <a class="nav-logo" href="#" aria-label="Cinemaxxing"><img src="https://alexwalker.co/img/cinemaxxing-icon.png" alt=""></a>
+  <a class="nav-logo" href="#" aria-label="Cinemaxxing"><img src="https://alexwalker.co/img/cinemaxxing-icon.png" alt="" width="1800" height="1800"></a>
   <a class="nav-btn" href="#subscribe">Subscribe</a>
 </nav>
 
@@ -330,7 +333,7 @@
             <div class="ep-films">
               <div class="ep-film is-imax">
                 <div class="ep-film-row">
-                  <img class="ep-poster" src="https://image.tmdb.org/t/p/w154/3o5YPjDGDTcTDL5ftDA9NwN9dLd.jpg" alt="" loading="lazy">
+                  <img class="ep-poster" src="https://image.tmdb.org/t/p/w154/3o5YPjDGDTcTDL5ftDA9NwN9dLd.jpg" alt="" width="154" height="231" loading="lazy">
                   <div class="ep-film-info">
                     <div class="ep-theater-label">San Antonio</div>
                     <div class="ep-film-title-row">
@@ -355,7 +358,7 @@
               </div>
               <div class="ep-film is-imax">
                 <div class="ep-film-row">
-                  <img class="ep-poster" src="https://image.tmdb.org/t/p/w154/3o5YPjDGDTcTDL5ftDA9NwN9dLd.jpg" alt="" loading="lazy">
+                  <img class="ep-poster" src="https://image.tmdb.org/t/p/w154/3o5YPjDGDTcTDL5ftDA9NwN9dLd.jpg" alt="" width="154" height="231" loading="lazy">
                   <div class="ep-film-info">
                     <div class="ep-film-title-row">
                       <span class="ep-film-title">Disclosure Day</span>
