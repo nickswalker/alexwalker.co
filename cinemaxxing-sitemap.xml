@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Cinemaxxing sitemap. Served at https://cinemaxxing.co/sitemap.xml via a
+     Cloudflare URL-rewrite in the cinemaxxing.co zone, so Cinemaxxing's pages
+     are attributed to cinemaxxing.co and not to the shared alexwalker.co build.
+     alexwalker.co keeps its own jekyll-sitemap output. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://cinemaxxing.co/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://cinemaxxing.co/cinemaxxing-preview.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://cinemaxxing.co/cinemaxxing-advance.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cinemaxxing.co/cinemaxxing-filtered.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.4</priority>
+  </url>
+</urlset>

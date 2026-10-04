@@ -1,0 +1,20 @@
+# Cinemaxxing
+
+> Your weekly guide to premium formats & special screenings in Austin — 70mm, IMAX, 35mm, Dolby Cinema, and repertory. Cinemaxxing curates Austin's premium-cinema showtimes and emails them every Monday.
+
+Cinemaxxing is an independent, Austin-focused listings service. It is the distinct identity for the cinema schedule and is separate from the alexwalker.co portfolio it shares a host with.
+
+## Pages
+- [This week's schedule](https://cinemaxxing.co/cinemaxxing-preview.html): The current week's curated premium-format and special screenings across Austin.
+- [Advance tickets](https://cinemaxxing.co/cinemaxxing-advance.html): 70mm IMAX engagements on sale now for dates beyond the current week.
+- [Filtered out](https://cinemaxxing.co/cinemaxxing-filtered.html): Screenings the main weekly digest dropped.
+- [Home and email signup](https://cinemaxxing.co/): About Cinemaxxing and the weekly/daily email subscription.
+
+## Coverage
+- Area served: Austin, Texas.
+- Venues tracked include the Paramount Theatre, AFS Cinema (Austin Film Society), Alamo Drafthouse, Hyperreal, and other premium-format houses.
+- Formats tracked: 70mm, IMAX, 35mm film prints, Dolby Cinema, 4K, and repertory/special one-off screenings.
+- Each listing notes the film, venue, date, format, and ticket/sold-out status.
+
+## Contact
+- Email: hello@cinemaxxing.co
