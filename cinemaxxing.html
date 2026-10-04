@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Cinemaxxing — Austin's Weekly Premium Cinema Schedule</title>
+<meta name="description" content="Your weekly guide to premium formats & special screenings in Austin — 70mm, IMAX, and repertory.">
+<!-- Canonical points at cinemaxxing.co so this content is attributed to its own
+     domain even when crawled at alexwalker.co/cinemaxxing.html (one shared build). -->
+<link rel="canonical" href="https://cinemaxxing.co/">
 
 <link rel="icon" type="image/png" href="https://alexwalker.co/img/cinemaxxing-icon-rounded.png">
 <link rel="apple-touch-icon" href="https://alexwalker.co/img/cinemaxxing-icon.png">
@@ -35,6 +39,50 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/cinemaxxing.css">
+
+<!-- Structured data: establishes Cinemaxxing as its own entity (distinct from the
+     alexwalker.co portfolio it shares a build with) and names the formats/area it
+     covers, so Google and AI answer engines can attribute + cite it correctly. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://cinemaxxing.co/#website",
+      "name": "Cinemaxxing",
+      "url": "https://cinemaxxing.co/",
+      "description": "Your weekly guide to premium formats & special screenings in Austin — 70mm, IMAX, and repertory.",
+      "inLanguage": "en-US",
+      "publisher": { "@id": "https://cinemaxxing.co/#org" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://cinemaxxing.co/#org",
+      "name": "Cinemaxxing",
+      "url": "https://cinemaxxing.co/",
+      "logo": "https://alexwalker.co/img/cinemaxxing-icon-rounded.png",
+      "image": "https://alexwalker.co/img/cinemaxxing-preview.jpg",
+      "email": "hello@cinemaxxing.co",
+      "description": "Your weekly guide to premium formats & special screenings in Austin — 70mm, IMAX, and repertory.",
+      "areaServed": {
+        "@type": "City",
+        "name": "Austin",
+        "containedInPlace": { "@type": "State", "name": "Texas" }
+      },
+      "knowsAbout": [
+        "70mm film screenings",
+        "IMAX",
+        "35mm film prints",
+        "Dolby Cinema",
+        "repertory cinema",
+        "Austin movie showtimes",
+        "special film screenings"
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
