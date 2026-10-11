@@ -1,0 +1,1023 @@
+/* Cinemaxxing next-gen — one shared stylesheet. Dark, film-grain, neon marquee. */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --bg: #0b0b0b;
+  --bg-2: #1b1b1b;
+  --bg-3: #262626;
+  --ink: #f3f3f3;
+  --ink-2: #c2c2c2;
+  --ink-3: #909090;
+  --line: rgba(255, 255, 255, 0.22);
+  --line-2: rgba(255, 255, 255, 0.34);
+  --card-line: rgba(255, 255, 255, 0.46);
+  --f-70mm: #1fcda4;  --f-imax: #4aa3e8;  --f-35mm: #e5a62b;  --f-dolby: #e8486f;  --f-hdr: #a78bfa;
+  --f-more: #8a8a8a;
+  --accent: #e8486f;          /* page highlight (pink) */
+  --gold: #e8b64a;            /* pick-of-the-night highlight */
+  --radius: 14px;
+  --maxw: 1120px;
+  font-synthesis: none;
+}
+* { box-sizing: border-box; }
+/* Keep the hidden view (By format vs By time) actually hidden — a class rule like
+   `.view-time{display:flex}` otherwise beats the UA `[hidden]{display:none}` and both show. */
+[hidden] { display: none !important; }
+/* Smooth cross-page tab navigation (View Transitions API); plain navigation where unsupported.
+   The title + section bars are named so they stay put while the content crossfades. */
+@view-transition { navigation: auto; }
+.titlebar { view-transition-name: cmx-titlebar; }
+.sectionbar { view-transition-name: cmx-sectionbar; }
+html { -webkit-text-size-adjust: 100%; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+body {
+  margin: 0; color: var(--ink); line-height: 1.45;
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  /* Original landing palette: ink base with navy/coral gradient bleed. */
+  background: #0b0d11;
+  background-image:
+    radial-gradient(ellipse 120% 55% at 50% 108%, rgba(228, 72, 72, 0.16) 0%, transparent 62%),
+    radial-gradient(90% 55% at 100% 0%, rgba(74, 163, 232, 0.08), transparent 60%),
+    linear-gradient(to bottom, #0b0d11 0%, #0c0c0b 55%, #0a0a0a 100%);
+  background-attachment: fixed;
+}
+/* The real analog film-grain from the original landing, as a fixed full-page overlay. */
+body::before { content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: url("https://alexwalker.co/img/cinemaxxing-grain.png");
+  background-size: 240px 240px; background-repeat: repeat; opacity: 0.22; }
+.titlebar, .sectionbar, .wrap, .sprockets, .foot { position: relative; z-index: 1; }
+h1, h2, h3 { font-family: "Sansita", Georgia, serif; line-height: 1.1; text-wrap: balance; margin: 0; }
+a { color: inherit; }
+
+/* ── Sprockets (film perforation strips top & bottom) ─────────────────────────── */
+.sprockets { height: 22px; background-color: #060606;
+  background-image: url("https://alexwalker.co/img/cinemaxxing-perf-strip.png");
+  background-size: auto 22px; background-repeat: repeat-x; background-position: left center;
+  filter: brightness(0.6) saturate(0.85); opacity: 0.9; position: relative; z-index: 5; }
+
+/* ── Title bar: full-height marquee logo · scoreboard · secondary nav · CTA · IG ── */
+/* Top sprocket stays pinned above the title bar on every page. */
+.sprockets-top { position: sticky; top: var(--safe-top); z-index: 40; }
+/* iOS home-screen (standalone) app: fill the status-bar / notch strip with solid page colour so
+   the header never sits under the status bar's progressive blur. No-op on non-notch (inset = 0). */
+body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: var(--safe-top);
+  background: #060606; z-index: 60; pointer-events: none; }
+.titlebar { position: sticky; top: calc(22px + var(--safe-top)); z-index: 30; background: rgba(12, 12, 12, 0.55);
+  -webkit-backdrop-filter: saturate(165%) blur(22px); backdrop-filter: saturate(165%) blur(22px);
+  border-bottom: 1px solid var(--line); }
+.titlebar-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  max-width: min(1380px, 96vw); margin: 0 auto; padding: 8px 20px; min-height: 68px; }
+.brand { display: inline-flex; align-items: center; flex: none; }
+.brand-img { height: 56px; width: auto; display: block;
+  filter: drop-shadow(0 0 7px rgba(232, 72, 111, 0.6)) drop-shadow(0 0 16px rgba(74, 163, 232, 0.32));
+  animation: marquee-glow 3.6s ease-in-out infinite; }
+@keyframes marquee-glow {
+  0%,100% { filter: drop-shadow(0 0 5px rgba(232,72,111,0.45)) drop-shadow(0 0 12px rgba(74,163,232,0.22)); }
+  45% { filter: drop-shadow(0 0 11px rgba(232,72,111,0.85)) drop-shadow(0 0 24px rgba(74,163,232,0.5)); }
+  48% { filter: drop-shadow(0 0 4px rgba(232,72,111,0.35)) drop-shadow(0 0 9px rgba(74,163,232,0.18)); }
+  52% { filter: drop-shadow(0 0 10px rgba(232,72,111,0.78)) drop-shadow(0 0 20px rgba(74,163,232,0.44)); }
+}
+.topnav-sec { display: flex; align-items: center; gap: 26px; margin: 0 10px;
+  /* neutralise the legacy landing CSS's blanket nav{} (sticky/bg/border/blur) on the about page */
+  position: static; padding: 0; background: none; backdrop-filter: none; border: 0; box-shadow: none; }
+.tnav { text-decoration: none; color: var(--ink-2); font-size: 13px; font-weight: 600; white-space: nowrap; }
+.tnav:hover { color: #fff; } .tnav.on { color: #fff; box-shadow: inset 0 -2px 0 var(--gold); }
+/* "Who are we??" — made prominent: a bright bordered pill, not a muted text link.
+   Height matched to the Subscribe pill and the Instagram glyph. */
+.tnav-about { color: var(--ink); font-weight: 700; border: 1.5px solid var(--line-2); border-radius: 999px;
+  height: 38px; padding: 0 16px; display: inline-flex; align-items: center; box-sizing: border-box; }
+.tnav-about:hover { color: #fff; border-color: #fff; background: var(--bg-2); }
+.tnav-about.on { color: #fff; border-color: var(--gold); box-shadow: none; }
+/* Greyed-out "coming soon" nav item — subtle, still links to the stub page. */
+.tnav-soon { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 1px;
+  color: var(--ink-3); opacity: 0.55; line-height: 1.05; cursor: default; user-select: none; }
+.tnav-soon small { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-3); }
+.subscribe-cta { background: var(--accent); color: #fff; font-weight: 700; font-size: 13px;
+  text-decoration: none; height: 38px; padding: 0 16px; border-radius: 999px; white-space: nowrap;
+  display: inline-flex; align-items: center; box-sizing: border-box;
+  box-shadow: 0 2px 12px rgba(232, 72, 111, 0.4); }
+.subscribe-cta:hover { filter: brightness(1.08); }
+.ig { color: #fff; display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 38px; height: 38px; box-sizing: border-box;   /* white OUTLINE glyph — NO pink, no button */
+  background: none; box-shadow: none; border: 0; border-radius: 0; padding: 0; filter: none; }
+.ig svg { display: block; width: 24px; height: 24px; }
+.ig:hover { color: var(--ink-2); }
+
+/* Scoreboard (in the title bar; same tile size) — doubles as the format filter. */
+.scoreboard { display: flex; gap: 7px; flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.scoreboard::-webkit-scrollbar { display: none; }
+.score { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+  width: 82px; padding: 7px 8px; border-radius: 10px; background: var(--bg-2); position: relative;
+  border: 1.5px solid var(--card-line); color: var(--ink); cursor: default; font: inherit;
+  transition: transform .16s ease, box-shadow .16s ease, filter .16s ease; }
+/* Each format tile wears its format's colour outline + glow, like the email blast / About hero pills. */
+.score-70mm { border-color: var(--f-70mm); --pill-glow: var(--f-70mm); } .score-imax { border-color: var(--f-imax); --pill-glow: var(--f-imax); }
+.score-35mm { border-color: var(--f-35mm); --pill-glow: var(--f-35mm); } .score-dolby { border-color: var(--f-dolby); --pill-glow: var(--f-dolby); } .score-hdr { border-color: var(--f-hdr); --pill-glow: var(--f-hdr); }
+/* Film-format score cards (70mm, 35mm) wear the same film-perforation sprockets as the format badges. */
+.score-70mm::before, .score-70mm::after,
+.score-35mm::before, .score-35mm::after {
+  content: ""; position: absolute; left: 6px; right: 6px; height: 2.5px; pointer-events: none;
+  background-image: repeating-linear-gradient(90deg, rgba(0,0,0,0.6) 0 2.5px, transparent 2.5px 5px); }
+.score-70mm::before, .score-35mm::before { top: 3px; }
+.score-70mm::after,  .score-35mm::after  { bottom: 3px; }
+/* Same playful lift + chromatic glow as the "who are we" format pills. */
+@media (hover: hover) {
+  .score:hover { z-index: 2; transform: scale(1.16) translateY(-2px) rotate(-1.5deg); filter: brightness(1.08);
+    box-shadow: 0 0 1px var(--pill-glow), 0 0 6px var(--pill-glow), 0 0 22px -2px var(--pill-glow), 0 8px 20px -8px var(--pill-glow); }
+}
+@media (prefers-reduced-motion: reduce) { .score, .score:hover { transition: none; transform: none; box-shadow: none; filter: none; } }
+/* Let the hovered tile's lift + glow spill out past the row instead of being clipped. The scroll
+   containers only need to clip on touch/narrow screens, so free them where hover applies. */
+@media (hover: hover) { .scoreboard, .sectionbar-row { overflow: visible; } }
+.score-label { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; }
+.score-num { display: inline-flex; align-items: center; gap: 4px; }
+.score-count { font-size: 17px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.score-face { width: 16px; height: 16px; }
+.score-70mm .score-count{color:var(--f-70mm)} .score-70mm.score-on{border-color:var(--f-70mm);background:color-mix(in srgb,var(--f-70mm) 18%,var(--bg-2))}
+.score-imax .score-count{color:var(--f-imax)} .score-imax.score-on{border-color:var(--f-imax);background:color-mix(in srgb,var(--f-imax) 18%,var(--bg-2))}
+.score-35mm .score-count{color:var(--f-35mm)} .score-35mm.score-on{border-color:var(--f-35mm);background:color-mix(in srgb,var(--f-35mm) 18%,var(--bg-2))}
+.score-dolby .score-count{color:var(--f-dolby)} .score-dolby.score-on{border-color:var(--f-dolby);background:color-mix(in srgb,var(--f-dolby) 18%,var(--bg-2))}
+.score-hdr .score-count{color:var(--f-hdr)} .score-hdr.score-on{border-color:var(--f-hdr);background:color-mix(in srgb,var(--f-hdr) 18%,var(--bg-2))}
+.score-zero { opacity: 0.45; }
+
+/* ── Section bar (sticky under the title bar) ─────────────────────────────────── */
+.sectionbar { position: sticky; top: calc(90px + var(--safe-top)); z-index: 25; background: rgba(14,14,14,0.5);
+  -webkit-backdrop-filter: saturate(165%) blur(20px); backdrop-filter: saturate(165%) blur(20px);
+  border-bottom: 1px solid var(--line); }
+.sectionbar-row { display: flex; gap: 6px; max-width: min(1380px, 96vw); margin: 0 auto; padding: 0 16px;
+  overflow-x: auto; scrollbar-width: none; align-items: stretch; justify-content: center; }
+.sectionbar-row::-webkit-scrollbar { display: none; }
+.sect { flex: 0 0 auto; text-decoration: none; color: var(--ink-2); font-size: 16px; font-weight: 700;
+  padding: 14px 20px; border-bottom: 3px solid transparent; white-space: nowrap; }
+/* "Austin Cinema Projector Guide" tab — not yet live: non-clickable, muted, with Coming soon beneath. */
+.sect-soon { color: var(--ink-3); cursor: default; display: inline-flex; flex-direction: column;
+  align-items: flex-start; gap: 1px; line-height: 1.05; }
+.sect-soon small { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-3); opacity: 0.85; }
+.sect:hover { color: #fff; }
+.sect.on { color: #fff; border-bottom-color: var(--accent); }
+/* Active tab expands to carry the heading + the screening/format summary + last-checked. */
+.sect-wide { display: inline-flex; align-items: baseline; gap: 7px; background: rgba(255,255,255,0.05); }
+.sect-title { font-family: "Sansita", serif; font-weight: 800; font-size: 18px; }
+.sect-meta { color: var(--ink-3); font-weight: 600; font-size: 14px; }
+
+/* ── Title bar + scoreboard relocation (Alex, 2026-10-10) ──────────────────────── */
+/* Scoreboard moved OUT of the title bar → brand stays left, the nav/subscribe/IG group
+   is pushed to the right. */
+.titlebar-row .brand { margin-right: auto; }
+/* Centered row, generous spacing between tabs (no divider lines) so Today / This Week / This Month /
+   Advance read as distinct items, not one run-on line (Alex, 2026-10-10). */
+.sectionbar-row { justify-content: center; gap: 42px; align-items: stretch; }
+.sect { padding: 14px 4px; }
+.sect:not(.on):hover { color: #fff; }
+
+/* Active tab + its format cards = ONE unit, sharing a SINGLE continuous red underline (one element,
+   one color — no seams). The inner tab/scoreboard carry no border of their own. */
+.sect-active { display: inline-flex; align-items: center; gap: 12px; border-bottom: 3px solid var(--accent); }
+.sect-active .sect { border-bottom: 0; }
+.sect-active .scoreboard { border-bottom: 0; align-self: center; }
+
+/* Format cards: compact ROUNDED RECTANGLES (not pills). */
+.sectionbar .scoreboard { flex: 0 1 auto; align-items: center; gap: 7px; }
+.sectionbar .score { flex-direction: row; width: auto; gap: 6px; padding: 6px 11px; border-radius: 9px; }
+.sectionbar .score-label { font-size: 10px; }
+.sectionbar .score-num { gap: 3px; }
+.sectionbar .score-count { font-size: 14px; }
+.sectionbar .score-face { width: 14px; height: 14px; }
+
+/* Active tab heading — chromatic aberration + blue-phosphor halation, ported from the live site's
+   hover/logo glow. Only the ACTIVE tab renders .sect-title, so only it glows (Alex, 2026-10-10). */
+.sect-title {
+  text-shadow:
+    -0.4px 0 0 rgba(228, 72, 72, 0.55),
+     0.4px 0 0 rgba(80, 200, 255, 0.55),
+     0 0 6px  rgba(144, 200, 240, 0.55),
+     0 0 18px rgba(144, 200, 240, 0.40),
+     0 0 36px rgba(144, 200, 240, 0.22);
+}
+
+/* ── Content ─────────────────────────────────────────────────────────────────── */
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 16px; }
+.bare { width: 100%; margin: 0; padding: 0; position: relative; z-index: 1; }   /* full-bleed (About = original landing) */
+.lede { margin-bottom: 10px; }
+.lede-h { font-size: clamp(20px, 4vw, 26px); font-weight: 800; display: inline-block; margin-right: 10px; }
+.lede-lens { font-family: "Plus Jakarta Sans"; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.freshness { color: var(--ink-3); font-size: 12px; margin: 6px 0 0; }
+.late-note { color: var(--f-35mm); font-size: 13px; font-weight: 600; margin: 6px 0 0; }
+
+/* ── Pick of the night — a distinct GOLD bounding box, clear of the rest ───────── */
+.pick { margin: 14px 0 30px; border: 2px solid var(--gold); border-radius: var(--radius); overflow: hidden;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--gold) 14%, var(--bg-2)), var(--bg-2));
+  box-shadow: 0 0 0 1px rgba(232,182,74,0.25), 0 10px 30px rgba(0,0,0,0.4); }
+.pick-tag { font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #1a1203; background: var(--gold); padding: 5px 12px; display: inline-block; border-bottom-right-radius: 10px; }
+.pick-body { display: flex; gap: 16px; padding: 12px 16px 16px; align-items: flex-start; }
+.pick-poster { width: 92px; aspect-ratio: 2/3; object-fit: cover; border-radius: 8px; flex: none; background: var(--bg-3); }
+.pick-info { min-width: 0; }
+.pick-film { font-size: 21px; font-weight: 800; }
+.pick-film .yr, .card-film .yr, .film-title .yr { font-family: "Plus Jakarta Sans"; font-weight: 500; color: var(--ink-3); font-size: 0.62em; }
+.pick-film .badge { vertical-align: middle; margin-left: 6px; }
+.pick-blurb { font-size: 14.5px; color: var(--ink); margin: 8px 0 8px; }
+.pick-times { font-size: 13px; color: var(--ink-2); } .pick-times .t { margin-right: 6px; font-weight: 700; }
+
+/* ── Controls: view slider (far left) + venue pills ──────────────────────────── */
+.controls { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; flex-wrap: wrap; }
+.seg { position: relative; display: inline-flex; flex: none; background: var(--bg-2);
+  border: 1px solid var(--line-2); border-radius: 999px; padding: 3px; }
+.seg-knob { position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc(50% - 3px);
+  background: var(--accent); border-radius: 999px; transition: transform .2s ease;
+  box-shadow: 0 2px 8px rgba(232,72,111,0.4); }
+.seg[data-mode="time"] .seg-knob { transform: translateX(100%); }
+.seg-opt { position: relative; z-index: 1; border: 0; background: transparent; color: var(--ink-2);
+  font: inherit; font-size: 12.5px; font-weight: 700; padding: 7px 12px; border-radius: 999px; cursor: pointer;
+  white-space: nowrap; min-width: 100px; text-align: center; }   /* equal widths so the knob + text line up */
+.seg-opt.seg-on { color: #fff; }
+/* Venue filter: the whole row lives inside ONE pill outline and scrolls within it, so a chip at the
+   edge clips cleanly against the rounded border instead of dangling half-off mid-scroll (Alex 2026-10-10).
+   flex:0 1 auto so the pill hugs its chips when few, and caps at the row width (scrolling) when many. */
+.chips { display: flex; gap: 7px; overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0;
+  border: 1px solid var(--line-2); border-radius: 999px; padding: 5px 12px; }
+.chips::-webkit-scrollbar { display: none; }
+/* Mobile venue picker — a native dropdown replaces the scrolling chip row (shown only on phones). */
+.venue-select { display: none; flex: 1; min-width: 0; background: var(--bg-2); color: var(--ink);
+  border: 1.5px solid var(--line-2); border-radius: 999px; padding: 9px 14px; font: inherit;
+  font-size: 13px; font-weight: 600; appearance: auto; }
+.chip { flex: 0 0 auto; font: inherit; font-size: 12.5px; font-weight: 600; color: var(--ink-2);
+  background: var(--bg-2); border: 1.5px solid var(--line-2); border-radius: 999px; padding: 7px 13px; cursor: pointer; white-space: nowrap; }
+.chip b { color: var(--ink-3); font-weight: 700; margin-left: 2px; }
+.chip:hover { border-color: #fff; }
+/* Active venue = clear BLUE outline (obvious which one is selected). */
+.chip-on { background: color-mix(in srgb, var(--f-imax) 16%, var(--bg-2)); color: #fff;
+  border-color: var(--f-imax);
+  box-shadow: 0 0 0 1.5px var(--f-imax), 0 0 16px rgba(144,200,240,0.3);
+  /* same chromatic-aberration + halation glow as the active tab heading, but more subtle */
+  text-shadow: -0.3px 0 0 rgba(228,72,72,0.4), 0.3px 0 0 rgba(80,200,255,0.4), 0 0 7px rgba(144,200,240,0.45); }
+.chip-on b { color: rgba(255,255,255,0.85); }
+/* A venue chip left half-visible at the scroll edge pulses slowly to hint there's more to scroll. */
+@keyframes chip-peek { 0%, 100% { box-shadow: 0 0 0 0 rgba(144,200,240,0); }
+                       50% { box-shadow: 0 0 11px 1px rgba(144,200,240,0.6); } }
+.chip-peek { animation: chip-peek 2.6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .chip-peek { animation: none; } }
+
+/* ── Format view: sections → one film per format → expandable venues/times ─────── */
+.fmt-sec { margin: 20px 0; }
+.fmt-h { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.fmt-badge { font-size: 14px; font-weight: 800; padding: 4px 12px; border-radius: 8px; }
+.fmt-count { color: var(--ink-3); font-size: 12.5px; }
+.films { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.film { border: 1.5px solid var(--card-line); border-radius: var(--radius); background: var(--bg-2); overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
+/* Film cards take their format section's colour outline, matching the email blast. */
+.fmt-70mm .film { border-color: var(--f-70mm); } .fmt-imax .film { border-color: var(--f-imax); }
+.fmt-35mm .film { border-color: var(--f-35mm); } .fmt-dolby .film { border-color: var(--f-dolby); }
+.fmt-hdr .film { border-color: var(--f-hdr); } .fmt-more .film { border-color: var(--card-line); }
+.film.open { box-shadow: 0 0 0 1px currentColor, 0 8px 22px rgba(0,0,0,0.4); }
+.film-head { width: 100%; display: flex; align-items: center; gap: 14px; padding: 12px; background: transparent; border: 0; cursor: pointer; text-align: left; color: inherit; font: inherit; }
+.film-poster { width: 104px; flex: none; }
+.film-poster img { width: 104px; aspect-ratio: 2/3; object-fit: cover; border-radius: 8px; background: var(--bg-3); display: block; }
+.poster-ph { width: 76px; aspect-ratio: 2/3; display: flex; align-items: center; justify-content: center; background: var(--bg-3); border-radius: 8px; font-family: "Sansita"; font-size: 30px; color: var(--ink-3); }
+.film-meta { flex: 1; min-width: 0; }
+.film-title { font-size: 18px; font-weight: 800; }
+.film-sub { color: var(--ink-3); font-size: 12.5px; margin: 5px 0 0; }
+.film-caret { margin-left: 8px; color: var(--ink-3); font-size: 18px; transition: transform .2s; }
+.film.open .film-caret { transform: rotate(180deg); }
+.film-detail { padding: 2px 14px 14px 132px; }   /* times align under the (larger) poster + title */
+.fv { padding: 8px 0; border-top: 1px solid var(--line); }
+.fv:first-child { border-top: 0; }
+.fv-name { font-size: 13px; font-weight: 700; margin-bottom: 6px; } .fv-loc { color: var(--ink-3); font-weight: 400; }
+.film-lb { display: inline-block; margin-top: 8px; font-size: 12px; color: var(--f-imax); text-decoration: none; }
+
+/* ── Poster-tile grid: format sections on top, "More" below. Posters carry showtime pills; a tap
+      opens the full detail modal. Compact tiles mean a lone premium film reads fine, never a
+      stranded full-width card (Alex, 2026-10-10). ── */
+/* Format sections flow + wrap, each sized to its own posters, so premium formats share a row and
+   fill the space to the right (a lone Dolby film sits next to the HDR films, not alone). "More" is
+   a full-width grid below the premium formats (Alex, 2026-10-10). */
+.view-format { --pw: 150px;   /* one poster width for every section, premium and More alike */
+  display: flex; flex-wrap: wrap; gap: 24px 44px; align-items: flex-start; padding-top: 16px; }
+.psec { flex: 0 1 auto; margin: 0; }                               /* premium: size to content, flow */
+.psec[data-format="more"] { flex: 1 1 100%; margin-top: 10px; }    /* More: full width, below premium */
+.psec-h { margin-bottom: 12px; }
+.posters { list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, var(--pw)); gap: 18px 14px; }
+.ptile-btn { display: block; width: 100%; padding: 0; margin: 0; border: 0; background: none;
+  text-align: left; font: inherit; color: inherit; cursor: pointer; }
+.ptile-poster { position: relative; display: block; aspect-ratio: 2/3; border-radius: 10px;
+  overflow: hidden; background: var(--bg-3); border: 1.5px solid var(--card-line);
+  transition: transform .16s ease, border-color .16s ease; }
+.ptile-poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ptile-poster .poster-ph { display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 100%; color: var(--ink-3); font-weight: 800; font-size: 28px; }
+.ptile-btn:hover .ptile-poster, .ptile-btn:focus-visible .ptile-poster {
+  transform: translateY(-3px); border-color: var(--line-2); }
+.ptile[data-format="70mm"] .ptile-poster { border-color: var(--f-70mm); }
+.ptile[data-format="imax"] .ptile-poster { border-color: var(--f-imax); }
+.ptile[data-format="35mm"] .ptile-poster { border-color: var(--f-35mm); }
+.ptile[data-format="dolby"] .ptile-poster { border-color: var(--f-dolby); }
+.ptile[data-format="hdr"] .ptile-poster { border-color: var(--f-hdr); }
+/* No poster match → the venue's logo shown at its NATURAL size (never upscaled, so it always stays
+   crisp), centered on a muted card and tinted to blend into the page. */
+.ptile-poster:has(.poster-logo),
+.tcard-poster:has(.poster-logo),
+.fdetail-poster:has(.poster-logo) { display: flex; align-items: center; justify-content: center; background: var(--bg-3); }
+.poster-logo { width: auto !important; height: auto !important; aspect-ratio: auto !important;
+  max-width: 74% !important; max-height: 56% !important; object-fit: contain;
+  filter: grayscale(0.85) brightness(0.92) opacity(0.62); }
+.ptile-times { position: absolute; inset-inline: 0; bottom: 0; display: flex; flex-wrap: wrap;
+  gap: 4px; padding: 24px 6px 6px; background: linear-gradient(to top, rgba(0,0,0,.95), rgba(0,0,0,0)); }
+.ptime { font-size: 10.5px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1;
+  padding: 3px 6px; border-radius: 6px; color: #fff;
+  background: rgba(14,14,14,.74); border: 1px solid rgba(255,255,255,.3);
+  box-shadow: 0 1px 2px rgba(0,0,0,.4); }
+.ptime-more { background: rgba(14,14,14,.9); }
+/* Sold-out status, visible on the tile itself (no need to open the card). */
+.ptime-sold { text-decoration: line-through; color: #ffb4b4; opacity: .8;
+  border-color: rgba(229,72,72,.55); background: rgba(70,14,14,.78); }
+.ptile-soldout { position: absolute; top: 7px; left: 7px; z-index: 2;
+  font-size: 9.5px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase;
+  color: #fff; background: #d33; padding: 3px 6px; border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.5); }
+.ptile-title { display: block; margin-top: 7px; font-size: 12.5px; font-weight: 600; line-height: 1.25;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.ptile-title .yr { color: var(--ink-3); font-weight: 500; }
+@media (prefers-reduced-motion: reduce) { .ptile-poster { transition: none; } }
+
+/* ── Detail modal ── */
+.modal { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center;
+  justify-content: center; padding: 20px; }
+.modal[hidden] { display: none; }
+.modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.6);
+  -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px); opacity: 0; transition: opacity .22s ease; }
+.modal-card { position: relative; width: 100%; max-width: 760px; max-height: 86vh; overflow-y: auto;
+  overscroll-behavior: contain;   /* no scroll-chaining / rubber-band out to the page */
+  background: var(--bg-2); border: 1px solid var(--card-line); border-radius: 18px; padding: 22px;
+  opacity: 0; transform: scale(.955) translateY(10px);
+  transition: opacity .24s ease, transform .26s cubic-bezier(.2,.75,.2,1); }
+.modal.open .modal-backdrop { opacity: 1; }
+.modal.open .modal-card { opacity: 1; transform: none; }
+.modal-x { position: absolute; top: 8px; right: 12px; width: 34px; height: 34px; border: 0;
+  background: none; color: var(--ink-3); font-size: 26px; line-height: 1; cursor: pointer; border-radius: 8px; }
+.modal-x:hover { color: var(--ink); background: var(--bg-3); }
+@media (prefers-reduced-motion: reduce) { .modal-backdrop, .modal-card { transition: none; } }
+/* Poster fills the full height of the card (inset by the card padding); ALL text is a single
+   column to its right. */
+.fdetail { position: relative; display: flex; gap: 20px; align-items: flex-start; }
+.fdetail-poster { width: 230px; flex: none; aspect-ratio: 2/3; }
+.fdetail-poster img, .fdetail-poster .poster-ph { width: 100%; aspect-ratio: 2/3; height: auto;
+  object-fit: cover; border-radius: 10px; background: var(--bg-3); display: block; }
+.fdetail-poster .poster-ph { display: flex; align-items: center; justify-content: center;
+  color: var(--ink-3); font-weight: 800; font-size: 44px; }
+.fdetail-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.fdetail-main .badge { align-self: flex-start; }   /* size the format chip to its text, not full width */
+.fdetail-soldout { align-self: flex-start; display: inline-block; font-size: 10px; font-weight: 800;
+  letter-spacing: .6px; text-transform: uppercase; color: #fff; background: #d33;
+  padding: 3px 8px; border-radius: 5px; box-shadow: 0 1px 2px rgba(0,0,0,.45); }
+/* Reserve clearance for the absolute close (×) button so a long title can never run under it. */
+.fdetail-title { font-size: 22px; font-weight: 800; line-height: 1.15; margin: 2px 0 0; padding-right: 48px; overflow-wrap: anywhere; }
+.fdetail-title .yr { font-weight: 500; color: var(--ink-3); font-size: 0.62em; }
+.fdetail-facts { font-size: 12.5px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.fdetail-syn { font-size: 13.5px; line-height: 1.5; color: var(--ink-2); margin: 10px 0 4px; }
+.fdetail-venues { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 12px; }
+.fdetail-venues .fv { padding: 7px 0; }
+.fdetail-venues .fv + .fv { border-top: 1px solid var(--line); }
+/* Clickable showtimes get a ↗ so they read as ticket links, like the Letterboxd link. Sold-out
+   times are plain <span>s, so they stay arrow-free. */
+.fdetail-venues a.t::after { content: "↗"; margin-left: 4px; font-size: 0.82em; opacity: 0.75; }
+/* Venue logos pinned to the lower-right corner of the detail overlay card. */
+.fdetail-venue-icons { position: absolute; right: 0; bottom: 0; display: flex; align-items: flex-end; gap: 14px; }
+.fdetail-venue-icons img { height: 34px; width: auto; max-width: 84px; object-fit: contain;
+  opacity: 0.5; filter: grayscale(1); transition: opacity .15s ease, filter .15s ease; }
+.fdetail-venue-icons img:hover { opacity: 0.95; filter: none; }
+/* Mobile: tighter modal + poster gaps; posters stay ~2-up on a phone via the auto-fill min. */
+@media (max-width: 520px) {
+  .modal { padding: 12px; align-items: center; }   /* vertically centered on phones, not a bottom sheet */
+  .modal-card { padding: 16px; border-radius: 16px; max-height: 92vh; }
+  .fdetail-poster, .fdetail-poster img, .fdetail-poster .poster-ph { width: 120px; }
+  .fdetail-title { font-size: 19px; }
+  .posters { gap: 14px 10px; }
+  /* Premium sections go full-width + responsive on a phone so a many-film unit never overflows. */
+  .psec { flex-basis: 100%; }
+  .psec .posters { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)) !important; }
+}
+/* a single-screening section has one film → it fills its half-section (overrides the 2-col grid) */
+.view-format .fmt-sec-single .films { display: flex; grid-template-columns: none; }
+/* Cleaner card: poster + ONE tight content column (title · Letterboxd · venue/time pills). Kills
+   the wasted indent + empty space of the old head/detail split; times are inline pills (Alex 2026-10-10). */
+.film { display: flex; gap: 14px; align-items: flex-start; padding: 12px; overflow: visible; }
+.film-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.film-body .fv { padding: 0; border-top: 0; }
+.film-body .fv + .fv { margin-top: 5px; }
+.film-title { font-size: 18px; line-height: 1.2; margin: 0; }   /* clearly larger than the venue text (.fv-name, 13px) */
+.film-lb { margin-top: 0; }
+
+/* ── Time view: flat cards ───────────────────────────────────────────────────── */
+.view-time.cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 12px; }
+.card { display: flex; gap: 12px; background: var(--bg-2); border: 1.5px solid var(--card-line); border-radius: var(--radius); padding: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
+.card-poster { position: relative; width: 62px; flex: none; }
+.card-poster img { width: 62px; aspect-ratio: 2/3; object-fit: cover; border-radius: 8px; background: var(--bg-3); display: block; }
+.card-poster-empty { width: 62px; aspect-ratio: 2/3; display: flex; align-items: center; justify-content: center; background: var(--bg-3); border-radius: 8px; }
+.card-body { min-width: 0; flex: 1; }
+.card-film { font-size: 16px; font-weight: 700; } .card-film a { text-decoration: none; }
+.card-venue { font-size: 12px; color: var(--ink-3); margin: 2px 0 8px; }
+.card-note { font-size: 12px; color: var(--ink-3); margin: 6px 0 0; }
+
+/* Shared time pills + badges */
+.times { display: flex; flex-wrap: wrap; gap: 6px; }
+.t { font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; padding: 4px 9px; border-radius: 8px;
+  background: var(--bg-3); border: 1px solid var(--line); text-decoration: none; color: var(--ink); }
+a.t:hover { border-color: var(--line-2); } .t em { font-style: normal; color: var(--ink-3); font-size: .85em; }
+.t-sold { text-decoration: line-through; color: #ffb4b4; opacity: 0.85; }
+.card-sold { opacity: 0.72; }
+.badge { font-size: 10px; font-weight: 800; letter-spacing: 0.05em; padding: 2px 7px; border-radius: 6px; color: #06120f; display: inline-block; }
+.badge-70mm{background:var(--f-70mm)} .badge-imax{background:var(--f-imax);color:#04121f} .badge-35mm{background:var(--f-35mm)}
+.badge-dolby{background:var(--f-dolby);color:#fff} .badge-hdr{background:var(--f-hdr);color:#140b2e} .badge-more{background:var(--f-more);color:#0a0a0a}
+/* Film-format badges wear film-perforation sprockets along their top + bottom edges —
+   two rows of little notched holes, like a strip of film. */
+.badge-70mm, .badge-35mm { position: relative; padding-block: 6px; }
+.badge-70mm::before, .badge-70mm::after,
+.badge-35mm::before, .badge-35mm::after {
+  content: ""; position: absolute; left: 4px; right: 4px; height: 2.5px;
+  background-image: repeating-linear-gradient(90deg,
+    rgba(0,0,0,0.6) 0 2.5px, transparent 2.5px 5px);
+}
+.badge-70mm::before, .badge-35mm::before { top: 2px; }
+.badge-70mm::after,  .badge-35mm::after  { bottom: 2px; }
+.badge-corner { position: absolute; top: 5px; left: 5px; }
+.empty, .empty-filtered { color: var(--ink-3); text-align: center; padding: 28px 0; }
+
+/* ── Subscribe strip / shared sections ───────────────────────────────────────── */
+.subscribe-strip { width: fit-content; max-width: 100%; margin: 96px auto 8px; padding: 8px 0; text-align: center; }
+.subscribe-strip h2 { font-size: 21px; font-weight: 800; } .subscribe-strip p { color: var(--ink-2); font-size: 14px; margin: 6px 0 12px; }
+.btn { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; font-weight: 700; padding: 11px 18px; border-radius: 999px; box-shadow: 0 2px 12px rgba(232,72,111,0.4); }
+.section-h { font-size: 21px; font-weight: 800; margin: 24px 0 10px; }
+.editorial { color: var(--ink-2); font-size: 13.5px; font-style: italic; margin: 8px 0 0; }
+
+/* Day strip (week/month) */
+.daystrip { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 14px 0; }
+.daystrip::-webkit-scrollbar { display: none; }
+.daypill { flex: 0 0 auto; text-decoration: none; color: var(--ink-2); font-size: 13px; font-weight: 600; background: var(--bg-2); border: 1.5px solid var(--line-2); border-radius: 999px; padding: 7px 13px; }
+.daypill b { color: var(--ink-3); }
+.day { margin: 22px 0; scroll-margin-top: 130px; } .day-h { font-size: 22px; font-weight: 800; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+.cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 12px; }
+
+/* ── This Week: venue filter on top, then a day selector, then the selected day's grid ── */
+.controls-week { padding-top: 14px; margin-bottom: 4px; }
+/* Day selector spans the full body width (same margins as the venue chips); each day is backed by a
+   zoomed, low-contrast poster from that day — gray when inactive, brand-tinted colour when selected. */
+/* The day selector breaks slightly beyond the body margins so it reads as its own distinct band.
+   Every day is always visible — the cards flex to fill the row, never scroll. */
+.week-days { display: flex; gap: 8px; padding: 18px 0 12px; margin: 4px -32px 26px; }
+.week-day { flex: 1 1 0; min-width: 0; position: relative; overflow: hidden; isolation: isolate;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 18px 6px; border: 1.5px solid var(--card-line); border-radius: 0;   /* sharp corners */
+  background: var(--bg-2); color: #fff; cursor: pointer; font: inherit;
+  transition: border-color .16s ease, box-shadow .18s ease, transform .16s ease; }
+.week-day::after { content: ""; position: absolute; inset: 0; z-index: -2;
+  background: var(--day-bg, none) center/cover no-repeat; transform: scale(1.7);
+  filter: grayscale(100%) brightness(0.68) contrast(1.02); transition: filter .2s ease; }
+.week-day::before { content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(14,14,14,0.34), rgba(14,14,14,0.7)); transition: background .2s ease; }
+.week-day:hover { transform: translateY(-3px); border-color: var(--line-2); }   /* same lift as the posters */
+.week-day:active { transform: scale(0.97); }
+.week-day-dow { font-family: "Sansita", Georgia, serif; font-weight: 800; white-space: nowrap;
+  font-size: clamp(12px, 1.55vw, 21px); line-height: 1.05; text-shadow: 0 1px 4px rgba(0,0,0,0.75); }
+.week-day-date { font-size: 12px; color: rgba(255,255,255,0.82); font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.75); }
+.week-day-on { border-color: var(--day-tint, var(--accent));
+  /* NO color-mix here — one unsupported layer drops the WHOLE box-shadow (no ring/line) on some
+     Safari versions, which is why the outline stayed grey on mobile. Plain tint layers only. */
+  box-shadow: 0 0 0 2px var(--day-tint, var(--accent)),           /* always-visible ring */
+    inset 0 -4px 0 var(--day-tint, var(--accent)),                /* + a clear highlight line */
+    0 0 20px -4px var(--day-tint, var(--accent)); }               /* subtle glow */
+.week-day-on::after { filter: brightness(0.82) contrast(1.05) saturate(1.35); }
+.week-day-on::before { background: linear-gradient(180deg,
+    color-mix(in srgb, var(--day-tint, var(--accent)) 40%, rgba(14,14,14,0.28)), rgba(14,14,14,0.72)); }
+/* selected day = a distinct, fun treatment: italic Sansita, a touch bigger, with the SAME
+   chromatic-aberration + halation glow as the active tab title */
+.week-day-on .week-day-dow {
+  font-style: italic; font-size: clamp(13px, 1.75vw, 23px); letter-spacing: -0.01em;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.7),
+    -0.4px 0 0 rgba(228,72,72,0.55), 0.4px 0 0 rgba(80,200,255,0.55),
+    0 0 6px rgba(144,200,240,0.55), 0 0 18px rgba(144,200,240,0.40), 0 0 36px rgba(144,200,240,0.22); }
+.week-body .dayviews { animation: week-fade .22s ease; }
+@keyframes week-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .week-body .dayviews { animation: none; } }
+@media (max-width: 860px) {
+  .week-days { gap: 4px; margin-inline: -12px; }
+  .week-day { flex: 1 1 0; min-width: 0; padding: 12px 3px; }
+  .week-day-date { font-size: 10px; }
+
+  /* Section bar: "This Week in Austin · date" on one line, the format cards on their OWN row
+     beneath it, and no horizontal scrolling anywhere. */
+  .sectionbar-row { flex-direction: column; align-items: stretch; gap: 10px; overflow-x: visible; max-width: 100%; padding: 10px 16px; }
+  /* Full-width red underline, with space between the format cards and the line. */
+  .sect-active { flex-direction: column; align-items: stretch; gap: 8px; margin-inline: -16px; padding: 0 16px 12px; }
+  .sect-active .sect { width: 100%; white-space: normal; }
+  .sectionbar .scoreboard { width: 100%; overflow-x: visible; flex-wrap: nowrap; gap: 5px; justify-content: space-between; }
+  .sectionbar .score { flex: 1 1 0; min-width: 0; flex-direction: column; padding: 6px 2px; gap: 1px; }
+  .sectionbar .score-label { font-size: 9px; }
+  .sectionbar .score-count { font-size: 15px; }
+  .sectionbar-row > .sect { padding: 4px 0; }
+
+  /* Venue filter becomes a dropdown instead of the scrolling chip slider. */
+  .chips { display: none; }
+  .venue-select { display: block; }
+}
+
+/* Hero (Who are we / subscribe) */
+.hero { text-align: center; padding: 18px 0 10px; }
+.hero-logo { max-width: min(560px, 88vw); width: 100%; height: auto; display: block; margin: 8px auto 20px;
+  filter: drop-shadow(0 0 16px rgba(232,72,111,0.5)) drop-shadow(0 0 38px rgba(74,163,232,0.3)); animation: marquee-glow 4.2s ease-in-out infinite; }
+.hero-h { font-size: clamp(22px, 5vw, 34px); font-weight: 800; max-width: 760px; margin: 0 auto; }
+/* Match the Who-are-we page's italic "70mm, IMAX, repertory" treatment: warm-white with a
+   chromatic-aberration + marquee-phosphor halation glow (not a flat teal). */
+.hero-h i { font-style: italic; font-weight: 800; color: #FFFEF7;
+  text-shadow: -0.5px 0 0 rgba(228,72,72,0.7), 0.5px 0 0 rgba(80,200,255,0.7),
+    0 0 1px rgba(255,255,255,0.85), 0 0 5px rgba(255,235,200,0.55),
+    0 0 14px rgba(255,200,150,0.30), 0 0 28px rgba(255,170,110,0.15); }
+.hero-sub { color: var(--ink-2); font-size: 15px; max-width: 600px; margin: 16px auto 0; line-height: 1.7; } .hero-sub strong { color: var(--ink); }
+.prose { max-width: 680px; } .prose p { color: var(--ink); font-size: 15px; } .prose a, .covered-note a, .embed-more a, .pitch a { color: var(--f-imax); }
+.covered-note { color: var(--ink-2); font-size: 14px; line-height: 1.7; max-width: 680px; } .covered-note strong { color: var(--ink); }
+.how { padding-left: 18px; } .how li { margin-bottom: 10px; color: var(--ink-2); font-size: 14px; } .how b { color: var(--ink); }
+.credits-line { color: var(--ink-3); font-size: 12px; margin-top: 22px; }
+.sub-card { background: var(--bg-2); border: 1.5px solid var(--line-2); border-radius: var(--radius); padding: 22px; margin: 20px auto; max-width: 540px; text-align: center; }
+.sub-opt { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; font-size: 14px; color: var(--ink-2); } .sub-opt b { color: var(--ink); } .sub-opt input { margin-top: 3px; }
+.sub-form { display: flex; gap: 8px; max-width: 420px; margin: 0 auto; } .sub-form input { flex: 1; min-width: 0; background: var(--bg); border: 1.5px solid var(--line-2); border-radius: 10px; padding: 10px 12px; color: var(--ink); font: inherit; }
+.sub-form button { background: var(--accent); color: #fff; border: 0; border-radius: 10px; padding: 10px 18px; font: inherit; font-weight: 700; cursor: pointer; }
+.sub-note { font-size: 11px; color: var(--ink-3); margin-top: 12px; } .embed-more { margin-top: 12px; }
+
+/* Projector guide / coming soon */
+.coming { text-align: center; padding: 40px 16px; }
+.coming h1 { font-size: clamp(24px, 6vw, 38px); font-weight: 800; } .coming .soon { display: inline-block; margin: 14px 0; padding: 6px 16px; border: 1.5px solid var(--gold); color: var(--gold); border-radius: 999px; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+.coming p { color: var(--ink-2); max-width: 560px; margin: 10px auto; font-size: 15px; }
+.screen-list { max-width: 620px; margin: 24px auto 0; text-align: left; display: flex; flex-direction: column; gap: 8px; }
+.screen-row { display: flex; justify-content: space-between; gap: 10px; padding: 12px 14px; background: var(--bg-2); border: 1.5px solid var(--line-2); border-radius: 10px; font-size: 14px; }
+.screen-row span { color: var(--ink-3); font-size: 12px; }
+
+/* Footer */
+.foot { max-width: var(--maxw); margin: 10px auto 0; padding: 24px 16px 30px; text-align: center; color: var(--ink-3); }
+.foot-filtered { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+  color: var(--ink-3); text-decoration: none; padding: 3px 12px; border: 1px solid var(--line);
+  border-radius: 999px; margin-bottom: 14px; }
+.foot-filtered:hover { color: var(--ink); border-color: var(--line-2); }
+.foot-credits { font-size: 12px; margin: 0; } .foot-credits a { color: var(--ink-3); text-decoration: none; }
+.foot-credits a:hover { color: var(--ink-2); }
+
+/* ── Responsive ──────────────────────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .topnav-sec { display: none; }
+  .subscribe-cta { font-size: 0; padding: 9px; }          /* becomes an icon-ish pill on mobile */
+  .subscribe-cta::before { content: "✉ Subscribe"; font-size: 12px; }
+  .brand-img { height: 46px; }
+  .sectionbar { top: 62px; }
+}
+@media (min-width: 720px) {
+  .view-time.cards, .cards { grid-template-columns: 1fr 1fr; }
+  .fmt-sec .films { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .film-detail { padding-left: 14px; }                    /* full-width detail in 2-col */
+}
+@media (min-width: 1100px) { .day .cards { grid-template-columns: 1fr 1fr 1fr; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* ── By-time view: chronological time groups, poster card per film ───────────────── */
+/* View toggle: data-view on <main> drives it (works for Tonight's single view AND each week day). */
+.view-time { margin: 0; padding: 0; flex-direction: column; gap: 22px; display: none; }
+main[data-view="time"] .view-format { display: none; }
+main[data-view="time"] .view-time { display: flex; }
+.yr { margin-left: 4px; }   /* a bit more breathing room between a title and its year, everywhere */
+.tslot { display: block; }
+.tslot-h { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.tslot-time { font-family: "Sansita", Georgia, serif; font-weight: 800; font-size: 19px;
+  font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+.tslot-h::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.tslot-films { list-style: none; margin: 0; padding: 0; display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px 14px; }  /* ~3 up on desktop, narrower cards */
+/* Poster-forward time card: full-height poster on the left, a tap opens the same detail modal. */
+.tcard { border: 1.5px solid var(--card-line); border-radius: 12px; background: var(--bg-2); overflow: hidden; }
+.tcard:hover { border-color: var(--line-2); }
+/* Premium formats get a colour-matched outline, same as the By-Format posters. */
+.tcard[data-format="70mm"] { border-color: var(--f-70mm); }
+.tcard[data-format="imax"] { border-color: var(--f-imax); }
+.tcard[data-format="35mm"] { border-color: var(--f-35mm); }
+.tcard[data-format="dolby"] { border-color: var(--f-dolby); }
+.tcard[data-format="hdr"]  { border-color: var(--f-hdr); }
+.tcard-btn { display: flex; align-items: stretch; width: 100%; padding: 0; margin: 0; border: 0;
+  background: none; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+.tcard-poster { position: relative; width: 104px; flex: none; aspect-ratio: 2/3; }
+.tcard-poster img,
+.tcard-poster .poster-ph { width: 104px; aspect-ratio: 2/3; object-fit: cover; display: block; background: var(--bg-3); }
+.tcard-poster .poster-ph { display: flex; align-items: center; justify-content: center;
+  color: var(--ink-3); font-weight: 800; font-size: 30px; }
+.tcard-body { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center;
+  gap: 5px; padding: 12px 14px; }
+.tcard-title { font-size: 15.5px; font-weight: 700; line-height: 1.28; }
+.tcard-title .yr { color: var(--ink-3); font-weight: 500; }   /* same size as the title, just dimmer */
+.tcard-badge { vertical-align: middle; margin-left: 5px; }    /* format chip to the right of the title */
+.tcard-venue { color: var(--ink-3); font-size: 12.5px; }
+.tcard-soldtag { display: inline-block; align-self: flex-start; margin-top: 3px; font-size: 9.5px; font-weight: 800;
+  letter-spacing: .6px; text-transform: uppercase; color: #fff; background: #d33;
+  padding: 2px 6px; border-radius: 5px; box-shadow: 0 1px 2px rgba(0,0,0,.45); }
+.tcard-sold { opacity: 0.74; }
+
+/* ── Advance Tickets — date-forward film cards ─────────────────────────────── */
+.ahead-lede { color: var(--ink-2); font-size: 15px; margin: 6px auto 24px; max-width: 54ch; text-align: center; }
+.ahead-list { list-style: none; margin: 0; padding: 0; display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+.ahead-card { display: flex; gap: 14px; background: var(--bg-2); border: 1.5px solid var(--card-line);
+  border-radius: 12px; overflow: hidden; }
+.ahead-card[data-format="70mm"] { border-color: var(--f-70mm); }
+.ahead-card[data-format="imax"] { border-color: var(--f-imax); }
+.ahead-card[data-format="35mm"] { border-color: var(--f-35mm); }
+.ahead-card[data-format="dolby"] { border-color: var(--f-dolby); }
+.ahead-card[data-format="hdr"]  { border-color: var(--f-hdr); }
+.ahead-poster { position: relative; width: 92px; flex: none; aspect-ratio: 2/3; background: var(--bg-3); }
+.ahead-poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ahead-poster:has(.poster-logo) { display: flex; align-items: center; justify-content: center; }
+.ahead-poster .poster-ph { display: flex; width: 100%; height: 100%; align-items: center;
+  justify-content: center; color: var(--ink-3); font-weight: 800; font-size: 26px; }
+.ahead-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px;
+  padding: 12px 14px; justify-content: center; }
+.ahead-date { font-family: "Sansita", Georgia, serif; font-weight: 800; font-size: 15px;
+  color: var(--gold); letter-spacing: .01em; }
+.ahead-film { font-size: 16px; font-weight: 800; line-height: 1.15; margin: 0; }
+.ahead-film a { color: inherit; text-decoration: none; } .ahead-film a:hover { color: #fff; }
+.ahead-venue { color: var(--ink-2); font-size: 12.5px; margin: 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ahead-buy { margin-top: 4px; align-self: flex-start; color: var(--accent); font-weight: 700; font-size: 13px; text-decoration: none; }
+.ahead-buy:hover { text-decoration: underline; }
+
+/* ── Who-are-we page: prominent daily/weekly email picker + room to breathe ──── */
+.cadence-pick { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  margin: 14px auto 28px; max-width: 620px; }
+.cad-opt { flex: 1 1 240px; max-width: 300px; display: flex; flex-direction: column; gap: 4px;
+  padding: 16px 18px 16px 20px; border: 1.5px solid rgba(244,242,225,0.22); border-radius: 14px;
+  background: rgba(244,242,225,0.03); cursor: pointer; text-align: left; position: relative;
+  transition: border-color .15s ease, background .15s ease; }
+.cad-opt input { position: absolute; top: 16px; right: 16px; accent-color: #e5a62b; width: 16px; height: 16px; }
+.cad-opt:hover { border-color: rgba(244,242,225,0.45); }
+.cad-opt:has(input:checked) { border-color: #e5a62b; background: rgba(229,166,43,0.10); }
+.cad-title { font-weight: 800; font-size: 1rem; color: #f4f2e1; }
+.cad-desc { font-size: .8rem; color: rgba(244,242,225,0.62); padding-right: 24px; }
+/* space between the picker, the email box and the note */
+.form-block { margin-top: 30px !important; }
+.form-block .form-wrap { margin-top: 2px; }
+.form-block .form-note { margin-top: 16px !important; }
+
+/* Film-format pills on the Who-are-we page wear film-perforation sprockets (like the badges). */
+.p-70mm, .p-35mm, .p-70mm-imax { position: relative; }
+.p-70mm::before, .p-70mm::after,
+.p-35mm::before, .p-35mm::after,
+.p-70mm-imax::before, .p-70mm-imax::after {
+  content: ""; position: absolute; left: 5px; right: 5px; height: 3px; pointer-events: none;
+  background-image: repeating-linear-gradient(90deg, rgba(0,0,0,0.5) 0 3px, transparent 3px 6px);
+}
+.p-70mm::before, .p-35mm::before, .p-70mm-imax::before { top: 2px; }
+.p-70mm::after,  .p-35mm::after,  .p-70mm-imax::after  { bottom: 2px; }
+
+/* ── Mobile menu-bar: hamburger for secondary nav + logo glow match ─────────── */
+.hamb, .hamb-menu { display: none; }
+/* Who-are-we hero logo: same pink+blue marquee glow as the top menu bar's logo. */
+.hero .cmx-logo { opacity: 1 !important; transform: none !important;
+  filter: drop-shadow(0 0 7px rgba(232,72,111,0.6)) drop-shadow(0 0 16px rgba(74,163,232,0.32)) !important;
+  animation: marquee-glow 3.6s ease-in-out infinite !important; }
+
+@media (max-width: 860px) {
+  /* Day buttons a touch taller. */
+  .week-day { padding: 16px 3px; }
+  .titlebar, .sectionbar { background: #0d0d0d; }
+
+  /* Hamburger (Who are we / Advance / Projector Guide) on the far right of the This Week row. */
+  .sect-active { position: relative; }
+  .hamb { display: inline-flex; align-items: center; justify-content: center; position: absolute;
+    top: 0; right: 2px; width: 40px; height: 36px; padding: 0; background: none; border: 0;
+    color: var(--ink); cursor: pointer; z-index: 5; }
+  .hamb-menu { display: flex; flex-direction: column; position: absolute; top: 42px; right: 2px; z-index: 50;
+    min-width: 230px; background: var(--bg-2); border: 1.5px solid var(--line-2); border-radius: 12px;
+    padding: 6px; box-shadow: 0 14px 34px rgba(0,0,0,0.55); }
+  .hamb-menu[hidden] { display: none; }
+  .hamb-menu a, .hamb-menu .hamb-soon { display: block; padding: 11px 14px; border-radius: 8px;
+    text-decoration: none; color: var(--ink); font-size: 14px; font-weight: 600; }
+  .hamb-menu a:hover { background: var(--bg-3); color: #fff; }
+  .hamb-soon { color: var(--ink-3); cursor: default; }
+  .hamb-soon small { display: block; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-top: 2px; }
+  /* the inactive tabs now live in the hamburger */
+  .sectionbar-row > .sect { display: none; }
+
+  /* Controls (By format/By time + venue dropdown) become a sticky bar — JS sets its top flush
+     under the section bar so the whole menu stack stays fixed and never changes height. */
+  .controls { position: sticky; z-index: 23; background: var(--bg); margin: 0 -16px 14px; padding: 10px 16px; }
+}
+
+@media (max-width: 860px) {
+  /* Titlebar hamburger (sectionbar-less pages: about / subscribe / guide) — a flex item at the
+     end of the bar; its menu drops below the title bar. */
+  .hamb-tb { position: static; width: 40px; height: 36px; margin-left: 4px; }
+  .titlebar-row { position: relative; }
+  .hamb-menu.hamb-menu-tb { top: calc(100% - 2px); right: 12px; }
+}
+
+@media (max-width: 860px) {
+  /* Day selector stays visible too — part of the sticky header stack. */
+  .week-days { position: sticky; z-index: 24; background: #0d0d0d; margin: 0 -16px; padding: 10px 16px 12px; }
+}
+
+@media (max-width: 860px) {
+  /* The This Week bar is NOT sticky on mobile — it scrolls away completely, leaving just the day
+     selector + controls stuck under the (shrunk) title bar for maximum content room. */
+  .sectionbar { position: static; }
+  /* On scroll the title bar shrinks. Instant (no transition) so the sticky bars never lag + gap. */
+  body.scrolled .titlebar-row { min-height: 0; padding-top: 4px; padding-bottom: 4px; }
+  body.scrolled .brand-img { height: 30px; }
+}
+
+/* Day-selector label: full ("Tomorrow") on wide screens, short weekday on mobile so it never clips. */
+.dow-sm { display: none; }
+@media (max-width: 860px) { .dow-lg { display: none; } .dow-sm { display: inline; } }
+
+/* When a detail modal is open, lift the content (which contains the modal) above the sticky menu
+   bars so the modal always overlaps them instead of sliding underneath. */
+body.modal-open .wrap { z-index: 200; }
+
+/* ── Liquid-glass return-to-top button (ported from alexwalker.co) ───────── */
+
+ #return-to-top svg {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+#return-to-top .glass-button-text {
+  color: rgba(0, 0, 0, 0.75) !important;
+}
+
+#return-to-top svg {
+  fill: rgba(0, 0, 0, 0.75);
+}
+
+@media (prefers-color-scheme: dark) {
+  #return-to-top .glass-button-text {
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  #return-to-top svg {
+    fill: rgba(255, 255, 255, 0.9);
+  }
+}
+/* Clients list — mobile fix (phones only). Scoped to the legacy text variant
+   so the logo grid keeps its auto-fit columns on small screens. */
+@media screen and (max-width: 700px) {
+  .clients:not(.clients--logos) {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding-left: 0 !important;
+    text-align: center !important;
+    overflow-x: hidden !important;
+  }
+
+  .clients:not(.clients--logos) li {
+    list-style: none;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .clients--logos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px 28px;
+  }
+  .clients--logos li { --lb-base: 64px; }
+  .clients--logos li > a,
+  .clients--logos li > img,
+  .clients--logos li > a > img {
+    max-width: calc(171px * var(--lb-scale));
+  }
+}
+/* Meta in-app WebViews (Instagram, Threads, FB) report viewports/layout in
+   ways that defeat our normal mobile breakpoint. Detected in JS in the head
+   and tagged on <html>; rules below win specificity AND use !important so
+   the WebView can't fall back to the desktop layout. iPad and Safari are
+   unaffected — they don't pick up this UA tag.
+   Extra defense: explicitly restate display:grid and re-apply column rule
+   in case the legacy .clients:not(.clients--logos) rule leaks through a
+   buggy :not() implementation in the WebView. */
+html.is-instagram-webview .clients--logos {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 24px !important;
+  max-width: 100% !important;
+}
+html.is-instagram-webview .clients--logos li {
+  --lb-base: 64px !important;
+  min-width: 0 !important;
+}
+html.is-instagram-webview .clients--logos li > a,
+html.is-instagram-webview .clients--logos li > img,
+html.is-instagram-webview .clients--logos li > a > img {
+  max-width: calc(171px * var(--lb-scale)) !important;
+  min-width: 0 !important;
+}
+/* Crisper rendering of the small monochrome logos in WebView contexts where
+   the default downscale can look aliased. */
+html.is-instagram-webview .clients--logos img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: auto;
+}
+/* iPad-class IG/FB/Threads WebView: the parent rule above forces 2 cols
+   because IG's iPhone-mode viewport otherwise cascades to the desktop
+   4-col rule and the logos blow out. On real iPad screens (detected via
+   `screen.width|height` in head.html) we still want the tablet 4-col
+   look — restore it here, with the same !important arsenal the base
+   IG-WebView rule uses since we need to outrank both it and the
+   `(max-width: 1000px)` rule (3 cols) that triggers at IG's narrow
+   layout viewport. */
+html.is-instagram-webview-tablet .clients--logos {
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 36px 48px !important;
+  max-width: 1100px !important;
+}
+html.is-instagram-webview-tablet .clients--logos li {
+  --lb-base: 76px !important;
+}
+html.is-instagram-webview-tablet .clients--logos li > a,
+html.is-instagram-webview-tablet .clients--logos li > img,
+html.is-instagram-webview-tablet .clients--logos li > a > img {
+  max-width: calc(210px * var(--lb-scale)) !important;
+}
+.centered-subheading {
+  text-align: center;
+}
+#glass-wrapper {
+  position: fixed;
+  bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+  right: calc(40px + env(safe-area-inset-right, 0px));
+  width: 44px;
+  height: 44px;
+  z-index: 9967;
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease,
+              transform 420ms cubic-bezier(0.4, 0, 0.2, 1),
+              filter 420ms ease-in-out,
+              visibility 0s linear 0.3s;
+}
+
+#glass-wrapper.visible {
+  visibility: visible;
+  pointer-events: auto;
+  opacity: 1;
+  transition: opacity 0.3s ease,
+              transform 420ms cubic-bezier(0.4, 0, 0.2, 1),
+              filter 420ms ease-in-out,
+              visibility 0s linear 0s;
+}
+
+#return-to-top {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  overflow: visible;
+  /* iOS Safari otherwise waits ~300ms after the first tap to see if a
+     second tap is coming (potential double-tap zoom). manipulation tells
+     the browser to fire `click` on the first tap immediately. */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+#glass-wrapper {
+  touch-action: manipulation;
+}
+
+/* All touch devices (iPhone + iPad, every orientation) — compact bottom-right placement */
+@media (hover: none) {
+  #glass-wrapper {
+    left: auto;
+    top: auto;
+    right: max(32px, env(safe-area-inset-right, 0px) + 24px);
+    bottom: calc(32px + env(safe-area-inset-bottom, 0px));
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* iPhone-size: keep same generous inset, smaller button */
+@media (max-width: 480px) {
+  #glass-wrapper {
+    bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* === styles (formerly styles.css) === */
+/* Base Styles - General layout and typography */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.content {
+  padding-top: 40px;
+  max-width: 800px;
+  margin: auto;
+}
+
+/* Image styles */
+.hero-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.content-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+.gradient-banner {
+  height: 300px;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gradient-banner h2 {
+  color: white;
+  text-align: center;
+}
+
+/* === glass (formerly glass.css) === */
+/* Glass Container Styles */
+.glass-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.glass-container-circle {
+  aspect-ratio: 1 / 1; /* Force perfect square ratio */
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.glass-container-pill {
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+/* Glass Button Styles */
+.glass-button {
+  position: relative;
+  cursor: pointer;
+  pointer-events: auto;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* Absolutely no CSS drop-shadow on the return-to-top wrapper or anything inside */
+#glass-wrapper,
+#glass-wrapper *,
+#glass-wrapper *::before,
+#glass-wrapper *::after,
+.glass-button,
+.glass-container {
+  box-shadow: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+.glass-button-circle {
+  aspect-ratio: 1 / 1; /* Force perfect square ratio */
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.glass-button-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+  font-weight: normal;
+  color: white;
+  font-family: system-ui, -apple-system, sans-serif;
+  white-space: nowrap;
+}
+
+/* === lightbox === */
