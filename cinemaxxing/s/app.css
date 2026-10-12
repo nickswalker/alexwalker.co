@@ -1021,3 +1021,11 @@ body {
 }
 
 /* === lightbox === */
+
+/* Special-event label (Alamo Dress-Up / Q&A etc.) — flags a non-standard screening on the card. */
+.ev-label { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--accent); background:color-mix(in srgb, var(--accent) 14%, transparent); border:1px solid color-mix(in srgb, var(--accent) 45%, transparent); border-radius:999px; padding:1px 7px; margin-left:4px; vertical-align:middle; white-space:nowrap; }
+
+/* Additive audio/resolution badges — secondary to the format tile (Atmos silver, 4K understated). */
+.aud-badge { display:inline-block; font-size:9px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; border-radius:4px; padding:1px 5px; margin-left:4px; vertical-align:middle; white-space:nowrap; }
+.aud-badge.badge-atmos { color:#e6e9ee; background:linear-gradient(180deg, rgba(222,226,232,0.22), rgba(150,156,168,0.14)); border:1px solid rgba(205,211,222,0.55); text-shadow:0 1px 1px rgba(0,0,0,0.35); }
+.aud-badge.badge-4k { color:#cdd1d6; background:rgba(205,209,214,0.08); border:1px solid rgba(205,209,214,0.32); }
