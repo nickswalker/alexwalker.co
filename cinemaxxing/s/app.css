@@ -370,6 +370,7 @@ body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: v
   color: var(--ink-3); font-weight: 800; font-size: 44px; }
 .fdetail-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
 .fdetail-main .badge { align-self: flex-start; }   /* size the format chip to its text, not full width */
+.fdetail-badges { align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .fdetail-soldout { align-self: flex-start; display: inline-block; font-size: 10px; font-weight: 800;
   letter-spacing: .6px; text-transform: uppercase; color: #fff; background: #d33;
   padding: 3px 8px; border-radius: 5px; box-shadow: 0 1px 2px rgba(0,0,0,.45); }
@@ -611,9 +612,9 @@ main[data-view="time"] .view-time { display: flex; }
   color: var(--ink-3); font-weight: 800; font-size: 30px; }
 .tcard-body { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center;
   gap: 5px; padding: 12px 14px; }
-.tcard-title { font-size: 15.5px; font-weight: 700; line-height: 1.28; }
+.tcard-title { font-size: 15.5px; font-weight: 700; line-height: 1.28; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; }
 .tcard-title .yr { color: var(--ink-3); font-weight: 500; }   /* same size as the title, just dimmer */
-.tcard-badge { vertical-align: middle; margin-left: 5px; }    /* format chip to the right of the title */
+.tcard-badge { vertical-align: middle; }    /* format chip to the right of the title; gap handles spacing */
 .tcard-venue { color: var(--ink-3); font-size: 12.5px; }
 .tcard-soldtag { display: inline-block; align-self: flex-start; margin-top: 3px; font-size: 9.5px; font-weight: 800;
   letter-spacing: .6px; text-transform: uppercase; color: #fff; background: #d33;
@@ -1024,7 +1025,7 @@ body {
 /* === lightbox === */
 
 /* Special-event label (Alamo Dress-Up / Q&A etc.) — flags a non-standard screening on the card. */
-.ev-label { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--accent); background:color-mix(in srgb, var(--accent) 14%, transparent); border:1px solid color-mix(in srgb, var(--accent) 45%, transparent); border-radius:999px; padding:1px 7px; margin-left:4px; vertical-align:middle; white-space:nowrap; }
+.ev-label { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:#fff; background:var(--accent); border:1px solid var(--accent); border-radius:999px; padding:2px 8px; margin-left:5px; vertical-align:middle; white-space:nowrap; box-shadow:0 0 0 2px color-mix(in srgb, var(--accent) 22%, transparent); }
 
 /* Additive audio/resolution badges — secondary to the format tile (Atmos silver, 4K understated). */
 .aud-badge { display:inline-block; font-size:9px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; border-radius:4px; padding:1px 5px; margin-left:4px; vertical-align:middle; white-space:nowrap; }
