@@ -525,6 +525,7 @@ a.t:hover { border-color: var(--line-2); } .t em { font-style: normal; color: va
   .titlebar .hamb-menu-tb .hamb-soon small { display: block; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-top: 2px; }
   .sectionbar-row > .sect { display: none; }
   .sectionbar .scoreboard { flex: 0 0 auto; }
+  .topnav-sec { display: none; }
 }
 
 @media (max-width: 860px) {
@@ -917,7 +918,7 @@ html.is-instagram-webview-tablet .clients--logos li > a > img {
   #glass-wrapper {
     left: auto;
     top: auto;
-    right: max(32px, env(safe-area-inset-right, 0px) + 24px);
+    right: calc(32px + env(safe-area-inset-right, 0px));
     bottom: calc(32px + env(safe-area-inset-bottom, 0px));
     width: 44px;
     height: 44px;
