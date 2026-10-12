@@ -14,11 +14,29 @@
   const activeFormats = new Set();
   let activeVenue = "";
 
-  // Keep the "Today"/"Tonight" wording correct even when the static page was built before sunset.
-  for (const el of $$(".js-daypart")) {
-    if (el.dataset.tomorrow === "1") continue;
-    const ss = parseInt(el.dataset.sunset || "0", 10);
-    if (ss) el.textContent = Date.now() >= ss ? "Tonight" : "Today";
+  // Keep "Today"/"Tonight" wording correct across the heading, the day-picker tab and the
+  // "More Today" badge even when the static page was built before sunset — and flip it LIVE
+  // at sunset while the page is open.
+  function applyDaypart() {
+    let ss = 0;
+    for (const el of $$(".js-daypart")) {
+      if (el.dataset.tomorrow === "1") continue;
+      const s = parseInt(el.dataset.sunset || "0", 10);
+      if (!s) continue;
+      ss = s;
+      el.textContent = Date.now() >= s ? "Tonight" : "Today";
+    }
+    if (ss && Date.now() >= ss) {
+      for (const el of $$(".badge-more")) {
+        if (/\bToday\b/.test(el.textContent)) el.textContent = el.textContent.replace(/\bToday\b/, "Tonight");
+      }
+    }
+    return ss;
+  }
+  const _sunsetMs = applyDaypart();
+  if (_sunsetMs) {
+    const _until = _sunsetMs - Date.now();
+    if (_until > 0 && _until < 24 * 3600 * 1000) setTimeout(applyDaypart, _until + 1000);
   }
 
   const inHiddenDay = (el) => { const dv = el.closest(".dayviews"); return dv && dv.hidden; };
