@@ -117,7 +117,7 @@ body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: v
 .score-70mm::before, .score-70mm::after,
 .score-35mm::before, .score-35mm::after {
   content: ""; position: absolute; left: 6px; right: 6px; height: 2.5px; pointer-events: none;
-  background-image: repeating-linear-gradient(90deg, rgba(0,0,0,0.6) 0 2.5px, transparent 2.5px 5px); }
+  background-image: repeating-linear-gradient(90deg, var(--pill-glow) 0 2.5px, transparent 2.5px 5px); }
 .score-70mm::before, .score-35mm::before { top: 3px; }
 .score-70mm::after,  .score-35mm::after  { bottom: 3px; }
 /* Same playful lift + chromatic glow as the "who are we" format pills. */
