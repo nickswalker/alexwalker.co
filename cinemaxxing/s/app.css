@@ -121,14 +121,14 @@ body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: v
 .score-70mm::before, .score-35mm::before { top: 3px; }
 .score-70mm::after,  .score-35mm::after  { bottom: 3px; }
 /* Same playful lift + chromatic glow as the "who are we" format pills. */
-@media (hover: hover) {
+@media (any-hover: hover) {
   .score:hover { z-index: 2; transform: scale(1.16) translateY(-2px) rotate(-1.5deg); filter: brightness(1.08);
     box-shadow: 0 0 1px var(--pill-glow), 0 0 6px var(--pill-glow), 0 0 22px -2px var(--pill-glow), 0 8px 20px -8px var(--pill-glow); }
 }
 @media (prefers-reduced-motion: reduce) { .score, .score:hover { transition: none; transform: none; box-shadow: none; filter: none; } }
 /* Let the hovered tile's lift + glow spill out past the row instead of being clipped. The scroll
    containers only need to clip on touch/narrow screens, so free them where hover applies. */
-@media (hover: hover) { .scoreboard, .sectionbar-row { overflow: visible; } }
+@media (any-hover: hover) { .scoreboard, .sectionbar-row { overflow: visible; } }
 .score-label { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-align: center; white-space: normal; line-height: 1.1; overflow-wrap: break-word; hyphens: none; }
 .score-num { display: inline-flex; align-items: center; gap: 4px; }
 .score-count { font-size: 17px; font-weight: 800; font-variant-numeric: tabular-nums; }
@@ -334,6 +334,8 @@ body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: v
 /* Sold-out status, visible on the tile itself (no need to open the card). */
 .ptime-sold { text-decoration: line-through; color: #ffb4b4; opacity: .8;
   border-color: rgba(229,72,72,.55); background: rgba(70,14,14,.78); }
+.ptile-event { position: absolute; top: 7px; left: 7px; z-index: 3; max-width: calc(100% - 14px); font-size: 10px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; color: #fff; background: var(--accent); border-radius: 6px; padding: 3px 7px; line-height: 1.12; box-shadow: 0 1px 6px rgba(0,0,0,.5); }
+.tcard-event { align-self: flex-start; margin-top: 4px; display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; color: #fff; background: var(--accent); border-radius: 5px; padding: 2px 7px; }
 .ptile-soldout { position: absolute; top: 7px; left: 7px; z-index: 2;
   font-size: 9.5px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase;
   color: #fff; background: #d33; padding: 3px 6px; border-radius: 5px;
@@ -504,6 +506,18 @@ a.t:hover { border-color: var(--line-2); } .t em { font-style: normal; color: va
 .week-body .dayviews { animation: week-fade .22s ease; }
 @keyframes week-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .week-body .dayviews { animation: none; } }
+/* iPad / narrow laptop (861-1340px): the one-row sectionbar (heading + 5 cards + 2 tabs ~1280px)
+   overflows below ~1340px and centered-clips both ends, hiding "4K Barco HDR". Stack it like the
+   phone layout so every card stays visible and the any-hover lift has room. */
+@media (min-width: 861px) and (max-width: 1340px) {
+  .sectionbar-row { flex-direction: column; align-items: stretch; gap: 10px; overflow-x: visible; max-width: 100%; }
+  .sect-active { flex-direction: column; align-items: stretch; gap: 8px; margin-inline: -16px; padding: 0 16px 12px; }
+  .sect-active .sect { width: 100%; white-space: normal; }
+  .sectionbar .scoreboard { width: 100%; overflow-x: visible; flex-wrap: nowrap; gap: 8px; justify-content: space-between; }
+  .sectionbar .score { flex: 1 1 0; min-width: 0; }
+  .sectionbar-row > .sect { padding: 6px 0; }
+}
+
 @media (max-width: 860px) {
   .week-days { gap: 4px; margin-inline: -12px; }
   .week-day { flex: 1 1 0; min-width: 0; padding: 12px 3px; }
@@ -1031,3 +1045,5 @@ body {
 .aud-badge { display:inline-block; font-size:9px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; border-radius:4px; padding:1px 5px; margin-left:4px; vertical-align:middle; white-space:nowrap; }
 .aud-badge.badge-atmos { color:#e6e9ee; background:linear-gradient(180deg, rgba(222,226,232,0.22), rgba(150,156,168,0.14)); border:1px solid rgba(205,211,222,0.55); text-shadow:0 1px 1px rgba(0,0,0,0.35); }
 .aud-badge.badge-4k { color:#cdd1d6; background:rgba(205,209,214,0.08); border:1px solid rgba(205,209,214,0.32); }
+
+.ptile-poster:has(.ptile-event) .ptile-soldout { left: auto; right: 7px; }
