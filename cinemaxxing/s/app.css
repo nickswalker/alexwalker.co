@@ -148,7 +148,8 @@ body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: v
   overflow-x: auto; scrollbar-width: none; align-items: stretch; justify-content: center; }
 .sectionbar-row::-webkit-scrollbar { display: none; }
 .sect { flex: 0 0 auto; text-decoration: none; color: var(--ink-2); font-size: 16px; font-weight: 700;
-  padding: 14px 20px; border-bottom: 3px solid transparent; white-space: nowrap; }
+  padding: 14px 20px; border-bottom: 3px solid transparent; white-space: nowrap;
+  display: inline-flex; align-items: center; justify-content: center; }
 /* "Austin Cinema Projector Guide" tab — not yet live: non-clickable, muted, with Coming soon beneath. */
 .sect-soon { color: var(--ink-3); cursor: default; display: inline-flex; flex-direction: column;
   align-items: flex-start; gap: 1px; line-height: 1.05; }
