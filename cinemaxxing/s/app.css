@@ -129,7 +129,7 @@ body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: v
 /* Let the hovered tile's lift + glow spill out past the row instead of being clipped. The scroll
    containers only need to clip on touch/narrow screens, so free them where hover applies. */
 @media (hover: hover) { .scoreboard, .sectionbar-row { overflow: visible; } }
-.score-label { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; }
+.score-label { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-align: center; white-space: normal; line-height: 1.1; overflow-wrap: break-word; hyphens: none; }
 .score-num { display: inline-flex; align-items: center; gap: 4px; }
 .score-count { font-size: 17px; font-weight: 800; font-variant-numeric: tabular-nums; }
 .score-face { width: 16px; height: 16px; }
@@ -180,7 +180,7 @@ body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: v
 /* Format cards: compact ROUNDED RECTANGLES (not pills). */
 .sectionbar .scoreboard { flex: 0 1 auto; align-items: center; gap: 7px; }
 .sectionbar .score { flex-direction: row; width: auto; gap: 6px; padding: 6px 11px; border-radius: 9px; }
-.sectionbar .score-label { font-size: 10px; }
+.sectionbar .score-label { font-size: 10px; max-width: 8.5em; }
 .sectionbar .score-num { gap: 3px; }
 .sectionbar .score-count { font-size: 14px; }
 .sectionbar .score-face { width: 14px; height: 14px; }
@@ -355,7 +355,7 @@ body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: v
   transition: opacity .24s ease, transform .26s cubic-bezier(.2,.75,.2,1); }
 .modal.open .modal-backdrop { opacity: 1; }
 .modal.open .modal-card { opacity: 1; transform: none; }
-.modal-x { position: absolute; top: 8px; right: 12px; width: 34px; height: 34px; border: 0;
+.modal-x { position: absolute; top: 8px; right: 12px; width: 34px; height: 34px; border: 0; display: inline-flex; align-items: center; justify-content: center; padding: 0; text-align: center;
   background: none; color: var(--ink-3); font-size: 26px; line-height: 1; cursor: pointer; border-radius: 8px; }
 .modal-x:hover { color: var(--ink); background: var(--bg-3); }
 @media (prefers-reduced-motion: reduce) { .modal-backdrop, .modal-card { transition: none; } }
