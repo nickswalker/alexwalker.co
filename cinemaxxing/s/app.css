@@ -128,7 +128,7 @@ body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: v
 @media (prefers-reduced-motion: reduce) { .score, .score:hover { transition: none; transform: none; box-shadow: none; filter: none; } }
 /* Let the hovered tile's lift + glow spill out past the row instead of being clipped. The scroll
    containers only need to clip on touch/narrow screens, so free them where hover applies. */
-@media (any-hover: hover) { .scoreboard, .sectionbar-row { overflow: visible; } }
+@media (any-hover: hover) and (min-width: 1341px) { .scoreboard, .sectionbar-row { overflow: visible; } }
 .score-label { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-align: center; white-space: normal; line-height: 1.1; overflow-wrap: break-word; hyphens: none; }
 .score-num { display: inline-flex; align-items: center; gap: 4px; }
 .score-count { font-size: 17px; font-weight: 800; font-variant-numeric: tabular-nums; }
@@ -334,8 +334,8 @@ body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: v
 /* Sold-out status, visible on the tile itself (no need to open the card). */
 .ptime-sold { text-decoration: line-through; color: #ffb4b4; opacity: .8;
   border-color: rgba(229,72,72,.55); background: rgba(70,14,14,.78); }
-.ptile-event { position: absolute; top: 7px; left: 7px; z-index: 3; max-width: calc(100% - 14px); font-size: 10px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; color: #fff; background: var(--accent); border-radius: 6px; padding: 3px 7px; line-height: 1.12; box-shadow: 0 1px 6px rgba(0,0,0,.5); }
-.tcard-event { align-self: flex-start; margin-top: 4px; display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; color: #fff; background: var(--accent); border-radius: 5px; padding: 2px 7px; }
+.ptile-event { position: absolute; top: 7px; left: 7px; z-index: 3; width: fit-content; max-width: calc(100% - 14px); font-size: 9.5px; font-weight: 800; letter-spacing: .02em; text-transform: uppercase; color: #fff; background: var(--accent); border-radius: 5px; padding: 2px 6px; line-height: 1.1; box-shadow: 0 1px 6px rgba(0,0,0,.5); }
+.tcard-event { align-self: flex-start; margin-top: 4px; display: inline-block; width: fit-content; font-size: 9.5px; font-weight: 800; letter-spacing: .02em; text-transform: uppercase; color: #fff; background: var(--accent); border-radius: 4px; padding: 2px 6px; }
 .ptile-soldout { position: absolute; top: 7px; left: 7px; z-index: 2;
   font-size: 9.5px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase;
   color: #fff; background: #d33; padding: 3px 6px; border-radius: 5px;
@@ -506,13 +506,25 @@ a.t:hover { border-color: var(--line-2); } .t em { font-style: normal; color: va
 .week-body .dayviews { animation: week-fade .22s ease; }
 @keyframes week-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .week-body .dayviews { animation: none; } }
-/* iPad / narrow laptop: keep the exact one-row bar, but stop the scoreboard from being
-   squeezed + internally clipping its last card ("4K Barco HDR"). Size it to its content and
-   left-anchor the row so the heading + all 5 cards read from the left; the Advance/Projector
-   tabs scroll off to the right as before. */
+/* iPad / narrow laptop: the full one-row sectionbar (heading + 5 cards + Advance + Projector)
+   is wider than the screen. Keep the heading + all 5 format cards at FULL SIZE on one row, and
+   move the two secondary nav tabs into the existing title-bar hamburger (same as the phone). */
 @media (min-width: 861px) and (max-width: 1340px) {
-  .sectionbar-row { justify-content: flex-start; gap: 20px; }
-  .sectionbar .scoreboard { flex: 0 0 auto; overflow-x: visible; }
+  .titlebar-row { position: relative; }
+  .titlebar .hamb-tb { display: inline-flex; align-items: center; justify-content: center; position: static;
+    width: 40px; height: 36px; margin-left: 4px; padding: 0; background: none; border: 0;
+    color: var(--ink); cursor: pointer; }
+  .titlebar .hamb-menu-tb { display: flex; flex-direction: column; position: absolute; top: calc(100% - 2px);
+    right: 12px; z-index: 50; min-width: 230px; background: var(--bg-2); border: 1.5px solid var(--line-2);
+    border-radius: 12px; padding: 6px; box-shadow: 0 14px 34px rgba(0,0,0,0.55); }
+  .titlebar .hamb-menu-tb[hidden] { display: none; }
+  .titlebar .hamb-menu-tb a, .titlebar .hamb-menu-tb .hamb-soon { display: block; padding: 11px 14px; border-radius: 8px;
+    text-decoration: none; color: var(--ink); font-size: 14px; font-weight: 600; }
+  .titlebar .hamb-menu-tb a:hover { background: var(--bg-3); color: #fff; }
+  .titlebar .hamb-menu-tb .hamb-soon { color: var(--ink-3); cursor: default; }
+  .titlebar .hamb-menu-tb .hamb-soon small { display: block; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-top: 2px; }
+  .sectionbar-row > .sect { display: none; }
+  .sectionbar .scoreboard { flex: 0 0 auto; }
 }
 
 @media (max-width: 860px) {
