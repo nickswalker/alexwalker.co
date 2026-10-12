@@ -506,16 +506,13 @@ a.t:hover { border-color: var(--line-2); } .t em { font-style: normal; color: va
 .week-body .dayviews { animation: week-fade .22s ease; }
 @keyframes week-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .week-body .dayviews { animation: none; } }
-/* iPad / narrow laptop (861-1340px): the one-row sectionbar (heading + 5 cards + 2 tabs ~1280px)
-   overflows below ~1340px and centered-clips both ends, hiding "4K Barco HDR". Stack it like the
-   phone layout so every card stays visible and the any-hover lift has room. */
+/* iPad / narrow laptop: keep the exact one-row bar, but stop the scoreboard from being
+   squeezed + internally clipping its last card ("4K Barco HDR"). Size it to its content and
+   left-anchor the row so the heading + all 5 cards read from the left; the Advance/Projector
+   tabs scroll off to the right as before. */
 @media (min-width: 861px) and (max-width: 1340px) {
-  .sectionbar-row { flex-direction: column; align-items: stretch; gap: 10px; overflow-x: visible; max-width: 100%; }
-  .sect-active { flex-direction: column; align-items: stretch; gap: 8px; margin-inline: -16px; padding: 0 16px 12px; }
-  .sect-active .sect { width: 100%; white-space: normal; }
-  .sectionbar .scoreboard { width: 100%; overflow-x: visible; flex-wrap: nowrap; gap: 8px; justify-content: space-between; }
-  .sectionbar .score { flex: 1 1 0; min-width: 0; }
-  .sectionbar-row > .sect { padding: 6px 0; }
+  .sectionbar-row { justify-content: flex-start; gap: 20px; }
+  .sectionbar .scoreboard { flex: 0 0 auto; overflow-x: visible; }
 }
 
 @media (max-width: 860px) {
