@@ -110,14 +110,14 @@
 <h1 class="sr-only">Austin Movie Showtimes This Week — IMAX, 70mm, 35mm Film Prints &amp; Repertory</h1>
 <!-- Day selector — today + the next days; each backed by a tinted poster from that day -->
 <div class="week-days" id="weekDays" role="tablist" aria-label="Pick a day">
-  <button class="week-day week-day-on" data-iso="2026-10-11" role="tab"
-          aria-selected="true" type="button"
-          style="--day-tint: var(--f-70mm); --day-bg: url('https://image.tmdb.org/t/p/w500/mpgkRPH1GNkMCgdPk2OMyHzAks7.jpg')">
+  <button class="week-day" data-iso="2026-10-11" role="tab"
+          aria-selected="false" type="button"
+          style="--day-tint: var(--f-70mm)">
     <span class="week-day-dow"><span class="dow-lg">Tonight</span><span class="dow-sm">Today</span></span>
     <span class="week-day-date">Oct 11</span>
   </button>
-  <button class="week-day" data-iso="2026-10-12" role="tab"
-          aria-selected="false" type="button"
+  <button class="week-day week-day-on" data-iso="2026-10-12" role="tab"
+          aria-selected="true" type="button"
           style="--day-tint: var(--f-imax); --day-bg: url('https://image.tmdb.org/t/p/w500/fGRNCssTRrhYZxNzykGGCoMsAVq.jpg')">
     <span class="week-day-dow"><span class="dow-lg">Tomorrow</span><span class="dow-sm">Mon</span></span>
     <span class="week-day-date">Oct 12</span>
@@ -184,103 +184,15 @@
 
 <!-- One day's By-Format / By-Time views at a time — same shared macros as Tonight -->
 <div class="week-body" id="weekBody">
-  <div class="dayviews" data-iso="2026-10-11">
+  <div class="dayviews" data-iso="2026-10-11" hidden>
     <div class="view view-format">
-  <section class="psec" data-format="hdr">
-    <div class="psec-h"><span class="fmt-badge badge-hdr">HDR</span></div>
-    <ul class="posters" style="grid-template-columns: repeat(1, var(--pw))">
-<li class="ptile" data-venues="Alamo Drafthouse" data-format="hdr" data-film="Other Mommy">
-  <button class="ptile-btn" type="button" aria-haspopup="dialog">
-    <span class="ptile-poster">
-<img src="https://image.tmdb.org/t/p/w500/fGRNCssTRrhYZxNzykGGCoMsAVq.jpg" alt="Other Mommy" loading="lazy">      <span class="ptile-times">
-<span class="ptime">10:45 PM</span>      </span>
-    </span>
-    <span class="ptile-title">Other Mommy <span class="yr">2026</span></span>
-  </button>
-  <template class="ptile-detail">
-    <div class="fdetail">
-      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/fGRNCssTRrhYZxNzykGGCoMsAVq.jpg" alt=""></div>
-      <div class="fdetail-main">
-<span class="badge badge-hdr">HDR</span>        <h3 class="fdetail-title">Other Mommy <span class="yr">2026</span></h3>
-<div class="fdetail-facts">1h 33m · Horror · Rob Savage</div><a class="film-lb" href="https://letterboxd.com/tmdb/1400837/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">Young Bela forms a relationship with a sinister entity in her home that looks uncannily like her own mother, drawing her into a terrifying and increasingly dark world.</p>        <div class="fdetail-venues">
-          <div class="fv">
-            <div class="fv-name">Alamo Drafthouse — Slaughter Lane</div>
-            <div class="times">
-<a class="t" href="https://drafthouse.com/austin/show/other-mommy" target="_blank" rel="noopener">10:45 PM</a>            </div>
-          </div>
-        </div>
-      </div>
-<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/alamo.png?v=7533fe12" alt=""></div>    </div>
-  </template>
-</li>
-    </ul>
-  </section>
-  <section class="psec" data-format="more">
-    <div class="psec-h"><span class="fmt-badge badge-more">More Tonight</span></div>
-    <ul class="posters">
-<li class="ptile" data-venues="Alamo Drafthouse" data-format="more" data-film="The Texas Chain Saw Massacre">
-  <button class="ptile-btn" type="button" aria-haspopup="dialog">
-    <span class="ptile-poster">
-<img src="https://image.tmdb.org/t/p/w500/mpgkRPH1GNkMCgdPk2OMyHzAks7.jpg" alt="The Texas Chain Saw Massacre" loading="lazy">      <span class="ptile-times">
-<span class="ptime">10:40 PM</span>      </span>
-    </span>
-    <span class="ptile-title">The Texas Chain Saw Massacre <span class="yr">1974</span></span>
-  </button>
-  <template class="ptile-detail">
-    <div class="fdetail">
-      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/mpgkRPH1GNkMCgdPk2OMyHzAks7.jpg" alt=""></div>
-      <div class="fdetail-main">
-        <h3 class="fdetail-title">The Texas Chain Saw Massacre <span class="yr">1974</span></h3>
-<div class="fdetail-facts">1h 23m · Horror · Tobe Hooper</div><a class="film-lb" href="https://letterboxd.com/tmdb/30497/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">Five friends head out to rural Texas to visit the grave of a grandfather. On the way, they stumble across what appears to be a deserted house, only to discover something sinister within. Something armed with a chainsaw.</p>        <div class="fdetail-venues">
-          <div class="fv">
-            <div class="fv-name">Alamo Drafthouse — Mueller</div>
-            <div class="times">
-<a class="t" href="https://drafthouse.com/austin/show/the-texas-chainsaw-massacre-1974" target="_blank" rel="noopener">10:40 PM</a>            </div>
-          </div>
-        </div>
-      </div>
-<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/alamo.png?v=7533fe12" alt=""></div>    </div>
-  </template>
-</li>
-    </ul>
-  </section>
 </div>
 
     <div class="view view-time">
-  <section class="tslot">
-    <div class="tslot-h"><span class="tslot-time">10:40 PM</span></div>
-    <ul class="tslot-films">
-      <li class="tcard" data-format="other" data-venues="Alamo Drafthouse" data-film="The Texas Chain Saw Massacre">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img src="https://image.tmdb.org/t/p/w500/mpgkRPH1GNkMCgdPk2OMyHzAks7.jpg" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">The Texas Chain Saw Massacre <span class="yr">1974</span></span>
-            <span class="tcard-venue">Alamo Drafthouse — Mueller</span>
-          </span>
-        </button>
-      </li>
-    </ul>
-  </section>
-  <section class="tslot">
-    <div class="tslot-h"><span class="tslot-time">10:45 PM</span></div>
-    <ul class="tslot-films">
-      <li class="tcard" data-format="hdr" data-venues="Alamo Drafthouse" data-film="Other Mommy">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img src="https://image.tmdb.org/t/p/w500/fGRNCssTRrhYZxNzykGGCoMsAVq.jpg" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">Other Mommy <span class="yr">2026</span> <span class="badge badge-hdr tcard-badge">HDR</span></span>
-            <span class="tcard-venue">Alamo Drafthouse — Slaughter Lane</span>
-          </span>
-        </button>
-      </li>
-    </ul>
-  </section>
 </div>
 
   </div>
-  <div class="dayviews" data-iso="2026-10-12" hidden>
+  <div class="dayviews" data-iso="2026-10-12">
     <div class="view view-format">
   <section class="psec" data-format="imax">
     <div class="psec-h"><span class="fmt-badge badge-imax">IMAX</span></div>
