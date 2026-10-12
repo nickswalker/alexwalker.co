@@ -285,4 +285,40 @@
     };
     tick(); setInterval(tick, 30000);
   }
+
+  // ── Deep link from the weekly email ─────────────────────────────────────────
+  // /#film=<title>[&fmt=<key>] opens that film's detail card in the By-format view.
+  function openFromHash() {
+    const h = location.hash || "";
+    const fm = h.match(/[#&]film=([^&]*)/);
+    if (!fm) return;
+    let want = fm[1]; try { want = decodeURIComponent(want.replace(/\+/g, " ")); } catch (e) {}
+    const km = h.match(/[#&]fmt=([^&]*)/);
+    let fmt = km ? km[1] : ""; try { fmt = decodeURIComponent(fmt); } catch (e) {}
+    const norm = (s) => (s || "").toLowerCase().replace(/[^a-z0-9]+/g, "");
+    const wn = norm(want);
+    if (!wn) return;
+    // Land on the By-format view so the tile + its detail are the format ones.
+    if (main && main.dataset.view !== "format") {
+      main.dataset.view = "format";
+      if (seg) {
+        seg.dataset.mode = "format";
+        seg.querySelectorAll(".seg-opt").forEach(o => o.classList.toggle("seg-on", o.dataset.view === "format"));
+      }
+      apply();
+    }
+    const tiles = $$(".ptile");
+    let tile = fmt && tiles.find(t => norm(t.dataset.film) === wn && t.dataset.format === fmt);
+    if (!tile) tile = tiles.find(t => norm(t.dataset.film) === wn);
+    if (!tile) tile = tiles.find(t => { const n = norm(t.dataset.film); return n && (n.indexOf(wn) === 0 || wn.indexOf(n) === 0); });
+    if (!tile) return;
+    const tpl = tile.querySelector("template.ptile-detail");
+    const btn = tile.querySelector(".ptile-btn");
+    if (tpl) {
+      try { tile.scrollIntoView({ block: "center" }); } catch (e) {}
+      openModal(tpl, btn);
+    }
+  }
+  openFromHash();
+  window.addEventListener("hashchange", openFromHash);
 })();
