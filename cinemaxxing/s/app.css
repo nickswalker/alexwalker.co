@@ -506,13 +506,13 @@ a.t:hover { border-color: var(--line-2); } .t em { font-style: normal; color: va
   .titlebar-row { position: relative; }
   .titlebar .hamb-tb { display: inline-flex; align-items: center; justify-content: center; position: static;
     width: 40px; height: 36px; margin-left: 4px; padding: 0; background: none; border: 0;
-    color: var(--ink); cursor: pointer; }
+    color: #f3f3f3; cursor: pointer; }
   .titlebar .hamb-menu-tb { display: flex; flex-direction: column; position: absolute; top: calc(100% - 2px);
     right: 12px; z-index: 50; min-width: 230px; background: var(--bg-2); border: 1.5px solid var(--line-2);
     border-radius: 12px; padding: 6px; box-shadow: 0 14px 34px rgba(0,0,0,0.55); }
   .titlebar .hamb-menu-tb[hidden] { display: none; }
   .titlebar .hamb-menu-tb a, .titlebar .hamb-menu-tb .hamb-soon { display: block; padding: 11px 14px; border-radius: 8px;
-    text-decoration: none; color: var(--ink); font-size: 14px; font-weight: 600; }
+    text-decoration: none; color: #f3f3f3; font-size: 14px; font-weight: 600; }
   .titlebar .hamb-menu-tb a:hover { background: var(--bg-3); color: #fff; }
   .titlebar .hamb-menu-tb .hamb-soon { color: var(--ink-3); cursor: default; }
   .titlebar .hamb-menu-tb .hamb-soon small { display: block; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-top: 2px; }
