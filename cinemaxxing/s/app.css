@@ -109,7 +109,7 @@ body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: v
 .score { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
   width: 82px; padding: 7px 8px; border-radius: 10px; background: var(--bg-2); position: relative;
   border: 1.5px solid var(--card-line); color: var(--ink); cursor: default; font: inherit;
-  transition: transform .16s ease, box-shadow .16s ease, filter .16s ease; }
+  transition: none; }
 /* Each format tile wears its format's colour outline + glow, like the email blast / About hero pills. */
 .score-70mm { border-color: var(--f-70mm); --pill-glow: var(--f-70mm); } .score-imax { border-color: var(--f-imax); --pill-glow: var(--f-imax); }
 .score-35mm { border-color: var(--f-35mm); --pill-glow: var(--f-35mm); } .score-dolby { border-color: var(--f-dolby); --pill-glow: var(--f-dolby); } .score-hdr { border-color: var(--f-hdr); --pill-glow: var(--f-hdr); }
@@ -120,15 +120,7 @@ body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: v
   background-image: repeating-linear-gradient(90deg, var(--pill-glow) 0 2.5px, transparent 2.5px 5px); }
 .score-70mm::before, .score-35mm::before { top: 3px; }
 .score-70mm::after,  .score-35mm::after  { bottom: 3px; }
-/* Same playful lift + chromatic glow as the "who are we" format pills. */
-@media (any-hover: hover) {
-  .score:hover { z-index: 2; transform: scale(1.16) translateY(-2px) rotate(-1.5deg); filter: brightness(1.08);
-    box-shadow: 0 0 1px var(--pill-glow), 0 0 6px var(--pill-glow), 0 0 22px -2px var(--pill-glow), 0 8px 20px -8px var(--pill-glow); }
-}
 @media (prefers-reduced-motion: reduce) { .score, .score:hover { transition: none; transform: none; box-shadow: none; filter: none; } }
-/* Let the hovered tile's lift + glow spill out past the row instead of being clipped. The scroll
-   containers only need to clip on touch/narrow screens, so free them where hover applies. */
-@media (any-hover: hover) and (min-width: 1341px) { .scoreboard, .sectionbar-row { overflow: visible; } }
 .score-label { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-align: center; white-space: normal; line-height: 1.1; overflow-wrap: break-word; hyphens: none; }
 .score-num { display: inline-flex; align-items: center; gap: 4px; }
 .score-count { font-size: 17px; font-weight: 800; font-variant-numeric: tabular-nums; }
