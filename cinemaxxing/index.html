@@ -75,7 +75,7 @@
           <button class="score score-imax" data-filter-format="imax" type="button">
             <span class="score-label">IMAX</span>
             <span class="score-num">
-              <span class="score-count">2</span>
+              <span class="score-count">3</span>
             </span>
           </button>
           <button class="score score-35mm" data-filter-format="35mm" type="button">
@@ -160,6 +160,7 @@
   </div>
   <div class="chips" data-chip-group="venue" aria-label="Filter by venue">
     <button class="chip chip-on" data-filter-venue="" type="button">All venues</button>
+    <button class="chip" data-filter-venue="Paramount Theatre" type="button">Paramount Theatre</button>
     <button class="chip" data-filter-venue="Bob Bullock IMAX" type="button">Bob Bullock IMAX</button>
     <button class="chip" data-filter-venue="Austin Film Society Cinema" type="button">Austin Film Society Cinema</button>
     <button class="chip" data-filter-venue="AMC Barton Creek Square 14" type="button">AMC Barton Creek Square 14</button>
@@ -170,7 +171,7 @@
   </div>
   <select class="venue-select" aria-label="Filter by venue">
     <option value="">All venues</option>
-<option value="Bob Bullock IMAX">Bob Bullock IMAX</option><option value="Austin Film Society Cinema">Austin Film Society Cinema</option><option value="AMC Barton Creek Square 14">AMC Barton Creek Square 14</option><option value="AMC DINE-IN Tech Ridge 10">AMC DINE-IN Tech Ridge 10</option><option value="Alamo Drafthouse">Alamo Drafthouse</option><option value="Hyperreal Film Club">Hyperreal Film Club</option><option value="Violet Crown Cinema">Violet Crown Cinema</option>  </select>
+<option value="Paramount Theatre">Paramount Theatre</option><option value="Bob Bullock IMAX">Bob Bullock IMAX</option><option value="Austin Film Society Cinema">Austin Film Society Cinema</option><option value="AMC Barton Creek Square 14">AMC Barton Creek Square 14</option><option value="AMC DINE-IN Tech Ridge 10">AMC DINE-IN Tech Ridge 10</option><option value="Alamo Drafthouse">Alamo Drafthouse</option><option value="Hyperreal Film Club">Hyperreal Film Club</option><option value="Violet Crown Cinema">Violet Crown Cinema</option>  </select>
 </div>
 
 
@@ -573,6 +574,35 @@
   </div>
   <div class="dayviews" data-iso="2026-10-13" hidden>
     <div class="view view-format">
+  <section class="psec" data-format="imax">
+    <div class="psec-h"><span class="fmt-badge badge-imax">IMAX</span></div>
+    <ul class="posters" style="grid-template-columns: repeat(1, var(--pw))">
+<li class="ptile" data-venues="Paramount Theatre" data-format="imax" data-film="Nope">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/AcKVlWaNVVVFQwro3nLXqPljcYA.jpg" alt="Nope" loading="lazy">      <span class="ptile-times">
+<span class="ptime">7:30 PM</span>      </span>
+    </span>
+    <span class="ptile-title">Nope <span class="yr">2022</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/AcKVlWaNVVVFQwro3nLXqPljcYA.jpg" alt=""></div>
+      <div class="fdetail-main">
+<span class="fdetail-badges"><span class="badge badge-imax">IMAX</span></span>        <h3 class="fdetail-title">Nope <span class="yr">2022</span></h3>
+<div class="fdetail-facts">2h 10m · Horror · Jordan Peele</div><a class="film-lb" href="https://letterboxd.com/tmdb/762504/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">Residents in a lonely gulch of inland California bear witness to an uncanny, chilling discovery.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">Paramount Theatre</div>
+            <div class="times">
+<a class="t" href="https://tickets.austintheatre.org/14258" target="_blank" rel="noopener">7:30 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/paramount.png?v=e224bc27" alt=""></div>    </div>
+  </template>
+</li>
+    </ul>
+  </section>
   <section class="psec" data-format="dolby">
     <div class="psec-h"><span class="fmt-badge badge-dolby">Dolby</span></div>
     <ul class="posters" style="grid-template-columns: repeat(2, var(--pw))">
@@ -1660,6 +1690,16 @@
           </span>
         </button>
       </li>
+      <li class="tcard" data-format="imax" data-venues="Paramount Theatre" data-film="Nope">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/AcKVlWaNVVVFQwro3nLXqPljcYA.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">Nope <span class="yr">2022</span> <span class="badge badge-imax tcard-badge">IMAX</span></span>
+            <span class="tcard-venue">Paramount Theatre</span>
+          </span>
+        </button>
+      </li>
     </ul>
   </section>
   <section class="tslot">
@@ -2338,6 +2378,30 @@
 <div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/alamo.png?v=e224bc27" alt=""></div>    </div>
   </template>
 </li>
+<li class="ptile" data-venues="Paramount Theatre" data-format="more" data-film="Dracula">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/ykyRfv7JDofLxXLAwtLXaSuaFfM.jpg" alt="Dracula" loading="lazy">      <span class="ptile-times">
+<span class="ptime">7:00 PM</span>      </span>
+    </span>
+    <span class="ptile-title">Dracula <span class="yr">2025</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/ykyRfv7JDofLxXLAwtLXaSuaFfM.jpg" alt=""></div>
+      <div class="fdetail-main">
+        <h3 class="fdetail-title">Dracula <span class="yr">2025</span></h3>
+<div class="fdetail-facts">2h 10m · Horror · Luc Besson</div><a class="film-lb" href="https://letterboxd.com/tmdb/1246049/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">In late 15th-century Eastern Europe, Prince Vlad II’s bride is brutally murdered. As a result, he renounces God and damns Heaven itself. Cursed with eternal life, Vlad is reborn as Dracula, an immortal warlord who defies fate in a blood-soaked crusade to wrench his lost love back from death.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">State Theatre</div>
+            <div class="times">
+<a class="t" href="https://tickets.austintheatre.org/14207" target="_blank" rel="noopener">7:00 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+</li>
 <li class="ptile" data-venues="Hyperreal Film Club" data-format="more" data-film="Cinema de la Cultura x Feminist Horror Week Collaboration Huesera: The Bone Woman">
   <button class="ptile-btn" type="button" aria-haspopup="dialog">
     <span class="ptile-poster">
@@ -2360,6 +2424,30 @@
         </div>
       </div>
 <div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/hyperreal.png?v=e224bc27" alt=""></div>    </div>
+  </template>
+</li>
+<li class="ptile" data-venues="Paramount Theatre" data-format="more" data-film="Frankenstein">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/g4JtvGlQO7DByTI6frUobqvSL3R.jpg" alt="Frankenstein" loading="lazy">      <span class="ptile-times">
+<span class="ptime">8:30 PM</span>      </span>
+    </span>
+    <span class="ptile-title">Frankenstein <span class="yr">2025</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/g4JtvGlQO7DByTI6frUobqvSL3R.jpg" alt=""></div>
+      <div class="fdetail-main">
+        <h3 class="fdetail-title">Frankenstein <span class="yr">2025</span></h3>
+<div class="fdetail-facts">2h 30m · Drama · Guillermo del Toro</div><a class="film-lb" href="https://letterboxd.com/tmdb/1062722/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">Dr. Victor Frankenstein, a brilliant but egotistical scientist, brings a creature to life in a monstrous experiment that ultimately leads to the undoing of both the creator and his tragic creation.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">State Theatre</div>
+            <div class="times">
+<a class="t" href="https://tickets.austintheatre.org/14207" target="_blank" rel="noopener">8:30 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </template>
 </li>
 <li class="ptile" data-venues="Alamo Drafthouse" data-format="more" data-film="Screamplay">
@@ -2879,6 +2967,16 @@
           </span>
         </button>
       </li>
+      <li class="tcard" data-format="other" data-venues="Paramount Theatre" data-film="Dracula">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/ykyRfv7JDofLxXLAwtLXaSuaFfM.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">Dracula <span class="yr">2025</span></span>
+            <span class="tcard-venue">State Theatre</span>
+          </span>
+        </button>
+      </li>
       <li class="tcard" data-format="other" data-venues="Alamo Drafthouse" data-film="Repo! The Genetic Opera">
         <button class="tcard-btn" type="button" aria-haspopup="dialog">
           <span class="tcard-poster">
@@ -2971,6 +3069,21 @@
           <span class="tcard-body">
             <span class="tcard-title">Other Mommy <span class="yr">2026</span> <span class="badge badge-hdr tcard-badge">4K Barco HDR</span> <span class="aud-badge badge-atmos">Atmos</span></span>
             <span class="tcard-venue">Alamo Lakeline</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+  <section class="tslot">
+    <div class="tslot-h"><span class="tslot-time">8:30 PM</span></div>
+    <ul class="tslot-films">
+      <li class="tcard" data-format="other" data-venues="Paramount Theatre" data-film="Frankenstein">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/g4JtvGlQO7DByTI6frUobqvSL3R.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">Frankenstein <span class="yr">2025</span></span>
+            <span class="tcard-venue">State Theatre</span>
           </span>
         </button>
       </li>
@@ -3531,6 +3644,30 @@
 <div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/hyperreal.png?v=e224bc27" alt=""></div>    </div>
   </template>
 </li>
+<li class="ptile" data-venues="Paramount Theatre" data-format="more" data-film="MASTER PANCAKE VS. THE LOST BOYS">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/gxbwRHsQ2v6DQv28ttp7pIx7Utj.jpg" alt="MASTER PANCAKE VS. THE LOST BOYS" loading="lazy">      <span class="ptile-times">
+<span class="ptime">7:30 PM</span>      </span>
+    </span>
+    <span class="ptile-title">MASTER PANCAKE VS. THE LOST BOYS <span class="yr">2022</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/gxbwRHsQ2v6DQv28ttp7pIx7Utj.jpg" alt=""></div>
+      <div class="fdetail-main">
+        <h3 class="fdetail-title">MASTER PANCAKE VS. THE LOST BOYS <span class="yr">2022</span></h3>
+<div class="fdetail-facts">1h 38m · Horror · Mariama Diallo</div><a class="film-lb" href="https://letterboxd.com/tmdb/680829/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">At an elite New England university built on the site of a Salem-era gallows hill, two black women strive to find their place. Navigating politics and privilege, they encounter increasingly terrifying manifestations of the school&#39;s haunted past… and present.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">State Theatre</div>
+            <div class="times">
+<a class="t" href="https://tickets.austintheatre.org/14239" target="_blank" rel="noopener">7:30 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+</li>
 <li class="ptile" data-venues="Austin Film Society Cinema" data-format="more" data-film="The Arrival">
   <button class="ptile-btn" type="button" aria-haspopup="dialog">
     <span class="ptile-poster">
@@ -3928,6 +4065,16 @@
           <span class="tcard-body">
             <span class="tcard-title">Feminist Horror Week Collaboration: Four Short Films <span class="yr">2019</span></span>
             <span class="tcard-venue">Hyperreal Film Club</span>
+          </span>
+        </button>
+      </li>
+      <li class="tcard" data-format="other" data-venues="Paramount Theatre" data-film="MASTER PANCAKE VS. THE LOST BOYS">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/gxbwRHsQ2v6DQv28ttp7pIx7Utj.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">MASTER PANCAKE VS. THE LOST BOYS <span class="yr">2022</span></span>
+            <span class="tcard-venue">State Theatre</span>
           </span>
         </button>
       </li>
@@ -6615,6 +6762,30 @@
 <div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/austin-film-society.png?v=e224bc27" alt=""></div>    </div>
   </template>
 </li>
+<li class="ptile" data-venues="Paramount Theatre" data-format="more" data-film="Monster House">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/zCRPr4bkO3ae0U1134vJ39xZnAG.jpg" alt="Monster House" loading="lazy">      <span class="ptile-times">
+<span class="ptime">3:30 PM</span>      </span>
+    </span>
+    <span class="ptile-title">Monster House <span class="yr">2006</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/zCRPr4bkO3ae0U1134vJ39xZnAG.jpg" alt=""></div>
+      <div class="fdetail-main">
+        <h3 class="fdetail-title">Monster House <span class="yr">2006</span></h3>
+<div class="fdetail-facts">1h 31m · Animation · Gil Kenan</div><a class="film-lb" href="https://letterboxd.com/tmdb/9297/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">Monsters under the bed are scary enough, but what happens when an entire house is out to get you? Three teens aim to find out when they go up against a decrepit neighboring home and unlock its frightening secrets.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">State Theatre</div>
+            <div class="times">
+<a class="t" href="https://tickets.austintheatre.org/14209" target="_blank" rel="noopener">3:30 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+</li>
 <li class="ptile" data-venues="Austin Film Society Cinema" data-format="more" data-film="Lost Chapters">
   <button class="ptile-btn" type="button" aria-haspopup="dialog">
     <span class="ptile-poster">
@@ -6639,6 +6810,30 @@
 <div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/austin-film-society.png?v=e224bc27" alt=""></div>    </div>
   </template>
 </li>
+<li class="ptile" data-venues="Paramount Theatre" data-format="more" data-film="The Abominable Dr. Phibes">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/4853HMKlJl1RozE6OyHBKQemCE0.jpg" alt="The Abominable Dr. Phibes" loading="lazy">      <span class="ptile-times">
+<span class="ptime">7:00 PM</span>      </span>
+    </span>
+    <span class="ptile-title">The Abominable Dr. Phibes <span class="yr">1971</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/4853HMKlJl1RozE6OyHBKQemCE0.jpg" alt=""></div>
+      <div class="fdetail-main">
+        <h3 class="fdetail-title">The Abominable Dr. Phibes <span class="yr">1971</span></h3>
+<div class="fdetail-facts">1h 35m · Horror · Robert Fuest</div><a class="film-lb" href="https://letterboxd.com/tmdb/17965/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">After a team of surgeons botches his beloved wife&#39;s operation, the distraught Dr. Phibes unleashes a score of Old-Testament atrocities on his enemies.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">State Theatre</div>
+            <div class="times">
+<a class="t" href="https://tickets.austintheatre.org/14211" target="_blank" rel="noopener">7:00 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+</li>
 <li class="ptile" data-venues="Hyperreal Film Club" data-format="more" data-film="Big Texas Little Film Tour">
   <button class="ptile-btn" type="button" aria-haspopup="dialog">
     <span class="ptile-poster">
@@ -6661,6 +6856,30 @@
         </div>
       </div>
 <div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/hyperreal.png?v=e224bc27" alt=""></div>    </div>
+  </template>
+</li>
+<li class="ptile" data-venues="Paramount Theatre" data-format="more" data-film="Malignant">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/dGv2BWjzwAz6LB8a8JeRIZL8hSz.jpg" alt="Malignant" loading="lazy">      <span class="ptile-times">
+<span class="ptime">8:50 PM</span>      </span>
+    </span>
+    <span class="ptile-title">Malignant <span class="yr">2021</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/dGv2BWjzwAz6LB8a8JeRIZL8hSz.jpg" alt=""></div>
+      <div class="fdetail-main">
+        <h3 class="fdetail-title">Malignant <span class="yr">2021</span></h3>
+<div class="fdetail-facts">1h 51m · Horror · James Wan</div><a class="film-lb" href="https://letterboxd.com/tmdb/619778/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">Madison is paralyzed by shocking visions of grisly murders, and her torment worsens as she discovers that these waking dreams are in fact terrifying realities with a mysterious tie to her past.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">State Theatre</div>
+            <div class="times">
+<a class="t" href="https://tickets.austintheatre.org/14211" target="_blank" rel="noopener">8:50 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </template>
 </li>
 <li class="ptile" data-venues="Alamo Drafthouse" data-format="more" data-film="The Craft">
@@ -6930,6 +7149,16 @@
   <section class="tslot">
     <div class="tslot-h"><span class="tslot-time">3:30 PM</span></div>
     <ul class="tslot-films">
+      <li class="tcard" data-format="other" data-venues="Paramount Theatre" data-film="Monster House">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/zCRPr4bkO3ae0U1134vJ39xZnAG.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">Monster House <span class="yr">2006</span></span>
+            <span class="tcard-venue">State Theatre</span>
+          </span>
+        </button>
+      </li>
       <li class="tcard" data-format="hdr" data-venues="Alamo Drafthouse" data-film="Other Mommy">
         <button class="tcard-btn" type="button" aria-haspopup="dialog">
           <span class="tcard-poster">
@@ -7175,6 +7404,16 @@
           </span>
         </button>
       </li>
+      <li class="tcard" data-format="other" data-venues="Paramount Theatre" data-film="The Abominable Dr. Phibes">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/4853HMKlJl1RozE6OyHBKQemCE0.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">The Abominable Dr. Phibes <span class="yr">1971</span></span>
+            <span class="tcard-venue">State Theatre</span>
+          </span>
+        </button>
+      </li>
     </ul>
   </section>
   <section class="tslot">
@@ -7212,6 +7451,21 @@
           <span class="tcard-body">
             <span class="tcard-title">Street Fighter <span class="yr">2026</span> <span class="badge badge-hdr tcard-badge">4K Barco HDR</span> <span class="aud-badge badge-atmos">Atmos</span></span>
             <span class="tcard-venue">Alamo Mueller</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+  <section class="tslot">
+    <div class="tslot-h"><span class="tslot-time">8:50 PM</span></div>
+    <ul class="tslot-films">
+      <li class="tcard" data-format="other" data-venues="Paramount Theatre" data-film="Malignant">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/dGv2BWjzwAz6LB8a8JeRIZL8hSz.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">Malignant <span class="yr">2021</span></span>
+            <span class="tcard-venue">State Theatre</span>
           </span>
         </button>
       </li>
