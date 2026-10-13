@@ -1058,3 +1058,21 @@ body {
 .aud-badge.badge-4k { color:#cdd1d6; background:rgba(205,209,214,0.08); border:1px solid rgba(205,209,214,0.32); }
 
 .ptile-poster:has(.ptile-event) .ptile-soldout { left: auto; right: 7px; }
+
+/* Legal pages (privacy / terms) */
+.legal { max-width: 720px; margin: 0 auto; padding: 8px 16px 52px; }
+.legal h1 { font-family: "Sansita", serif; font-size: clamp(28px, 6vw, 40px); font-weight: 800; margin: 16px 0 4px; color: #fff; }
+.legal .legal-date { color: var(--ink-3); font-size: 13px; margin: 0 0 26px; }
+.legal h2 { font-family: "Sansita", serif; font-size: 20px; font-weight: 800; margin: 30px 0 8px; color: #fff; }
+.legal p { font-size: 15px; line-height: 1.7; color: var(--ink-2); margin: 0 0 12px; }
+.legal p strong, .legal li strong { color: var(--ink); }
+.legal ul { margin: 0 0 14px; padding-left: 20px; }
+.legal li { font-size: 15px; line-height: 1.7; color: var(--ink-2); margin-bottom: 8px; }
+.legal a { color: var(--f-imax); }
+.legal .legal-tldr { background: var(--bg-2); border: 1.5px solid var(--line-2); border-radius: 10px; padding: 13px 16px; margin: 4px 0 8px; color: var(--ink-2); }
+.legal-table-wrap { overflow-x: auto; margin: 6px 0 14px; }
+.legal-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.legal-table th, .legal-table td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--ink-2); }
+.legal-table th { color: var(--ink); font-weight: 700; border-bottom-color: var(--line-2); }
+.legal-cross { margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--line); }
+.legal-cross a { font-weight: 700; }
