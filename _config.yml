@@ -50,19 +50,19 @@ defaults:
   # served via the redirect Worker). They are built from this repo but must NOT
   # appear in alexwalker.co's sitemap — their canonical tags already attribute
   # them to cinemaxxing.co. Still served at their URLs; only dropped from sitemap.
+  # Scoped by directory + glob (not per file) so new Cinemaxxing pages the
+  # publish bot adds are excluded automatically: cinemaxxing/ (the
+  # /cinemaxxing/* site), cinemaxxing*.html, and about.html (Cinemaxxing's
+  # About page, served at /about.html).
   - scope:
-      path: "cinemaxxing.html"
+      path: "cinemaxxing"
     values:
       sitemap: false
   - scope:
-      path: "cinemaxxing-advance.html"
+      path: "cinemaxxing*.html"
     values:
       sitemap: false
   - scope:
-      path: "cinemaxxing-filtered.html"
-    values:
-      sitemap: false
-  - scope:
-      path: "cinemaxxing-preview.html"
+      path: "about.html"
     values:
       sitemap: false
