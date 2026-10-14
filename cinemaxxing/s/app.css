@@ -351,7 +351,7 @@ body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: v
   transition: opacity .24s ease, transform .26s cubic-bezier(.2,.75,.2,1); }
 .modal.open .modal-backdrop { opacity: 1; }
 .modal.open .modal-card { opacity: 1; transform: none; }
-.modal-x { position: absolute; top: 8px; right: 12px; width: 34px; height: 34px; border: 0; display: inline-flex; align-items: center; justify-content: center; padding: 0; text-align: center;
+.modal-x { position: absolute; z-index: 5; top: 8px; right: 12px; width: 34px; height: 34px; border: 0; display: inline-flex; align-items: center; justify-content: center; padding: 0; text-align: center;
   background: none; color: var(--ink-3); font-size: 26px; line-height: 1; cursor: pointer; border-radius: 8px; }
 .modal-x:hover { color: var(--ink); background: var(--bg-3); }
 @media (prefers-reduced-motion: reduce) { .modal-backdrop, .modal-card { transition: none; } }
