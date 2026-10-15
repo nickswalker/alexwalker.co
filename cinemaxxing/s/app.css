@@ -1077,10 +1077,23 @@ body {
 .is-stack > img.stack-back, .is-stack > img.stack-front {
   position: absolute; width: 87% !important; height: 87% !important; aspect-ratio: auto;
   object-fit: cover; border-radius: 8px; background: var(--bg-3); }
+/* Both posters wear the SAME outline as a normal tile (incl. the format colour + hover state). */
+.is-stack > img.stack-back, .is-stack > img.stack-front { border: 1.5px solid var(--stack-line, var(--card-line)); }
+.ptile-btn:hover .is-stack, .ptile-btn:focus-visible .is-stack { --stack-line: var(--line-2); }
+.ptile[data-format="70mm"] .is-stack { --stack-line: var(--f-70mm); }
+.ptile[data-format="imax"] .is-stack { --stack-line: var(--f-imax); }
+.ptile[data-format="35mm"] .is-stack { --stack-line: var(--f-35mm); }
+.ptile[data-format="dolby"] .is-stack { --stack-line: var(--f-dolby); }
+.ptile[data-format="hdr"] .is-stack { --stack-line: var(--f-hdr); }
 .is-stack > img.stack-back { top: 0; right: 0; transform: rotate(4deg); transform-origin: 70% 30%;
-  filter: brightness(.72); box-shadow: 0 2px 8px rgba(0,0,0,.45); }
-.is-stack > img.stack-front { left: 0; bottom: 0; z-index: 1; border: 1.5px solid var(--card-line);
-  box-shadow: 4px 4px 14px rgba(0,0,0,.6); }
+  box-shadow: 0 2px 8px rgba(0,0,0,.45); }
+.is-stack > img.stack-front { left: 0; bottom: 0; z-index: 1; box-shadow: 4px 4px 14px rgba(0,0,0,.6); }
+/* Detail window: both posters fully visible, one above the other (lead film on top). */
+.fdetail-poster.is-stack { aspect-ratio: auto; display: flex; flex-direction: column; gap: 10px; }
+.fdetail-poster.is-stack > img.stack-back, .fdetail-poster.is-stack > img.stack-front {
+  position: static; width: 100% !important; height: auto !important; aspect-ratio: 2/3;
+  transform: none; border-radius: 10px; box-shadow: none; }
+.fdetail-poster.is-stack > img.stack-front { order: -1; }
 .ptile-poster.is-stack .ptile-event, .ptile-poster.is-stack .ptile-soldout { top: calc(13% + 7px); }
 .ptile-poster.is-stack .ptile-times { width: 87%; border-radius: 0 0 8px 8px; z-index: 2; }
 .card-poster.is-stack { height: auto; }
@@ -1091,3 +1104,7 @@ body {
 .fdetail-bill .bill-time { font-variant-numeric: tabular-nums; color: var(--accent); margin-right: 4px; }
 .fdetail-bill .yr { font-weight: 500; color: var(--ink-3); font-size: .85em; }
 .fdetail-bill .fdetail-syn { margin: 4px 0 0; }
+
+/* Label badges that wrap (narrow phone tiles) split into even lines; app.js fitBadges() then trims
+   the pill to the longest line so it never runs wider than its text. */
+.ptile-event, .tcard-event, .ev-label, .ptile-soldout, .fdetail-soldout { text-wrap: balance; }

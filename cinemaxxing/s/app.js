@@ -187,6 +187,46 @@
     }
   }, { passive: true });
 
+  // ── Badge shrink-wrap ───────────────────────────────────────────────────────
+  // A label badge that wraps onto two lines ("DRESS-UP / SCREENING" on a narrow phone tile) keeps
+  // its full max-width as an inline-block, so the pill ends up much wider than its text. CSS can't
+  // size a box to its longest wrapped line, so measure the lines and pin the width to them. Applies
+  // to every label badge (tiles, By-time cards, detail window); single-line badges are untouched.
+  const FIT_SEL = ".ptile-event, .tcard-event, .ev-label, .fdetail-soldout, .ptile-soldout";
+  function fitBadge(el) {
+    el.style.width = "";
+    const rg = document.createRange();
+    rg.selectNodeContents(el);
+    const lines = {};
+    for (const r of rg.getClientRects()) {
+      if (!r.width) continue;
+      const k = Math.round(r.top);
+      lines[k] = (lines[k] || 0) + r.width;
+    }
+    const ws = Object.values(lines);
+    if (ws.length < 2 || !el.offsetWidth) return;
+    // Range rects include transforms (the modal scales in) — convert back to layout pixels.
+    const scale = el.getBoundingClientRect().width / el.offsetWidth || 1;
+    const cs = getComputedStyle(el);
+    const extra = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight)
+                + parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
+    el.style.width = Math.ceil(Math.max(...ws) / scale + extra + 1) + "px";
+  }
+  function fitBadges(root = document) { for (const el of $$(FIT_SEL, root)) fitBadge(el); }
+  // Re-fit when a badge's container gets laid out (hidden day/view becoming visible) or resizes.
+  if ("ResizeObserver" in window) {
+    const ro = new ResizeObserver((entries) => { for (const e of entries) fitBadges(e.target); });
+    const seen = new Set();
+    for (const el of $$(FIT_SEL)) {
+      const host = el.parentElement;
+      if (host && !seen.has(host)) { seen.add(host); ro.observe(host); }
+    }
+  } else {
+    fitBadges();
+    window.addEventListener("resize", () => fitBadges());
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => fitBadges());
+
   // ── Detail modal (tap a poster) ─────────────────────────────────────────────
   const modal = $("#filmModal");
   const modalBody = $("#modalBody");
@@ -213,6 +253,7 @@
     modalBody.innerHTML = "";
     modalBody.appendChild(tpl.content.cloneNode(true));
     modal.hidden = false;
+    fitBadges(modalBody);
     requestAnimationFrame(() => modal.classList.add("open"));
     lockScroll();
   }
