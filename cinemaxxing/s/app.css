@@ -1068,3 +1068,26 @@ body {
 .legal-table th { color: var(--ink); font-weight: 700; border-bottom-color: var(--line-2); }
 .legal-cross { margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--line); }
 .legal-cross a { font-weight: 700; }
+
+/* ── Double / triple features: two posters stacked — the lead film in front, the second offset
+   behind it with a slight tilt. Shared by poster tiles, By-time cards, list cards and the detail
+   window; the DOUBLE FEATURE badge is the normal event badge (.ptile-event / .tcard-event). ── */
+.is-stack { position: relative; aspect-ratio: 2/3; }
+.ptile-poster.is-stack, .ptile-btn:hover .ptile-poster.is-stack { overflow: visible; border: 0; background: none; }
+.is-stack > img.stack-back, .is-stack > img.stack-front {
+  position: absolute; width: 87% !important; height: 87% !important; aspect-ratio: auto;
+  object-fit: cover; border-radius: 8px; background: var(--bg-3); }
+.is-stack > img.stack-back { top: 0; right: 0; transform: rotate(4deg); transform-origin: 70% 30%;
+  filter: brightness(.72); box-shadow: 0 2px 8px rgba(0,0,0,.45); }
+.is-stack > img.stack-front { left: 0; bottom: 0; z-index: 1; border: 1.5px solid var(--card-line);
+  box-shadow: 4px 4px 14px rgba(0,0,0,.6); }
+.ptile-poster.is-stack .ptile-event, .ptile-poster.is-stack .ptile-soldout { top: calc(13% + 7px); }
+.ptile-poster.is-stack .ptile-times { width: 87%; border-radius: 0 0 8px 8px; z-index: 2; }
+.card-poster.is-stack { height: auto; }
+.card-poster.is-stack > img { width: 87% !important; }
+.fdetail-bill { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.fdetail-bill li { padding-left: 12px; border-left: 3px solid var(--accent); }
+.fdetail-bill .bill-h { font-weight: 700; font-size: 15px; }
+.fdetail-bill .bill-time { font-variant-numeric: tabular-nums; color: var(--accent); margin-right: 4px; }
+.fdetail-bill .yr { font-weight: 500; color: var(--ink-3); font-size: .85em; }
+.fdetail-bill .fdetail-syn { margin: 4px 0 0; }
