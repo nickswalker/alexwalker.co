@@ -108,14 +108,14 @@
 <h1 class="sr-only">Austin Movie Showtimes This Week — IMAX, 70mm, 35mm Film Prints &amp; Repertory</h1>
 <!-- Day selector — today + the next days; each backed by a tinted poster from that day -->
 <div class="week-days" id="weekDays" role="tablist" aria-label="Pick a day">
-  <button class="week-day week-day-on" data-iso="2026-10-25" role="tab"
-          aria-selected="true" type="button"
-          style="--day-tint: var(--f-70mm); --day-bg: url('https://image.tmdb.org/t/p/w500/au8CGZeCjgoxHe33gZWO0DDvndL.jpg')">
+  <button class="week-day" data-iso="2026-10-25" role="tab"
+          aria-selected="false" type="button"
+          style="--day-tint: var(--f-70mm)">
     <span class="week-day-dow"><span class="dow-lg js-daypart" data-sunset="1792972140000">Tonight</span><span class="dow-sm js-daypart" data-sunset="1792972140000">Today</span></span>
     <span class="week-day-date">Oct 25</span>
   </button>
-  <button class="week-day" data-iso="2026-10-26" role="tab"
-          aria-selected="false" type="button"
+  <button class="week-day week-day-on" data-iso="2026-10-26" role="tab"
+          aria-selected="true" type="button"
           style="--day-tint: var(--f-imax); --day-bg: url('https://image.tmdb.org/t/p/w500/9l1NuFjel2j89hiuiJbsxfblqjy.jpg')">
     <span class="week-day-dow"><span class="dow-lg">Tomorrow</span><span class="dow-sm">Mon</span></span>
     <span class="week-day-date">Oct 26</span>
@@ -184,59 +184,15 @@
 
 <!-- One day's By-Format / By-Time views at a time — same shared macros as Tonight -->
 <div class="week-body" id="weekBody">
-  <div class="dayviews" data-iso="2026-10-25">
+  <div class="dayviews" data-iso="2026-10-25" hidden>
     <div class="view view-format">
-  <section class="psec" data-format="more">
-    <div class="psec-h"><span class="fmt-badge badge-more">More Tonight</span></div>
-    <ul class="posters">
-<li class="ptile" data-venues="Alamo Drafthouse" data-format="more" data-film="Godzilla vs. Megalon">
-  <button class="ptile-btn" type="button" aria-haspopup="dialog">
-    <span class="ptile-poster">
-<img src="https://image.tmdb.org/t/p/w500/au8CGZeCjgoxHe33gZWO0DDvndL.jpg" alt="Godzilla vs. Megalon" loading="lazy">      <span class="ptile-times">
-<span class="ptime">11:00 PM</span>      </span>
-    </span>
-    <span class="ptile-title">Godzilla vs. Megalon <span class="yr">1973</span></span>
-  </button>
-  <template class="ptile-detail">
-    <div class="fdetail">
-      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/au8CGZeCjgoxHe33gZWO0DDvndL.jpg" alt=""></div>
-      <div class="fdetail-main">
-        <h3 class="fdetail-title">Godzilla vs. Megalon <span class="yr">1973</span></h3>
-<div class="fdetail-facts">1h 18m · Action · Jun Fukuda</div><a class="film-lb" href="https://letterboxd.com/tmdb/39264/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">Inventor Goro Ibuki creates a humanoid robot named Jet Jaguar. It is soon seized by an undersea race of people called the Seatopians. Using Jet Jaguar as a guide, the Seatopians send Megalon as vengeance for the nuclear tests that have devastated their society.</p>        <div class="fdetail-venues">
-          <div class="fv">
-            <div class="fv-name">Alamo Mueller</div>
-            <div class="times">
-<a class="t" href="https://drafthouse.com/austin/show/godzilla-vs-megalon" target="_blank" rel="noopener">11:00 PM</a>            </div>
-          </div>
-        </div>
-      </div>
-<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/alamo.png?v=af6105b3" alt=""></div>    </div>
-  </template>
-</li>
-    </ul>
-  </section>
 </div>
 
     <div class="view view-time">
-  <section class="tslot">
-    <div class="tslot-h"><span class="tslot-time">11:00 PM</span></div>
-    <ul class="tslot-films">
-      <li class="tcard" data-format="other" data-venues="Alamo Drafthouse" data-film="Godzilla vs. Megalon">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img src="https://image.tmdb.org/t/p/w500/au8CGZeCjgoxHe33gZWO0DDvndL.jpg" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">Godzilla vs. Megalon <span class="yr">1973</span></span>
-            <span class="tcard-venue">Alamo Mueller</span>
-          </span>
-        </button>
-      </li>
-    </ul>
-  </section>
 </div>
 
   </div>
-  <div class="dayviews" data-iso="2026-10-26" hidden>
+  <div class="dayviews" data-iso="2026-10-26">
     <div class="view view-format">
   <section class="psec" data-format="imax">
     <div class="psec-h"><span class="fmt-badge badge-imax">IMAX</span></div>
