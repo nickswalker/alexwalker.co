@@ -251,7 +251,10 @@
     if (!modal || !tpl) return;
     lastFocus = trigger || null;
     modalBody.innerHTML = "";
-    modalBody.appendChild(tpl.content.cloneNode(true));
+    // importNode, not content.cloneNode: a clone is still owned by the template's inert document
+    // and iOS Safari can leave its <img>s unloaded after adoption (venue-logo placeholder showed as
+    // a bare grey box, 2026-10-26). importNode creates the nodes in THIS document so they load.
+    modalBody.appendChild(document.importNode(tpl.content, true));
     modal.hidden = false;
     fitBadges(modalBody);
     requestAnimationFrame(() => modal.classList.add("open"));
