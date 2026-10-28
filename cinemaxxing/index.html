@@ -72,10 +72,10 @@
               <img class="score-face" src="https://alexwalker.co/img/cinemaxxing-frown-cyan.png" width="16" height="16" alt="" aria-hidden="true">
             </span>
           </button>
-          <button class="score score-imax" data-filter-format="imax" type="button">
+          <button class="score score-imax score-zero" data-filter-format="imax" type="button">
             <span class="score-label">IMAX</span>
             <span class="score-num">
-              <span class="score-count">1</span>
+              <span class="score-count">0</span>
             </span>
           </button>
           <button class="score score-35mm" data-filter-format="35mm" type="button">
@@ -111,7 +111,7 @@
   <button class="week-day week-day-on" data-iso="2026-10-27" role="tab"
           aria-selected="true" type="button"
           style="--day-tint: var(--f-70mm); --day-bg: url('https://image.tmdb.org/t/p/w500/WABfdeaThFYXCySGIOvRNv2sSW.jpg')">
-    <span class="week-day-dow"><span class="dow-lg js-daypart" data-sunset="1793144880000">Today</span><span class="dow-sm js-daypart" data-sunset="1793144880000">Today</span></span>
+    <span class="week-day-dow"><span class="dow-lg js-daypart" data-sunset="1793144880000">Tonight</span><span class="dow-sm js-daypart" data-sunset="1793144880000">Today</span></span>
     <span class="week-day-date">Oct 27</span>
   </button>
   <button class="week-day" data-iso="2026-10-28" role="tab"
@@ -166,7 +166,6 @@
   </div>
   <div class="chips" data-chip-group="venue" aria-label="Filter by venue">
     <button class="chip chip-on" data-filter-venue="" type="button">All venues</button>
-    <button class="chip" data-filter-venue="Bob Bullock IMAX" type="button">Bob Bullock IMAX</button>
     <button class="chip" data-filter-venue="Austin Film Society Cinema" type="button">Austin Film Society Cinema</button>
     <button class="chip" data-filter-venue="Alamo Drafthouse" type="button">Alamo Drafthouse</button>
     <button class="chip" data-filter-venue="Hyperreal Film Club" type="button">Hyperreal Film Club</button>
@@ -178,7 +177,7 @@
   </div>
   <select class="venue-select" aria-label="Filter by venue">
     <option value="">All venues</option>
-<option value="Bob Bullock IMAX">Bob Bullock IMAX</option><option value="Austin Film Society Cinema">Austin Film Society Cinema</option><option value="Alamo Drafthouse">Alamo Drafthouse</option><option value="Hyperreal Film Club">Hyperreal Film Club</option><option value="Paramount Theatre">Paramount Theatre</option><option value="Violet Crown Cinema">Violet Crown Cinema</option><option value="We Luv Video">We Luv Video</option><option value="AMC Barton Creek Square 14">AMC Barton Creek Square 14</option><option value="AMC DINE-IN Tech Ridge 10">AMC DINE-IN Tech Ridge 10</option>  </select>
+<option value="Austin Film Society Cinema">Austin Film Society Cinema</option><option value="Alamo Drafthouse">Alamo Drafthouse</option><option value="Hyperreal Film Club">Hyperreal Film Club</option><option value="Paramount Theatre">Paramount Theatre</option><option value="Violet Crown Cinema">Violet Crown Cinema</option><option value="We Luv Video">We Luv Video</option><option value="AMC Barton Creek Square 14">AMC Barton Creek Square 14</option><option value="AMC DINE-IN Tech Ridge 10">AMC DINE-IN Tech Ridge 10</option>  </select>
 </div>
 
 
@@ -186,35 +185,6 @@
 <div class="week-body" id="weekBody">
   <div class="dayviews" data-iso="2026-10-27">
     <div class="view view-format">
-  <section class="psec" data-format="imax">
-    <div class="psec-h"><span class="fmt-badge badge-imax">IMAX</span></div>
-    <ul class="posters" style="grid-template-columns: repeat(1, var(--pw))">
-<li class="ptile" data-venues="Bob Bullock IMAX" data-format="imax" data-film="Project Hail Mary">
-  <button class="ptile-btn" type="button" aria-haspopup="dialog">
-    <span class="ptile-poster">
-<img src="https://image.tmdb.org/t/p/w500/iOb2fjXLbpJgyQXe46n1WtGCnaa.jpg" alt="Project Hail Mary" loading="lazy">      <span class="ptile-times">
-<span class="ptime">7:00 PM</span>      </span>
-    </span>
-    <span class="ptile-title">Project Hail Mary <span class="yr">2026</span></span>
-  </button>
-  <template class="ptile-detail">
-    <div class="fdetail">
-      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/iOb2fjXLbpJgyQXe46n1WtGCnaa.jpg" alt=""></div>
-      <div class="fdetail-main">
-<span class="fdetail-badges"><span class="badge badge-imax">IMAX</span></span>        <h3 class="fdetail-title">Project Hail Mary <span class="yr">2026</span></h3>
-<div class="fdetail-facts">2h 37m · Science Fiction · Phil Lord</div><a class="film-lb" href="https://letterboxd.com/tmdb/687163/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">Science teacher Ryland Grace wakes up on a spaceship light years from home with no recollection of who he is or how he got there. As his memory returns, he begins to uncover his mission: solve the riddle of the mysterious substance causing the sun to die out. He must call on his scientific knowledge and unorthodox ideas to save everything on Earth from extinction.</p>        <div class="fdetail-venues">
-          <div class="fv">
-            <div class="fv-name">Bob Bullock IMAX (Paramount presents)</div>
-            <div class="times">
-<a class="t" href="https://tickets.austintheatre.org/14166/14282" target="_blank" rel="noopener">7:00 PM</a>            </div>
-          </div>
-        </div>
-      </div>
-<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/paramount.png?v=2179e198" alt=""></div>    </div>
-  </template>
-</li>
-    </ul>
-  </section>
   <section class="psec" data-format="35mm">
     <div class="psec-h"><span class="fmt-badge badge-35mm">35mm</span></div>
     <ul class="posters" style="grid-template-columns: repeat(1, var(--pw))">
@@ -251,7 +221,7 @@
   <button class="ptile-btn" type="button" aria-haspopup="dialog">
     <span class="ptile-poster">
 <img src="https://image.tmdb.org/t/p/w500/9l1NuFjel2j89hiuiJbsxfblqjy.jpg" alt="Clayface" loading="lazy">      <span class="ptile-times">
-<span class="ptime">7:00 PM</span><span class="ptime">9:45 PM</span><span class="ptime">10:00 PM</span>      </span>
+<span class="ptime">9:45 PM</span><span class="ptime">10:00 PM</span>      </span>
     </span>
     <span class="ptile-title">Clayface <span class="yr">2026</span></span>
   </button>
@@ -264,12 +234,12 @@
           <div class="fv">
             <div class="fv-name">AMC Barton Creek Square 14</div>
             <div class="times">
-<a class="t" href="https://www.amctheatres.com/movie-theatres/austin/amc-barton-creek-square-14/showtimes" target="_blank" rel="noopener">7:00 PM</a><a class="t" href="https://www.amctheatres.com/movie-theatres/austin/amc-barton-creek-square-14/showtimes" target="_blank" rel="noopener">9:45 PM</a>            </div>
+<a class="t" href="https://www.amctheatres.com/movie-theatres/austin/amc-barton-creek-square-14/showtimes" target="_blank" rel="noopener">9:45 PM</a>            </div>
           </div>
           <div class="fv">
             <div class="fv-name">AMC DINE-IN Tech Ridge 10</div>
             <div class="times">
-<a class="t" href="https://www.amctheatres.com/movie-theatres/austin/amc-dine-in-tech-ridge-10/showtimes" target="_blank" rel="noopener">7:00 PM</a><a class="t" href="https://www.amctheatres.com/movie-theatres/austin/amc-dine-in-tech-ridge-10/showtimes" target="_blank" rel="noopener">10:00 PM</a>            </div>
+<a class="t" href="https://www.amctheatres.com/movie-theatres/austin/amc-dine-in-tech-ridge-10/showtimes" target="_blank" rel="noopener">10:00 PM</a>            </div>
           </div>
         </div>
       </div>
@@ -313,181 +283,8 @@
     </ul>
   </section>
   <section class="psec" data-format="more">
-    <div class="psec-h"><span class="fmt-badge badge-more">More Today</span></div>
+    <div class="psec-h"><span class="fmt-badge badge-more">More Tonight</span></div>
     <ul class="posters">
-<li class="ptile" data-venues="Violet Crown Cinema" data-format="more" data-film="Primetime">
-  <button class="ptile-btn" type="button" aria-haspopup="dialog">
-    <span class="ptile-poster">
-<img src="https://image.tmdb.org/t/p/w500/lmrulvLbmaejTix1YaMxo1oGhH1.jpg" alt="Primetime" loading="lazy">      <span class="ptile-times">
-<span class="ptime">6:35 PM</span><span class="ptime">10:00 PM</span>      </span>
-    </span>
-    <span class="ptile-title">Primetime <span class="yr">2026</span></span>
-  </button>
-  <template class="ptile-detail">
-    <div class="fdetail">
-      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/lmrulvLbmaejTix1YaMxo1oGhH1.jpg" alt=""></div>
-      <div class="fdetail-main">
-        <h3 class="fdetail-title">Primetime <span class="yr">2026</span></h3>
-<div class="fdetail-facts">1h 50m · Drama · Lance Oppenheim</div><a class="film-lb" href="https://letterboxd.com/tmdb/1375441/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">In 2006, To Catch a Predator host Chris Hansen sets out to make television history. When a high stakes operation goes fatally wrong, his veneered dream of fame curdles into a nightmare of performative justice.</p>        <div class="fdetail-venues">
-          <div class="fv">
-            <div class="fv-name">Violet Crown Cinema</div>
-            <div class="times">
-<a class="t" href="https://austin.violetcrown.com/cinema/primetime" target="_blank" rel="noopener">6:35 PM</a><a class="t" href="https://austin.violetcrown.com/cinema/primetime" target="_blank" rel="noopener">10:00 PM</a>            </div>
-          </div>
-        </div>
-      </div>
-<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/violet-crown.png?v=2179e198" alt=""></div>    </div>
-  </template>
-</li>
-<li class="ptile" data-venues="Alamo Drafthouse" data-format="more" data-film="Godzilla vs. Megalon">
-  <button class="ptile-btn" type="button" aria-haspopup="dialog">
-    <span class="ptile-poster">
-<img src="https://image.tmdb.org/t/p/w500/au8CGZeCjgoxHe33gZWO0DDvndL.jpg" alt="Godzilla vs. Megalon" loading="lazy">      <span class="ptile-times">
-<span class="ptime">7:00 PM</span>      </span>
-    </span>
-    <span class="ptile-title">Godzilla vs. Megalon <span class="yr">1973</span></span>
-  </button>
-  <template class="ptile-detail">
-    <div class="fdetail">
-      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/au8CGZeCjgoxHe33gZWO0DDvndL.jpg" alt=""></div>
-      <div class="fdetail-main">
-        <h3 class="fdetail-title">Godzilla vs. Megalon <span class="yr">1973</span></h3>
-<div class="fdetail-facts">1h 18m · Action · Jun Fukuda</div><a class="film-lb" href="https://letterboxd.com/tmdb/39264/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">Inventor Goro Ibuki creates a humanoid robot named Jet Jaguar. It is soon seized by an undersea race of people called the Seatopians. Using Jet Jaguar as a guide, the Seatopians send Megalon as vengeance for the nuclear tests that have devastated their society.</p>        <div class="fdetail-venues">
-          <div class="fv">
-            <div class="fv-name">Alamo Lakeline</div>
-            <div class="times">
-<a class="t" href="https://drafthouse.com/austin/show/godzilla-vs-megalon" target="_blank" rel="noopener">7:00 PM</a>            </div>
-          </div>
-        </div>
-      </div>
-<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/alamo.png?v=2179e198" alt=""></div>    </div>
-  </template>
-</li>
-<li class="ptile" data-venues="Alamo Drafthouse" data-format="more" data-film="Scary Movie">
-  <button class="ptile-btn" type="button" aria-haspopup="dialog">
-    <span class="ptile-poster">
-<img src="https://image.tmdb.org/t/p/w500/per9VRL7WmEOgutgykgo2yWqV4A.jpg" alt="Scary Movie" loading="lazy"><span class="ptile-event">Live Q&amp;A</span>      <span class="ptile-times">
-<span class="ptime">7:00 PM</span>      </span>
-    </span>
-    <span class="ptile-title">Scary Movie <span class="yr">1991</span></span>
-  </button>
-  <template class="ptile-detail">
-    <div class="fdetail">
-      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/per9VRL7WmEOgutgykgo2yWqV4A.jpg" alt=""></div>
-      <div class="fdetail-main">
-        <h3 class="fdetail-title">Scary Movie <span class="yr">1991</span> <span class="ev-label">Live Q&amp;A</span></h3>
-<div class="fdetail-facts">1h 22m · Comedy · Daniel Erickson</div><a class="film-lb" href="https://letterboxd.com/tmdb/4242/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-event">Join director Daniel Erickson for a special screening of SCARY MOVIE – in the very theater it premiered in 1991! Select copies of Scary Movie: Behind-the-Screams Collector’s Magazine available while supplies last the night of.</p><p class="fdetail-syn">On Halloween night, big-time nerd Warren attends a spookhouse in a small Texas town. But is the haunted house as harmless as it seems, or has a psychotic mental patient found a new stomping ground?</p>        <div class="fdetail-venues">
-          <div class="fv">
-            <div class="fv-name">Alamo Village</div>
-            <div class="times">
-<a class="t" href="https://drafthouse.com/austin/show/live-q-a-scary-movie-1991" target="_blank" rel="noopener">7:00 PM</a>            </div>
-          </div>
-        </div>
-      </div>
-<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/alamo.png?v=2179e198" alt=""></div>    </div>
-  </template>
-</li>
-<li class="ptile" data-venues="Violet Crown Cinema" data-format="more" data-film="Digger">
-  <button class="ptile-btn" type="button" aria-haspopup="dialog">
-    <span class="ptile-poster">
-<img src="https://image.tmdb.org/t/p/w500/1ATXKrIPJyKNwnJ6lcG088Sa6zi.jpg" alt="Digger" loading="lazy">      <span class="ptile-times">
-<span class="ptime">7:05 PM</span><span class="ptime">9:45 PM</span>      </span>
-    </span>
-    <span class="ptile-title">Digger <span class="yr">2026</span></span>
-  </button>
-  <template class="ptile-detail">
-    <div class="fdetail">
-      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/1ATXKrIPJyKNwnJ6lcG088Sa6zi.jpg" alt=""></div>
-      <div class="fdetail-main">
-        <h3 class="fdetail-title">Digger <span class="yr">2026</span></h3>
-<div class="fdetail-facts">2h 9m · Comedy · Alejandro G. Iñárritu</div><a class="film-lb" href="https://letterboxd.com/tmdb/1248832/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">The most powerful man in the world embarks on a frantic mission to prove he is humanity&#39;s savior before the disaster he&#39;s unleashed destroys everything.</p>        <div class="fdetail-venues">
-          <div class="fv">
-            <div class="fv-name">Violet Crown Cinema</div>
-            <div class="times">
-<a class="t" href="https://austin.violetcrown.com/cinema/digger" target="_blank" rel="noopener">7:05 PM</a><a class="t" href="https://austin.violetcrown.com/cinema/digger" target="_blank" rel="noopener">9:45 PM</a>            </div>
-          </div>
-        </div>
-      </div>
-<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/violet-crown.png?v=2179e198" alt=""></div>    </div>
-  </template>
-</li>
-<li class="ptile" data-venues="Alamo Drafthouse,Austin Film Society Cinema" data-format="more" data-film="The Devils">
-  <button class="ptile-btn" type="button" aria-haspopup="dialog">
-    <span class="ptile-poster">
-<img src="https://image.tmdb.org/t/p/w500/y1k7eiOFc6fzm8XeTa1kNGx6JIs.jpg" alt="The Devils" loading="lazy">      <span class="ptile-times">
-<span class="ptime">7:30 PM</span><span class="ptime">8:40 PM</span>      </span>
-    </span>
-    <span class="ptile-title">The Devils <span class="yr">1971</span></span>
-  </button>
-  <template class="ptile-detail">
-    <div class="fdetail">
-      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/y1k7eiOFc6fzm8XeTa1kNGx6JIs.jpg" alt=""></div>
-      <div class="fdetail-main">
-        <h3 class="fdetail-title">The Devils <span class="yr">1971</span></h3>
-<div class="fdetail-facts">1h 52m · Drama · Ken Russell</div><a class="film-lb" href="https://letterboxd.com/tmdb/31767/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">In 1634 France, charismatic Father Urbain Grandier becomes the target of sexually depraved Sister Jeanne&#39;s accusations of witchcraft, which corrupt officials of church and state are all too happy to exploit.​​​​​​​​​​​​​​​​</p>        <div class="fdetail-venues">
-          <div class="fv">
-            <div class="fv-name">Alamo South Lamar</div>
-            <div class="times">
-<a class="t" href="https://drafthouse.com/austin/show/ken-russells-the-devils" target="_blank" rel="noopener">7:30 PM</a>            </div>
-          </div>
-          <div class="fv">
-            <div class="fv-name">Austin Film Society Cinema</div>
-            <div class="times">
-<a class="t" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3Cjr0000000NkbEAE" target="_blank" rel="noopener">8:40 PM</a>            </div>
-          </div>
-        </div>
-      </div>
-<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/alamo.png?v=2179e198" alt=""><img src="/s/logos/austin-film-society.png?v=2179e198" alt=""></div>    </div>
-  </template>
-</li>
-<li class="ptile" data-venues="Austin Film Society Cinema" data-format="more" data-film="The Snake Girl And The Silver-Haired Witch">
-  <button class="ptile-btn" type="button" aria-haspopup="dialog">
-    <span class="ptile-poster">
-<img src="https://image.tmdb.org/t/p/w500/zVdI4C4xZcK4ZA85AqtHiZiTG1b.jpg" alt="The Snake Girl And The Silver-Haired Witch" loading="lazy">      <span class="ptile-times">
-<span class="ptime">7:30 PM</span>      </span>
-    </span>
-    <span class="ptile-title">The Snake Girl And The Silver-Haired Witch <span class="yr">1968</span></span>
-  </button>
-  <template class="ptile-detail">
-    <div class="fdetail">
-      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/zVdI4C4xZcK4ZA85AqtHiZiTG1b.jpg" alt=""></div>
-      <div class="fdetail-main">
-        <h3 class="fdetail-title">The Snake Girl And The Silver-Haired Witch <span class="yr">1968</span></h3>
-<div class="fdetail-facts">1h 22m · Horror · Noriaki Yuasa Japan</div><a class="film-lb" href="https://letterboxd.com/tmdb/182921/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">Up until this point, young Sayuri Nanjo has had to live most of her life in a nun-run boarding school for orphans and away from her parents. That&#39;s all about to change when her real father mysteriously comes to get her and finally bring her home.</p>        <div class="fdetail-venues">
-          <div class="fv">
-            <div class="fv-name">Austin Film Society Cinema</div>
-            <div class="times">
-<a class="t" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000Xnjtp2AB" target="_blank" rel="noopener">7:30 PM</a>            </div>
-          </div>
-        </div>
-      </div>
-<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/austin-film-society.png?v=2179e198" alt=""></div>    </div>
-  </template>
-</li>
-<li class="ptile" data-venues="Hyperreal Film Club" data-format="more" data-film="The Wailing">
-  <button class="ptile-btn" type="button" aria-haspopup="dialog">
-    <span class="ptile-poster">
-<img src="https://image.tmdb.org/t/p/w500/lWE9ih9qgjx8HatYboP7fG0nri.jpg" alt="The Wailing" loading="lazy">      <span class="ptile-times">
-<span class="ptime">7:30 PM</span>      </span>
-    </span>
-    <span class="ptile-title">The Wailing <span class="yr">2016</span></span>
-  </button>
-  <template class="ptile-detail">
-    <div class="fdetail">
-      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/lWE9ih9qgjx8HatYboP7fG0nri.jpg" alt=""></div>
-      <div class="fdetail-main">
-        <h3 class="fdetail-title">The Wailing <span class="yr">2016</span></h3>
-<div class="fdetail-facts">2h 36m · Horror · Na Hong-jin</div><a class="film-lb" href="https://letterboxd.com/tmdb/293670/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-event">The vitals: 7:00 ~ Doors 7:30 ~ The Wailing SEE YOU AT THE MOVIES 🔮</p><p class="fdetail-syn">A stranger arrives in a little village and soon after a mysterious sickness starts spreading. A policeman is drawn into the incident and is forced to solve the mystery in order to save his daughter.</p>        <div class="fdetail-venues">
-          <div class="fv">
-            <div class="fv-name">Hyperreal Film Club</div>
-            <div class="times">
-<a class="t" href="https://hyperrealfilm.club/events/10-27/the-wailing-movie-screening" target="_blank" rel="noopener">7:30 PM</a>            </div>
-          </div>
-        </div>
-      </div>
-<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/hyperreal.png?v=2179e198" alt=""></div>    </div>
-  </template>
-</li>
 <li class="ptile" data-venues="Violet Crown Cinema" data-format="more" data-film="Wicker">
   <button class="ptile-btn" type="button" aria-haspopup="dialog">
     <span class="ptile-poster">
@@ -536,6 +333,30 @@
 <div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/austin-film-society.png?v=2179e198" alt=""></div>    </div>
   </template>
 </li>
+<li class="ptile" data-venues="Austin Film Society Cinema" data-format="more" data-film="The Devils">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/y1k7eiOFc6fzm8XeTa1kNGx6JIs.jpg" alt="The Devils" loading="lazy">      <span class="ptile-times">
+<span class="ptime">8:40 PM</span>      </span>
+    </span>
+    <span class="ptile-title">The Devils <span class="yr">1971</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/y1k7eiOFc6fzm8XeTa1kNGx6JIs.jpg" alt=""></div>
+      <div class="fdetail-main">
+        <h3 class="fdetail-title">The Devils <span class="yr">1971</span></h3>
+<div class="fdetail-facts">1h 52m · Drama · Ken Russell UK</div><a class="film-lb" href="https://letterboxd.com/tmdb/31767/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">In 1634 France, charismatic Father Urbain Grandier becomes the target of sexually depraved Sister Jeanne&#39;s accusations of witchcraft, which corrupt officials of church and state are all too happy to exploit.​​​​​​​​​​​​​​​​</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">Austin Film Society Cinema</div>
+            <div class="times">
+<a class="t" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3Cjr0000000NkbEAE" target="_blank" rel="noopener">8:40 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/austin-film-society.png?v=2179e198" alt=""></div>    </div>
+  </template>
+</li>
 <li class="ptile" data-venues="Violet Crown Cinema" data-format="more" data-film="You Can See Everything">
   <button class="ptile-btn" type="button" aria-haspopup="dialog">
     <span class="ptile-poster">
@@ -554,6 +375,54 @@
             <div class="fv-name">Violet Crown Cinema</div>
             <div class="times">
 <a class="t" href="https://austin.violetcrown.com/cinema/you-can-see-everything" target="_blank" rel="noopener">9:10 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/violet-crown.png?v=2179e198" alt=""></div>    </div>
+  </template>
+</li>
+<li class="ptile" data-venues="Violet Crown Cinema" data-format="more" data-film="Digger">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/1ATXKrIPJyKNwnJ6lcG088Sa6zi.jpg" alt="Digger" loading="lazy">      <span class="ptile-times">
+<span class="ptime">9:45 PM</span>      </span>
+    </span>
+    <span class="ptile-title">Digger <span class="yr">2026</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/1ATXKrIPJyKNwnJ6lcG088Sa6zi.jpg" alt=""></div>
+      <div class="fdetail-main">
+        <h3 class="fdetail-title">Digger <span class="yr">2026</span></h3>
+<div class="fdetail-facts">2h 9m · Comedy · Alejandro G. Iñárritu</div><a class="film-lb" href="https://letterboxd.com/tmdb/1248832/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">The most powerful man in the world embarks on a frantic mission to prove he is humanity&#39;s savior before the disaster he&#39;s unleashed destroys everything.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">Violet Crown Cinema</div>
+            <div class="times">
+<a class="t" href="https://austin.violetcrown.com/cinema/digger" target="_blank" rel="noopener">9:45 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/violet-crown.png?v=2179e198" alt=""></div>    </div>
+  </template>
+</li>
+<li class="ptile" data-venues="Violet Crown Cinema" data-format="more" data-film="Primetime">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/lmrulvLbmaejTix1YaMxo1oGhH1.jpg" alt="Primetime" loading="lazy">      <span class="ptile-times">
+<span class="ptime">10:00 PM</span>      </span>
+    </span>
+    <span class="ptile-title">Primetime <span class="yr">2026</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/lmrulvLbmaejTix1YaMxo1oGhH1.jpg" alt=""></div>
+      <div class="fdetail-main">
+        <h3 class="fdetail-title">Primetime <span class="yr">2026</span></h3>
+<div class="fdetail-facts">1h 50m · Drama · Lance Oppenheim</div><a class="film-lb" href="https://letterboxd.com/tmdb/1375441/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">In 2006, To Catch a Predator host Chris Hansen sets out to make television history. When a high stakes operation goes fatally wrong, his veneered dream of fame curdles into a nightmare of performative justice.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">Violet Crown Cinema</div>
+            <div class="times">
+<a class="t" href="https://austin.violetcrown.com/cinema/primetime" target="_blank" rel="noopener">10:00 PM</a>            </div>
           </div>
         </div>
       </div>
@@ -589,116 +458,6 @@
 </div>
 
     <div class="view view-time">
-  <section class="tslot">
-    <div class="tslot-h"><span class="tslot-time">6:35 PM</span></div>
-    <ul class="tslot-films">
-      <li class="tcard" data-format="other" data-venues="Violet Crown Cinema" data-film="Primetime">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img src="https://image.tmdb.org/t/p/w500/lmrulvLbmaejTix1YaMxo1oGhH1.jpg" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">Primetime <span class="yr">2026</span></span>
-            <span class="tcard-venue">Violet Crown Cinema</span>
-          </span>
-        </button>
-      </li>
-    </ul>
-  </section>
-  <section class="tslot">
-    <div class="tslot-h"><span class="tslot-time">7:00 PM</span></div>
-    <ul class="tslot-films">
-      <li class="tcard" data-format="dolby" data-venues="AMC Barton Creek Square 14,AMC DINE-IN Tech Ridge 10" data-film="Clayface">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img src="https://image.tmdb.org/t/p/w500/9l1NuFjel2j89hiuiJbsxfblqjy.jpg" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">Clayface <span class="yr">2026</span> <span class="badge badge-dolby tcard-badge">Dolby</span> <span class="aud-badge badge-atmos">Atmos</span></span>
-            <span class="tcard-venue">2 theaters</span>
-          </span>
-        </button>
-      </li>
-      <li class="tcard" data-format="other" data-venues="Alamo Drafthouse" data-film="Godzilla vs. Megalon">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img src="https://image.tmdb.org/t/p/w500/au8CGZeCjgoxHe33gZWO0DDvndL.jpg" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">Godzilla vs. Megalon <span class="yr">1973</span></span>
-            <span class="tcard-venue">Alamo Lakeline</span>
-          </span>
-        </button>
-      </li>
-      <li class="tcard" data-format="imax" data-venues="Bob Bullock IMAX" data-film="Project Hail Mary">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img src="https://image.tmdb.org/t/p/w500/iOb2fjXLbpJgyQXe46n1WtGCnaa.jpg" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">Project Hail Mary <span class="yr">2026</span> <span class="badge badge-imax tcard-badge">IMAX</span></span>
-            <span class="tcard-venue">Bob Bullock IMAX (Paramount presents)</span>
-          </span>
-        </button>
-      </li>
-      <li class="tcard" data-format="other" data-venues="Alamo Drafthouse" data-film="Scary Movie">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img src="https://image.tmdb.org/t/p/w500/per9VRL7WmEOgutgykgo2yWqV4A.jpg" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">Scary Movie <span class="yr">1991</span></span>
-            <span class="tcard-venue">Alamo Village</span>
-<span class="tcard-event">Live Q&amp;A</span>          </span>
-        </button>
-      </li>
-    </ul>
-  </section>
-  <section class="tslot">
-    <div class="tslot-h"><span class="tslot-time">7:05 PM</span></div>
-    <ul class="tslot-films">
-      <li class="tcard" data-format="other" data-venues="Violet Crown Cinema" data-film="Digger">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img src="https://image.tmdb.org/t/p/w500/1ATXKrIPJyKNwnJ6lcG088Sa6zi.jpg" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">Digger <span class="yr">2026</span></span>
-            <span class="tcard-venue">Violet Crown Cinema</span>
-          </span>
-        </button>
-      </li>
-    </ul>
-  </section>
-  <section class="tslot">
-    <div class="tslot-h"><span class="tslot-time">7:30 PM</span></div>
-    <ul class="tslot-films">
-      <li class="tcard" data-format="other" data-venues="Alamo Drafthouse" data-film="The Devils">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img src="https://image.tmdb.org/t/p/w500/y1k7eiOFc6fzm8XeTa1kNGx6JIs.jpg" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">The Devils <span class="yr">1971</span></span>
-            <span class="tcard-venue">Alamo South Lamar</span>
-          </span>
-        </button>
-      </li>
-      <li class="tcard" data-format="other" data-venues="Austin Film Society Cinema" data-film="The Snake Girl And The Silver-Haired Witch">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img src="https://image.tmdb.org/t/p/w500/zVdI4C4xZcK4ZA85AqtHiZiTG1b.jpg" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">The Snake Girl And The Silver-Haired Witch <span class="yr">1968</span></span>
-            <span class="tcard-venue">Austin Film Society Cinema</span>
-          </span>
-        </button>
-      </li>
-      <li class="tcard" data-format="other" data-venues="Hyperreal Film Club" data-film="The Wailing">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img src="https://image.tmdb.org/t/p/w500/lWE9ih9qgjx8HatYboP7fG0nri.jpg" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">The Wailing <span class="yr">2016</span></span>
-            <span class="tcard-venue">Hyperreal Film Club</span>
-          </span>
-        </button>
-      </li>
-    </ul>
-  </section>
   <section class="tslot">
     <div class="tslot-h"><span class="tslot-time">7:35 PM</span></div>
     <ul class="tslot-films">
@@ -9242,7 +9001,7 @@
   </footer>
 
   <script src="/s/app.js?v=2179e198" defer></script>
-<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Project Hail Mary", "startDate": "2026-10-27T19:00:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Project Hail Mary", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/687163/"}, "location": {"@type": "MovieTheater", "name": "Bob Bullock IMAX", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (downtown)"}}, "offers": {"@type": "Offer", "url": "https://tickets.austintheatre.org/14166/14282", "availability": "https://schema.org/InStock"}, "videoFormat": "IMAX", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Halloween III: Season of the Witch", "startDate": "2026-10-27T21:30:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Halloween III: Season of the Witch", "dateCreated": "1982", "sameAs": "https://letterboxd.com/tmdb/10676/"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/terror-tuesday-halloween-iii-season-of-the-witch", "availability": "https://schema.org/InStock"}, "videoFormat": "35mm", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Clayface", "startDate": "2026-10-27T19:00:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Clayface", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1400940/"}, "location": {"@type": "MovieTheater", "name": "AMC Barton Creek Square 14", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://www.amctheatres.com/movie-theatres/austin/amc-barton-creek-square-14/showtimes", "availability": "https://schema.org/InStock"}, "videoFormat": "Dolby", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Clayface", "startDate": "2026-10-27T21:45:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Clayface", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1400940/"}, "location": {"@type": "MovieTheater", "name": "AMC Barton Creek Square 14", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://www.amctheatres.com/movie-theatres/austin/amc-barton-creek-square-14/showtimes", "availability": "https://schema.org/InStock"}, "videoFormat": "Dolby", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Clayface", "startDate": "2026-10-27T19:00:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Clayface", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1400940/"}, "location": {"@type": "MovieTheater", "name": "AMC DINE-IN Tech Ridge 10", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://www.amctheatres.com/movie-theatres/austin/amc-dine-in-tech-ridge-10/showtimes", "availability": "https://schema.org/InStock"}, "videoFormat": "Dolby", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Clayface", "startDate": "2026-10-27T22:00:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Clayface", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1400940/"}, "location": {"@type": "MovieTheater", "name": "AMC DINE-IN Tech Ridge 10", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://www.amctheatres.com/movie-theatres/austin/amc-dine-in-tech-ridge-10/showtimes", "availability": "https://schema.org/InStock"}, "videoFormat": "Dolby", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Clayface", "startDate": "2026-10-27T19:45:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Clayface", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1400940/"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/clayface", "availability": "https://schema.org/InStock"}, "videoFormat": "4K Barco HDR", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Clayface", "startDate": "2026-10-27T22:30:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Clayface", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1400940/"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/clayface", "availability": "https://schema.org/InStock"}, "videoFormat": "4K Barco HDR", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Clayface", "startDate": "2026-10-27T22:40:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Clayface", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1400940/"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/clayface", "availability": "https://schema.org/InStock"}, "videoFormat": "4K Barco HDR", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Primetime", "startDate": "2026-10-27T18:35:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Primetime", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1375441/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/cinema/primetime", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Primetime", "startDate": "2026-10-27T22:00:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Primetime", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1375441/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/cinema/primetime", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Scary Movie", "startDate": "2026-10-27T19:00:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Scary Movie", "dateCreated": "1991", "sameAs": "https://letterboxd.com/tmdb/4242/"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/live-q-a-scary-movie-1991", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Digger", "startDate": "2026-10-27T19:05:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Digger", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1248832/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/cinema/digger", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Digger", "startDate": "2026-10-27T21:45:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Digger", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1248832/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/cinema/digger", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "The Snake Girl And The Silver-Haired Witch", "startDate": "2026-10-27T19:30:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "The Snake Girl And The Silver-Haired Witch", "dateCreated": "1968", "sameAs": "https://letterboxd.com/tmdb/182921/"}, "location": {"@type": "MovieTheater", "name": "Austin Film Society Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000Xnjtp2AB", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "The Wailing", "startDate": "2026-10-27T19:30:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "The Wailing", "dateCreated": "2016", "sameAs": "https://letterboxd.com/tmdb/293670/"}, "location": {"@type": "MovieTheater", "name": "Hyperreal Film Club", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://hyperrealfilm.club/events/10-27/the-wailing-movie-screening", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Wicker", "startDate": "2026-10-27T19:35:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Wicker", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1195803/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/cinema/wicker", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Wicker", "startDate": "2026-10-27T22:15:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Wicker", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1195803/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/cinema/wicker", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Paper Tiger", "startDate": "2026-10-27T20:00:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Paper Tiger", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1381273/"}, "location": {"@type": "MovieTheater", "name": "Austin Film Society Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://www.austinfilm.org/screening/paper-tiger/", "availability": "https://schema.org/SoldOut"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "The Devils", "startDate": "2026-10-27T20:40:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "The Devils", "dateCreated": "1971", "sameAs": "https://letterboxd.com/tmdb/31767/"}, "location": {"@type": "MovieTheater", "name": "Austin Film Society Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3Cjr0000000NkbEAE", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "You Can See Everything", "startDate": "2026-10-27T21:10:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "You Can See Everything", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1765072/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/cinema/you-can-see-everything", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Daughters of Darkness", "startDate": "2026-10-27T22:20:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Daughters of Darkness", "dateCreated": "1971", "sameAs": "https://letterboxd.com/tmdb/46175/"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/queer-film-theory-101-daughters-of-darkness", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}]</script>  <div id="glass-wrapper"></div>
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Halloween III: Season of the Witch", "startDate": "2026-10-27T21:30:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Halloween III: Season of the Witch", "dateCreated": "1982", "sameAs": "https://letterboxd.com/tmdb/10676/"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/terror-tuesday-halloween-iii-season-of-the-witch", "availability": "https://schema.org/InStock"}, "videoFormat": "35mm", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Clayface", "startDate": "2026-10-27T21:45:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Clayface", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1400940/"}, "location": {"@type": "MovieTheater", "name": "AMC Barton Creek Square 14", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://www.amctheatres.com/movie-theatres/austin/amc-barton-creek-square-14/showtimes", "availability": "https://schema.org/InStock"}, "videoFormat": "Dolby", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Clayface", "startDate": "2026-10-27T22:00:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Clayface", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1400940/"}, "location": {"@type": "MovieTheater", "name": "AMC DINE-IN Tech Ridge 10", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://www.amctheatres.com/movie-theatres/austin/amc-dine-in-tech-ridge-10/showtimes", "availability": "https://schema.org/InStock"}, "videoFormat": "Dolby", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Clayface", "startDate": "2026-10-27T19:45:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Clayface", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1400940/"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/clayface", "availability": "https://schema.org/InStock"}, "videoFormat": "4K Barco HDR", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Clayface", "startDate": "2026-10-27T22:30:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Clayface", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1400940/"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/clayface", "availability": "https://schema.org/InStock"}, "videoFormat": "4K Barco HDR", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Clayface", "startDate": "2026-10-27T22:40:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Clayface", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1400940/"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/clayface", "availability": "https://schema.org/InStock"}, "videoFormat": "4K Barco HDR", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Wicker", "startDate": "2026-10-27T19:35:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Wicker", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1195803/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/cinema/wicker", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Wicker", "startDate": "2026-10-27T22:15:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Wicker", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1195803/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/cinema/wicker", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Paper Tiger", "startDate": "2026-10-27T20:00:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Paper Tiger", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1381273/"}, "location": {"@type": "MovieTheater", "name": "Austin Film Society Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://www.austinfilm.org/screening/paper-tiger/", "availability": "https://schema.org/SoldOut"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "The Devils", "startDate": "2026-10-27T20:40:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "The Devils", "dateCreated": "1971", "sameAs": "https://letterboxd.com/tmdb/31767/"}, "location": {"@type": "MovieTheater", "name": "Austin Film Society Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3Cjr0000000NkbEAE", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "You Can See Everything", "startDate": "2026-10-27T21:10:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "You Can See Everything", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1765072/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/cinema/you-can-see-everything", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Digger", "startDate": "2026-10-27T21:45:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Digger", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1248832/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/cinema/digger", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Primetime", "startDate": "2026-10-27T22:00:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Primetime", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1375441/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/cinema/primetime", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Daughters of Darkness", "startDate": "2026-10-27T22:20:00-05:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Daughters of Darkness", "dateCreated": "1971", "sameAs": "https://letterboxd.com/tmdb/46175/"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/queer-film-theory-101-daughters-of-darkness", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}]</script>  <div id="glass-wrapper"></div>
   <script defer src="/s/glass/container.js?v=2179e198"></script>
   <script defer src="/s/glass/button.js?v=2179e198"></script>
   <script defer src="/s/glass/glass-return-to-top.js?v=2179e198"></script>
