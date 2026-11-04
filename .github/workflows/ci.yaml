@@ -18,7 +18,8 @@ on:
 
 jobs:
   jekyll-build:
-    runs-on: ubuntu-latest
+    # pinned: ubuntu-latest moved to 26.04 on 2026-10-19 which has no Ruby 3.3.6; move to Ruby 3.3.13 + 3.3 before 24.04 retires
+    runs-on: ubuntu-24.04
     # workflow_run fires on both success and failure. Skip the deploy chain
     # entirely if the sync didn't actually succeed — no point shipping a
     # broken sync (or worse, a partial commit) to the live site.
@@ -76,7 +77,7 @@ jobs:
           path: _site
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [jekyll-build]
     # Deploy to live on:
     #  - direct pushes to master
@@ -194,7 +195,7 @@ jobs:
           CLOUDFLARE_KEY: ${{ secrets.CLOUDFLARE_KEY }}
 
   deploy-staging:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [jekyll-build]
     if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
     steps:
