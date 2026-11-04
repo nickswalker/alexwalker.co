@@ -1108,3 +1108,5 @@ body {
 /* Label badges that wrap (narrow phone tiles) split into even lines; app.js fitBadges() then trims
    the pill to the longest line so it never runs wider than its text. */
 .ptile-event, .tcard-event, .ev-label, .ptile-soldout, .fdetail-soldout { text-wrap: balance; }
+/* Red event badge (KUTX), set by the badge_class filter in site/build.py. */
+.ptile-event.is-red, .tcard-event.is-red, .ev-label.is-red { background: #d6212b; border-color: #d6212b; }
