@@ -63,7 +63,7 @@
     <div class="sectionbar-row">
       <div class="sect-active">
         <a href="/" class="sect on sect-wide">
-          <b class="sect-title">This Week in Austin</b><span class="sect-meta"> · Nov 4 – Nov 11</span>        </a>
+          <b class="sect-title">This Week in Austin</b><span class="sect-meta"> · Nov 5 – Nov 12</span>        </a>
         <div class="scoreboard" role="group" aria-label="Filter by format">
           <button class="score score-70mm score-zero" data-filter-format="70mm" type="button">
             <span class="score-label">70mm</span>
@@ -72,16 +72,16 @@
               <img class="score-face" src="https://alexwalker.co/img/cinemaxxing-frown-cyan.png" width="16" height="16" alt="" aria-hidden="true">
             </span>
           </button>
-          <button class="score score-imax score-zero" data-filter-format="imax" type="button">
+          <button class="score score-imax" data-filter-format="imax" type="button">
             <span class="score-label">IMAX</span>
             <span class="score-num">
-              <span class="score-count">0</span>
+              <span class="score-count">1</span>
             </span>
           </button>
           <button class="score score-35mm" data-filter-format="35mm" type="button">
             <span class="score-label">35mm</span>
             <span class="score-num">
-              <span class="score-count">1</span>
+              <span class="score-count">2</span>
               <img class="score-face" src="https://alexwalker.co/img/cinemaxxing-smile-amber.png" width="16" height="16" alt="" aria-hidden="true">
             </span>
           </button>
@@ -108,53 +108,53 @@
 <h1 class="sr-only">Austin Movie Showtimes This Week — IMAX, 70mm, 35mm Film Prints &amp; Repertory</h1>
 <!-- Day selector — today + the next days; each backed by a tinted poster from that day -->
 <div class="week-days" id="weekDays" role="tablist" aria-label="Pick a day">
-  <button class="week-day" data-iso="2026-11-04" role="tab"
-          aria-selected="false" type="button"
-          style="--day-tint: var(--f-70mm)">
-    <span class="week-day-dow"><span class="dow-lg js-daypart" data-sunset="1793835660000">Tonight</span><span class="dow-sm js-daypart" data-sunset="1793835660000">Today</span></span>
-    <span class="week-day-date">Nov 4</span>
-  </button>
   <button class="week-day week-day-on" data-iso="2026-11-05" role="tab"
           aria-selected="true" type="button"
-          style="--day-tint: var(--f-imax); --day-bg: url('https://image.tmdb.org/t/p/w500/dNJFRtVg3xLQ7dbNIQ55cmmIniD.jpg')">
-    <span class="week-day-dow"><span class="dow-lg">Tomorrow</span><span class="dow-sm">Thu</span></span>
+          style="--day-tint: var(--f-70mm); --day-bg: url('https://image.tmdb.org/t/p/w500/9l1NuFjel2j89hiuiJbsxfblqjy.jpg')">
+    <span class="week-day-dow"><span class="dow-lg js-daypart" data-sunset="1793922000000">Today</span><span class="dow-sm js-daypart" data-sunset="1793922000000">Today</span></span>
     <span class="week-day-date">Nov 5</span>
   </button>
   <button class="week-day" data-iso="2026-11-06" role="tab"
           aria-selected="false" type="button"
-          style="--day-tint: var(--f-35mm); --day-bg: url('https://image.tmdb.org/t/p/w500/hSmIJluOJmTWvJs4d7kHRxjc8s8.jpg')">
-    <span class="week-day-dow"><span class="dow-lg">Fri</span><span class="dow-sm">Fri</span></span>
+          style="--day-tint: var(--f-imax); --day-bg: url('https://image.tmdb.org/t/p/w500/dNJFRtVg3xLQ7dbNIQ55cmmIniD.jpg')">
+    <span class="week-day-dow"><span class="dow-lg">Tomorrow</span><span class="dow-sm">Fri</span></span>
     <span class="week-day-date">Nov 6</span>
   </button>
   <button class="week-day" data-iso="2026-11-07" role="tab"
           aria-selected="false" type="button"
-          style="--day-tint: var(--accent); --day-bg: url('https://image.tmdb.org/t/p/w500/tYH4rQZlHtuFSeDS0bsV17khvJC.jpg')">
+          style="--day-tint: var(--f-35mm); --day-bg: url('https://image.tmdb.org/t/p/w500/hSmIJluOJmTWvJs4d7kHRxjc8s8.jpg')">
     <span class="week-day-dow"><span class="dow-lg">Sat</span><span class="dow-sm">Sat</span></span>
     <span class="week-day-date">Nov 7</span>
   </button>
   <button class="week-day" data-iso="2026-11-08" role="tab"
           aria-selected="false" type="button"
-          style="--day-tint: var(--f-hdr); --day-bg: url('https://image.tmdb.org/t/p/w500/f7E3jZVWgjzxONUfrCkJRGQJH0t.jpg')">
+          style="--day-tint: var(--accent); --day-bg: url('https://image.tmdb.org/t/p/w500/tYH4rQZlHtuFSeDS0bsV17khvJC.jpg')">
     <span class="week-day-dow"><span class="dow-lg">Sun</span><span class="dow-sm">Sun</span></span>
     <span class="week-day-date">Nov 8</span>
   </button>
   <button class="week-day" data-iso="2026-11-09" role="tab"
           aria-selected="false" type="button"
-          style="--day-tint: var(--gold); --day-bg: url('https://image.tmdb.org/t/p/w500/raayaQ9WTUGolsYHPWc2bGonu58.jpg')">
+          style="--day-tint: var(--f-hdr); --day-bg: url('https://image.tmdb.org/t/p/w500/raayaQ9WTUGolsYHPWc2bGonu58.jpg')">
     <span class="week-day-dow"><span class="dow-lg">Mon</span><span class="dow-sm">Mon</span></span>
     <span class="week-day-date">Nov 9</span>
   </button>
   <button class="week-day" data-iso="2026-11-10" role="tab"
           aria-selected="false" type="button"
-          style="--day-tint: var(--f-imax); --day-bg: url('https://image.tmdb.org/t/p/w500/g5EosvM0delNPkgBDGYYZvJl46n.jpg')">
+          style="--day-tint: var(--gold); --day-bg: url('https://image.tmdb.org/t/p/w500/g5EosvM0delNPkgBDGYYZvJl46n.jpg')">
     <span class="week-day-dow"><span class="dow-lg">Tue</span><span class="dow-sm">Tue</span></span>
     <span class="week-day-date">Nov 10</span>
   </button>
   <button class="week-day" data-iso="2026-11-11" role="tab"
           aria-selected="false" type="button"
-          style="--day-tint: var(--f-70mm); --day-bg: url('https://image.tmdb.org/t/p/w500/ifYDZkr2qkHFz87TNVvlxajOxl5.jpg')">
+          style="--day-tint: var(--f-imax); --day-bg: url('https://image.tmdb.org/t/p/w500/ifYDZkr2qkHFz87TNVvlxajOxl5.jpg')">
     <span class="week-day-dow"><span class="dow-lg">Wed</span><span class="dow-sm">Wed</span></span>
     <span class="week-day-date">Nov 11</span>
+  </button>
+  <button class="week-day" data-iso="2026-11-12" role="tab"
+          aria-selected="false" type="button"
+          style="--day-tint: var(--f-70mm); --day-bg: url('https://image.tmdb.org/t/p/w500/c0KUggz86JiqSU92eJBgrxmkrL3.jpg')">
+    <span class="week-day-dow"><span class="dow-lg">Thu</span><span class="dow-sm">Thu</span></span>
+    <span class="week-day-date">Nov 12</span>
   </button>
 </div>
 
@@ -166,6 +166,7 @@
   </div>
   <div class="chips" data-chip-group="venue" aria-label="Filter by venue">
     <button class="chip chip-on" data-filter-venue="" type="button">All venues</button>
+    <button class="chip" data-filter-venue="Bob Bullock IMAX" type="button">Bob Bullock IMAX</button>
     <button class="chip" data-filter-venue="Austin Film Society Cinema" type="button">Austin Film Society Cinema</button>
     <button class="chip" data-filter-venue="Alamo Drafthouse" type="button">Alamo Drafthouse</button>
     <button class="chip" data-filter-venue="Hyperreal Film Club" type="button">Hyperreal Film Club</button>
@@ -176,20 +177,12 @@
   </div>
   <select class="venue-select" aria-label="Filter by venue">
     <option value="">All venues</option>
-<option value="Austin Film Society Cinema">Austin Film Society Cinema</option><option value="Alamo Drafthouse">Alamo Drafthouse</option><option value="Hyperreal Film Club">Hyperreal Film Club</option><option value="Violet Crown Cinema">Violet Crown Cinema</option><option value="We Luv Video">We Luv Video</option><option value="AMC Barton Creek Square 14">AMC Barton Creek Square 14</option><option value="AMC DINE-IN Tech Ridge 10">AMC DINE-IN Tech Ridge 10</option>  </select>
+<option value="Bob Bullock IMAX">Bob Bullock IMAX</option><option value="Austin Film Society Cinema">Austin Film Society Cinema</option><option value="Alamo Drafthouse">Alamo Drafthouse</option><option value="Hyperreal Film Club">Hyperreal Film Club</option><option value="Violet Crown Cinema">Violet Crown Cinema</option><option value="We Luv Video">We Luv Video</option><option value="AMC Barton Creek Square 14">AMC Barton Creek Square 14</option><option value="AMC DINE-IN Tech Ridge 10">AMC DINE-IN Tech Ridge 10</option>  </select>
 </div>
 
 
 <!-- One day's By-Format / By-Time views at a time — same shared macros as Tonight -->
 <div class="week-body" id="weekBody">
-  <div class="dayviews" data-iso="2026-11-04" hidden>
-    <div class="view view-format">
-</div>
-
-    <div class="view view-time">
-</div>
-
-  </div>
   <div class="dayviews" data-iso="2026-11-05">
     <div class="view view-format">
   <section class="psec" data-format="dolby">
@@ -299,7 +292,7 @@
     </ul>
   </section>
   <section class="psec" data-format="more">
-    <div class="psec-h"><span class="fmt-badge badge-more">More Tomorrow</span></div>
+    <div class="psec-h"><span class="fmt-badge badge-more">More Today</span></div>
     <ul class="posters">
 <li class="ptile" data-venues="Violet Crown Cinema" data-format="more" data-film="2-Hour Event">
   <button class="ptile-btn" type="button" aria-haspopup="dialog">
@@ -1408,7 +1401,7 @@
     </ul>
   </section>
   <section class="psec" data-format="more">
-    <div class="psec-h"><span class="fmt-badge badge-more">More Friday</span></div>
+    <div class="psec-h"><span class="fmt-badge badge-more">More Tomorrow</span></div>
     <ul class="posters">
 <li class="ptile" data-venues="Violet Crown Cinema,Austin Film Society Cinema" data-format="more" data-film="La Bola Negra">
   <button class="ptile-btn" type="button" aria-haspopup="dialog">
@@ -6832,6 +6825,582 @@
           <span class="tcard-body">
             <span class="tcard-title">Wild Horse Nine <span class="yr">2026</span></span>
             <span class="tcard-venue">Violet Crown Cinema</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+</div>
+
+  </div>
+  <div class="dayviews" data-iso="2026-11-12" hidden>
+    <div class="view view-format">
+  <section class="psec" data-format="imax">
+    <div class="psec-h"><span class="fmt-badge badge-imax">IMAX</span></div>
+    <ul class="posters" style="grid-template-columns: repeat(1, var(--pw))">
+<li class="ptile" data-venues="Bob Bullock IMAX" data-format="imax" data-film="Godzilla Minus Zero">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/hSmIJluOJmTWvJs4d7kHRxjc8s8.jpg" alt="Godzilla Minus Zero" loading="lazy">      <span class="ptile-times">
+<span class="ptime">3:30 PM</span><span class="ptime">7:00 PM</span>      </span>
+    </span>
+    <span class="ptile-title">Godzilla Minus Zero <span class="yr">2026</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/hSmIJluOJmTWvJs4d7kHRxjc8s8.jpg" alt=""></div>
+      <div class="fdetail-main">
+<span class="fdetail-badges"><span class="badge badge-imax">IMAX</span></span>        <h3 class="fdetail-title">Godzilla Minus Zero <span class="yr">2026</span></h3>
+<div class="fdetail-facts">2h 15m · Science Fiction · Takashi Yamazaki</div><a class="film-lb" href="https://letterboxd.com/tmdb/1381071/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">War reduced Japan to zero, and Godzilla plunged it into minus. Two years have passed since then, and the country has faced agonizing struggles to achieve recovery and finally reclaim its daily life. Just as humanity managed to cling to a hard-won peace, a new threat strikes, crushing hope in an instant. There is no third time. Everything ends here.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">Bob Bullock IMAX</div>
+            <div class="times">
+<a class="t" href="https://tickets.thestoryoftexas.com" target="_blank" rel="noopener">3:30 PM</a><a class="t" href="https://tickets.thestoryoftexas.com" target="_blank" rel="noopener">7:00 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/paramount.png?v=87a37184" alt=""></div>    </div>
+  </template>
+</li>
+    </ul>
+  </section>
+  <section class="psec" data-format="35mm">
+    <div class="psec-h"><span class="fmt-badge badge-35mm">35mm</span></div>
+    <ul class="posters" style="grid-template-columns: repeat(1, var(--pw))">
+<li class="ptile" data-venues="Alamo Drafthouse" data-format="35mm" data-film="I Play Rocky">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/c0KUggz86JiqSU92eJBgrxmkrL3.jpg" alt="I Play Rocky" loading="lazy">      <span class="ptile-times">
+<span class="ptime">3:00 PM</span><span class="ptime">6:15 PM</span><span class="ptime">9:30 PM</span>      </span>
+    </span>
+    <span class="ptile-title">I Play Rocky <span class="yr">2026</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/c0KUggz86JiqSU92eJBgrxmkrL3.jpg" alt=""></div>
+      <div class="fdetail-main">
+<span class="fdetail-badges"><span class="badge badge-35mm">35mm</span></span>        <h3 class="fdetail-title">I Play Rocky <span class="yr">2026</span></h3>
+<div class="fdetail-facts">2h 8m · Drama · Peter Farrelly</div><a class="film-lb" href="https://letterboxd.com/tmdb/1286656/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">The electrifying true story about an unknown actor with an unshakable belief that he wasn&#39;t just meant to write Rocky—he was meant to be Rocky Balboa. Told &#34;no&#34; at every turn, Sylvester Stallone bets everything on himself, holding the line on playing the lead against seemingly impossible odds.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">Alamo South Lamar</div>
+            <div class="times">
+<a class="t" href="https://drafthouse.com/austin/show/i-play-rocky" target="_blank" rel="noopener">3:00 PM</a><a class="t" href="https://drafthouse.com/austin/show/i-play-rocky" target="_blank" rel="noopener">6:15 PM</a><a class="t" href="https://drafthouse.com/austin/show/i-play-rocky" target="_blank" rel="noopener">9:30 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/alamo.png?v=87a37184" alt=""></div>    </div>
+  </template>
+</li>
+    </ul>
+  </section>
+  <section class="psec" data-format="dolby">
+    <div class="psec-h"><span class="fmt-badge badge-dolby">Dolby</span></div>
+    <ul class="posters" style="grid-template-columns: repeat(3, var(--pw))">
+<li class="ptile" data-venues="AMC Barton Creek Square 14,AMC DINE-IN Tech Ridge 10" data-format="dolby" data-film="How to Rob a Bank">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/ifYDZkr2qkHFz87TNVvlxajOxl5.jpg" alt="How to Rob a Bank" loading="lazy">      <span class="ptile-times">
+<span class="ptime">4:00 PM</span><span class="ptime">7:30 PM</span>      </span>
+    </span>
+    <span class="ptile-title">How to Rob a Bank <span class="yr">2026</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/ifYDZkr2qkHFz87TNVvlxajOxl5.jpg" alt=""></div>
+      <div class="fdetail-main">
+<span class="fdetail-badges"><span class="badge badge-dolby">Dolby</span><span class="aud-badge badge-atmos">Atmos</span></span>        <h3 class="fdetail-title">How to Rob a Bank <span class="yr">2026</span></h3>
+<div class="fdetail-facts">2h 2m · Action · David Leitch</div><a class="film-lb" href="https://letterboxd.com/tmdb/1437511/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">A crew of social media-savvy bank robbers broadcasts their daring heists, unaware that their growing viral fame has put them in the crosshairs of a veteran FBI agent and a brilliant software engineer. Despite the unlikely duo closing in, the crime ring pushes past their limits, putting everything on the line for their most ambitious heist yet.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">AMC Barton Creek Square 14</div>
+            <div class="times">
+<a class="t" href="https://www.amctheatres.com/movie-theatres/austin/amc-barton-creek-square-14/showtimes" target="_blank" rel="noopener">4:00 PM</a>            </div>
+          </div>
+          <div class="fv">
+            <div class="fv-name">AMC DINE-IN Tech Ridge 10</div>
+            <div class="times">
+<a class="t" href="https://www.amctheatres.com/movie-theatres/austin/amc-dine-in-tech-ridge-10/showtimes" target="_blank" rel="noopener">7:30 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/amc.png?v=87a37184" alt=""></div>    </div>
+  </template>
+</li>
+<li class="ptile" data-venues="AMC DINE-IN Tech Ridge 10" data-format="dolby" data-film="The Cat in the Hat">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/tYH4rQZlHtuFSeDS0bsV17khvJC.jpg" alt="The Cat in the Hat" loading="lazy">      <span class="ptile-times">
+<span class="ptime">4:35 PM</span>      </span>
+    </span>
+    <span class="ptile-title">The Cat in the Hat <span class="yr">2026</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/tYH4rQZlHtuFSeDS0bsV17khvJC.jpg" alt=""></div>
+      <div class="fdetail-main">
+<span class="fdetail-badges"><span class="badge badge-dolby">Dolby</span><span class="aud-badge badge-atmos">Atmos</span></span>        <h3 class="fdetail-title">The Cat in the Hat <span class="yr">2026</span></h3>
+<div class="fdetail-facts">1h 48m · Adventure · Erica Rivinoja</div><a class="film-lb" href="https://letterboxd.com/tmdb/1117898/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">Assigned his toughest mission yet, the Cat must cheer up siblings Gabby and Sebastian as they adjust to life in a new town. Known for pushing boundaries, this agent of chaos must prove himself or risk losing his magical hat forever.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">AMC DINE-IN Tech Ridge 10</div>
+            <div class="times">
+<a class="t" href="https://www.amctheatres.com/movie-theatres/austin/amc-dine-in-tech-ridge-10/showtimes" target="_blank" rel="noopener">4:35 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/amc.png?v=87a37184" alt=""></div>    </div>
+  </template>
+</li>
+<li class="ptile" data-venues="AMC DINE-IN Tech Ridge 10" data-format="dolby" data-film="Godzilla Minus Zero">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/hSmIJluOJmTWvJs4d7kHRxjc8s8.jpg" alt="Godzilla Minus Zero" loading="lazy">      <span class="ptile-times">
+<span class="ptime">10:35 PM</span>      </span>
+    </span>
+    <span class="ptile-title">Godzilla Minus Zero <span class="yr">2026</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/hSmIJluOJmTWvJs4d7kHRxjc8s8.jpg" alt=""></div>
+      <div class="fdetail-main">
+<span class="fdetail-badges"><span class="badge badge-dolby">Dolby</span><span class="aud-badge badge-atmos">Atmos</span></span>        <h3 class="fdetail-title">Godzilla Minus Zero <span class="yr">2026</span></h3>
+<div class="fdetail-facts">2h 15m · Science Fiction · Takashi Yamazaki</div><a class="film-lb" href="https://letterboxd.com/tmdb/1381071/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">War reduced Japan to zero, and Godzilla plunged it into minus. Two years have passed since then, and the country has faced agonizing struggles to achieve recovery and finally reclaim its daily life. Just as humanity managed to cling to a hard-won peace, a new threat strikes, crushing hope in an instant. There is no third time. Everything ends here.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">AMC DINE-IN Tech Ridge 10</div>
+            <div class="times">
+<a class="t" href="https://www.amctheatres.com/movie-theatres/austin/amc-dine-in-tech-ridge-10/showtimes" target="_blank" rel="noopener">10:35 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/amc.png?v=87a37184" alt=""></div>    </div>
+  </template>
+</li>
+    </ul>
+  </section>
+  <section class="psec" data-format="hdr">
+    <div class="psec-h"><span class="fmt-badge badge-hdr">4K Barco HDR</span></div>
+    <ul class="posters" style="grid-template-columns: repeat(1, var(--pw))">
+<li class="ptile" data-venues="Alamo Drafthouse" data-format="hdr" data-film="How to Rob a Bank">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/ifYDZkr2qkHFz87TNVvlxajOxl5.jpg" alt="How to Rob a Bank" loading="lazy">      <span class="ptile-times">
+<span class="ptime">7:20 PM</span>      </span>
+    </span>
+    <span class="ptile-title">How to Rob a Bank <span class="yr">2026</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/ifYDZkr2qkHFz87TNVvlxajOxl5.jpg" alt=""></div>
+      <div class="fdetail-main">
+<span class="fdetail-badges"><span class="badge badge-hdr">4K Barco HDR</span><span class="aud-badge badge-atmos">Atmos</span></span>        <h3 class="fdetail-title">How to Rob a Bank <span class="yr">2026</span></h3>
+<div class="fdetail-facts">2h 2m · Action · David Leitch</div><a class="film-lb" href="https://letterboxd.com/tmdb/1437511/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">A crew of social media-savvy bank robbers broadcasts their daring heists, unaware that their growing viral fame has put them in the crosshairs of a veteran FBI agent and a brilliant software engineer. Despite the unlikely duo closing in, the crime ring pushes past their limits, putting everything on the line for their most ambitious heist yet.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">Alamo Lakeline</div>
+            <div class="times">
+<a class="t" href="https://drafthouse.com/austin/show/special-event-how-to-rob-a-bank-wolf-pack-screening" target="_blank" rel="noopener">7:20 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/alamo.png?v=87a37184" alt=""></div>    </div>
+  </template>
+</li>
+    </ul>
+  </section>
+  <section class="psec" data-format="more">
+    <div class="psec-h"><span class="fmt-badge badge-more">More Thursday</span></div>
+    <ul class="posters">
+<li class="ptile" data-venues="Austin Film Society Cinema" data-format="more" data-film="The History Of Concrete">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/2GWR1g1VdUNnNpLh6XfAQ6LVfyd.jpg" alt="The History Of Concrete" loading="lazy">      <span class="ptile-times">
+<span class="ptime">4:15 PM</span>      </span>
+    </span>
+    <span class="ptile-title">The History Of Concrete <span class="yr">2026</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/2GWR1g1VdUNnNpLh6XfAQ6LVfyd.jpg" alt=""></div>
+      <div class="fdetail-main">
+        <h3 class="fdetail-title">The History Of Concrete <span class="yr">2026</span></h3>
+<div class="fdetail-facts">1h 41m · Documentary · John Wilson</div><a class="film-lb" href="https://letterboxd.com/tmdb/1596296/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">After attending a workshop on how to write and sell a Hallmark movie, filmmaker John Wilson tries to use the same formula to sell a documentary about concrete.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">Austin Film Society Cinema</div>
+            <div class="times">
+<a class="t" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3Cjr00000062bpEAA" target="_blank" rel="noopener">4:15 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/austin-film-society.png?v=87a37184" alt=""></div>    </div>
+  </template>
+</li>
+<li class="ptile" data-venues="Austin Film Society Cinema" data-format="more" data-film="La Bola Negra">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/jT5SR5qc9KvVg7HUEmjMWEUYMce.jpg" alt="La Bola Negra" loading="lazy">      <span class="ptile-times">
+<span class="ptime">4:45 PM</span><span class="ptime">7:00 PM</span>      </span>
+    </span>
+    <span class="ptile-title">La Bola Negra <span class="yr">2026</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/jT5SR5qc9KvVg7HUEmjMWEUYMce.jpg" alt=""></div>
+      <div class="fdetail-main">
+        <h3 class="fdetail-title">La Bola Negra <span class="yr">2026</span></h3>
+<div class="fdetail-facts">2h 39m · Drama · Javier Calvo and Javier Ambrossi</div><a class="film-lb" href="https://letterboxd.com/tmdb/1422041/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">The intertwined lives of three men in three different eras, three lives intimately linked by sexuality and desire, pain, and legacy.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">Austin Film Society Cinema</div>
+            <div class="times">
+<a class="t" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3Cjr0000000PG9EAM" target="_blank" rel="noopener">4:45 PM</a><a class="t" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3Cjr0000000PG9EAM" target="_blank" rel="noopener">7:00 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/austin-film-society.png?v=87a37184" alt=""></div>    </div>
+  </template>
+</li>
+<li class="ptile" data-venues="Alamo Drafthouse" data-format="more" data-film="Women on the Verge of a Nervous Breakdown">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/lOehCiqghODNrNBpI1JS76zl6Lx.jpg" alt="Women on the Verge of a Nervous Breakdown" loading="lazy">      <span class="ptile-times">
+<span class="ptime">7:00 PM</span><span class="ptime">7:30 PM</span>      </span>
+    </span>
+    <span class="ptile-title">Women on the Verge of a Nervous Breakdown <span class="yr">1988</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/lOehCiqghODNrNBpI1JS76zl6Lx.jpg" alt=""></div>
+      <div class="fdetail-main">
+        <h3 class="fdetail-title">Women on the Verge of a Nervous Breakdown <span class="yr">1988</span></h3>
+<div class="fdetail-facts">1h 28m · Comedy · Pedro Almodóvar</div><a class="film-lb" href="https://letterboxd.com/tmdb/4203/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">After being dumped by her lover, Pepa finds her life and the lives of those around her spiraling out of control in a deliciously chaotic series of events.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">Alamo Lakeline</div>
+            <div class="times">
+<a class="t" href="https://drafthouse.com/austin/show/women-on-the-verge-of-a-nervous-breakdown" target="_blank" rel="noopener">7:00 PM</a>            </div>
+          </div>
+          <div class="fv">
+            <div class="fv-name">Alamo Slaughter Lane</div>
+            <div class="times">
+<a class="t" href="https://drafthouse.com/austin/show/women-on-the-verge-of-a-nervous-breakdown" target="_blank" rel="noopener">7:30 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/alamo.png?v=87a37184" alt=""></div>    </div>
+  </template>
+</li>
+<li class="ptile" data-venues="We Luv Video" data-format="more" data-film="The Big Heat">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/ezt6fb4JbghGKmaMzzuMtxpz0Kb.jpg" alt="The Big Heat" loading="lazy">      <span class="ptile-times">
+<span class="ptime">7:00 PM</span>      </span>
+    </span>
+    <span class="ptile-title">The Big Heat <span class="yr">1953</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/ezt6fb4JbghGKmaMzzuMtxpz0Kb.jpg" alt=""></div>
+      <div class="fdetail-main">
+        <h3 class="fdetail-title">The Big Heat <span class="yr">1953</span></h3>
+<div class="fdetail-facts">1h 29m · Crime · Fritz Lang</div><a class="film-lb" href="https://letterboxd.com/tmdb/14580/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-event">Presented by We Luv Video Clerks</p><p class="fdetail-syn">After the suspicious suicide of a fellow cop, tough homicide detective Dave Bannion takes the law into his own hands when he sets out to smash a vicious crime syndicate.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">We Luv Video</div>
+            <div class="times">
+<a class="t" href="https://store.weluvvideo.org/events/clerks-programming-november-2026" target="_blank" rel="noopener">7:00 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+</li>
+<li class="ptile" data-venues="Austin Film Society Cinema" data-format="more" data-film="Wild Foxes">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/bIHE1cDsDBrLohkthzIZf04bqXk.jpg" alt="Wild Foxes" loading="lazy">      <span class="ptile-times">
+<span class="ptime">7:30 PM</span>      </span>
+    </span>
+    <span class="ptile-title">Wild Foxes <span class="yr">2026</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/bIHE1cDsDBrLohkthzIZf04bqXk.jpg" alt=""></div>
+      <div class="fdetail-main">
+        <h3 class="fdetail-title">Wild Foxes <span class="yr">2026</span></h3>
+<div class="fdetail-facts">1h 32m · Drama · Valéry Carnoy</div><a class="film-lb" href="https://letterboxd.com/tmdb/1020829/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">At a sports boarding school, talented young boxer Camille narrowly survives a fatal accident, saved by his best friend Matteo. After a swift recovery, an inexplicable pain gradually takes hold of him, threatening his dreams of greatness and his relationship with the team. In the ring and in a man&#39;s world, there’s no room for weakness.</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">Austin Film Society Cinema</div>
+            <div class="times">
+<a class="t" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000Zj7u22AB" target="_blank" rel="noopener">7:30 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/austin-film-society.png?v=87a37184" alt=""></div>    </div>
+  </template>
+</li>
+<li class="ptile" data-venues="Austin Film Society Cinema" data-format="more" data-film="The Devils">
+  <button class="ptile-btn" type="button" aria-haspopup="dialog">
+    <span class="ptile-poster">
+<img src="https://image.tmdb.org/t/p/w500/y1k7eiOFc6fzm8XeTa1kNGx6JIs.jpg" alt="The Devils" loading="lazy">      <span class="ptile-times">
+<span class="ptime">8:15 PM</span>      </span>
+    </span>
+    <span class="ptile-title">The Devils <span class="yr">1971</span></span>
+  </button>
+  <template class="ptile-detail">
+    <div class="fdetail">
+      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/y1k7eiOFc6fzm8XeTa1kNGx6JIs.jpg" alt=""></div>
+      <div class="fdetail-main">
+        <h3 class="fdetail-title">The Devils <span class="yr">1971</span></h3>
+<div class="fdetail-facts">1h 52m · Drama · Ken Russell</div><a class="film-lb" href="https://letterboxd.com/tmdb/31767/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">In 1634 France, charismatic Father Urbain Grandier becomes the target of sexually depraved Sister Jeanne&#39;s accusations of witchcraft, which corrupt officials of church and state are all too happy to exploit.​​​​​​​​​​​​​​​​</p>        <div class="fdetail-venues">
+          <div class="fv">
+            <div class="fv-name">Austin Film Society Cinema</div>
+            <div class="times">
+<a class="t" href="https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3Cjr00000063PrEAI" target="_blank" rel="noopener">8:15 PM</a>            </div>
+          </div>
+        </div>
+      </div>
+<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/austin-film-society.png?v=87a37184" alt=""></div>    </div>
+  </template>
+</li>
+    </ul>
+  </section>
+</div>
+
+    <div class="view view-time">
+  <section class="tslot">
+    <div class="tslot-h"><span class="tslot-time">3:00 PM</span></div>
+    <ul class="tslot-films">
+      <li class="tcard" data-format="35mm" data-venues="Alamo Drafthouse" data-film="I Play Rocky">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/c0KUggz86JiqSU92eJBgrxmkrL3.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">I Play Rocky <span class="yr">2026</span> <span class="badge badge-35mm tcard-badge">35mm</span></span>
+            <span class="tcard-venue">Alamo South Lamar</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+  <section class="tslot">
+    <div class="tslot-h"><span class="tslot-time">3:30 PM</span></div>
+    <ul class="tslot-films">
+      <li class="tcard" data-format="imax" data-venues="Bob Bullock IMAX" data-film="Godzilla Minus Zero">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/hSmIJluOJmTWvJs4d7kHRxjc8s8.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">Godzilla Minus Zero <span class="yr">2026</span> <span class="badge badge-imax tcard-badge">IMAX</span></span>
+            <span class="tcard-venue">Bob Bullock IMAX</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+  <section class="tslot">
+    <div class="tslot-h"><span class="tslot-time">4:00 PM</span></div>
+    <ul class="tslot-films">
+      <li class="tcard" data-format="dolby" data-venues="AMC Barton Creek Square 14" data-film="How to Rob a Bank">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/ifYDZkr2qkHFz87TNVvlxajOxl5.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">How to Rob a Bank <span class="yr">2026</span> <span class="badge badge-dolby tcard-badge">Dolby</span> <span class="aud-badge badge-atmos">Atmos</span></span>
+            <span class="tcard-venue">AMC Barton Creek Square 14</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+  <section class="tslot">
+    <div class="tslot-h"><span class="tslot-time">4:15 PM</span></div>
+    <ul class="tslot-films">
+      <li class="tcard" data-format="other" data-venues="Austin Film Society Cinema" data-film="The History Of Concrete">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/2GWR1g1VdUNnNpLh6XfAQ6LVfyd.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">The History Of Concrete <span class="yr">2026</span></span>
+            <span class="tcard-venue">Austin Film Society Cinema</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+  <section class="tslot">
+    <div class="tslot-h"><span class="tslot-time">4:35 PM</span></div>
+    <ul class="tslot-films">
+      <li class="tcard" data-format="dolby" data-venues="AMC DINE-IN Tech Ridge 10" data-film="The Cat in the Hat">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/tYH4rQZlHtuFSeDS0bsV17khvJC.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">The Cat in the Hat <span class="yr">2026</span> <span class="badge badge-dolby tcard-badge">Dolby</span> <span class="aud-badge badge-atmos">Atmos</span></span>
+            <span class="tcard-venue">AMC DINE-IN Tech Ridge 10</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+  <section class="tslot">
+    <div class="tslot-h"><span class="tslot-time">4:45 PM</span></div>
+    <ul class="tslot-films">
+      <li class="tcard" data-format="other" data-venues="Austin Film Society Cinema" data-film="La Bola Negra">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/jT5SR5qc9KvVg7HUEmjMWEUYMce.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">La Bola Negra <span class="yr">2026</span></span>
+            <span class="tcard-venue">Austin Film Society Cinema</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+  <section class="tslot">
+    <div class="tslot-h"><span class="tslot-time">6:15 PM</span></div>
+    <ul class="tslot-films">
+      <li class="tcard" data-format="35mm" data-venues="Alamo Drafthouse" data-film="I Play Rocky">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/c0KUggz86JiqSU92eJBgrxmkrL3.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">I Play Rocky <span class="yr">2026</span> <span class="badge badge-35mm tcard-badge">35mm</span></span>
+            <span class="tcard-venue">Alamo South Lamar</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+  <section class="tslot">
+    <div class="tslot-h"><span class="tslot-time">7:00 PM</span></div>
+    <ul class="tslot-films">
+      <li class="tcard" data-format="imax" data-venues="Bob Bullock IMAX" data-film="Godzilla Minus Zero">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/hSmIJluOJmTWvJs4d7kHRxjc8s8.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">Godzilla Minus Zero <span class="yr">2026</span> <span class="badge badge-imax tcard-badge">IMAX</span></span>
+            <span class="tcard-venue">Bob Bullock IMAX</span>
+          </span>
+        </button>
+      </li>
+      <li class="tcard" data-format="other" data-venues="Austin Film Society Cinema" data-film="La Bola Negra">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/jT5SR5qc9KvVg7HUEmjMWEUYMce.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">La Bola Negra <span class="yr">2026</span></span>
+            <span class="tcard-venue">Austin Film Society Cinema</span>
+          </span>
+        </button>
+      </li>
+      <li class="tcard" data-format="other" data-venues="We Luv Video" data-film="The Big Heat">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/ezt6fb4JbghGKmaMzzuMtxpz0Kb.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">The Big Heat <span class="yr">1953</span></span>
+            <span class="tcard-venue">We Luv Video</span>
+          </span>
+        </button>
+      </li>
+      <li class="tcard" data-format="other" data-venues="Alamo Drafthouse" data-film="Women on the Verge of a Nervous Breakdown">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/lOehCiqghODNrNBpI1JS76zl6Lx.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">Women on the Verge of a Nervous Breakdown <span class="yr">1988</span></span>
+            <span class="tcard-venue">Alamo Lakeline</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+  <section class="tslot">
+    <div class="tslot-h"><span class="tslot-time">7:20 PM</span></div>
+    <ul class="tslot-films">
+      <li class="tcard" data-format="hdr" data-venues="Alamo Drafthouse" data-film="How to Rob a Bank">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/ifYDZkr2qkHFz87TNVvlxajOxl5.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">How to Rob a Bank <span class="yr">2026</span> <span class="badge badge-hdr tcard-badge">4K Barco HDR</span> <span class="aud-badge badge-atmos">Atmos</span></span>
+            <span class="tcard-venue">Alamo Lakeline</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+  <section class="tslot">
+    <div class="tslot-h"><span class="tslot-time">7:30 PM</span></div>
+    <ul class="tslot-films">
+      <li class="tcard" data-format="dolby" data-venues="AMC DINE-IN Tech Ridge 10" data-film="How to Rob a Bank">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/ifYDZkr2qkHFz87TNVvlxajOxl5.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">How to Rob a Bank <span class="yr">2026</span> <span class="badge badge-dolby tcard-badge">Dolby</span> <span class="aud-badge badge-atmos">Atmos</span></span>
+            <span class="tcard-venue">AMC DINE-IN Tech Ridge 10</span>
+          </span>
+        </button>
+      </li>
+      <li class="tcard" data-format="other" data-venues="Austin Film Society Cinema" data-film="Wild Foxes">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/bIHE1cDsDBrLohkthzIZf04bqXk.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">Wild Foxes <span class="yr">2026</span></span>
+            <span class="tcard-venue">Austin Film Society Cinema</span>
+          </span>
+        </button>
+      </li>
+      <li class="tcard" data-format="other" data-venues="Alamo Drafthouse" data-film="Women on the Verge of a Nervous Breakdown">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/lOehCiqghODNrNBpI1JS76zl6Lx.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">Women on the Verge of a Nervous Breakdown <span class="yr">1988</span></span>
+            <span class="tcard-venue">Alamo Slaughter Lane</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+  <section class="tslot">
+    <div class="tslot-h"><span class="tslot-time">8:15 PM</span></div>
+    <ul class="tslot-films">
+      <li class="tcard" data-format="other" data-venues="Austin Film Society Cinema" data-film="The Devils">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/y1k7eiOFc6fzm8XeTa1kNGx6JIs.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">The Devils <span class="yr">1971</span></span>
+            <span class="tcard-venue">Austin Film Society Cinema</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+  <section class="tslot">
+    <div class="tslot-h"><span class="tslot-time">9:30 PM</span></div>
+    <ul class="tslot-films">
+      <li class="tcard" data-format="35mm" data-venues="Alamo Drafthouse" data-film="I Play Rocky">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/c0KUggz86JiqSU92eJBgrxmkrL3.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">I Play Rocky <span class="yr">2026</span> <span class="badge badge-35mm tcard-badge">35mm</span></span>
+            <span class="tcard-venue">Alamo South Lamar</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+  <section class="tslot">
+    <div class="tslot-h"><span class="tslot-time">10:35 PM</span></div>
+    <ul class="tslot-films">
+      <li class="tcard" data-format="dolby" data-venues="AMC DINE-IN Tech Ridge 10" data-film="Godzilla Minus Zero">
+        <button class="tcard-btn" type="button" aria-haspopup="dialog">
+          <span class="tcard-poster">
+<img src="https://image.tmdb.org/t/p/w500/hSmIJluOJmTWvJs4d7kHRxjc8s8.jpg" alt="" loading="lazy">          </span>
+          <span class="tcard-body">
+            <span class="tcard-title">Godzilla Minus Zero <span class="yr">2026</span> <span class="badge badge-dolby tcard-badge">Dolby</span> <span class="aud-badge badge-atmos">Atmos</span></span>
+            <span class="tcard-venue">AMC DINE-IN Tech Ridge 10</span>
           </span>
         </button>
       </li>
