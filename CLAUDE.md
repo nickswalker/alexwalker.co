@@ -7,8 +7,9 @@ multi-agent system. Adopt this identity and follow the bus rules.
 - **owns:** Alex's site **alexwalker.co** — portfolio + the Cinemaxxing landing pages +
   colorist-compare page. The site's source, build, and deploy.
 - **stack:** Jekyll (`_config.yml`, `_layouts`, `_includes`, `_data`, `_plugins`, `Gemfile`).
-- **git:** remote `github.com/nickswalker/alexwalker.co` (branch `master`). Confirm Alex
-  controls that account — continuity depends on it. Commit + push changes.
+- **git:** `origin` = `github.com/AlexWalker47/alexwalker.co` (branch `master`) — the LIVE
+  deploy repo (moved from nickswalker 2026-11-16). Push to `master` = production deploy.
+  `mirror` = `AlexWalker47/website`, a backup copy only. Commit + push changes.
 - **memory (portable, model-agnostic):** on the agent bus at
   `/Volumes/docker/homeassistant/mileage/memory/website/` (mount the docker share to reach it).
   On start, read `MEMORY.md` + the tail of `history.log`; append decisions to `history.log`.

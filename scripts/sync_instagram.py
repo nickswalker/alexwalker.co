@@ -142,7 +142,7 @@ REAUTH_STEPS = (
     "  3. Exchange it for a long-lived token (scripts/README.md, "
     "'Re-authorizing from scratch').\n"
     "  4. Put that long-lived token in the IG_ACCESS_TOKEN repo secret:\n"
-    "     gh secret set IG_ACCESS_TOKEN --repo nickswalker/alexwalker.co\n"
+    "     gh secret set IG_ACCESS_TOKEN --repo AlexWalker47/alexwalker.co\n"
     "  5. Re-run this workflow. From then on it refreshes itself daily.\n"
 )
 
@@ -237,7 +237,7 @@ def verify_token():
         f"({fingerprint(TOKEN)}) is no longer valid",
         f"Meta says: [{code}] {msg}\n\n"
         "WHAT EXPIRED: the Instagram long-lived access token stored in the\n"
-        "GitHub secret IG_ACCESS_TOKEN (repo nickswalker/alexwalker.co).\n"
+        "GitHub secret IG_ACCESS_TOKEN (repo AlexWalker47/alexwalker.co).\n"
         "Long-lived tokens last ~60 days; this one is dead, so alexwalker.co\n"
         "has stopped picking up new Instagram stills.\n\n"
         "THE ONE ACTION NEEDED - re-authorize in a browser (only Alex can do\n"
@@ -460,7 +460,7 @@ def refresh_and_persist():
             "Then re-run this workflow. See scripts/README.md.")
     mask(credential)
 
-    repo = os.environ.get("GITHUB_REPOSITORY") or "nickswalker/alexwalker.co"
+    repo = os.environ.get("GITHUB_REPOSITORY") or "AlexWalker47/alexwalker.co"
     try:
         p = _gh(["secret", "set", "IG_ACCESS_TOKEN", "--repo", repo],
                 credential, stdin=new_token)

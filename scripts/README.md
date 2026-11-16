@@ -96,13 +96,13 @@ automated.** Everything after it is.
 5. Store it (reads the value from stdin so it never lands in shell history):
 
    ```sh
-   gh secret set IG_ACCESS_TOKEN --repo nickswalker/alexwalker.co
+   gh secret set IG_ACCESS_TOKEN --repo AlexWalker47/alexwalker.co
    ```
 
 6. Re-run the workflow:
 
    ```sh
-   gh workflow run sync-instagram.yaml --repo nickswalker/alexwalker.co
+   gh workflow run sync-instagram.yaml --repo AlexWalker47/alexwalker.co
    ```
 
    From here it renews itself daily. Confirm the run's job summary says
@@ -128,7 +128,7 @@ They are edited in the **alexwalker-stats Flask app**:
 - URL: `/admin/captions/` — **tailnet-only** (gated on the
   `Tailscale-User-Login` header; not reachable from the public internet)
 - Saving proxies a commit of `_data/instagram_captions.yml` to
-  `nickswalker/alexwalker.co` through the server's own `GITHUB_PAT`, then
+  `AlexWalker47/alexwalker.co` through the server's own `GITHUB_PAT`, then
   dispatches this workflow so the crops are re-rendered and deployed.
 
 That app holds its own GitHub credential in `/Volumes/docker/alexwalker-stats/.env`
