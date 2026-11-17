@@ -45,20 +45,3 @@ defaults:
       path: "google88bacf39fa2b9f7b.html"
     values:
       sitemap: false
-
-  # Cinemaxxing moved to cinemaxxing.co (2026-11-17). Its site copy was
-  # removed from this repo and Cloudflare 301s the old URLs there. These
-  # scopes stay as a guard so a stray Cinemaxxing file never enters the
-  # sitemap. The home page promo logo (img/) is not affected.
-  - scope:
-      path: "cinemaxxing"
-    values:
-      sitemap: false
-  - scope:
-      path: "cinemaxxing*.html"
-    values:
-      sitemap: false
-  - scope:
-      path: "about.html"
-    values:
-      sitemap: false

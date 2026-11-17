@@ -65,8 +65,8 @@ jobs:
             --assume-extension .html \
             --no-enforce-https \
             --ignore-missing-alt \
-            --ignore-files '/_site/admin/,/_site/cinemaxxing/,/_site/cinemaxxing-preview\.html/,/_site/cinemaxxing-filtered\.html/,/_site/cinemaxxing-advance\.html/' \
-            --ignore-urls '/vimeo\.com/,/twitter\.com/,/instagram\.com/,/letterboxd\.com/,/fonts\.googleapis\.com/,/fonts\.gstatic\.com/,/nexus\.tail1c6f41\.ts\.net/,/imdb\.com/,/image\.tmdb\.org/,/cinemaxxing\.co/,/cinemark\.com/,/fandango\.com/,/amctheatres\.com/,/texaslegacyinlights\.com/,/linktr\.ee/' \
+            --ignore-files '/_site/admin/' \
+            --ignore-urls '/vimeo\.com/,/twitter\.com/,/instagram\.com/,/letterboxd\.com/,/fonts\.googleapis\.com/,/fonts\.gstatic\.com/,/nexus\.tail1c6f41\.ts\.net/,/imdb\.com/,/cinemaxxing\.co/,/texaslegacyinlights\.com/,/linktr\.ee/' \
             --swap-urls 'https?\:\/\/alexwalker\.co:' \
             --cache '{ "timeframe": { "external": "30d" } }'
 
@@ -131,12 +131,28 @@ jobs:
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'workflow_run'
     steps:
+      # Nick's server (ssh.nickwalker.us) is only a fallback since the move to
+      # GitHub Pages on 2026-11-16. From 2026-11-30 (UTC) on, the rsync and
+      # unpublish steps skip by themselves so the fallback ends without an
+      # edit. The Cloudflare purge below still runs: Pages needs it.
+      - name: ⏳ Nick-server fallback window
+        id: nick
+        run: |
+          if [ "$(date -u +%Y-%m-%d)" \< "2026-11-30" ]; then
+            echo "active=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "active=false" >> "$GITHUB_OUTPUT"
+            echo "Nick-server fallback ended 2026-11-30; skipping rsync and unpublish."
+          fi
+
       - name: Download build result
+        if: steps.nick.outputs.active == 'true'
         uses: actions/download-artifact@v4
         with:
           name: site
 
       - name: Setup SSH Keys and known_hosts
+        if: steps.nick.outputs.active == 'true'
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
@@ -147,11 +163,12 @@ jobs:
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
 
       - name: 🚀 deploy
+        if: steps.nick.outputs.active == 'true'
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: rsync -havz * www-data@ssh.nickwalker.us:/var/www/alexwalker.co/
 
-      # The production rsync above deliberately has NO --delete (staging does).
+      # The production rsync above deliberately has NO --delete.
       # That means deleting a file from this repo never unpublishes it: the
       # copy already on the server keeps returning 200 forever. Adding --delete
       # is NOT the fix — production may hold intentionally server-only files
@@ -166,6 +183,7 @@ jobs:
       # A second, separate list below rmdirs directories left EMPTY by the
       # first — see the comment there; it is not an exception to these rules.
       - name: 🧹 unpublish removed documents
+        if: steps.nick.outputs.active == 'true'
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
@@ -818,46 +836,3 @@ jobs:
             exit 1
           fi
 
-  deploy-staging:
-    runs-on: ubuntu-24.04
-    needs: [jekyll-build]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-    steps:
-      - name: Download build result
-        uses: actions/download-artifact@v4
-        with:
-          name: site
-
-      - name: Setup SSH Keys and known_hosts
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-          ssh-keyscan ssh.nickwalker.us >> ~/.ssh/known_hosts
-          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
-
-      - name: 🚀 deploy to staging
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-        run: rsync -havz --delete ./ www-data@ssh.nickwalker.us:/var/www/testing.alexwalker.co/ --exclude=/.well-known
-
-      # Purges the whole alexwalker.co zone (Alex's Cloudflare account) with a
-      # Cache Purge-only API token. Fails the job with Cloudflare's error JSON
-      # if the API does not report success.
-      - name: purge Cloudflare cache
-        env:
-          CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: |
-          resp=$(curl -sS -X POST \
-            "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE/purge_cache" \
-            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-            -H "Content-Type: application/json" \
-            --data '{"purge_everything":true}')
-          echo "$resp"
-          if [ "$(echo "$resp" | jq -r '.success')" != "true" ]; then
-            echo "::error::Cloudflare cache purge failed: $resp"
-            exit 1
-          fi
