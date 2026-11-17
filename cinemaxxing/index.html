@@ -108,14 +108,14 @@
 <h1 class="sr-only">Austin Movie Showtimes This Week — IMAX, 70mm, 35mm Film Prints &amp; Repertory</h1>
 <!-- Day selector — today + the next days; each backed by a tinted poster from that day -->
 <div class="week-days" id="weekDays" role="tablist" aria-label="Pick a day">
-  <button class="week-day week-day-on" data-iso="2026-11-16" role="tab"
-          aria-selected="true" type="button"
-          style="--day-tint: var(--f-70mm); --day-bg: url('https://image.tmdb.org/t/p/w500/xE5tY3lppZUyG7WKKThsuYHuAHr.jpg')">
+  <button class="week-day" data-iso="2026-11-16" role="tab"
+          aria-selected="false" type="button"
+          style="--day-tint: var(--f-70mm)">
     <span class="week-day-dow"><span class="dow-lg js-daypart" data-sunset="1794872040000">Tonight</span><span class="dow-sm js-daypart" data-sunset="1794872040000">Today</span></span>
     <span class="week-day-date">Nov 16</span>
   </button>
-  <button class="week-day" data-iso="2026-11-17" role="tab"
-          aria-selected="false" type="button"
+  <button class="week-day week-day-on" data-iso="2026-11-17" role="tab"
+          aria-selected="true" type="button"
           style="--day-tint: var(--f-imax); --day-bg: url('https://image.tmdb.org/t/p/w500/6H2N59jJW1hZEzn2ZdrMvJw5vNI.jpg')">
     <span class="week-day-dow"><span class="dow-lg">Tomorrow</span><span class="dow-sm">Tue</span></span>
     <span class="week-day-date">Nov 17</span>
@@ -183,215 +183,15 @@
 
 <!-- One day's By-Format / By-Time views at a time — same shared macros as Tonight -->
 <div class="week-body" id="weekBody">
-  <div class="dayviews" data-iso="2026-11-16">
+  <div class="dayviews" data-iso="2026-11-16" hidden>
     <div class="view view-format">
-  <section class="psec" data-format="35mm">
-    <div class="psec-h"><span class="fmt-badge badge-35mm">35mm</span></div>
-    <ul class="posters" style="grid-template-columns: repeat(1, var(--pw))">
-<li class="ptile" data-venues="Alamo Drafthouse" data-format="35mm" data-film="I Play Rocky">
-  <button class="ptile-btn" type="button" aria-haspopup="dialog">
-    <span class="ptile-poster">
-<img src="https://image.tmdb.org/t/p/w500/xE5tY3lppZUyG7WKKThsuYHuAHr.jpg" alt="I Play Rocky" loading="lazy">      <span class="ptile-times">
-<span class="ptime">10:30 PM</span>      </span>
-    </span>
-    <span class="ptile-title">I Play Rocky <span class="yr">2026</span></span>
-  </button>
-  <template class="ptile-detail">
-    <div class="fdetail">
-      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/xE5tY3lppZUyG7WKKThsuYHuAHr.jpg" alt=""></div>
-      <div class="fdetail-main">
-<span class="fdetail-badges"><span class="badge badge-35mm">35mm</span></span>        <h3 class="fdetail-title">I Play Rocky <span class="yr">2026</span></h3>
-<div class="fdetail-facts">2h 8m · Drama · Peter Farrelly</div><a class="film-lb" href="https://letterboxd.com/tmdb/1286656/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">The electrifying true story about an unknown actor with an unshakable belief that he wasn&#39;t just meant to write Rocky—he was meant to be Rocky Balboa. Told &#34;no&#34; at every turn, Sylvester Stallone bets everything on himself, holding the line on playing the lead against seemingly impossible odds.</p>        <div class="fdetail-venues">
-          <div class="fv">
-            <div class="fv-name">Alamo South Lamar</div>
-            <div class="times">
-<a class="t" href="https://drafthouse.com/austin/show/i-play-rocky" target="_blank" rel="noopener">10:30 PM</a>            </div>
-          </div>
-        </div>
-      </div>
-<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/alamo.png?v=87a37184" alt=""></div>    </div>
-  </template>
-</li>
-    </ul>
-  </section>
-  <section class="psec" data-format="more">
-    <div class="psec-h"><span class="fmt-badge badge-more">More Tonight</span></div>
-    <ul class="posters">
-<li class="ptile" data-venues="Alamo Drafthouse" data-format="more" data-film="Mystery Voyage">
-  <button class="ptile-btn" type="button" aria-haspopup="dialog">
-    <span class="ptile-poster">
-<img class="poster-logo" src="/s/logos/alamo.png?v=87a37184" alt="" loading="lazy"><span class="ptile-event">Special Event</span>      <span class="ptile-times">
-<span class="ptime">9:45 PM</span>      </span>
-    </span>
-    <span class="ptile-title">Mystery Voyage</span>
-  </button>
-  <template class="ptile-detail">
-    <div class="fdetail">
-      <div class="fdetail-poster"><img class="poster-logo" src="/s/logos/alamo.png?v=87a37184" alt=""></div>
-      <div class="fdetail-main">
-        <h3 class="fdetail-title">Mystery Voyage <span class="ev-label">Special Event</span></h3>
-<p class="fdetail-event">Absent from the big screen since its release in the early 1980s, this haunting holiday horror film has been preserved from AGFA&#39;s ultra-rare 35mm print.</p>        <div class="fdetail-venues">
-          <div class="fv">
-            <div class="fv-name">Alamo South Lamar</div>
-            <div class="times">
-<a class="t" href="https://drafthouse.com/austin/show/agfadrome-mystery-voyage-november-2026" target="_blank" rel="noopener">9:45 PM</a>            </div>
-          </div>
-        </div>
-      </div>
-<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/alamo.png?v=87a37184" alt=""></div>    </div>
-  </template>
-</li>
-<li class="ptile" data-venues="Violet Crown Cinema" data-format="more" data-film="La Bola Negra">
-  <button class="ptile-btn" type="button" aria-haspopup="dialog">
-    <span class="ptile-poster">
-<img src="https://image.tmdb.org/t/p/w500/7HwFQTMghL6HOvzEnXYUvyuZXeh.jpg" alt="La Bola Negra" loading="lazy">      <span class="ptile-times">
-<span class="ptime">9:45 PM</span>      </span>
-    </span>
-    <span class="ptile-title">La Bola Negra <span class="yr">2026</span></span>
-  </button>
-  <template class="ptile-detail">
-    <div class="fdetail">
-      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/7HwFQTMghL6HOvzEnXYUvyuZXeh.jpg" alt=""></div>
-      <div class="fdetail-main">
-        <h3 class="fdetail-title">La Bola Negra <span class="yr">2026</span></h3>
-<div class="fdetail-facts">2h 39m · Drama · Javier Ambrossi</div><a class="film-lb" href="https://letterboxd.com/tmdb/1422041/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">The intertwined lives of three men in three different eras, three lives intimately linked by sexuality and desire, pain, and legacy.</p>        <div class="fdetail-venues">
-          <div class="fv">
-            <div class="fv-name">Violet Crown Cinema</div>
-            <div class="times">
-<a class="t" href="https://austin.violetcrown.com/checkout/showing/la-bola-negra/4302471/" target="_blank" rel="noopener">9:45 PM</a>            </div>
-          </div>
-        </div>
-      </div>
-<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/violet-crown.png?v=87a37184" alt=""></div>    </div>
-  </template>
-</li>
-<li class="ptile" data-venues="Violet Crown Cinema" data-format="more" data-film="Godzilla Minus Zero">
-  <button class="ptile-btn" type="button" aria-haspopup="dialog">
-    <span class="ptile-poster">
-<img src="https://image.tmdb.org/t/p/w500/hSmIJluOJmTWvJs4d7kHRxjc8s8.jpg" alt="Godzilla Minus Zero" loading="lazy">      <span class="ptile-times">
-<span class="ptime">10:00 PM</span>      </span>
-    </span>
-    <span class="ptile-title">Godzilla Minus Zero <span class="yr">2026</span></span>
-  </button>
-  <template class="ptile-detail">
-    <div class="fdetail">
-      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/hSmIJluOJmTWvJs4d7kHRxjc8s8.jpg" alt=""></div>
-      <div class="fdetail-main">
-        <h3 class="fdetail-title">Godzilla Minus Zero <span class="yr">2026</span></h3>
-<div class="fdetail-facts">2h 15m · Science Fiction · Takashi Yamazaki</div><a class="film-lb" href="https://letterboxd.com/tmdb/1381071/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">War reduced Japan to zero, and Godzilla plunged it into minus. Two years have passed since then, and the country has faced agonizing struggles to achieve recovery and finally reclaim its daily life. Just as humanity managed to cling to a hard-won peace, a new threat strikes, crushing hope in an instant. There is no third time. Everything ends here.</p>        <div class="fdetail-venues">
-          <div class="fv">
-            <div class="fv-name">Violet Crown Cinema</div>
-            <div class="times">
-<a class="t" href="https://austin.violetcrown.com/checkout/showing/godzilla-minus-zero/4302466/" target="_blank" rel="noopener">10:00 PM</a>            </div>
-          </div>
-        </div>
-      </div>
-<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/violet-crown.png?v=87a37184" alt=""></div>    </div>
-  </template>
-</li>
-<li class="ptile" data-venues="Violet Crown Cinema" data-format="more" data-film="Wild Horse Nine">
-  <button class="ptile-btn" type="button" aria-haspopup="dialog">
-    <span class="ptile-poster">
-<img src="https://image.tmdb.org/t/p/w500/dNJFRtVg3xLQ7dbNIQ55cmmIniD.jpg" alt="Wild Horse Nine" loading="lazy">      <span class="ptile-times">
-<span class="ptime">10:25 PM</span>      </span>
-    </span>
-    <span class="ptile-title">Wild Horse Nine <span class="yr">2026</span></span>
-  </button>
-  <template class="ptile-detail">
-    <div class="fdetail">
-      <div class="fdetail-poster"><img src="https://image.tmdb.org/t/p/w500/dNJFRtVg3xLQ7dbNIQ55cmmIniD.jpg" alt=""></div>
-      <div class="fdetail-main">
-        <h3 class="fdetail-title">Wild Horse Nine <span class="yr">2026</span></h3>
-<div class="fdetail-facts">1h 57m · Comedy · Martin McDonagh</div><a class="film-lb" href="https://letterboxd.com/tmdb/891621/" target="_blank" rel="noopener">Letterboxd ↗</a><p class="fdetail-syn">Shortly before the 1973 Chilean coup, CIA agents Chris and Lee are dispatched from Santiago to Easter Island by their bureau chief, MJ. Amongst the Island&#39;s iconic statues, and as the longtime partners wrestle with their dark pasts and present conspiracies, Chris&#39;s newfound bond with a pair of rebellious students threatens to send everyone’s trip to this remote paradise sideways.</p>        <div class="fdetail-venues">
-          <div class="fv">
-            <div class="fv-name">Violet Crown Cinema</div>
-            <div class="times">
-<a class="t" href="https://austin.violetcrown.com/checkout/showing/wild-horse-nine/4302472/" target="_blank" rel="noopener">10:25 PM</a>            </div>
-          </div>
-        </div>
-      </div>
-<div class="fdetail-venue-icons" aria-hidden="true"><img src="/s/logos/violet-crown.png?v=87a37184" alt=""></div>    </div>
-  </template>
-</li>
-    </ul>
-  </section>
 </div>
 
     <div class="view view-time">
-  <section class="tslot">
-    <div class="tslot-h"><span class="tslot-time">9:45 PM</span></div>
-    <ul class="tslot-films">
-      <li class="tcard" data-format="other" data-venues="Violet Crown Cinema" data-film="La Bola Negra">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img src="https://image.tmdb.org/t/p/w500/7HwFQTMghL6HOvzEnXYUvyuZXeh.jpg" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">La Bola Negra <span class="yr">2026</span></span>
-            <span class="tcard-venue">Violet Crown Cinema</span>
-          </span>
-        </button>
-      </li>
-      <li class="tcard" data-format="other" data-venues="Alamo Drafthouse" data-film="Mystery Voyage">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img class="poster-logo" src="/s/logos/alamo.png?v=87a37184" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">Mystery Voyage</span>
-            <span class="tcard-venue">Alamo South Lamar</span>
-<span class="tcard-event">Special Event</span>          </span>
-        </button>
-      </li>
-    </ul>
-  </section>
-  <section class="tslot">
-    <div class="tslot-h"><span class="tslot-time">10:00 PM</span></div>
-    <ul class="tslot-films">
-      <li class="tcard" data-format="other" data-venues="Violet Crown Cinema" data-film="Godzilla Minus Zero">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img src="https://image.tmdb.org/t/p/w500/hSmIJluOJmTWvJs4d7kHRxjc8s8.jpg" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">Godzilla Minus Zero <span class="yr">2026</span></span>
-            <span class="tcard-venue">Violet Crown Cinema</span>
-          </span>
-        </button>
-      </li>
-    </ul>
-  </section>
-  <section class="tslot">
-    <div class="tslot-h"><span class="tslot-time">10:25 PM</span></div>
-    <ul class="tslot-films">
-      <li class="tcard" data-format="other" data-venues="Violet Crown Cinema" data-film="Wild Horse Nine">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img src="https://image.tmdb.org/t/p/w500/dNJFRtVg3xLQ7dbNIQ55cmmIniD.jpg" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">Wild Horse Nine <span class="yr">2026</span></span>
-            <span class="tcard-venue">Violet Crown Cinema</span>
-          </span>
-        </button>
-      </li>
-    </ul>
-  </section>
-  <section class="tslot">
-    <div class="tslot-h"><span class="tslot-time">10:30 PM</span></div>
-    <ul class="tslot-films">
-      <li class="tcard" data-format="35mm" data-venues="Alamo Drafthouse" data-film="I Play Rocky">
-        <button class="tcard-btn" type="button" aria-haspopup="dialog">
-          <span class="tcard-poster">
-<img src="https://image.tmdb.org/t/p/w500/xE5tY3lppZUyG7WKKThsuYHuAHr.jpg" alt="" loading="lazy">          </span>
-          <span class="tcard-body">
-            <span class="tcard-title">I Play Rocky <span class="yr">2026</span> <span class="badge badge-35mm tcard-badge">35mm</span></span>
-            <span class="tcard-venue">Alamo South Lamar</span>
-          </span>
-        </button>
-      </li>
-    </ul>
-  </section>
 </div>
 
   </div>
-  <div class="dayviews" data-iso="2026-11-17" hidden>
+  <div class="dayviews" data-iso="2026-11-17">
     <div class="view view-format">
   <section class="psec" data-format="35mm">
     <div class="psec-h"><span class="fmt-badge badge-35mm">35mm</span></div>
@@ -6422,7 +6222,7 @@
   </footer>
 
   <script src="/s/app.js?v=87a37184" defer></script>
-<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "I Play Rocky", "startDate": "2026-11-16T22:30:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "I Play Rocky", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1286656/"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/i-play-rocky", "availability": "https://schema.org/InStock"}, "videoFormat": "35mm", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Mystery Voyage", "startDate": "2026-11-16T21:45:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Mystery Voyage"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/agfadrome-mystery-voyage-november-2026", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "La Bola Negra", "startDate": "2026-11-16T21:45:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "La Bola Negra", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1422041/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/la-bola-negra/4302471/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Godzilla Minus Zero", "startDate": "2026-11-16T22:00:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Godzilla Minus Zero", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1381071/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/godzilla-minus-zero/4302466/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Wild Horse Nine", "startDate": "2026-11-16T22:25:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Wild Horse Nine", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/891621/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/wild-horse-nine/4302472/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}]</script>  <div id="glass-wrapper"></div>
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "I Play Rocky", "startDate": "2026-11-17T11:45:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "I Play Rocky", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1286656/"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/i-play-rocky", "availability": "https://schema.org/InStock"}, "videoFormat": "35mm", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "I Play Rocky", "startDate": "2026-11-17T15:00:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "I Play Rocky", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1286656/"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/i-play-rocky", "availability": "https://schema.org/InStock"}, "videoFormat": "35mm", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "I Play Rocky", "startDate": "2026-11-17T18:15:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "I Play Rocky", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1286656/"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/i-play-rocky", "availability": "https://schema.org/InStock"}, "videoFormat": "35mm", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Poetic Justice", "startDate": "2026-11-17T19:30:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Poetic Justice", "dateCreated": "1993", "sameAs": "https://letterboxd.com/tmdb/8291/"}, "location": {"@type": "MovieTheater", "name": "Austin Film Society Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3CUQ00000ZjXdB2AV", "availability": "https://schema.org/InStock"}, "videoFormat": "35mm", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "How to Rob a Bank", "startDate": "2026-11-17T15:00:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "How to Rob a Bank", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1437511/"}, "location": {"@type": "MovieTheater", "name": "AMC Barton Creek Square 14", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://www.amctheatres.com/movie-theatres/austin/amc-barton-creek-square-14/showtimes", "availability": "https://schema.org/InStock"}, "videoFormat": "Dolby", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Ebenezer", "startDate": "2026-11-17T18:00:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Ebenezer", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1567605/"}, "location": {"@type": "MovieTheater", "name": "AMC Barton Creek Square 14", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://www.amctheatres.com/movie-theatres/austin/amc-barton-creek-square-14/showtimes", "availability": "https://schema.org/InStock"}, "videoFormat": "Dolby", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Ebenezer", "startDate": "2026-11-17T21:00:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Ebenezer", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1567605/"}, "location": {"@type": "MovieTheater", "name": "AMC Barton Creek Square 14", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://www.amctheatres.com/movie-theatres/austin/amc-barton-creek-square-14/showtimes", "availability": "https://schema.org/InStock"}, "videoFormat": "Dolby", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "How to Rob a Bank", "startDate": "2026-11-17T19:05:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "How to Rob a Bank", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1437511/"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/how-to-rob-a-bank", "availability": "https://schema.org/InStock"}, "videoFormat": "4K Barco HDR", "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Godzilla Minus Zero", "startDate": "2026-11-17T09:00:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Godzilla Minus Zero", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1381071/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/godzilla-minus-zero/4301176/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Godzilla Minus Zero", "startDate": "2026-11-17T12:50:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Godzilla Minus Zero", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1381071/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/godzilla-minus-zero/4301182/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Godzilla Minus Zero", "startDate": "2026-11-17T16:15:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Godzilla Minus Zero", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1381071/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/godzilla-minus-zero/4301184/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Godzilla Minus Zero", "startDate": "2026-11-17T18:20:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Godzilla Minus Zero", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1381071/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/godzilla-minus-zero/4301186/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Godzilla Minus Zero", "startDate": "2026-11-17T21:50:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Godzilla Minus Zero", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1381071/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/godzilla-minus-zero/4301194/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Wild Horse Nine", "startDate": "2026-11-17T09:05:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Wild Horse Nine", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/891621/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/wild-horse-nine/4301179/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Wild Horse Nine", "startDate": "2026-11-17T11:45:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Wild Horse Nine", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/891621/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/wild-horse-nine/4301180/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Wild Horse Nine", "startDate": "2026-11-17T15:40:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Wild Horse Nine", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/891621/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/wild-horse-nine/4301185/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Wild Horse Nine", "startDate": "2026-11-17T18:50:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Wild Horse Nine", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/891621/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/wild-horse-nine/4301188/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Wild Horse Nine", "startDate": "2026-11-17T22:15:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Wild Horse Nine", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/891621/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/wild-horse-nine/4301191/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "You Can See Everything", "startDate": "2026-11-17T09:05:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "You Can See Everything", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1765072/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/you-can-see-everything/4301178/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "You Can See Everything", "startDate": "2026-11-17T12:00:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "You Can See Everything", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1765072/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/you-can-see-everything/4301181/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "You Can See Everything", "startDate": "2026-11-17T14:40:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "You Can See Everything", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1765072/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/you-can-see-everything/4301183/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "You Can See Everything", "startDate": "2026-11-17T18:35:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "You Can See Everything", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1765072/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/you-can-see-everything/4301187/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "You Can See Everything", "startDate": "2026-11-17T21:20:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "You Can See Everything", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1765072/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/you-can-see-everything/4301189/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "La Bola Negra", "startDate": "2026-11-17T09:50:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "La Bola Negra", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1422041/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/la-bola-negra/4301177/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "La Bola Negra", "startDate": "2026-11-17T21:35:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "La Bola Negra", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1422041/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/la-bola-negra/4301190/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Being Heumann", "startDate": "2026-11-17T13:20:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Being Heumann", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1050981/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/being-heumann/4301193/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Being Heumann", "startDate": "2026-11-17T15:50:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Being Heumann", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1050981/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/being-heumann/4301192/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "La Bola Negra", "startDate": "2026-11-17T15:45:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "La Bola Negra", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1422041/"}, "location": {"@type": "MovieTheater", "name": "Austin Film Society Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3Cjr000000DO7lEAG", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Fatherland", "startDate": "2026-11-17T16:10:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Fatherland", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1437696/"}, "location": {"@type": "MovieTheater", "name": "Austin Film Society Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3Cjr000000DNGXEA4", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Once Upon A Time In Harlem", "startDate": "2026-11-17T16:30:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Once Upon A Time In Harlem", "dateCreated": "2026", "sameAs": "https://letterboxd.com/tmdb/1596300/"}, "location": {"@type": "MovieTheater", "name": "Austin Film Society Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3Cjr000000DOR7EAO", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Raise The Red Lantern", "startDate": "2026-11-17T19:00:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Raise The Red Lantern", "dateCreated": "1991", "sameAs": "https://letterboxd.com/tmdb/10404/"}, "location": {"@type": "MovieTheater", "name": "Austin Film Society Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austinfilmsociety.my.salesforce-sites.com/ticket/#/instances/a3Cjr000000DOSlEAO", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Hobo With a Shotgun", "startDate": "2026-11-17T19:15:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Hobo With a Shotgun", "dateCreated": "2011", "sameAs": "https://letterboxd.com/tmdb/49010/"}, "location": {"@type": "MovieTheater", "name": "Violet Crown Cinema", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://austin.violetcrown.com/checkout/showing/hobo-with-a-shotgun/4280237/", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Matilda", "startDate": "2026-11-17T19:30:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Matilda", "dateCreated": "1996", "sameAs": "https://letterboxd.com/tmdb/10830/"}, "location": {"@type": "MovieTheater", "name": "Hyperreal Film Club", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX"}}, "offers": {"@type": "Offer", "url": "https://hyperrealfilm.club/events/11-17/matilda-movie-screening", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}, {"@context": "https://schema.org", "@type": "ScreeningEvent", "name": "Indonesian Mystery Movie", "startDate": "2026-11-17T21:30:00-06:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "workPresented": {"@type": "Movie", "name": "Indonesian Mystery Movie"}, "location": {"@type": "MovieTheater", "name": "Alamo Drafthouse", "address": {"@type": "PostalAddress", "addressLocality": "Austin", "addressCountry": "US", "addressRegion": "TX (multiple locations)"}}, "offers": {"@type": "Offer", "url": "https://drafthouse.com/austin/show/terror-tuesday-indonesian-mystery-movie", "availability": "https://schema.org/InStock"}, "url": "https://cinemaxxing.co/"}]</script>  <div id="glass-wrapper"></div>
   <script defer src="/s/glass/container.js?v=87a37184"></script>
   <script defer src="/s/glass/button.js?v=87a37184"></script>
   <script defer src="/s/glass/glass-return-to-top.js?v=87a37184"></script>
