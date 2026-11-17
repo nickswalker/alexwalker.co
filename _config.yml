@@ -32,8 +32,8 @@ include:
 # files too (Jekyll::StaticFile#data reads frontmatter_defaults), so a path
 # scope is enough for files that have no front matter of their own.
 defaults:
-  # Archived Rancho El Macho microsite (plus its old raw traffic-log HTML
-  # dumps). Not alexwalker.co content — 15 of the sitemap's 32 URLs.
+  # Rancho El Macho moved to ranchoelmacho.com (2026-11-16). Only two
+  # redirect stubs remain here; keep them out of the sitemap.
   - scope:
       path: "ranchoelmacho"
     values:
