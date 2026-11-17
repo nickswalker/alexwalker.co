@@ -76,6 +76,46 @@ jobs:
           name: site
           path: _site
 
+      # Second copy of the SAME _site, packaged for GitHub Pages (the
+      # deploy-pages job below). Only on the events that deploy to live.
+      # continue-on-error: a Pages packaging failure must never skip the
+      # rsync deploy to Nick's server, which needs this job to succeed.
+      - name: Upload Pages artifact
+        if: |
+          (github.event_name == 'push' && github.ref == 'refs/heads/master') ||
+          github.event_name == 'workflow_dispatch' ||
+          github.event_name == 'workflow_run'
+        continue-on-error: true
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  # Dual deploy while alexwalker.co moves to GitHub Pages (fact #2510).
+  # DNS still points at Nick's server, so this copy is not visitor-facing
+  # until the Cloudflare switch. Separate job: a failure here neither fails
+  # nor skips the rsync `deploy` job. Keep the rsync until ~2 weeks after
+  # the switch so rollback stays possible.
+  deploy-pages:
+    runs-on: ubuntu-24.04
+    needs: [jekyll-build]
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/master') ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'workflow_run'
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
   deploy:
     runs-on: ubuntu-24.04
     needs: [jekyll-build]
