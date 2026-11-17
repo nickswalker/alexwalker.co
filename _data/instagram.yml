@@ -623,6 +623,19 @@
   hue: 0.0897
   saturation: 0.25
   value: 0.4078
+- id: '17939738097406742'
+  permalink: https://www.instagram.com/p/Df0ZdBcSAhh/
+  timestamp: '2026-11-16T22:11:00+00:00'
+  caption: ''
+  image: /img/instagram/17939738097406742.jpg
+  thumb: /img/instagram/17939738097406742-thumb.jpg
+  rgb:
+  - 39
+  - 35
+  - 30
+  hue: 0.0926
+  saturation: 0.2308
+  value: 0.1529
 - id: '18057289864956161'
   permalink: https://www.instagram.com/p/DFTs4NOSCE8/
   timestamp: '2025-01-26T23:49:23+00:00'
