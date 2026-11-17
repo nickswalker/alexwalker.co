@@ -48,9 +48,34 @@ function ping(extra) {
     img.src = `${PIXEL_URL}?${params.toString()}`;
 }
 
+// document.referrer trimmed to origin+path ('' = direct). Same-site
+// referrers send the origin only: the backend files that as "(internal)",
+// whereas dropping it entirely would count the hit as "(direct)".
+function trimmedReferrer() {
+    const raw = document.referrer || '';
+    if (!raw) return '';
+    try {
+        const u = new URL(raw);
+        if (u.hostname === window.location.hostname) return u.origin;
+        return u.origin + u.pathname;
+    } catch (_) {
+        return '';
+    }
+}
+
+// Optional GoatCounter-parity fields read by the backend's _pixel_extra():
+//   t  document.title   r  trimmed referrer   w  screen.width
+//   q  location.search, only when it carries utm_* (fallback for browsers
+//      that strip the query from the Referer header)
+// Language comes server-side from Accept-Language; screen height is not
+// stored, so neither is sent.
 export function sendPagePixel() {
     const { dev, me } = getOwnerFlags();
     const data = { p: window.location.pathname || '/' };
+    data.t = (document.title || '').slice(0, 300);
+    data.r = trimmedReferrer().slice(0, 600);
+    if (window.screen && screen.width) data.w = String(screen.width);
+    if (/[?&]utm_/.test(window.location.search)) data.q = window.location.search.slice(0, 500);
     if (dev) data.dev = '1';
     if (me) data.me = me;
     ping(data);
