@@ -647,12 +647,24 @@ jobs:
           exit "$failed"
           REMOTE
 
+      # Purges the whole alexwalker.co zone (Alex's Cloudflare account) with a
+      # Cache Purge-only API token. Fails the job with Cloudflare's error JSON
+      # if the API does not report success.
       - name: purge Cloudflare cache
-        uses: jakejarvis/cloudflare-purge-action@v0.3.0
         env:
           CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
-          CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
-          CLOUDFLARE_KEY: ${{ secrets.CLOUDFLARE_KEY }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          resp=$(curl -sS -X POST \
+            "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE/purge_cache" \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}')
+          echo "$resp"
+          if [ "$(echo "$resp" | jq -r '.success')" != "true" ]; then
+            echo "::error::Cloudflare cache purge failed: $resp"
+            exit 1
+          fi
 
   deploy-staging:
     runs-on: ubuntu-24.04
@@ -679,9 +691,21 @@ jobs:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: rsync -havz --delete ./ www-data@ssh.nickwalker.us:/var/www/testing.alexwalker.co/ --exclude=/.well-known
 
+      # Purges the whole alexwalker.co zone (Alex's Cloudflare account) with a
+      # Cache Purge-only API token. Fails the job with Cloudflare's error JSON
+      # if the API does not report success.
       - name: purge Cloudflare cache
-        uses: jakejarvis/cloudflare-purge-action@v0.3.0
         env:
           CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
-          CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
-          CLOUDFLARE_KEY: ${{ secrets.CLOUDFLARE_KEY }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          resp=$(curl -sS -X POST \
+            "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE/purge_cache" \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}')
+          echo "$resp"
+          if [ "$(echo "$resp" | jq -r '.success')" != "true" ]; then
+            echo "::error::Cloudflare cache purge failed: $resp"
+            exit 1
+          fi
