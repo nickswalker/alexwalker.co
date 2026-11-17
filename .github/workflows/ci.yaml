@@ -181,6 +181,10 @@ jobs:
           # (2026-11-16). Every file except the two redirect stubs
           # (ranchoelmacho/index.html, ranchoelmacho/ranchoelmacho.html) goes,
           # including the public logs/ folder that held visitor IP addresses.
+          # cinemaxxing/*, cinemaxxing*.html/txt/xml, about.html and the
+          # Cinemaxxing img/css/js assets: the site moved to cinemaxxing.co
+          # (2026-11-17). Cloudflare 301s the old URLs there. The home page
+          # promo logo (img/cinemaxxing-logo.png/.webp) stays and is not listed.
           for p in \
             img/Chapman_MiniScope_Factsheet.pdf \
             img/Full_Gear_Inventory.pdf \
@@ -596,7 +600,140 @@ jobs:
             ranchoelmacho/packages/bootstrap/js/bootstrap-carousel.js \
             ranchoelmacho/packages/bootstrap/js/bootstrap-carousel.min.js \
             ranchoelmacho/packages/fancybox/jquery.fancybox.min.css \
-            ranchoelmacho/packages/fancybox/jquery.fancybox.min.js
+            ranchoelmacho/packages/fancybox/jquery.fancybox.min.js \
+            about.html \
+            cinemaxxing-advance.html \
+            cinemaxxing-filtered.html \
+            cinemaxxing-llms.txt \
+            cinemaxxing-preview.html \
+            cinemaxxing-robots.txt \
+            cinemaxxing-sitemap.xml \
+            cinemaxxing.html \
+            cinemaxxing/about/index.html \
+            cinemaxxing/advance-tickets/index.html \
+            cinemaxxing/apple-touch-icon-precomposed.png \
+            cinemaxxing/apple-touch-icon.png \
+            cinemaxxing/cinemaxxing-advance.html \
+            cinemaxxing/cinemaxxing-filtered.html \
+            cinemaxxing/cinemaxxing-preview.html \
+            cinemaxxing/cinemaxxing.html \
+            cinemaxxing/favicon.ico \
+            cinemaxxing/favicon.png \
+            cinemaxxing/filtered.html \
+            cinemaxxing/filtered/index.html \
+            cinemaxxing/ig/cmx-ig-20261013-v2.jpg \
+            cinemaxxing/ig/cmx-ig-20261013.jpg \
+            cinemaxxing/ig/cmx-ig-20261014.jpg \
+            cinemaxxing/ig/cmx-ig-20261015.jpg \
+            cinemaxxing/ig/cmx-ig-20261016.jpg \
+            cinemaxxing/ig/cmx-ig-20261017.jpg \
+            cinemaxxing/ig/cmx-ig-20261018.jpg \
+            cinemaxxing/ig/cmx-ig-20261019.jpg \
+            cinemaxxing/ig/cmx-ig-20261020.jpg \
+            cinemaxxing/ig/cmx-ig-20261023.jpg \
+            cinemaxxing/ig/cmx-ig-20261024.jpg \
+            cinemaxxing/ig/cmx-ig-20261026.jpg \
+            cinemaxxing/ig/cmx-ig-20261027.jpg \
+            cinemaxxing/ig/cmx-ig-20261101.jpg \
+            cinemaxxing/ig/cmx-ig-20261103.jpg \
+            cinemaxxing/ig/cmx-ig-20261110.jpg \
+            cinemaxxing/ig/cmx-ig-20261112.jpg \
+            cinemaxxing/ig/cmx-ig-20261114.jpg \
+            cinemaxxing/index.html \
+            cinemaxxing/llms.txt \
+            cinemaxxing/privacy/index.html \
+            cinemaxxing/projector-guide/index.html \
+            cinemaxxing/robots.txt \
+            cinemaxxing/s/app.css \
+            cinemaxxing/s/app.css.bak-sprocket \
+            cinemaxxing/s/app.js \
+            cinemaxxing/s/cinemaxxing-icon-rounded.png \
+            cinemaxxing/s/cinemaxxing-icon.png \
+            cinemaxxing/s/cinemaxxing-logo.png \
+            cinemaxxing/s/cinemaxxing-orig.css \
+            cinemaxxing/s/fonts.css \
+            cinemaxxing/s/fonts/09ac2e3af8.woff2 \
+            cinemaxxing/s/fonts/0b7be2a840.woff2 \
+            cinemaxxing/s/fonts/142e765bc1.woff2 \
+            cinemaxxing/s/fonts/1bc2c83f08.woff2 \
+            cinemaxxing/s/fonts/1fda6c5f88.woff2 \
+            cinemaxxing/s/fonts/22d85308f6.woff2 \
+            cinemaxxing/s/fonts/4f08402189.woff2 \
+            cinemaxxing/s/fonts/54db195b02.woff2 \
+            cinemaxxing/s/fonts/5c69085a8e.woff2 \
+            cinemaxxing/s/fonts/5f75d388a8.woff2 \
+            cinemaxxing/s/fonts/6114b47ba7.woff2 \
+            cinemaxxing/s/fonts/64f185f0aa.woff2 \
+            cinemaxxing/s/fonts/6fc9ef99a1.woff2 \
+            cinemaxxing/s/fonts/72098a8fb2.woff2 \
+            cinemaxxing/s/fonts/8d432b7440.woff2 \
+            cinemaxxing/s/fonts/917695753a.woff2 \
+            cinemaxxing/s/fonts/91d7e556d9.woff2 \
+            cinemaxxing/s/fonts/9b462c4f64.woff2 \
+            cinemaxxing/s/fonts/9f6257e36e.woff2 \
+            cinemaxxing/s/fonts/a08bb59742.woff2 \
+            cinemaxxing/s/fonts/a8833406c8.woff2 \
+            cinemaxxing/s/fonts/b4a3958934.woff2 \
+            cinemaxxing/s/fonts/c9a7ec71e3.woff2 \
+            cinemaxxing/s/fonts/d5d9edd3b4.woff2 \
+            cinemaxxing/s/fonts/d5f7f47260.woff2 \
+            cinemaxxing/s/fonts/ef8c1eeca5.woff2 \
+            cinemaxxing/s/fonts/f6b684fdd8.woff2 \
+            cinemaxxing/s/fonts/fa162e4d23.woff2 \
+            cinemaxxing/s/fonts/fccbe4fa19.woff2 \
+            cinemaxxing/s/fonts/fcd7e4095c.woff2 \
+            cinemaxxing/s/fonts/fdb05bf0ea.woff2 \
+            cinemaxxing/s/fonts/fdf1d5c3d9.woff2 \
+            cinemaxxing/s/glass/button.js \
+            cinemaxxing/s/glass/container.js \
+            cinemaxxing/s/glass/glass-desktop-dark.jpg \
+            cinemaxxing/s/glass/glass-mobile-dark.jpg \
+            cinemaxxing/s/glass/glass-mobile-landscape-dark.jpg \
+            cinemaxxing/s/glass/glass-return-to-top.js \
+            cinemaxxing/s/glass/glass-tablet-dark.jpg \
+            cinemaxxing/s/glass/glass-tablet-landscape-dark.jpg \
+            cinemaxxing/s/logos/alamo.png \
+            cinemaxxing/s/logos/amc.png \
+            cinemaxxing/s/logos/austin-film-society.png \
+            cinemaxxing/s/logos/cinemark.png \
+            cinemaxxing/s/logos/hyperreal.png \
+            cinemaxxing/s/logos/imax.png \
+            cinemaxxing/s/logos/paramount.png \
+            cinemaxxing/s/logos/violet-crown.png \
+            cinemaxxing/s/og-image.png \
+            cinemaxxing/s/tmdb-logo.svg \
+            cinemaxxing/sitemap.xml \
+            cinemaxxing/subscribe/index.html \
+            cinemaxxing/terms/index.html \
+            cinemaxxing/this-week/index.html \
+            css/cinemaxxing.css \
+            img/cinemaxxing-frown-amber.png \
+            img/cinemaxxing-frown-cyan.png \
+            img/cinemaxxing-grain.png \
+            img/cinemaxxing-icon-rounded.png \
+            img/cinemaxxing-icon.png \
+            img/cinemaxxing-logo-white.svg \
+            img/cinemaxxing-logo.svg \
+            img/cinemaxxing-logos/alamo.png \
+            img/cinemaxxing-logos/amc.png \
+            img/cinemaxxing-logos/austin-film-society.png \
+            img/cinemaxxing-logos/cinemark.png \
+            img/cinemaxxing-logos/ddlogodarkmode.png \
+            img/cinemaxxing-logos/ddlogolightmode.png \
+            img/cinemaxxing-logos/hyperreal.png \
+            img/cinemaxxing-logos/imax.png \
+            img/cinemaxxing-logos/paramount.png \
+            img/cinemaxxing-logos/violet-crown.png \
+            img/cinemaxxing-perf-strip.png \
+            img/cinemaxxing-poster-placeholder.png \
+            img/cinemaxxing-preview.jpg \
+            img/cinemaxxing-smile-amber.png \
+            img/cinemaxxing-smile-cyan.png \
+            img/cinemaxxing-still-1.jpg \
+            img/cinemaxxing-still-2.jpg \
+            img/cinemaxxing-still-3.jpg \
+            img/cinemaxxing-still-4.jpg \
+            js/cinemaxxing-visit-log.js
           do
             f="$root/$p"
             if [ ! -e "$f" ]; then
@@ -633,7 +770,22 @@ jobs:
             ranchoelmacho/js \
             ranchoelmacho/logs \
             ranchoelmacho/macho \
-            ranchoelmacho/packages
+            ranchoelmacho/packages \
+            cinemaxxing/s/fonts \
+            cinemaxxing/s/glass \
+            cinemaxxing/s/logos \
+            cinemaxxing/about \
+            cinemaxxing/advance-tickets \
+            cinemaxxing/filtered \
+            cinemaxxing/ig \
+            cinemaxxing/privacy \
+            cinemaxxing/projector-guide \
+            cinemaxxing/s \
+            cinemaxxing/subscribe \
+            cinemaxxing/terms \
+            cinemaxxing/this-week \
+            img/cinemaxxing-logos \
+            cinemaxxing
           do
             f="$root/$d"
             if [ ! -e "$f" ]; then

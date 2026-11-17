@@ -46,14 +46,10 @@ defaults:
     values:
       sitemap: false
 
-  # Cinemaxxing pages live at cinemaxxing.co (its own domain + its own sitemap,
-  # served via the redirect Worker). They are built from this repo but must NOT
-  # appear in alexwalker.co's sitemap — their canonical tags already attribute
-  # them to cinemaxxing.co. Still served at their URLs; only dropped from sitemap.
-  # Scoped by directory + glob (not per file) so new Cinemaxxing pages the
-  # publish bot adds are excluded automatically: cinemaxxing/ (the
-  # /cinemaxxing/* site), cinemaxxing*.html, and about.html (Cinemaxxing's
-  # About page, served at /about.html).
+  # Cinemaxxing moved to cinemaxxing.co (2026-11-17). Its site copy was
+  # removed from this repo and Cloudflare 301s the old URLs there. These
+  # scopes stay as a guard so a stray Cinemaxxing file never enters the
+  # sitemap. The home page promo logo (img/) is not affected.
   - scope:
       path: "cinemaxxing"
     values:
